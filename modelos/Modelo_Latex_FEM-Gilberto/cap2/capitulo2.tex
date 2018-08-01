@@ -1,0 +1,68 @@
+\pagestyle{empty}
+
+% Inclui o cabeçalho definido no meta.tex
+\pagestyle{fancy}
+
+
+%===================================================================================================
+%                                              Capítulo 2 
+%===================================================================================================
+
+\chapter{Título do Capítulo 2}\label{cap2}
+Nesse capítulo, apresentam-se conceitos sobre o método de elementos finitos ...
+
+
+%---------------------------------------------------------------------------------------------------
+\section{Título da Seção 1}\label{cap2:secao1}
+
+Descrição . . .
+
+Para utilizar as referências em latex acrescente o comando \begin{verbatim} ~\cite{referencia} 
+\end{verbatim}.
+
+Esses são 2 exemplos de citações: ~\cite{rylo2007} e~\cite{lima2008}.
+
+O comando \begin{verbatim} ~\citet{referencia} \end{verbatim}
+
+é utilizado quando se coloca o autor no começo da oração. Exemplo: 
+
+~\citet{bittencourt2010} propôs o método X para o desenvolvimento de . . .
+%---------------------------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------------------------------------
+\subsection{Título da Subseção 1}\label{cap2:sub1}
+
+Descrição . . .
+
+Exemplo para definir imagens. Veja o arquivo capitulo2.tex e verifique como a 
+Figura~\ref{fig:logo} é definida.
+
+%   Exemplo de Figura.
+\begin{figure}[!thp]
+  \centering
+  \includegraphics[width=4.cm, height=5.5cm]{./cap2/figs/logo-unicamp.jpg}
+  \caption{Logo da Unicamp.}
+  \label{fig:logo}
+\end{figure}
+%---------------------------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------------------------------------
+\section{Título da Seção 2}\label{cap2:secao2}
+
+Descrição . . .
+
+Agora, um exemplo da para descrever as equações em latex. Veja o arquivo capitulo2.tex verifique 
+como as equações~\ref{eq:massa1D} e~\ref{eq:carga1D} estão definidas.
+
+\begin{equation}\label{eq:massa1D}
+M^{1D}_{e,ij} = \int_{-1}^{1}\phi_{i}\phi_{j}(\xi_{1}) d\xi_{1},
+\end{equation}
+% E os carregamento de corpos para o problema de projeção \cite{santos2011} são
+\begin{equation}\label{eq:carga1D}
+f^{1D}_{i} = \int_{-1}^{1} b(\xi_{1})\phi_{i}(\xi_{1}) d\xi_{1},
+\end{equation}
+
+%---------------------------------------------------------------------------------------------------
+
+%===================================================================================================
+

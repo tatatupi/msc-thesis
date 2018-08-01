@@ -1,0 +1,151 @@
+%% Exemplo de como usar a classe ppgccufscar.
+%% O template da monografia (quali, dissertacao ou tese)
+%% foi feito pela Profa. Sandra Fabbri.
+%% A classe ppgccufscar foi feita por Daniel Beck,
+%% Daniel Bruno e Prof. Marcio
+
+
+%%
+%% Opcoes que podem ser passadas 'a classe
+%%
+%% Todas as opcoes da classe abnt (AbnTeX) sao validas.
+%% Outras opcoes sao: quali e tese (dissertacao e' padrao)
+%%
+\documentclass{ppgccufscar}
+
+%% pacotes que deseja usar
+%% pacotes incompativeis sao:
+%%   qualquer pacote de citacoes, como natbib, apalike, cite, etc.
+%% o pacote babel ja vem carregado com ingles e portugues
+\usepackage[latin1]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amstext,textcomp}
+\usepackage{mathrsfs} %permite o uso de letras trabalhadas
+\usepackage{cite}
+
+% Change these to change out the sort outputs.
+
+\titulo{Fusão Sensorial para Sistemas com Amostragem Irregular}
+\autor{Taiguara Melo Tupinambás}
+\orientador[Orientador]{Prof. Dr. Bruno Otávio Soares Teixeira}
+\coorientador{Prof. Dr. Leonardo Antônio Borges Tôrres}
+\areaconcentracao{Sinais e Sistemas}
+\data{Janeiro 2018}
+
+% epigrafre, agradecimentos sao feitos 'na mao'.
+% um dia eu faco alguns comandos para eles ;)
+
+\begin{document} 
+
+\capa
+%\folhaderosto
+
+%\dedicatoria{A meus pais.}
+
+%\begin{agradecimentos}
+%\end{agradecimentos}
+
+%\epigrafe{Um dia vocï¿½ descobre que se leva muito tempo para se tornar a pessoa que se
+%deseja tornar, e que o tempo ï¿½ curto. Aprende que nï¿½o importa atï¿½ o ponto onde jï¿½
+%chegamos, mas para onde estamos, de fato, indo - mas, se vocï¿½ nï¿½o sabe para onde
+%estï¿½ indo, qualquer lugar servirï¿½.(...) Aprende que herï¿½is sï¿½o pessoas que foram
+%suficientemente corajosas para fazer o que era necessï¿½rio fazer, enfrentando as consequï¿½ncias de seus atos. Aprende que paciï¿½ncia requer muita persistï¿½ncia e
+%prï¿½tica. Descobre que, algumas vezes, a pessoa que vocï¿½ espera que o chute
+%quando vocï¿½ cai, poderï¿½ ser uma das poucas que o ajudarï¿½ a levantar-se.}{Veronica Shoffstall}
+%
+%\begin{resumo}
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin euismod risus sed velit congue vitae posuere risus condimentum. Aliquam interdum condimentum risus, vel aliquet nibh pretium at. Integer egestas, dolor eget ultrices gravida, turpis nunc suscipit erat, ut aliquam velit nisl in turpis. Nam vel sodales justo. Nulla auctor, quam sed porta hendrerit, mi tortor rutrum ipsum, sed ullamcorper nisl erat nec ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam eget arcu id nisi auctor iaculis. Curabitur dignissim porta lacus. Curabitur bibendum aliquet diam vel tempor. Maecenas vulputate aliquet purus eget interdum. Etiam pretium tortor in mi interdum volutpat. Aenean at convallis lectus. Nulla adipiscing massa eget diam consequat a consequat nisi pharetra. Suspendisse potenti. Sed at tellus metus, at tempor turpis. Curabitur vitae ligula libero, et aliquet diam. Proin bibendum hendrerit interdum. Curabitur luctus, augue sit amet pharetra consectetur, erat tellus sagittis ligula, eget rhoncus neque diam mattis urna. Donec consequat pretium euismod. Nam pellentesque facilisis quam et scelerisque. Aenean eu lacus ac sem vehicula laoreet a quis erat. Nulla facilisi. Sed a tortor eros, et viverra felis. Duis molestie elit in arcu condimentum quis blandit justo fermentum. Integer rhoncus accumsan hendrerit.
+%\palavraschave{Latex, Template, Exemplo}
+%\end{resumo}
+%
+%\begin{abstract}
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin euismod risus sed velit congue vitae posuere risus condimentum. Aliquam interdum condimentum risus, vel aliquet nibh pretium at. Integer egestas, dolor eget ultrices gravida, turpis nunc suscipit erat, ut aliquam velit nisl in turpis. Nam vel sodales justo. Nulla auctor, quam sed porta hendrerit, mi tortor rutrum ipsum, sed ullamcorper nisl erat nec ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam eget arcu id nisi auctor iaculis. Curabitur dignissim porta lacus. Curabitur bibendum aliquet diam vel tempor. Maecenas vulputate aliquet purus eget interdum. Etiam pretium tortor in mi interdum volutpat. Aenean at convallis lectus. Nulla adipiscing massa eget diam consequat a consequat nisi pharetra. Suspendisse potenti. Sed at tellus metus, at tempor turpis. Curabitur vitae ligula libero, et aliquet diam. Proin bibendum hendrerit interdum. Curabitur luctus, augue sit amet pharetra consectetur, erat tellus sagittis ligula, eget rhoncus neque diam mattis urna. Donec consequat pretium euismod. Nam pellentesque facilisis quam et scelerisque. Aenean eu lacus ac sem vehicula laoreet a quis erat. Nulla facilisi. Sed a tortor eros, et viverra felis. Duis molestie elit in arcu condimentum quis blandit justo fermentum. Integer rhoncus accumsan hendrerit.
+%\keywords{Latex, Template, Example}
+%\end{abstract}
+
+\listoffigures
+\listoftables
+
+%% sumario
+\tableofcontents
+
+%% aqui comeca o texto da monografia
+%% voce pode dividir o conteudo em varios arquivos.
+%% por exemplo, intro.tex, fundamentacao.tex, desenvolvimento.tex, conclusao.tex.
+%% dai, vc inclui aqui assim: \input{intro.tex} e assim por diante.
+
+\chapter{Primeiro capï¿½tulo}
+
+%Exemplo de citaï¿½ï¿½o indireta \cite{tolvanenKelly08}.
+%Exemplo de citaï¿½ï¿½o de autor: Segundo \citeonline{lucredio2009}, bla bla bla.
+%Exemplo de citaï¿½ï¿½o longa:
+
+%\begin{citacao}
+%A teleconferï¿½ncia permite ao indivï¿½duo participar de um encontro
+%nacional ou regional sem a necessidade de deixar seu local de
+%origem. Tipos comuns de teleconferï¿½nia incluem o uso da televisï¿½o,
+%telefone e computador. Atravï¿½s de ï¿½udio conferï¿½ncia, utilizando
+%a companhia local de telefone, um sinal de ï¿½udio pode ser emitido
+%em um salï¿½o de qualquer dimensï¿½o \cite[p. 181]{weberZhang96}.
+%\end{citacao}
+
+Lorem ipsum 
+
+\section{Seï¿½ï¿½o de exemplo}
+
+Lorem ipsum \cite{fernandesMachado07} e não sei mais o que \cite{uml11}
+
+\subsection{Subseï¿½ï¿½o de exemplo}
+
+Lorem ipsum 
+
+\subsubsection{Subsubseï¿½ï¿½o de exemplo}
+
+Lorem ipsum 
+
+
+
+%% coloque aqui o seu arquivo .bib
+%% IMPORTANTE: nao use bibliographystyle!
+%% o estilo ja vem definido.
+
+\bibliography{references}
+
+%% de acordo com o template, o glossario vem
+%% depois das referencias e deve estar em ordem
+%% alfabetica.
+%% depois de muito esforco consegui fazer com que
+%% o glossario ficasse em ordem alfabetica automaticamente.
+%% ainda nao sei a escalabilidade do algoritmo :(
+
+%% DICA: voce pode ir definindo os acronimos ao longo do texto.
+%% Por exemplo, no capitulo 1, vc ta escrevendo:
+%% Segundo Fulano, Model-Driven Development (MDD)\acronym{MDD}{Model-Driven Development} ï¿½ uma tï¿½cnica bla bla bla...
+
+
+%\acronym{MDD}{Model-Driven Development}
+%\acronym{GPL}{General Purpose Language}
+%\acronym{SE}{Sistemas Embarcados}
+%\listofacronyms
+
+%\apendice
+
+%\chapter{Explicaï¿½ï¿½o do que ï¿½ apï¿½ndice}
+%
+%\begin{resumocap}
+%Dï¿½ pra usar o resuminho aqui tambï¿½m.
+%\end{resumocap}
+%
+%Segundo a norma, apï¿½ndice ï¿½ um documento elaborado pelo autor a fim de complementar sua argumentaï¿½ï¿½o sem afetar a unidade nuclear do trabalho.
+%
+%\chapter{Outro apï¿½ndice}
+%
+%Sï¿½ pra ilustrar mais de um apï¿½ndice.
+%
+%\anexo
+%
+%\chapter{Explicaï¿½ï¿½o do que ï¿½ anexo}
+%
+%Anexos consistem em textos ou documentos nï¿½o elaborados pelo autor que servem de ilustraï¿½ï¿½o, comprovaï¿½ï¿½o e ilustraï¿½ï¿½o.
+
+\end{document}

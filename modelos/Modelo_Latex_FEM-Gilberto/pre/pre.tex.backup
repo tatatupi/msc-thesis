@@ -1,0 +1,507 @@
+%===================================================================================================
+%                                            CAPA
+%===================================================================================================
+\thispagestyle{fancy}
+\fancyhf{}
+\lhead{
+  \begin{picture}(225,150)%(horizontal,vertical)
+    \put(0,0){\includegraphics[scale=0.13]{pre/logo-unicamp.jpg}}
+  \end{picture}
+}
+\cfoot{\thepage}
+
+
+\begin{center}
+\vspace*{6.cm}
+
+Gilberto Luis Valente Costa
+
+\vspace{2.6cm}
+{\fontsize{23}{23} \textbf{$hp^2$FEM - Uma Arquitetura de \textit{Software}}}	\\ \vspace{1.2ex}
+{\fontsize{23}{23} \textbf{$p$ Não-Uniforme para o Método de}}			\\ \vspace{1.2ex}
+{\fontsize{23}{23} \textbf{Elementos Finitos de Alta Ordem}}
+
+
+\vspace*{4.6cm}
+\begin{flushleft}
+119/2012
+% (\textcolor[rgb]{0.00,0.00,1.00}{Número de publicação - solicitar na CPG/FEM}).
+\end{flushleft}
+
+\vspace{3cm}
+CAMPINAS\\ 2012
+\end{center}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                     ASSINATURA DO ORIENTADOR
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{3}
+%%%
+
+\thispagestyle{fancy}
+\fancyhf{}
+\lhead{
+\begin{wrapfigure}{l}{0.5\textwidth}
+  \begin{picture}(225,150)%(horizontal,vertical)
+    \put(0,0){\includegraphics[scale=0.13]{pre/logo-unicamp.jpg}}
+  \end{picture}
+\end{wrapfigure}
+}
+\cfoot{\thepage}
+
+\begin{center}
+\vspace*{4.cm}
+{\large\textbf{UNIVERSIDADE ESTADUAL DE CAMPINAS\\\vspace{1.2ex}
+FACULDADE DE ENGENHARIA MECÂNICA\vspace{1.2ex}}}
+
+\vspace{1.5cm}
+{\large Gilberto Luis Valente da Costa}
+
+\vspace{1.3cm}
+{\fontsize{23}{23} \textbf{$hp^2$FEM - Uma Arquitetura de \textit{Software}}}	\\ \vspace{1.2ex}
+{\fontsize{23}{23} \textbf{$p$ Não-Uniforme para o Método de}}			\\ \vspace{1.2ex}
+{\fontsize{23}{23} \textbf{Elementos Finitos de Alta Ordem}}
+\end{center}
+
+\vspace{0.7cm}
+\noindent
+Orientador: Prof. Dr. Marco Lúcio Bittencourt\\
+\vspace{0.5cm}
+% Coorientador:
+
+\vspace{0.1cm}
+Dissertação de Mestrado apresentada à Faculdade de Engenharia Mecânica da Universidade Estadual de
+Campinas, para a obtenção do título de Mestre em Engenharia Mecânica, na Área de Mecânica dos
+Sólidos e Projeto Mecânico.
+
+\vspace{0.4cm}
+\begin{flushleft}
+\parbox{4in}{ESTE EXEMPLAR CORRESPONDE À VERSÃO FINAL DA DISSERTAÇÃO DEFENDIDA PELO ALUNO
+Gilberto Luis Valente da Costa, E
+ORIENTADO PELO PROF. DR.
+Marco Lúcio Bittencourt.\\
+\begin{center}
+...............................................................\\
+ASSINATURA DO ORIENTADOR
+\end{center}
+}
+\end{flushleft}
+
+\vspace{0.4cm}
+\begin{center}
+CAMPINAS\\ 2012
+\end{center}
+\fancyhead{}	% Limpa os campos do cabeçalho atual
+%===================================================================================================
+
+
+%===================================================================================================
+%                                     FICHA CATALOGRÁFICA
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{4}
+%%%
+
+\begin{center}
+\begin{tabular}{c}
+  FICHA CATALOGRÁFICA ELABORADA PELA \\
+  BIBLIOTECA DA ÁREA DE ENGENHARIA E ARQUITETURA - BAE - UNICAMP \\
+\end{tabular}
+
+\vspace{0.8cm}
+\begin{tabular}{|cl|} \hline
+  \hspace{2cm} & \\
+  & Valente da Costa, Gilberto Luis, 1983-				\\  
+  V234a & \hspace{0.15in} hp2FEM - uma arquitetura de software		\\
+  & p não-uniforme para o método de elementos finitos de alta		\\
+  & ordem $\backslash$ Gilberto Luis Valente				\\
+  & da Costa. --Campinas, SP: [s.n.], 2012.				\\
+  &  \\  
+  & \hspace{0.15in} Orientador: Marco Lúcio Bittencourt. 		\\
+  & \hspace{0.15in} Dissertação de Mestrado - Universidade Estadual de\\
+  & Campinas, Faculdade de Engenharia Mecânica. 			\\
+  & \\
+  & \hspace{0.15in} 1. Arquitetura de software. 2. Método de elementos\\
+  & finitos. 3. Framework (Programa de computador). I.			\\
+  & Bittencourt, Marco Lúcio, 1972-. II. Universidade			\\
+  & Estadual de Campinas. Faculdade de Engenharia			\\
+  & Mecânica. III. hp2FEM - uma arquitetura de software		\\
+  & p não-uniforme para o método de elementos finitos de alta.		\\
+  & \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.2in}
+\begin{tabular}{ll}
+Título em Inglês: &
+hp2FEM - a p non-uniform software architecture to the high order	\\
+& finite element method.						\\
+Palavras-chave em Inglês: &
+Software Architecture, Finite Element Method, Framework.		\\
+Área de concentração: & Mecânica dos Sólidos e Projeto Mecânico	\\
+Titulação: &
+Mestre em Engenharia Mecânica						\\
+Banca Examinadora: & Carlos Alberto Cimini Júnior, Edson Borin		\\
+Data da defesa: & 27-08-2012						\\
+Programa de Pós Graduação:& Engenharia Mecânica
+\end{tabular}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                     FOLHA DE APROVAÇÃO
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{5}
+%%%
+
+\begin{center}
+
+\vspace*{1cm}
+{\large\textbf{UNIVERSIDADE ESTADUAL DE CAMPINAS\\\vspace{1.2ex}
+FACULDADE DE ENGENHARIA MECÂNICA\\\vspace{1.2ex}
+COMISSÃO DE PÓS-GRADUAÇÃO EM ENGENHARIA MECÂNICA\\\vspace{1.2ex}
+DEPARTAMENTO DE PROJETO MECÂNICO}}
+
+\vspace{0.8cm}
+\textbf{DISSERTAÇÃO DE MESTRADO ACADÊMICO}
+
+\vspace{1.4cm}
+{\fontsize{23}{23} \textbf{$hp^2$FEM - Uma Arquitetura de \textit{Software}}}	\\ \vspace{1.4ex}
+{\fontsize{23}{23} \textbf{$p$ Não-Uniforme para o Método de}}			\\ \vspace{1.4ex}
+{\fontsize{23}{23} \textbf{Elementos Finitos de Alta Ordem}}			\\
+
+\begin{flushleft}
+\vspace{0.2cm}
+Autor: Gilberto Luis Valente da Costa\\Orientador:~Marco~Lúcio~Bittencourt
+
+\vspace{0.4cm}
+A Banca Examinadora composta pelos membros abaixo aprovou esta Dissertação:  \\
+
+\vspace{0.6cm}
+\hrulefill\\
+\textbf{Prof. Dr. Marco Lúcio Bittencourt, Presidente\\
+DPM/FEM/UNICAMP \\}
+
+\vspace{0.6cm}
+\hrulefill\\
+\textbf{Prof. Dr. Carlos Alberto Cimini Júnior\\
+DPM/FEM/UNICAMP \\}
+
+\vspace{0.6cm}
+\hrulefill\\
+\textbf{Prof. Dr. Edson Borin\\
+IC/UNICAMP \\}
+\end{flushleft}
+
+\begin{flushright}
+\vspace{1.2cm}
+Campinas, 27 de Agosto de 2012.
+\end{flushright}
+
+\end{center}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                         DEDICATÓRIA
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{7}
+%%%
+
+\begin{center}
+\chapter*{Dedicatória}
+\end{center}
+\vspace*{1cm}
+
+Aos meus queridos avós, Pedro Catarino e Luiza Marçal, os quais sinto muito orgulho e agradeço por
+todo carinho e o apoio de sempre.
+%===================================================================================================
+
+
+%===================================================================================================
+%                                       AGRADECIMENTOS
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{9}
+%%%
+
+\begin{center}
+\chapter*{Agradecimentos}
+\end{center}
+
+\vspace*{1cm}
+\begin{trivlist}  \itemsep 2ex  \normalsize
+
+\item À Deus, minha fonte de força, fé e determinação. E como em todos os dias, agradeço pelo dom da
+vida.
+
+\item Ao meu orientador, Prof. Dr. ...
+
+\item Aos membros das bancas de qualificação e defesa ...
+
+\item A toda minha família ...
+
+\item Aos amigos e companheiros de laboratório ...
+
+\item A CAPES - Coordenação de Aperfeiçoamento de Pessoal de Nível Superior, pelo indispensável
+apoio financeiro.
+
+\end{trivlist}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                         EPÍGRAFE
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{11}
+%%%
+
+\vspace*{6in}
+\epigraph{\emph{O gênio consiste em um por cento de inspiração e noventa e nove por cento de
+transpiração.}}{Thomas Alva Edison}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                          RESUMO
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{13}
+%%%
+
+\begin{center}
+\chapter*{Resumo}
+\end{center}
+\vspace{24pt}
+\onehalfspacing
+\noindent
+VALENTE DA COSTA, Gilberto Luis. hp2FEM - uma arquitetura de software p não-uniforme para o método
+de elementos finitos de alta ordem. 2012. 122p. Dissertação (Mestrado). Faculdade de Engenharia
+Mecânica, Universidade Estadual de Campinas, Campinas.\\
+
+Este trabalho tem como objetivo principal a implementação de uma arquitetura de \textit{software}
+para o Método de Elementos Finitos de Alta Ordem (MEF-AO), baseando-se no paradigma de programação
+orientada a objeto (POO) e no uso de técnicas de otimização de código fonte. O \textit{software} foi
+escrito em linguagem C++ e desenvolvido sobre um \textit{framework} com ferramentas que auxiliaram
+no desenvolvimento. A modelagem do sistema foi realizada de forma a facilitar e promover o reuso e
+manutenção do código. Buscou-se, também, a flexibilidade e generalização do MEF-AO ao permitir a
+variação nos procedimentos da construção das equações e o uso de malhas $p$ não-uniforme. Neste
+caso, cada elemento pode ser interpolado com uma ordem polinomial diferente, além de permitir o uso
+de um algoritmo local de solução. Tal característica pode diminuir o número de operações e de
+armazenamento, pois o número de funções de forma é aumentado apenas onde é necessário o uso de mais
+pontos para interpolação da malha de solução. No final, o \textit{software} é avaliado aplicando o
+problema de projeção para malha de quadrados e hexaedros.\\
+
+\vspace{1cm}
+\noindent
+\emph{ Palavras-chave}: Arquitetura de \textit{Software}, Método de Elementos Finitos,
+\textit{Framework} (Programa de computador).\\
+%===================================================================================================
+
+
+%===================================================================================================
+%                                        ABSTRACT
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{15}
+%%%
+
+\begin{center}
+\chapter*{Abstract}
+\end{center}
+\vspace{24pt}
+\noindent
+VALENTE DA COSTA, Gilberto Luis. hp2FEM - a p non-uniform software architecture to the high order
+finite element method. 2012. 122p. Dissertação (Mestrado). Faculdade de Engenharia Mecânica,
+Universidade Estadual de Campinas, Campinas.\\
+
+The main objective of this work is the implementation of a software architecture for the High-Order
+Finite Element Method (HO-FEM), based on the Object Oriented Paradigm (OOP) and on source-code
+optimization techniques. The software was written in C++ programming language and developed over a
+framework which provided tools that assisted the implementation. The system was modeled so to
+promote code reuse and maintainability. Furthermore, the system modeling also provided flexibility
+and generalization for the HO-FEM by allowing modifications on the procedures for equation
+assembling and the use of $p$-non-uniform meshes. In this case, each element can be interpolated
+with different polynomial order, and allows the application of an algorithm for local solution. Such
+features can reduce the number of operations for memory allocation, since the number of shape
+functions is increased only where a higher density of points is needed by the solution mesh.
+Finally, the software is assessed by applying the projection problem for meshes of squares and
+hexahedros.\\
+
+\vspace{1cm}
+\noindent
+\emph{Keywords}: Software Architecture, Finite Element Method, Framework.
+%===================================================================================================
+
+
+%===================================================================================================
+   
+
+%===================================================================================================
+%                                    LISTA DE FIGURAS
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{17}
+%%%
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Lista de Ilustrações}
+\DeclareRobustCommand\listfigurename
+{\begin{center} {\chapter*{Lista de Ilustrações}} \end{center}}
+
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!                AVISO               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% Se sua lista de figuras possui DUAS páginas acrescente o comando abaixo:
+% \afterpage{
+%     \clearpage \setcounter{page}{19}
+% }
+
+% Se sua lista de figuras possui TRÊS páginas acrescente:
+% \afterpage{
+%     \clearpage \setcounter{page}{19}
+%     \afterpage{
+%         \clearpage \setcounter{page}{21}
+%     }
+% }
+
+% OBSERVAÇÕES:
+% 1) É necessário colocar os comandos "\afterpage" aninhados.
+% 2) É necessário n-1 comandos "\afterpage", onde n é o número de páginas utilizado para listar as
+% figuras
+% 3) Lembre-se que ao alterar a numeração das páginas por meio do comando "\setcounter" afetará 
+% as numerações das páginas seguinte como a lista de tabelas, lista de simbolos e sumário.
+
+\listoffigures
+%===================================================================================================
+
+
+%===================================================================================================
+%                                    LISTA DE TABELAS
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{19}
+%%%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Lista de Tabelas}
+\DeclareRobustCommand\listtablename
+{\begin{center} {\chapter*{Lista de Tabelas}} \end{center}}
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!                AVISO               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% Se sua lista de tabelas possui DUAS páginas acrescente o comando abaixo:
+% \afterpage{
+%     \clearpage \setcounter{page}{21}
+% }
+
+% Se sua lista de tabelas possui TRÊS páginas acrescente:
+% \afterpage{
+%     \clearpage \setcounter{page}{21}
+%     \afterpage{
+%         \clearpage \setcounter{page}{23}
+%     }
+% }
+
+% OBSERVAÇÕES:
+% 1) É necessário colocar os comandos "\afterpage" aninhados.
+% 2) É necessário n-1 comandos "\afterpage", onde n é o número de páginas utilizado para listar as
+% tabelas
+% 3) Lembre-se que ao alterar a numeração das páginas por meio do comando "\setcounter" afetará 
+% as numerações das páginas seguinte como a lista de simbolos e sumário.
+
+\listoftables
+%===================================================================================================
+
+
+%===================================================================================================
+%                                    LISTA DE SÍMBOLOS
+%===================================================================================================
+%%% Neste caso, a contagem é feita dentro do arquivo da lista de simbolos e se inicia em 21.
+% \clearpage
+% \setcounter{page}{21}
+%%%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Lista de Abreviaturas e Siglas}
+\renewcommand{\listfigurename}
+{\begin{center} {\chapter*{Lista de Abreviaturas e Siglas}} \end{center}}
+\markboth{Lista de Abreviaturas e Siglas}{Lista de Abreviaturas e Siglas}
+\printnomenclature
+\input{pre/simbolos}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                         SUMÁRIO
+%===================================================================================================
+%%% Força a contagem da página.
+\clearpage
+\setcounter{page}{27}
+%%%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{SUMÁRIO}
+\DeclareRobustCommand\contentsname
+{\begin{center} \chapter*{SUMÁRIO} \end{center}}
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!                AVISO               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% Se seu sumário possui DUAS páginas acrescente o comando abaixo:
+% \afterpage{
+%     \clearpage \setcounter{page}{21}
+% }
+
+% Se seu sumário possui TRÊS páginas acrescente:
+% \afterpage{
+%     \clearpage \setcounter{page}{21}
+%     \afterpage{
+%         \clearpage \setcounter{page}{23}
+%     }
+% }
+
+% OBSERVAÇÕES:
+% 1) É necessário colocar os comandos "\afterpage" aninhados.
+% 2) É necessário n-1 comandos "\afterpage", onde n é o número de páginas utilizado para o sumário
+
+\tableofcontents
+\cleardoublepage
+
+
+%===================================================================================================
+
+
+%===================================================================================================
+%                                    DEMAIS FORMATAÇÕES
+%===================================================================================================
+%%% Setspace
+\onehalfspacing         % Espaçamento de 1.5
+%%%
+
+%%% Iniciar capítulos apenas em páginas impares
+\let\originalchapter=\chapter
+\def\chapter{\cleardoublepage\originalchapter}
+%%%
+
+%%% Muda a numeração de páginas para formato arábico
+\pagenumbering{arabic}
+\setlength{\parskip}{1\baselineskip}
+%%%
+%==================================================================================================
