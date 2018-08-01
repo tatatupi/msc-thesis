@@ -1,0 +1,154 @@
+%% LaTeX estilotese.sty --> Estilo para a preparação de dissertações e teses da
+%% Faculdade de Engenharia Mecânica - UNICAMP (by Vinicius AD Silva)
+%% Desenvolvido por Vinicius AD Silva, Outubro de 2011.
+
+
+%%=============================================PACOTES==============================================================================
+\usepackage[top=3cm,left=3cm,right=2cm,bottom=4cm]{geometry}    % Dimensões da página
+\usepackage[latin1]{inputenc}                                   % Para utilizar hifenização em português
+\usepackage[T1]{fontenc}                                        % Necessário para que se possa selecionar outras fontes
+\usepackage[portuges, brazil]{babel}                            % Hiphenação em portugues
+\usepackage{times}                                              % Pacote de fonte Times
+\usepackage{ccaption}                                           % Opções para capítulos
+\usepackage{indentfirst}                                        % Indenta primeiro parágrafo
+\usepackage{graphics}                                           % Suporte padrão para gráficos
+\usepackage{graphicx}                                           % Suporte avançado para gráficos
+\usepackage[normalsize]{subfigure}                              % Possibilita a utilização de subfiguras
+\usepackage{fancyhdr}                                           % Amplo controle de cabeçalhos e rodapés de página
+\usepackage{pifont}                                             % Acesso a PostScript Symbol padrão e fontes Dingbats
+\usepackage{textcomp}                                           % LaTeX suporte para as fontes Companion. Ex.: Marca registrada (\texttrademark)
+\usepackage{nomencl}                                            % Glossário
+%\usepackage{helvet}                                            % Fonte Helvet
+\usepackage{floatflt}                                           % Quebra de texto em figuras e tabelas
+\usepackage{colortbl}                                           % Adicionar cor às tabelas
+\usepackage{fancyvrb}                                           % Texo verbatim sofisticado
+\usepackage{wrapfig}                                            % Produz figuras que o texto pode ficar ao redor
+\usepackage{url}                                                % Adiciona URLs
+\usepackage{multirow}                                           % Permite construir células multi-linhas
+\usepackage[round]{natbib}                                      % Citações tipo  (nome-ano)
+%\usepackage{natbib}                                            % Citações tipo  [nome-ano]
+\usepackage{setspace}                                           % Definição de espaçamento entre linhas
+\usepackage{amssymb}                                            % Pacote da American Mathematical Society
+\usepackage{amsmath,amsthm,amscd}                               % Pacotes com simbolos matemáticos
+\usepackage{amsfonts,psfrag,layout}
+\usepackage[pdftex,plainpages=false,pdfpagelabels,colorlinks=true,citecolor=black,linkcolor=black,urlcolor=black,filecolor=black,bookmarksopen=true]{hyperref}
+\usepackage[all]{hypcap}                                        % Soluciona o problema com o hyperref e capítulos
+\usepackage{wasysym}                                            % Símbolos especiais com \female e \male etc.
+\usepackage{bigstrut}                                           % Espaçamento na tabela
+\usepackage{comment}                                            % Comentar várias linhas simultâneas
+\usepackage{epigraph}                                           % Epígrafe
+\usepackage[titles,subfigure]{tocloft}                          % Permite formatar o sumário
+\usepackage{makeidx}
+\usepackage{emptypage}
+
+
+%%====================================================================================================================================
+\special{papersize=215.9mm,279.4mm}                             % Tamanho do papel (neste caso papel carta)
+\pagenumbering{roman}                                           % Numeração das paginas iniciais em romano
+\setlength{\parindent}{1cm}                                     % Parágrafo de 1cm
+\setlength{\mathindent}{1cm}                                    % Indentação das fórmulas matemáticas
+\frenchspacing                                                  % Não põe um espaço adicional após ponto final
+\sloppy                                                         % Força que todas as linhas fiquem dentro das margens
+\raggedbottom                                                   % Para não permitir espaços extra no texto
+\def\figurename{Figura.}                                        % Define como a palavra figura será escrito
+\def\tablename{Tabela.}                                         % Define como a palavra tabela será escrito
+\renewcommand{\cite}[1]{\textsc{\citep{#1}}}                    % Citação tipo (AUTOR, ano), conforme ABNT
+%
+\theoremstyle{definition}
+\newtheorem{defi}{Definição}[chapter]                           % Para introduzir uma definição
+\newtheorem{teo}{Teorema}[chapter]                              % Para introduzir um teorema
+%
+
+
+%%===============================================OPERADORES==========================================================================
+% Conforme a necessidade de cada trabalho
+\newcommand{\vectornorm}[1]{\left|\left|#1\right|\right|}       % Facilita a introdução da norma ||w||
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}           % Facilita a escrita de argmax
+\newcommand{\latex}{\LaTeX}                                     % Facilita a escrita de LaTeX
+
+
+%%===================================================================================================================================
+%
+\setcounter{secnumdepth}{4}                                     % Serve pra introduzir um quarto nível de seções (subsubsubsection)
+\setcounter{tocdepth}{3}                                        % Serve pra introduzir um quarto nível de seções (subsubsubsection)
+%
+\makeatletter                                                   % Changes the category code of '@' character to 11
+%
+
+
+%%====================================Fromatando Seções, Tabelas e Equações=========================================================
+\@addtoreset{figure}{chapter}
+\renewcommand{\thefigure}{\thechapter.\@arabic\c@figure}
+\@addtoreset{equation}{chapter}
+\renewcommand{\theequation}{\thechapter.\@arabic\c@equation}
+\@addtoreset{table}{chapter}
+\renewcommand{\thetable}{\thechapter.\@arabic\c@table}
+\def\chapter{\@startsection{chapter}{1}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\large\bf}}
+\def\section{\@startsection{section}{2}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\bf}}
+\def\subsection{\@startsection{subsection}{3}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\bf}}
+\def\subsubsection{\@startsection{subsubsection}{4}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\bf}}
+
+
+%%=============================================Subsubsubsection==========================================================================
+%\newcounter {subsubsubsection}[subsubsection]
+%\renewcommand\thesubsubsubsection{\@alph\c@subsubsubsection.}
+%\newcommand\subsubsubsection{\@startsection{subsubsubsection}{4}{\z@}%
+%                                     {12pt minus 0pt}{12pt minus 0pt}{\normalfont\normalsize\bf}}
+%\newcommand*\l@subsubsubsection{\@dottedtocline{3}{8em}{2.2em}}   % Espaçamento do numero da subsubsubseção em relação à marge no sumário
+%\newcommand*{\subsubsubsectionmark}[1]{}
+%%===================================================================================================================================
+\def\thechapter{\arabic{chapter}}	
+\def\thesection{\thechapter.\arabic{section}}	
+\def\thesubsection{\thesection.\arabic{subsection}}
+\def\thesubsubsection{\Alph{subsubsection}}
+\makeatother                                                       % Reverts (\makealetter) this to its original catcode of 12.
+%
+%\renewcommand\cftsecfont{\bf}                                     % Títulos das seções em negrito no sumário
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftnodots}}             % Elimina os pontos na frente das seções no sumário
+%\setlength\cftbeforesecskip{12pt}                                 % Espaçamento antes da seção no sumário
+%\renewcommand{\cftsecindent}{0 em}                                % Espaçamento do numero da seção em relação à marge no sumário
+%\renewcommand{\cftsecnumwidth}{1.9 em}                            % Espaçamento do título da seção em relação ao número no sumário
+%\renewcommand{\cftsubsecindent}{1.9 em}                           % Espaçamento do numero da subseção em relação à marge no sumário
+%\renewcommand{\cftsubsecnumwidth}{2.8 em}                         % Espaçamento do título da subseção em relação ao número no sumário
+%\renewcommand{\cftsubsubsecindent}{4.7 em}                        % Espaçamento do numero da subsubseção em relação à marge no sumário
+\renewcommand{\cftsubsubsecnumwidth}{1.9 em}                       % Espaçamento do título da subsubseção em relação ao número no sumário
+%
+
+
+%%===================================================================================================================================
+
+
+%%==================================Formatação das Referências Bibliográficas========================================================
+\renewcommand\refname{}
+\makeatletter
+\renewcommand\@biblabel[1]{}
+\newcommand*\clinbiblabel[1]{\hspace\labelsep
+                             \normalfont #1}
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\refname
+        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+	    \vspace{-50pt}                                            % Diminui o espaço vertical entre o titulo "Refências" e as referencias
+	    \leftmargin 0cm                                           % Recuo das linhas seguinets em relação à primeira linha
+	    \labelwidth\z@
+	    \labelsep\z@
+	    \itemsep 24pt                                             % Espaço vertical entre as referências
+	    \parsep\z@
+	    \itemindent-\leftmargin	
+	    \let\makelabel\clinbiblabel
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+        \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+      \sloppy\clubpenalty4000\widowpenalty4000%
+      \sfcode`\.=\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist} 

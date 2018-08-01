@@ -1,0 +1,390 @@
+\chapter{Fundamentos de Sistemas Lineares e Álgebra Linear}
+\label{A}
+\section{Algumas Definições}
+\newtheorem{defiA}{Definição A.}
+\begin{defiA}
+O \emph{produto de Kronecker} de duas matrizes $A\in \mathbb{R}^{m
+\times n}$ e $B\in \mathbb{R}^{p \times q}$, denotado por $A \otimes
+B$, é a matriz $mp$$\times$$nq$ é dada por
+\begin{equation}\label{kronecker}
+A \otimes B = \left[\begin{array}{cccc}
+                             a_{11}B  & a_{21}B   &\cdots     & a_{1n}B \\
+                             a_{21}B  & a_{22}B   &\cdots     &a_{2n}B  \\
+                             \vdots   &\vdots     &\ddots     &\vdots  \\
+                             a_{m1}B  &a_{m2}B     &\cdots    & a_{mn}B
+                           \end{array}\right].
+\end{equation}
+\end{defiA}
+\begin{defiA}
+O \emph{operador vec} empilha todas as colunas de uma matriz, uma em
+cima da outra, formando um vetor. Para uma matriz $A\in
+\mathbb{R}^{m \times n}$ dada por $A$ $=$
+$[a_{1}~a_{2}~\cdots~a_{n}]$, com $a_{i}\in \mathbb{R}^{m}$, o vetor
+$mn$-dimensional vec($A$) é definido como
+
+\begin{equation}\label{vec}
+\text{vec}(A)= \left[\begin{array}{c}
+                             a_{1}\\
+                             a_{2}\\
+                             \vdots\\
+                             a_{n}
+                           \end{array}\right].
+\end{equation}
+\end{defiA}
+\begin{defiA} O produto de Kronecker e o operador vec, combinados, são
+de grande utilidade para reescrever produtos de matrizes. Dadas
+matrizes  $A\in \mathbb{R}^{m \times n}$, $B\in \mathbb{R}^{n \times
+p}$ e  $C\in \mathbb{R}^{p \times q}$, tem-se a seguinte relação
+\begin{equation}\label{prodmatrizes}
+\text{vec}(ABC)= (C^{T}\otimes A)\text{vec}(B).
+\end{equation}
+\end{defiA}
+\begin{defiA}
+A \emph{norma de Frobenius} de uma matriz $A\in \mathbb{R}^{m \times
+n}$ é
+\begin{equation}\label{frobeniusnorm}
+||A||_{F}=||\text{vec}(A)||_{2}=
+\sqrt{\sum^{m}_{i=1}\sum^{n}_{j=1}a^{2}_{ij}}=\sqrt{\text{tr}[A^{T}A]},
+\end{equation}
+sendo que tr$[\bullet]$ indica o traço da matriz $\bullet$.
+\end{defiA}
+%\begin{defiA}
+%
+%\end{defiA}
+
+\section{Lemas}
+
+
+%\newtheorem{lema}
+\begin{lema}
+A \emph{desigualdade de Sylvester} é utilizada com frequência para
+determinar o posto da matriz $AB$ quando ambas, $A$ e $B$, tem posto
+completo $n$, com $n\leq p$ e $n\leq m$. Considere as matrizes $A\in
+\mathbb{R}^{m \times n}$ e $B\in \mathbb{R}^{n \times p}$, então
+
+\begin{equation}
+\label{Sylvester}
+\text{posto}(A)+\text{posto}(B)-n\leq\text{posto}(AB)\leq\text{min}
+\left(\begin{array}{c} \text{posto}(A),\text{posto}(B)\end{array}
+\right).
+\end{equation}
+
+
+Neste caso, de acordo com (\ref{Sylvester}), a \emph{desigualdade de
+Sylvester} se torna,
+
+\begin{equation}
+n+n-n\leq\text{posto}(AB)\leq\text{min}(n,n),
+\end{equation}
+assim, $\text{posto}(AB)=n$.
+
+\end{lema}
+
+\section{Decomposições de Matrizes}
+\subsection{Decomposição em Valores Singulares}\label{demons_svd_A}
+Qualquer matriz $A\in \mathbb{R}^{m \times n}$ pode ser decomposta
+como
+\begin{equation}\label{SVD_A}
+A=U S V^{T},
+\end{equation}
+em que $U\in \mathbb{R}^{m \times m}$ e  $V\in \mathbb{R}^{n \times
+n}$ são matrizes ortogonais e,  $S \in \mathbb{R}^{m \times n}$
+possui somente elementos não-nulos ao longo de sua diagonal. Estes
+elementos $\sigma_{i}$ são ordenados de forma que
+\begin{equation}\label{vs_ordenados}
+\sigma_{1}\geq \sigma_{2} \geq \cdots \geq \sigma_{r}\geq
+\sigma_{r+1}= \cdots=\sigma_{k}=0,
+\end{equation}
+em que $r$$=$posto($A$) e $k$$=$min($m$,~$n$).
+
+Os elementos da diagonal $\sigma_{i}$ da matriz $S$ são chamados de
+\emph{valores singulares} de $A$, as colunas da matriz $U$ são
+chamadas de \emph{vetores singulares à esquerda}, e as colunas da
+matriz $V$ são chamadas de \emph{vetores singulares à direita}. A
+SVD da matriz $A$ pode ser relacionada com a decomposição dos
+autovalores de matrizes simétricas do tipo $AA^{T}$ e $A^{T}A$,
+visto que
+\begin{eqnarray}
+AA^{T}~&~=~U S V^{T}V S^{T}U^{T}~&~=~USS^{T}U^{T},\\
+A^{T}A~&~=~V S^{T}U^{T}U S V^{T}~&~=~VS^{T}S V^{T}.
+\end{eqnarray}
+
+Assim, a matriz $U$ contém todos os autovetores da matriz $AA^{T}$,
+a matriz $m~\times~m$  $SS^{T}$ contém os autovalores
+correspondentes, com $r$ autovalores não-nulos $\sigma^{2}_{i}$, $i$
+$=$ $1$, $2$, $\ldots$, $r$; a matriz $V$ contém os autovetores da
+matriz $A^{T}A$, a matriz $n~\times~n$  $S^{T}S$ contém os
+autovalores correspondentes, com $r$ autovalores não-nulos
+$\sigma^{2}_{i}$, $i$ $=$ $1$, $2$, $\ldots$, $r$.
+
+Quando uma matriz $A\in \mathbb{R}^{m \times n}$ possui posto $r$,
+tal que $r$ $<$ $m$ e $r$ $<$ $n$, a SVD pode ser particionada como
+a seguir:
+
+\begin{equation}
+A =\left(\begin{array}{cc}
+                         U_{1} & U_{2}
+                        \end{array}
+ \right)\left(\begin{array}{cc}
+                   S_{1} & 0\\
+                   0 & 0
+                 \end{array}
+ \right)\left(\begin{array}{c}
+           V^{T}_{1} \\
+           V^{T}_{2}
+         \end{array}
+\right),
+\end{equation}
+em que $U_{1}\in \mathbb{R}^{m \times r}$, $U_{2}\in \mathbb{R}^{m
+\times (m-r)}$, $S_{1}\in \mathbb{R}^{r \times r}$, $V_{1}\in
+\mathbb{R}^{n \times r}$, e $V_{2}\in \mathbb{R}^{n \times (n-r)}$
+\citep{verhaegen2007}. Por meio desta relação pode-se verificar que
+as colunas das matrizes $U_{1}$, $U_{2}$, $V_{1}$, e $V_{2}$ provêm
+bases ortogonais para todos os quatro subespaços fundamentais da
+matriz $A$, são eles:
+
+\begin{eqnarray*}
+\text{range}(A)~&~=~\text{range}(U_{1}),\\ \nonumber
+\text{ker}(A^{T})~&~=~\text{range}(U_{2}),\\ \nonumber
+\text{range}(A^{T})~&~=~\text{range}(V_{1}),\\ \nonumber
+\text{ker}(A)~&~=~\text{range}(V_{2}). \nonumber
+\end{eqnarray*}
+
+A SVD é uma fatoração numérica confiável. Maiores detalhes sobre o
+uso da SVD em algoritmos de identificação por subespaços podem ser
+encontrados em \cite{VanDerVeen1993}.
+
+\subsection{Decomposição QR}
+Qualquer matriz $A\in \mathbb{R}^{m \times n}$ pode ser decomposta
+como
+\begin{equation}\label{QR_A}
+A=QR,
+\end{equation}
+em que $Q\in \mathbb{R}^{m \times m}$ é uma matriz ortogonal  com
+$Q^{T}Q$ $=$ $I_{n}$, e $R\in \mathbb{R}^{m \times n}$ é uma matriz
+triangular superior. O termo à direita na equação (\ref{QR_A}) é
+chamado de decomposição QR de $A$.
+%, aumentada com colunas à direita para $n$ $>$
+%$m$ ou aumentada com linhas de zeros na parte inferior para $m$ $>$
+%$n$.
+
+Quando a matriz $A\in \mathbb{R}^{m \times n}$ possui posto $r$, tal
+que $r$ $>$ $m$ e $r$ $<$ $n$, a decomposição QR pode ser
+particionada como a seguir:
+\begin{equation}
+A=\left[\begin{array}{cc}
+                         Q_{1} & Q_{2}
+                        \end{array}
+ \right]\left[\begin{array}{cc}
+                   R_{1} & R_{2}\\
+                   0 & 0
+                 \end{array}
+ \right],\\
+\end{equation}
+em que $Q_{1}\in \mathbb{R}^{m \times r}$, $Q_{2}\in \mathbb{R}^{m
+\times (m-r)}$, $R_{1}\in \mathbb{R}^{r \times r}$, e $R_{2}\in
+\mathbb{R}^{n \times (n-r)}$. Esta relação mostra que
+\begin{eqnarray}
+\text{range}(A)~&~=~\text{range}(Q_{1}),\\ \nonumber
+\text{ker}(A^{T})~&~=~\text{range}(Q_{2}),\\ \nonumber
+\text{range}(A^{T})~&~=~\text{range}(R^{T}_{1}).
+\end{eqnarray}
+
+
+
+\section{Sistemas Lineares}
+
+Um sistema em espaço de estados linear variante no tempo pode ser
+representado da seguinte forma:
+\begin{eqnarray}
+x(k+1)~&~=~A(k)x(k)+B(k)u(k),\label{x}\\
+y(k)~&~=~C(k)x(k)+D(k)u(k), \label{y}
+\end{eqnarray}
+com $A(k)\in \mathbb{R}^{n \times n}$, $B(k)\in \mathbb{R}^{n \times
+m}$, $C(k)\in \mathbb{R}^{l \times n}$ e $D(k)\in \mathbb{R}^{l
+\times m}$. O sistema (\ref{x}) e (\ref{y}) é chamado de sistema em
+espaço de estados LVT (linear variante no tempo). Se as matrizes
+$A(k)$, $B(k)$, $C(k)$, e $D(k)$ não dependem do tempo $k$, o
+sistema é invariante no tempo. Assim, um sistema em espaço de
+estados linear invariante no tempo (LIT) pode ser representado da
+seguinte maneira:
+\begin{eqnarray}
+x(k+1)&=&Ax(k)+Bu(k),\label{x1}\\
+y(k)&=&Cx(k)+Du(k). \label{y1}
+\end{eqnarray}
+
+Como nesta dissertação o foco é o estudo de sistemas LIT, a parte
+restante desta seção será dedicada a algumas propriedades desses
+tipos de sistemas.
+
+\subsection{Controlabilidade e Observabilidade}
+
+Dependendo da natureza do sistema, alguns dos componentes do vetor
+de estado $x(k)$ podem não ser influenciados pelo vetor de entrada
+$u(k)$ ao longo do tempo (ver Equação (\ref{x1}) e (\ref{y1})). Se a
+entrada puder ser utilizada  para levar todo o estado do sistema
+para o estado nulo, dentro de um intervalo de tempo finito, o
+sistema é dito ser controlável. A definição formal de um sistema
+controlável é a seguinte:
+
+\begin{defiA}
+\textbf{Controlabilidade}: O sistema LIT (\ref{x1})-(\ref{y1}) é
+\emph{controlável} se, para um dado estado inicial $x(k_{a})$,
+existir um sinal de entrada $u(k)$ para $k_{a}\leq k \leq k_{b}$,
+tal que $x(k_{b})=0$ para algum $k_{b}$.
+\end{defiA}
+
+O problema com o conceito de controlabilidade em tempo discreto é
+que certos sistemas são controláveis mesmo se a entrada não puder
+ser utilizada para levar o estado do sistema para o estado nulo. Um
+exemplo simples é um sistema que tem $A=0$ e $B=0$; qualquer estado
+inicial irá a zero. Sendo assim, uma noção maior de
+controlabilidade, chamada de alcançabilidade, deve ser utilizada.
+
+
+\begin{defiA}
+\textbf{Alcançabilidade}: O sistema LIT (\ref{x1})-(\ref{y1}) é
+\emph{alcançável} se para qualquer dois estados, $x_{a}$ e $x_{b}$,
+existir um sinal de entrada $u(k)$, para $k_{a}\leq k \leq k_{b}$,
+que leva o sistema do estado $x(k_{a})$ para o estado $x(k_{b})$.
+\end{defiA}
+
+Um exemplo trivial de um sistema não alcançável é um sistema que tem
+uma equação de estado que não é influenciada pela entrada, como,
+$x(k +1)=Ax(k)$. A alcançabilidade implica em controlabilidade, mas
+não necessariamente pode-se dizer que um sistema controlável é um
+sistema alcançável. Controlabilidade implica em alcançabilidade
+somente se a matriz $A$ é inversível.
+
+A alcançabilidade de um sistema LIT (\ref{x1})-(\ref{y1}) pode ser
+determinada pelo posto da matriz
+
+\begin{equation}
+\begin{array}{c c c c c c}
+C_{n}&=&[B&AB&\ldots&A^{n-1}B].
+\end{array}
+\label{pp}
+\end{equation}
+
+Na literatura, como em \citep{Chen1998}, a matriz (\ref{pp}) é
+chamada de matriz de controlabilidade. Entretanto, \textit{matriz de
+alcançabilidade} é mais apropriado. Por questões didáticas, neste
+trabalho adotou-se a denominação \textit{matriz de
+controlabilidade}, que é a mais utilizada .
+
+\begin{lema}
+\textbf{Condição de Posto de Alcançabilidade}: O sistema LIT
+(\ref{x1})-(\ref{y1}) é \emph{alcançável} se e somente se
+\begin{equation}
+\label{alcan} \text{posto}(C_{n})=n.
+\end{equation}
+
+\end{lema}
+
+\textbf{\textit{Prova} }: A resposta de um sistema LIT em um
+instante $k$ para um dado estado inicial, $x(0)$, e um sinal de
+entrada de duração de tempo de $0$ a $k$, pode ser encontrada a
+partir das equações de estados recursivas:
+\begin{eqnarray}
+x(1)&=&Ax(0)+Bu(0),\nonumber \\
+x(2)&=&A^{2}x(0)+ABu(0)+Bu(1),\nonumber \\
+x(3)&=&A^{3}x(0)+A^{2}Bu(0)+ABu(1)+Bu(2),\nonumber \\
+    &~&\vdots~  \nonumber \\
+x(k)&=&A^{k}x(0)+A^{k-1}Bu(0)+\ldots+ABu(k-2)+Bu(k-1).\nonumber
+\label{regre}
+\end{eqnarray}
+
+Ou, equivalentemente, a resposta do  instante de tempo $k$ ao
+instante $k+j$ é dada por,
+
+\begin{eqnarray}
+x(k+j)&=&A^{k}x(j)+\sum^{k-1}_{i=0}A^{k-i-1}Bu(i+j). \label{regre1}
+\end{eqnarray}
+Sendo assim, reescrevendo (\ref{regre1}),
+\begin{equation}\label{con}
+\underbrace{\left[\begin{array}{cccc} B & AB & \cdots & A^{n-1}B \end{array}\right]}_\text{\footnotesize{$C_{n}$}} \left[\begin{array}{c} u(j+n-1)\\
+u(j+n-2) \\
+\vdots \\
+u(j)
+\end{array}\right]~=~x(j+n)~-~A^{n}x(j).
+\end{equation}
+
+Se a condição de posto para $C_{n}$ é satisfeita, pode-se determinar
+uma sequência de entrada que leva o sistema do estado $x(j)$ para o
+estado $x(n+j)$, como segue:
+
+\begin{equation}
+\left [\begin{array}{c} u(j+n-1)\\ u(j+n-2) \\ \vdots \\ u(j)
+\end{array} \right]~=~C_{n}^{T}(C_{n}C_{n}^{T})^{-1} \left
+(\begin{array}{c} x(n+j)~-~A^{n}x(j) \end{array} \right).
+\end{equation}
+
+\begin{flushright}
+$\Box$
+\end{flushright}
+
+
+A Equação (\ref{y1}) mostra que a saída do sistema está relacionada
+com o estado do sistema, mas o estado não é diretamente observável.
+Se existe uma relação única no tempo entre o estado e a saída, o
+sistema é chamado de observável.
+
+\begin{defiA}
+\textbf{Observabilidade}: O sistema LIT (\ref{x1})-(\ref{y1}) é
+\emph{observável} se qualquer estado inicial $x(k_{a})$ é unicamente
+determinado por sua correspondente resposta a entrada nula $y(k)$,
+para $k_{a}\leq k \leq k_{b}$ com um $k_{b}$ finito.
+\end{defiA}
+
+Um exemplo trivial de um sistema não observável  é um sistema que
+tem uma equação de saída que não é influenciada pelo estado, como,
+$y(k)=Du(k)$. A matriz de observabilidade é dada por:
+
+
+\begin{equation}
+O_{n}=\left [\begin{array}{c} C\\ CA \\ \vdots \\ CA^{n-1}
+\end{array} \right].
+\end{equation}
+
+ \begin{lema}
+ \textbf{Condição de Posto de Observabilidade}: O sistema LIT (\ref{x1})-(\ref{y1}) é \emph{observável} se e somente se
+
+ \begin{equation}
+\text{posto}(O_{n})=n.
+\end{equation}
+\end{lema}
+
+ \textbf{\textit{Prova} }: Usando a Equação (\ref{regre1}) para encontrar a resposta $y(k)$ a entrada nula,
+
+ \begin{equation}
+O_{n}x(j)=\left [\begin{array}{c} C\\ CA \\ CA^{2} \\ \vdots \\
+CA^{n-1}  \end{array} \right]x(j)~=~ \left [\begin{array}{c} y(j)\\
+y(j+1) \\ y(j+2) \\ \vdots \\ y(j+n-1) \end{array} \right].
+\end{equation}
+
+ Se há condição de posto de observabilidade, pode-se determinar o estado inicial $x(j)$ exclusivamente a partir de $y(j),~y(j +1 ),\ldots ,~y(j+n-1)$, como segue:
+
+ \begin{equation}
+x(j)=(O_{n}^{T}O_{n})^{-1}O_{n}^{T} \left [\begin{array}{c} y(j)\\
+y(j+1) \\ y(j+2) \\ \vdots \\ y(j+n-1) \end{array} \right].
+\end{equation}
+
+\begin{flushright}
+$\Box$
+\end{flushright}
+
+
+Conclui-se a discussão sobre alcançabilidade e observabilidade por
+meio da definição de minimalidade.
+
+\begin{defiA}
+\textbf{Minimalidade}: O sistema LIT (\ref{x1})-(\ref{y1}) é
+\emph{mínimo} se ele é ao mesmo tempo alcançável e observável.
+\end{defiA}
+
+A dimensão do vetor de estado $x(k)$ de um sistema LIT
+(\ref{x1})-(\ref{y1}) que seja mínimo é chamada de ordem do sistema
+LIT.
+
+
+\clearpage

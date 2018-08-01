@@ -1,0 +1,33 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Problem Formulation}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Objectives}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Text Outline}{chapter.1}% 5
+\BOOKMARK [0][-]{chapter.2}{Theoretical Background}{}% 6
+\BOOKMARK [1][-]{section.2.1}{Irregular Sampling Survey}{chapter.2}% 7
+\BOOKMARK [2][-]{subsection.2.1.1}{Time Delay}{section.2.1}% 8
+\BOOKMARK [2][-]{subsection.2.1.2}{Packet Loss}{section.2.1}% 9
+\BOOKMARK [2][-]{subsection.2.1.3}{Uncertain Observation}{section.2.1}% 10
+\BOOKMARK [2][-]{subsection.2.1.4}{Aperiodic Sampling}{section.2.1}% 11
+\BOOKMARK [2][-]{subsection.2.1.5}{Multi-Rate Sampling}{section.2.1}% 12
+\BOOKMARK [1][-]{section.2.2}{Sensor Fusion}{chapter.2}% 13
+\BOOKMARK [2][-]{subsection.2.2.1}{Probabilistic Sensor Fusion}{section.2.2}% 14
+\BOOKMARK [2][-]{subsection.2.2.2}{Sensor Fusion Techniques}{section.2.2}% 15
+\BOOKMARK [0][-]{chapter.3}{Simulation Methods and Assumptions}{}% 16
+\BOOKMARK [1][-]{section.3.1}{State Estimation with Irregular Sampling}{chapter.3}% 17
+\BOOKMARK [2][-]{subsection.3.1.1}{Input Irregular Sampling}{section.3.1}% 18
+\BOOKMARK [1][-]{section.3.2}{With Timestamp}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.3}{Without Timestamp}{chapter.3}% 20
+\BOOKMARK [0][-]{chapter.4}{Results}{}% 21
+\BOOKMARK [1][-]{section.4.1}{Unicycle Position Estimation}{chapter.4}% 22
+\BOOKMARK [2][-]{subsection.4.1.1}{System Description}{section.4.1}% 23
+\BOOKMARK [2][-]{subsection.4.1.2}{Measurement Signal-to-Noise Ratio Variation}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.3}{Average Sampling Rate Variation}{section.4.1}% 25
+\BOOKMARK [2][-]{subsection.4.1.4}{Regular and Average Irregular Time Interval Relation Variation}{section.4.1}% 26
+\BOOKMARK [1][-]{section.4.2}{Other system 1}{chapter.4}% 27
+\BOOKMARK [1][-]{section.4.3}{Other system 2}{chapter.4}% 28
+\BOOKMARK [0][-]{chapter.5}{Conclusions}{}% 29
+\BOOKMARK [1][-]{section.5.1}{Project Overview}{chapter.5}% 30
+\BOOKMARK [1][-]{section.5.2}{Main Results}{chapter.5}% 31
+\BOOKMARK [1][-]{section.5.3}{Future Work}{chapter.5}% 32
+\BOOKMARK [0][-]{chapter*.14}{References}{}% 33

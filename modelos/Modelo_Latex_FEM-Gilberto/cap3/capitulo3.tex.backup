@@ -1,0 +1,1377 @@
+\pagestyle{empty}
+
+
+% Inclui o cabeçalho definido no meta.tex
+\pagestyle{fancy}
+
+
+%===================================================================================================
+%                                       Capítulo 3 
+%===================================================================================================
+\chapter{Título do Capítulo 3}\label{cap3}
+
+Nesse capítulo, abordam-se conceitos relacionados as técnicas de estruturação . . . 
+
+Em seguida, apresenta-se a arquitetura proposta demonstrando com as visões arquiteturais . . .
+
+
+
+%---------------------------------------------------------------------------------------------------
+\section{Título da Seção 1}\label{cap3:secao1}
+
+A seguir, demonstramos um tipo de enumeração utilizado em latex.
+
+\textbf{Enumeração:}
+
+%   Descrição de algumas visões de arquitetura de software.
+\begin{itemize}
+    \item Visão de dados . . .
+    \item Visão de módulo . . .
+    \item Visão de implantação . . .
+    \item Visão de execução  . . .
+    \item Visão de implementação  . . .
+    \item Visão de caso de uso . . .
+ \end{itemize}
+ 
+ 
+%---------------------------------------------------------------------------------------------------
+\subsection{Título da Subseção 1}\label{cap3:secao1}
+
+%---------------------------------------------------------------------------------------------------
+
+%===================================================================================================
+
+% % % % %	Visões utilizadas.
+% % % % Algumas dessas visões foram utilizadas nesse trabalho. A forma com que se buscou organizar a
+% % % % estrutura do \textit{software} demonstra o uso da visão de implementação. A visão de execução foi
+% % % % utilizada de forma indireta e colaborou na correção de alguns acoplamentos dos módulos. Por último,
+% % % % destaca-se a visão de módulo, utilizada durante todo o processo de desenvolvimento, tanto no
+% % % % planejamento inicial como na reformulação de alguns componentes.
+% % % % 
+% % % % % Talvez inserir a figura, Talvez utilizar na apresentação.
+% % % % % em: http://www.wthreex.com/rup/process/workflow/ana_desi/co_swarch.htm#Architectural%20Views  
+% % % % 
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Técnicas de Estruturação de \textit{Software}}\label{cap3:engenharia_software:estrutura}
+% % % % 
+% % % % %   Técnicas de estruturação de software
+% % % % Durante a estruturação de um \textit{software}, principalmente em sistemas mais complexos, devem ser
+% % % % considerados conceitos como: modularização, procedimento de particionamento em que cada parte do
+% % % % projeto de \textit{software} seja bem delimitada; visão hierárquica, proporcionando uma visualização
+% % % % do sistema com uma divisão em diferentes níveis de abstração; baixo acoplamento entre os elementos,
+% % % % que determina uma maior independência entre as partes; e a alta coesão, que agrupa as partes
+% % % % inter-relacionadas, reduzindo a troca de mensagens entre as partes do sistema \cite{rubira2007}.
+% % % %  
+% % % % %   Formas de construir um software bottom-up e top-down.
+% % % % Além disso, um projeto de arquitetura de \textit{software} pode ser determinado por meio de dois
+% % % % enfoques principais: \emph{top-down} e o \emph{bottom-up}. No primeiro, o sistema é decomposto
+% % % % recursivamente ``de cima para baixo'', gerando módulos ou funções até que esses sejam reconhecidos
+% % % % como módulos facilmente implementados. O enfoque \emph{top-down} descreve o estado de um sistema
+% % % % centralizado e compartilhado com as funções atuantes. Neste projeto, o enfoque desenvolvido foi o
+% % % % \emph{bottom-up}, que está mais relacionado com as características do paradigma de programação de
+% % % % orientação a objetos, descrito mais adiante. Nesse caso, o sistema é visto como uma coleção de
+% % % % blocos, e o estado do sistema é decentralizado entre os objetos do sistema, sendo assim, cada objeto
+% % % % opera sobre seu próprio estado \cite{vasconcelos2006}. Essa forma de implementação permite o
+% % % % desenvolvimento independente das partes do \textit{software} ajudando a obter um maior foco na
+% % % % implementação do objeto a ser tratado. Colabora ainda com o trabalho em um grupo de desenvolvedores,
+% % % % no qual cada um pode atuar em diferentes partes do \textit{software} sem a necessidade de possuir o
+% % % % programa por completo.
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Paradigma de Programação Orientada a Objeto (POO)}\label{cap3:engenharia_software:poo}
+% % % % 
+% % % % %	POO
+% % % % No processo de desenvolvimento do \textit{software} também incluímos a escolha de um paradigma de
+% % % % programação. No programa $hp^2$FEM, optou-se pelo modelo de orientação a objeto que representa
+% % % % melhor objetos do mundo real no domínio da aplicação e nas funcionalidades requeridas pelos mesmos,
+% % % % por meio de sua interação. Esse paradigma, inicialmente criado em 1967 por Dahl e Nygaard, e
+% % % % consolidado em 1976 com a linguagem Smaltalk, descreve conceitos de classes, objetos, tipos,
+% % % % encapsulamento de informações, polimorfismo, parametrização, métodos virtuais e herança
+% % % % \cite{rubira2007}. Esses conceitos definem como os sistemas serão estruturados. Alguns desses, são
+% % % % descritos a seguir:
+% % % % 
+% % % % %	Explicação de alguns conceitos de (POO)
+% % % % \begin{itemize}
+% % % % 	\item A característica de herança em POO é representada por uma hierarquia de classes
+% % % % 	especializadas, onde a mais específica herda métodos e atributos de uma classe mais geral,
+% % % % 	respectivamente, denominadas como sub-classe e super-classe.
+% % % % 	
+% % % % 	\item O conceito de encapsulamento é o efeito de programar dados e métodos em um mesmo
+% % % % 	objeto, protegendo a estrutura interna do usuário do objeto. Com isso, uma das vantagens
+% % % % 	adquiridas é poder modificar um objeto internamente sem afetar outros módulos do sistema que
+% % % % 	utilizam-se do objeto modificado.
+% % % % 	
+% % % % 	\item O polimorfismo permite criar sistemas mais claros e flexíveis, podendo ser dado de
+% % % % 	duas formas, dinâmico e estático. O polimorfismo estático permite criar funções com o mesmo
+% % % % 	nome com argumentos diferentes. A definição de qual método será chamado é definido em tempo
+% % % % 	de compilação através dos argumentos que foram passados. O polimorfismo dinâmico está
+% % % % 	relacionado ao conceito de herança e permite a redefinição de um método da super-classe na
+% % % % 	sub-classe. A decisão de qual método será chamado é dado em tempo de execução
+% % % % 	\cite{deitel2008}.
+% % % % 	
+% % % % 	\item Os métodos ou funções virtuais geralmente são utilizados para resolver o problema de
+% % % % 	ambiguidade propiciado pelo polimorfismo dinâmico. Chamadas dos métodos de uma classe
+% % % % 	derivada de uma classe base podem ser ambíguas, visto que um objeto da classe derivada por
+% % % % 	ser referenciado tanto pela classe base como pela derivada. Com o uso da função virtual,
+% % % % 	declarada na classe base com a palavra-chave \textit{virtual}, o compilador gera versões de
+% % % % 	uma função e força sempre a chamada das funções dos objetos referenciados. Aconselha-se o
+% % % % 	uso de funções virtuais quando a função sobrescrita for modificada futuramente.
+% % % % 
+% % % % \end{itemize}
+% % % % 
+% % % % %	A UML.
+% % % % A modelagem de um \textit{software} pode ser feita por meio de UML. Essa linguagem surgiu em 1995 da
+% % % % união dos métodos de modelagem de \textit{software} propostos por Booch, Jacobson e Raumbaugh
+% % % % \cite{fernandes2011}. Sua modelagem pode ser feita independentemente da linguagem de programação a
+% % % % ser utilizada. Durante a criação do modelo UML, podem ser arquitetados diversos tipos de diagramas,
+% % % % com diferentes finalidades para cada etapa do projeto. 
+% % % %  
+% % % % %   Uso de ferramentas UML no hp2fem
+% % % % Dentre esses tipos de diagramas, no $hp^2$FEM foi utilizado o diagrama de classe, representando os
+% % % % diversos módulos que constituem o \textit{software}. Também conhecidos como diagramas estáticos,
+% % % % descrevem o sistema por meio das definições das classes com seus métodos e atributos e o
+% % % % relacionamento entre elas. Nesse relacionamento, indica-se, por exemplo, as associações entre
+% % % % classes, bem como quais classes são tipos de atributos das outras classes. Contudo, não é exibido a
+% % % % troca de mensagens entre essas classes.
+% % % % 
+% % % % % Na Figura~\ref{fig:metamill} é mostrado o diagrama de classes de uma das bibliotecas geradas no
+% % % % % software $hp^2$FEM. Essa biblioteca é responsável pelo armazenado das propriedades de materiais.
+% % % % % Nesse diagrama utiliza-se a associação entre as classes por generalização, ou seja, uma classe é
+% % % % % projetada herdando atributos e métodos de outra mais geral. 
+% % % % % 
+% % % % % \begin{figure}[!hp]
+% % % % %   \centering
+% % % % %   \includegraphics[width=\textwidth]{./cap3_arquitetura_proposta/figuras/material}
+% % % % % %  \includegraphics[width=\textwidth]{./cap3_arquitetura_proposta/fig/material.jpg}
+% % % % %   \caption[Diagrama de classe UML]{Diagrama de classe do modulo material.}
+% % % % %   \label{fig:metamill}
+% % % % % \end{figure}
+% % % % 
+% % % % 
+% % % % %###################################################################################################
+% % % % \section{Infraestrutura de \textit{Software} Construída (\it Framework)}\label{cap3:framework}
+% % % % 
+% % % % %  Resumo geral sobre o framework
+% % % % Durante o projeto foram empregadas ferramentas que fossem capazes de gerenciar cada módulo do
+% % % % \textit{software} $hp^2$FEM de maneira independente durante as fases de modelagem, implementação,
+% % % % tratamentos de erros, verificação de vazamento de memória, entre outras, e a criação de um conversor
+% % % % de expressões simbólicas para valores numéricos. Essas ferramentas são descritas a seguir.
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Ferramenta de Modelagem e Documentação}\label{cap3:framework:metamill}
+% % % % 
+% % % % %  Metamill
+% % % % Os diagramas e a documentação do programa $hp^2$FEM foram desenvolvidos a partir da ferramenta
+% % % % Metamill de multiplataforma e modelagem UML 2.3, desenvolvido pela companhia Metamill Software de
+% % % % Luxemburgo \cite{metamill2011}.
+% % % % 
+% % % % %  Metamill - Detalhes sobre documentação e inserção de informações na ferramenta.
+% % % % Esse \textit{software} foi utilizado principalmente para criação de diagramas de classes ao longo
+% % % % desse projeto. Através de interface gráfica, pode-se inserir informações sobre as classes, como os
+% % % % atributos, métodos e parâmetros. Do mesmo modo, foi possível a adição do código implementado para
+% % % % uma determinada funcionalidade e posteriormente gerar os códigos direcionando a um diretório
+% % % % configurado.
+% % % % 
+% % % % %  Metamill - Detalhes sobre exportação e importação de arquivos.
+% % % % O Metamill armazena todas as informações em um único arquivo baseado em XMI (\textit{XML Metadata
+% % % % Interchange}) \cite{xmi2011}, sendo possível editá-lo separadamente. As importações e exportações
+% % % % dos diagramas podem ser realizadas nesse formato. 
+% % % % 
+% % % % Embora a documentação das classes pudesse ser gerada utilizando-se o próprio Metamill, criou-se uma
+% % % % opção de documentação utilizando o Doxygen \cite{doxygen2012}, um \textit{software} que gera
+% % % % documentação em formatos html, latex, rtf e xml a partir do código fonte. Assim, as palavras-chaves
+% % % % utilizadas pelo Doxygen foram inseridas dentro das interfaces do Metamill. 
+% % % % 
+% % % % De forma geral, os passos de modelagem, codificação e documentação desse projeto realizaram-se de
+% % % % forma concorrente aplicando-se a estratégia \textit{bottom-up} discutida na
+% % % % Seção~\ref{cap3:engenharia_software:estrutura}.
+% % % % 
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Monitoramento de Memória}\label{cap3:framework:valgrind}
+% % % % 
+% % % % %  Gerenciar memória em C++ é uma tarefa difícil
+% % % % A tarefa de gerenciamento de memória dinâmica em programas escritos na linguagem C++ deve sempre
+% % % % estar a cargo do programador. Dependendo da complexidade do sistema, erros no uso incorreto de
+% % % % memória dinâmica podem não ser percebidos pelo compilador. Considerando isso e o uso repetitivo de
+% % % % vetores extensos no projeto $hp^2$FEM, utilizou-se o \textit{software} Valgrind
+% % % % \cite{valgrind:2011:online} para o monitoramento de memória.
+% % % % 
+% % % % %  Memcheck
+% % % % Esse \textit{software} possui algumas ferramentas como o Memcheck, que através de um mapa de
+% % % % \textit{bits} aponta quais áreas de memórias estão ou não alocadas e quais estão alocadas e
+% % % % inicializadas. Com essa ferramenta, o Valgrind consegue detectar erros como: vazamento de memória,
+% % % % leitura ou escrita em regiões de memória já desalocadas ou não alocadas, uso de variáveis ou
+% % % % ponteiros não iniciados, leitura ou escrita em regiões de memória que ultrapassa o limite de memória
+% % % % alocada, o uso incorreto de funções que desalocam ou alocam o bloco de memória.
+% % % % 
+% % % % %  Valkyrie e código.
+% % % % Atrelado ao Valgrind, pode-se utilizar o Vakyrie, uma ferramenta de interface gráfica baseado em Qt4
+% % % % \cite{summerfield2010}, que exibe o monitoramento de memória através do arquivo de saída em XML
+% % % % \textit{eXtended Markup Language} \cite{heitlinger2001} do Valgrind. Nesse monitoramento, como
+% % % % mostra a Figura~\ref{fig:valkyrie}, é possível visualizar uma árvore recursiva do fluxo de execução
+% % % % do programa até o momento em que se encontra o erro devido ao uso incorreto de memória.
+% % % % 
+% % % % %  Tela do Valkyrie
+% % % % \begin{figure}[!thp]
+% % % %   \centering
+% % % % %  \includegraphics[width=5.5in, height=3.2in]{./cap3_arquitetura_proposta/figuras/tela_valkyrie.jpg}
+% % % %   \includegraphics[width=\textwidth]{./cap3_arquitetura_proposta/figuras/tela_valkyrie.jpg}
+% % % %   \caption{Monitoramento do uso de memória.}
+% % % %   \label{fig:valkyrie}
+% % % % \end{figure}
+% % % % 
+% % % % %  Comandos para Monitoramento de memória.
+% % % % O Código~\ref{sources:VerificaMemoria} apresenta um \textit{script} programado em \textit{Shell
+% % % % Script} para gerar os arquivos gráfico e em formato texto com informações sobre a memória utilizada
+% % % % no programa. Juntamente ao \textit{script}, exibe-se a lista dos principais parâmetros do
+% % % % \textit{software} Valgrind na geração desses arquivos.
+% % % % 
+% % % % \begin{itemize}
+% % % % \item[$\bullet$] \textit{-v} - Exibe vários aspectos sobre o programa.
+% % % % 
+% % % % \item[$\bullet$] \textit{--tool=<Nome da ferramenta a ser utilizada pelo Valgrind>}
+% % % %    \begin{itemize}
+% % % %       \item[$\circ$] \textit{callgrind} - É uma ferramenta de análise que armazena o histórico de
+% % % %       chamadas entre funções de um programa.
+% % % %       \item[$\circ$] \textit{memcheck} - Ferramenta padrão do Valgrind que permite monitorar o uso
+% % % %       de memória.
+% % % %    \end{itemize}
+% % % % 
+% % % % \item[$\bullet$] \textit{--track-origins=yes} - Ativa o rastreamento de variavéis não inicializadas.
+% % % % \item[$\bullet$] \textit{--leak-check=full} - Exibe detalhes sobre cada vazamento de memória
+% % % %                  individualmente.
+% % % % \item[$\bullet$] \textit{--show-reachable=yes} - Exibe todos os blocos.
+% % % % \item[$\bullet$] \textit{--xml=yes} - Exibe as partes importantes em XML.
+% % % % \item[$\bullet$] \textit{--xml="LogFile".xml} - Especifica o arquivo em que o Valgrind deve escrever
+% % % % 		  sua saída XML.
+% % % % \end{itemize}
+% % % % 
+% % % % \lstinputlisting[language=sh, label=sources:VerificaMemoria, caption={\textit{Script} em Shell
+% % % % Script para verificar o uso de memória.}]{./cap3_arquitetura_proposta/sources/checkmemleak.sh}
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Analisador Simbólico-Numérico}\label{cap3:framework:parse}
+% % % % 
+% % % % %  Parse Simbólico-Numérico.
+% % % % Alguns dados de entrada do $hp^2$FEM, tais como condições de contorno e carregamentos, podem
+% % % % utilizar expressões simbólicas ou funções que a princípio não conhecem os valores das suas
+% % % % variáveis. Devido à essas expressões, desenvolveu-se um analisador simbólico-numérico, que converte
+% % % % uma expressão, dado os valores das variáveis, em um valor numérico resultado de uma função de
+% % % % entrada. A Figura~\ref{fig:parse} representa esse fluxo de execução.  Para isso, construiu-se a
+% % % % biblioteca do analisador através das ferramentas \textit{lex} e \textit{yacc} para sistemas Unix,
+% % % % que são geradores de analisadores léxicos e sintáticos.
+% % % % 
+% % % % %%  Figura Valkyrie
+% % % % \begin{figure}[!th]
+% % % %   \centering
+% % % %   \includegraphics[width=3.5in,
+% % % %   height=4.5in]{./cap3_arquitetura_proposta/figuras/ParseSimbolicoNumerico.jpg}
+% % % % %  \includegraphics[width=\textwidth]{./cap3_arquitetura_proposta/figuras/ParseSimbolicoNumerico.jpg}
+% % % %   \caption{Analisador simbólico-numérico.}
+% % % %   \label{fig:parse}
+% % % % \end{figure}
+% % % % 
+% % % % %  Analisador léxico
+% % % % A descrição da análise léxica é realizada através de expressões regulares que são construídas em um
+% % % % arquivo com a extensão '.l'. A partir desse arquivo, a ferramenta lex produz um autômato finito
+% % % % (máquina de estados) que serve para reconhecer padrões de uma linguagem, como a que estará descrita
+% % % % no arquivo '.l'. Juntamente com rotinas em C ou C++, esse autômato é gravado em um arquivo
+% % % % 'lex.yy.c', que será compilado e ligado ao \textit{software} \cite{santos2006}.
+% % % % 
+% % % % %  Descrição do arquivo .l
+% % % % O arquivo '.l' é dividido em 3 seções, como mostrado no Exemplo~\ref{exe:LexFormato}, sendo que a
+% % % % última pode ser excluída.
+% % % % \begin{example}{exe:LexFormato}{Formato do arquivo '.l' para gerar o analisador léxico.}
+% % % % seção de declarações
+% % % % \%\%
+% % % % seção de regras
+% % % % \%\%
+% % % % seção de rotinas
+% % % % \end{example}
+% % % % 
+% % % % %  Descrição do arquivo .l - Seção de declarações
+% % % % A seção de declarações é o local onde são colocadas as declarações de variáveis, constantes e/ou
+% % % % bibliotecas a serem incluídas no código. Essas definições devem estar entre os caracteres especiais
+% % % % '\%\{' e '\%\}'. Em seguida, na zona de regras, pode-se definir o formato dos \textit{tokens} a
+% % % % partir de expressões regulares, com objetivo de simplificar o seu uso. O
+% % % % Exemplo~\ref{exe:LexDeclaracao} exemplifica o uso dessas substituições.
+% % % % \begin{example}{exe:LexDeclaracao}{Seção de declarações do arquivo '.l'.}
+% % % % variable    [a-z][A-Z]
+% % % % real        [0-9]+[eE][+-]?[0-9]+
+% % % % MULTIPLY    ``*''
+% % % % \end{example}
+% % % % 
+% % % % %  Descrição do arquivo .l - Seção de regras
+% % % % A seção de regras é o local em que se definem as expressões regulares, associando uma determinada
+% % % % ação semântica definida por uma linguagem, podendo ser C ou C++ \cite{santos2006}. Essas expressões
+% % % % são definidas por um conjunto de regras que permite identificar padrões como uma sequência de
+% % % % caracteres pertencente a uma certa linguagem. O Exemplo~\ref{exe:LexRegras} exibe a seção de regras
+% % % % utilizada no analisador simbólico-numérico.
+% % % % \begin{example}{exe:LexRegras}{Seção de regras do arquivo '.l' empregada no analisador
+% % % % simbólico-numérico.}
+% % % % {real}     {                        
+% % % %              yylval = atof(yytext); 
+% % % %              return NUMBER;         
+% % % %            }
+% % % % {MULTIPLY} {return MULTIPLY; }      
+% % % % \end{example}
+% % % % \vspace{-0.5cm}
+% % % % %  Possivéis comentários para Defesa.
+% % % % %  Na realidade, o aumento do número ou complexidade das expressões regulares apenas
+% % % % %pode aumentar o número de estados do autómato e a respectiva dimensão, mas não o tempo de
+% % % % %processamento. Assim, Os reconhecedores construídos a partir da descrição dos tokens (através de
+% % % % %gramáticas regulares, expressões regulares ou autômatos finitos) são mais eficientes e compactos do
+% % % % %que os reconhecedores construídos a partir das gramáticas livres de contexto.
+% % % % 
+% % % % %  Descrição do arquivo .l - Seção de regras (Explicação do exemplo) e Seção do código
+% % % % O lado esquerdo é onde ocorre o reconhecimento da expressão regular, nesse caso a expressão foi
+% % % % definida anteriormente na seção de declaração (Exemplo~\ref{exe:LexDeclaracao}). O lado direito
+% % % % define a ação semântica a ser executada. Em um dos exemplos anteriores é identificado a expressão
+% % % % 'real', posteriormente são executadas as ações em que se converte o conjunto de \textit{strings}
+% % % % reconhecido em um valor 'real', por conseguinte, esse valor é passado ao analisador sintático como
+% % % % \textit{token} 'NUMBER'. Por fim, a seção de código do arquivo '.l' é facultativa e onde pode-se
+% % % % definir rotinas auxiliares em C que serão copiadas inteiramente para o arquivo {\tt lex.yy.c}. O
+% % % % arquivo completo que foi utilizado nesse trabalho para gerar o analisador léxico pode ser visto na
+% % % % Seção~\ref{ApendiceA:Lex} do Apêndice~\ref{ApendiceA}.
+% % % % 
+% % % % %  Analisador Sintático - Gramática Livre de Contexto.
+% % % % %  O yacc foi desenvolvido pela AT&T
+% % % % O próximo passo do analisador simbólico-numérico é o analisador sintático produzido através da
+% % % % ferramenta \textit{yacc}, a qual gera uma rotina chamada \textit{yyparse}. A análise sintática a ser
+% % % % gerada identifica um sequência de texto descrita por uma GLC - Gramática Livre de Contexto. Uma GLC
+% % % % pode ser definida por $G = \left \{ V, \tiny{\sum}, P, S \right \}$, onde $V$ são os símbolos não
+% % % % terminais ou variáveis; $\tiny{\sum}$ representa os símbolos terminais, ou seja um conjunto do
+% % % % alfabeto definido pela linguagem em $G$; $P$ descreve as regras de substituições ou produções
+% % % % gramaticais; e por último $S$ que define o símbolo inicial da gramática e deve ser não terminal.
+% % % % 
+% % % % Para uma breve exemplificação, considere uma gramática GLC, dada por $G = \left \{ {T,S}, {i,j}, P,
+% % % % S \right \}$, onde $P$ são as produções:\\
+% % % % $
+% % % % S\rightarrow T \\
+% % % % T\rightarrow jTj \\
+% % % % T\rightarrow iTi \\
+% % % % T\rightarrow i \\
+% % % % $
+% % % % Logo, uma derivação que pode ser obtida com essa gramática seria: $S\rightarrow T\rightarrow
+% % % % jTj\rightarrow jiTij\rightarrow jiiij$.
+% % % % 
+% % % % %  Analisador Sintático - Descrição do arquivo .y - Introdução.
+% % % % Assim como nesse exemplo, a definição da gramática aqui considerada seguiu o mesmo parâmetro, porém
+% % % % para o uso de equações simbólicas. Seguindo esses passos, a gramática desenvolvida é colocada dentro
+% % % % de um arquivo '.y' e o analisador sintático é gerado pela ferramenta \textit{yacc}. Esse arquivo tem
+% % % % características parecidas com o arquivo '.l', separado por três seções: declaração, gramática e
+% % % % código entre os caracteres especiais '\%\%'.
+% % % % 
+% % % % % As vantagens de manter a gramática ambígua, mas eliminar essa ambiguidade através de
+% % % % % associatividades e prioridades, residem numa maior legibilidade da gramática e maior eficiência do
+% % % % % analisador. A maior eficiência do analisador gerado traduz-se num menor número de regras e,
+% % % % % consequentemente, num menor número de passos necessários para reconhecer uma mesma sequência.
+% % % % 
+% % % % %  Analisador Sintático-Descrição do arquivo .y - Redeclaração dos Tokens - Resolvendo ambiguidade.
+% % % % Na seção declaração, deve-se redeclarar os \textit{tokens} que possuem mais de um caractere com
+% % % % palavra-chave '\%token'. Outros \textit{tokens} devem ser redeclarados para tratamento de
+% % % % ambiguidades da gramática, em que uma mesma sequência de entrada é reconhecida por produções
+% % % % distintas do lado direito da regra. Essas redeclarações utilizam definições de associatividade e
+% % % % prioridade da ferramenta \textit{yacc}. Abaixo segue um trecho do analisador, exemplificando a
+% % % % redeclaração de alguns \textit{tokens}:
+% % % % \begin{example}{exe:YaccDeclaracao}{Seção de declarações do arquivo '.y' para o analisador
+% % % % simbólico-numérico.}
+% % % % \%token   NEW_LINE
+% % % % \%left    PLUS MINUS
+% % % % \%left    MULTIPLY DIVIDE
+% % % % \%right   POWER
+% % % % \end{example}
+% % % % 
+% % % % %  Analisador Sintático - Descrição do arquivo .y - Explicação da redeclaração dos tokens.
+% % % % O efeito de prioridade dos \textit{tokens} é definido pela ordem decrescente de declaração no
+% % % % arquivo '.y'. Portanto, as operações do Exemplo~\ref{exe:YaccDeclaracao} de multiplicação e divisão
+% % % % serão priorizadas em relação as operações de soma e subtração em uma determinada função. O critério
+% % % % de associatividade é determinado pelas palavras-chaves '\%left' e '\%right'.  No exemplo, o
+% % % % \textit{token} 'POWER' representa potenciação, isto é, dado a expressão $x^2$ seria o mesmo que $x$
+% % % % elevado a $2$. Nesse caso, a palavra-chave '\%right' define que a associatividade da operação estará
+% % % % a direita. Por exemplo, se uma função for descrita pela \textit{string} x\^{}y\^{}2, o uso da
+% % % % associatividade define que a primeira operação a ser executada será y\^{}2, o mesmo que escrever a
+% % % % função da seguinte maneira x\^{}(y\^{}2).
+% % % % 
+% % % % %  Analisador Sintático - Descrição do arquivo .y - Seção de código.
+% % % % A seção de código do arquivo '.y' implementa as funções auxiliares em C, como por exemplo funções
+% % % % para o tratamento de erro. Por último, a seção de código define a gramática GLC como descrita
+% % % % anteriormente.  No Exemplo~\ref{exe:YaccCodigo}, tem-se uma parte da gramática descrita no código do
+% % % % analisador. Seguindo a descrição anterior, define-se um conjunto de regras (produções), onde um
+% % % % símbolo não terminal é colocado à esquerda do separador ':' e conhecido como alvo. No lado direito,
+% % % % coloca-se uma sequência de símbolos (terminais e não terminais) concluído por ';'. Quando há várias
+% % % % sequências, essas devem ser separadas por '|'. O arquivo para gerar o analisador sintático pode ser
+% % % % visto na Seção~\ref{ApendiceA:Sintatico} do Apêndice~\ref{ApendiceA}.
+% % % % 
+% % % % \begin{example}{exe:YaccCodigo}{Seção de código do arquivo '.y' para o analisador
+% % % % simbólico-numérico.}
+% % % % Input:
+% % % %        /* Empty */
+% % % %        | Input Line
+% % % %        ;
+% % % % Line:
+% % % %       NEW_LINE
+% % % %       | Expression NEW_LINE
+% % % %       | VARIABLE EQUAL Expression { int ind = $1; sym[ind] = $3; }
+% % % %       ;
+% % % % Expression:
+% % % %             NUMBER { \$$ = $1; }
+% % % %             | Expression PLUS Expression 	{ $$ = $1 + $3; }
+% % % %             | Expression DIVIDE Expression 	{ $$ = $1 - $3; }
+% % % %             ;
+% % % % \end{example}
+% % % % 
+% % % % 
+% % % % %  Explicação da execução da parse - Rotinas auxiliares e como é dado a entrada.
+% % % % Atrelado aos arquivos '.l' e '.y' para os analisadores léxico e sintático, foi implementado um
+% % % % arquivo '.cpp' para interface com o código $hp^2$FEM, conforme pode ser visto na
+% % % % Seção~\ref{ApendiceA:Analisador} do Apêndice~\ref{ApendiceA}. Como demonstrado na
+% % % % Figura~\ref{fig:parse}, essa interface recebe como entrada dois \textit{arrays} de \textit{strings}:
+% % % % um que armazena o valor das variáveis e outro a expressão ou equação simbólica a ser calculada,
+% % % % exemplos: ``$x=2 \ \ y=3 \ \ z=5,5$'' (variáveis) e ``$x*5+y^3-sin(z)$'' (equação). Entre as tarefas
+% % % % das rotinas auxiliares estão a conversão de variáveis em caixa alta para caixa baixa, ou seja, $X$
+% % % % para $x$; e a junção dos dois \textit{arrays} de entrada em um único \textit{array} de caracteres,
+% % % % considerando que o analisador simbólico-numérico somente poderá receber uma entrada.
+% % % % 
+% % % % %  Explicação da execução do parse
+% % % % A saída do analisador é armazenada por uma variável global do tipo \textit{double} com o cálculo da
+% % % % equação simbólica. Para facilitar a solução das equações no analisador sintático, o armazenamento
+% % % % das variáveis foi realizado em um \textit{array} $sym[]$ de valores numéricos, sendo que cada índice
+% % % % do \textit{array} é representado pela ordem em que variável aparece no alfabeto português. Assim,
+% % % % dado a entrada das variáveis por ``$x=2 \ \ y=3 \ \ z=5,5$'', os campos de índices $23$, $24$ e $25$
+% % % % do vetor de variáveis $sym[]$ estará armazenando os valores $2$, $3$ e $5,5$ respectivamente.
+% % % % 
+% % % % %  Resumo do funcionamento do parse.
+% % % % Em geral, a equação de entrada é quebrada pelo analisador sintático em partes como $expressao\
+% % % % OPERADOR\ expressao$. Para cada produção gramatical como essa, executa-se a operação correspondente
+% % % % dentro de uma ação semântica definida em linguagem C. A operação é executada sobre os valores já
+% % % % armazenados no vetor de variáveis $sym[]$ ou constantes numéricas. Quando a última operação for
+% % % % executada, o valor resultante da equação será armazenado na variável global de saída, concluindo a
+% % % % execução do analisador simbólico-numérico.
+% % % % 
+% % % % 
+% % % % %###################################################################################################
+% % % % \section{Abordagem Adotada para a Arquitetura}\label{cap3:abordagem_arquitetura}
+% % % % 
+% % % % 
+% % % % %  Histórico
+% % % % Esta seção fornece uma visão geral da arquitetura do \textit{software} $hp^2$FEM. O projeto,
+% % % % desenvolvido em linguagem C++, utiliza todas as ferramentas descritas na Seção~\ref{cap3:framework}.
+% % % % A modelagem e implementação foi baseada em uma versão anterior desenvolvida em Matlab pelo grupo do
+% % % % Laboratório de Simulação Computacional da Faculdade de Engenharia Mecânica da Universidade Estadual
+% % % % de Campinas. Contudo, houve uma versão anterior a essa, escrita em C++ \cite{silva1997}, porém com
+% % % % objetivos mais específicos. \citet{silva1997} apresentou a otimização estrutural e análise de
+% % % % sensibilidade em elasticidade linear e não-linear em problemas bi e tridimensionais.
+% % % % 
+% % % % %  Escopo
+% % % % No entanto, o escopo desse projeto trata do desenvolvimento de uma arquitetura para o MEF-AO de
+% % % % maneira generalizada, modular, otimizada e de fácil usabilidade. A seguir, exibe-se a descrição da
+% % % % arquitetura através de diagramas de classes e atividades, além dos dados de entrada para o
+% % % % \textit{software}. Para a validação do código, considera-se o procedimento local de projeção
+% % % % descrito na Seção~\ref{cap2:solver}.
+% % % % 
+% % % % %===================================================================================================
+% % % % %  Objetivos e restrições do código.
+% % % % \subsection{Metas e Restrições Arquiteturais do $hp^2$FEM}\label{cap3:metas_restricoes}
+% % % % 
+% % % % %  Objetivos geral do hp2fem.
+% % % % O programa $hp^2$FEM tem como principal objetivo permitir a flexibilidade e a generalização na
+% % % % implementação do MEF-AO, facilitando o seu uso, manutenção e o acoplamento de novas bibliotecas.
+% % % % Juntamente a isso, busca-se a eficiência do uso de recursos computacionais, tanto na modelagem, como
+% % % % na implementação através de boas práticas de programação em C++. 
+% % % % 
+% % % % %  Forma de construção do código.
+% % % % Esse projeto foi desenvolvido através da implementação independente para cada módulo, começando a
+% % % % partir de pacotes mais básicos, até as aplicações a serem incluídas nas camadas superiores do
+% % % % sistema. Para cada pacote foi gerada uma biblioteca estática com uso de Makefiles \cite{make2010} e
+% % % % posteriormente incluídas em pacotes de níveis mais elevados. Concluídos os módulos, construiu-se a
+% % % % árvore de camadas dos algoritmos principais como será visto adiante.
+% % % % 
+% % % % %  Apresentação dos objetivos e restrições.
+% % % % Além dos requisitos gerais dados na Seção~\ref{intro:objs}, o $hp^2$FEM apresenta as seguintes
+% % % % restrições e metas de desenvolvimento mais específicas:
+% % % % \begin{enumerate}
+% % % %    \item A funções de formas a serem construídas devem permitir o uso de bases modal e nodal. Para
+% % % % 	 esse projeto foram implementados classes para os polinômios de Lagrange truncado, Lagrange
+% % % % 	 padrão, Jacobi, Hermite e Lobato \cite{karniadakis2005}.
+% % % % 
+% % % %    \item A implementação realizada suporta condições de contorno homogêneas e não homogêneas,
+% % % % 	 podendo serem aplicadas em diferente entidades como nós, arestas e faces dos elementos e
+% % % % 	 linhas, superfícies e volumes da geometria.
+% % % % 
+% % % %    \item O $hp^2$FEM faz o uso de diferentes tipos de matrizes como as simétricas e esparsas. Essas
+% % % % 	 classes foram construídas no \textit{software} sem o uso de bibliotecas externas. As
+% % % % 	 operações e alocação essas estruturas são feitas de forma unidimensional.
+% % % % 
+% % % %    \item Armazenamento das relações entre a geometria e malha.
+% % % % 
+% % % %    \item Cálculo de carregamento nodais equivalentes com intensidades aplicadas às arestas e faces
+% % % % 	 dos elementos e linhas, superfícies e volumes da geometria.
+% % % %    
+% % % %    \item Uso de diversos tipos de materiais através de generalização, sendo possível acrescentar
+% % % % 	 materiais específicos quando necessário.
+% % % % 
+% % % %    \item Construção de incidência e coordenadas nodais de alta ordem para os elementos, considerando
+% % % % 	 o caso de vários grupos de elementos de formas diferentes.
+% % % % 
+% % % %    \item Gerenciamento automático da disposição dos pontos de interpolação no elemento.
+% % % % 
+% % % %    \item Adaptatividade $p$ com uso de ordem polinomial não-uniforme, ou seja, variação polinomial
+% % % % 	 em uma mesma malha do grupo de elementos.
+% % % % 
+% % % %    \item Definição de mais de um tipo de grupo de elementos na malha de elementos finitos a ser
+% % % % 	 gerado, permitindo formas diferentes para a mesma malha de elementos finitos.
+% % % % 
+% % % %    \item Estratégias de solução através do produto tensorial de operadores de elementos
+% % % % 	 unidimensionais para o cálculo das funções de interpolação e operadores de elementos 2D e
+% % % % 	 3D.
+% % % % 
+% % % %    \item Conversão de funções simbólicas para valores numéricos através do analisador
+% % % % 	 simbólico-numérico
+% % % % 
+% % % %    \item Tratamento de malhas uniformes, não-uniformes e não-estruturadas.
+% % % % 
+% % % %    \item Uso de diferentes tipos de malhas para cada etapa do programa. Nesse caso, o
+% % % % 	 \textit{software} possui objetos de malha para entrada, solução, mapeamento e
+% % % % 	 pós-processamento, podendo utilizar diferentes ordens polinomiais em cada malha. 
+% % % % \end{enumerate}
+% % % % 
+% % % % 
+% % % % %###################################################################################################
+% % % % \section{Visão Lógica}\label{cap3:logica}
+% % % % 
+% % % % A visão lógica será demonstrada através da subdivisão do $hp^2$FEM em camadas e pacotes principais.
+% % % % Em cada pacote, exibem-se diagramas de classes e o relacionamento entre essas. Além disso, serão
+% % % % descritas as principais operações e atributos de classes mais significativas ao programa.
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Visão Geral da Arquitetura}\label{cap3:logica:geral}
+% % % % 
+% % % % A Figura~\ref{fig:ModeloHP2FEM} apresenta uma visão geral da arquitetura organizada por camadas e
+% % % % pacotes e classes mais importantes. A seguir, apresenta-se uma descrição sucinta das camadas, desde
+% % % % a camada de solução até as camadas bases dos sistema. Já na Seção~\ref{cap3:logica:pacotes},
+% % % % apresenta-se de forma inversa, iniciando-se das classes bases, uma descrição detalhada das camadas
+% % % % por meio de diagrama de classes.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \includegraphics[width=6.55in, height=8.in]{cap3_arquitetura_proposta/figuras/ModeloHP2FEM.jpg}
+% % % %   \caption{Visão geral da arquitetura $hp^2$FEM - Disposição dos componentes em camadas.} 
+% % % %   \label{fig:ModeloHP2FEM}
+% % % % \end{figure}
+% % % % 
+% % % % 
+% % % % \begin{itemize}
+% % % %     \item \textbf{Camada Solver} \\ 
+% % % %     Representada principalmente pela classe \textit{\textbf{Solver}}. Este nível, trata as
+% % % %     aplicações do MEF-AO. Como visto na Figura~\ref{fig:ModeloHP2FEM}, os métodos de solução são
+% % % %     divididos em duas classes principais, \textit{\textbf{ElementElementSolver}} e
+% % % %     \textit{\textbf{GlobalSolver}}.
+% % % %     
+% % % %     \item \textbf{Camada Model} \\
+% % % %     Descreve as principais características do modelo de elementos finitos como a numeração e os
+% % % %     tipos de graus de liberdade (classes \textit{\textbf{Equations}} e \textit{\textbf{DOFs}}), as
+% % % %     coordenadas de cada nó (classe \textit{\textbf{Nodes}}), as condições de contorno (classe
+% % % %     \textit{\textbf{BoundaryConditions}}), o conjunto de cargas aplicadas (classe
+% % % %     \textit{\textbf{LoadSets}}), as relações entre malha e geometria (classe
+% % % %     \textit{\textbf{GeometryMesh}}), a topologia da malha (representando pela classe
+% % % %     \textit{\textbf{MeshTopology}}). Dentro deste componente é importante ressaltar a classe
+% % % %     \textit{\textbf{HighOrder}} que gera e gerencia os graus de liberdade de alta ordem polinomial.
+% % % % 	
+% % % %     \item \textbf{Camada Group} \\    
+% % % %     Este nível é representado por um grupo de elementos finitos que possuem características
+% % % %     idênticas como a dimensão, material, forma do elemento e funções de interpolação (classe
+% % % %     \textit{\textbf{Group}}). As principais classes são descritas a seguir:    
+% % % %     \begin{itemize}
+% % % %         \item Classe \textit{\textbf{Material}}: define as propriedades específicas de um
+% % % % 	determinado material, calcula os tensores e as componentes de tensão.
+% % % %         \item Classe \textit{\textbf{Mapping}}: calcula a matriz de jacobiano e seu determinante em
+% % % % 	cada ponto de integração.
+% % % %         \item Classe \textit{\textbf{Mesh}}: armazena dados da malha, tais como a incidência e
+% % % % 	coordenadas dos elementos e a numeração dos graus de liberdade dos nós do elemento.
+% % % %         \item Classe \textit{\textbf{ElementTopologicalIndices}}: está agregada à classe
+% % % % 	\textit{\textbf{Mesh}} e é responsável por construir e armazenar a numeração local das
+% % % % 	entidades topológicas dos elementos.
+% % % %         \item Classe \textit{\textbf{FiniteElement}}: é responsável pelo cálculo dos operadores do
+% % % % 	elemento, tais como matrizes de massa e rigidez e vetores de carregamento.
+% % % %     \end{itemize}  
+% % % % 
+% % % %     \item \textbf{Camada Interpolation} \\
+% % % %     Composta pelas classes \textit{\textbf{CollocationPoints}},
+% % % %     \textit{\textbf{NumericalIntegration}}, \textit{\textbf{Polynomials1D}} e
+% % % %     \textit{\textbf{ShapeFunctions}}. Essas classes calculam, respectivamente, os pontos de
+% % % %     colocação, os pontos de integração, os polinômios e suas derivadas, os quais são utilizados no
+% % % %     cálculo das funções de forma na classe \textit{\textbf{ShapeFunctions}}.
+% % % % 
+% % % %     \item \textbf{Camada Data Structure - DS} \\ 
+% % % %     Nesta camada estão as estruturas básicas do $hp^2$FEM responsáveis por armazenar informações
+% % % %     numéricas sobre o método de elementos finitos em \textit{arrays} e operações sobre esses valores
+% % % %     como métodos para solução de sistema de equações.
+% % % % 
+% % % %     \item \textbf{Camada ACDP} \\
+% % % %     No modelo $hp^2$FEM, este módulo não está incluso no desenho UML da arquitetura proposta, ou
+% % % %     seja, nesse nível as implementações foram realizadas de forma independente das classes do
+% % % %     modelo. Esse ambiente é composto por funções auxiliares em linguagem C para dar suporte a todo
+% % % %     código, como, rotinas de armazenamento e gerenciamento de arquivos, depuração e banco de dados.
+% % % % 
+% % % % \end{itemize}
+% % % % 
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Descrição e Relacionamento Estático dos Principais Pacotes}\label{cap3:logica:pacotes}
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsubsection{Camada ACDP}\label{cap3:logica:acdpoop}
+% % % % 
+% % % % %  Descrição geral sobre o Acdp.
+% % % % O pacote ACDP (Ambiente Computacional para Desenvolvimento de Programas), implementa procedimentos
+% % % % para gerenciamento de bancos de dados, armazenamento e leitura de arquivos, tratamento de erros e
+% % % % depuração. Essas operações utilizam estruturas de dados dinâmicas como pilha, lista e fila
+% % % % \cite{ACS_Guimaraes1989}.
+% % % % 
+% % % % %  Descrição das rotinas geterror e FindKeyWord.
+% % % % Entretanto, as principais rotinas utilizadas nesse projeto são: \textbf{\textit{geterror}} para
+% % % % indicação de erros específicos e \textbf{\textit{FindKeyWord}}, que localiza as palavras-chaves dos
+% % % % arquivos de entrada. Entre outras rotinas, encontram-se as auxiliares para ordenação de estrutura de
+% % % % dados construídas para o \textit{software} $hp^2$FEM, usados principalmente na camada \textbf{Model}
+% % % % e no componente \textbf{\textit{MeshTopology}}. Além disso, empregam-se as funções de banco de dados
+% % % % para o armazenamento, em formato binário, de dados gerados pelo programa.
+% % % % 
+% % % % %  Descrição das rotinas getEnumIndex e enumerations.
+% % % % Para a leitura de dados é sempre utilizado a função \textbf{\textit{getEnumIndex}}, para conversão
+% % % % de caracteres, como determinadas palavras-chaves ou indicação da forma dos elementos finitos, para
+% % % % valores enumerados em C++. Para essas informações de entrada são construídos uma lista de estruturas
+% % % % de enumerados para armazenar dados de forma numérica, facilitando a manipulação dos dados em C++,
+% % % % como comparações entre palavras-chaves.
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsubsection{Camada DS - \textit{Data Structure}}\label{cap3:logica:ds}
+% % % % 
+% % % % Nesta camada estão as estruturas de dados básicas do $hp^2$FEM. Essas estruturas contêm diferentes
+% % % % tipos de matrizes como matriz esparsa e simétrica, além de vetores, que realizam operações de
+% % % % produtos matriciais e escalares, como também operações para solução de sistemas de equações
+% % % % lineares.  Nesse nível, encontram-se também classes \textit{arrays}, que armazenam valores
+% % % % numéricos, e também objetos.  Destacam-se as classes \textit{\textbf{OneIndexTable}} e
+% % % % \textit{\textbf{TwoIndexTable}}, que são tabelas de armazenamento de dados para o reaproveitamento
+% % % % dos mesmos em mais de um módulo do \textit{software}. Essas tabelas possuem vetores de índices e
+% % % % dados. O vetor de índices acessa e gerencia o vetor de dados. Essas tabelas são utilizadas
+% % % % principalmente para o gerenciamento dos valores das funções de interpolação.
+% % % % 
+% % % % %  Descrição Geral da ds.
+% % % % As estruturas de dados definidas nessas camadas são principalmente usadas na construção das equações
+% % % % de elementos finitos. Como pode ser visto na Figura~\ref{fig:classeDS}, existem classes para
+% % % % matrizes padrão, simétrica e esparsa, além da classe para vetores. Existe uma relação de dependência
+% % % % entre essas classes devido à utilização de instâncias em operações de algumas classes em outras.
+% % % % 
+% % % % \begin{figure}[!th]
+% % % %   \includegraphics[width=6.55in,
+% % % %   height=6.5in]{cap3_arquitetura_proposta/figuras/classes/ds_versao3.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{DS}}.}
+% % % %   \label{fig:classeDS}
+% % % % \end{figure}
+% % % % 
+% % % % %  Operações Gerais das Matrizes.
+% % % % Entre as rotinas principais e em comum nas classes de matrizes estão os procedimentos para: acesso
+% % % % aos elementos, produto escalar e matricial, inserção de submatriz em uma matriz e cálculo de normas.
+% % % % Destacamos nessas classes, principalmente para o MEF, as operações para soluções de equações
+% % % % lineares como o método de eliminação de \textit{Gauss} com rotinas adjacentes para a
+% % % % triangularização e solução por meio da fatorização LU.
+% % % % 
+% % % % %  Operações restritas as matrizes simétrica e esparsa.
+% % % % As classes \textbf{\textit{SymmetricMatrix}} e \textbf{\textit{SymmetricSparse}} adicionam outras
+% % % % rotinas para solução de sistemas de equações. Nessas classes, têm-se métodos iterativos de
+% % % % \textit{Jacobi}, \textit{Gauss-Seidel} e gradiente conjugado padrão e pré-condicionado para matrizes
+% % % % simétricas e positivas definidas. Em relação à alocação e armazenamento de dados, a classe de matriz
+% % % % simétrica aloca e atribui valores somente para a parte triangular superior. A classe de matriz
+% % % % esparsa aloca apenas as posições para coeficientes não nulos.
+% % % % 
+% % % % %  Descrição dos arrays.
+% % % % Na parte inferior da Figura~\ref{fig:classeDS} estão as classes de \textit{arrays} e tabelas para
+% % % % armazenamento de dados do MEF, como as funções de interpolação, numeração de equações, incidência e
+% % % % coordenadas de elementos. As classes \textit{arrays} permitem criar instâncias para armazenamento de
+% % % % uma sequência dados de um mesmo tipo. 
+% % % % 
+% % % % 
+% % % % % Diferença entre as classes arrays.
+% % % % A diferença entre essas classes está nos tipos de dados instanciados. A classe
+% % % % \textbf{\textit{BuiltInArray}} foi modelada para ser instanciada utilizando-se tipos de variáveis
+% % % % básicos em C++, \textit{float} ou \textit{int}. No entanto, a \textbf{\textit{Array}} é usada para
+% % % % armazenar instâncias de uma classe. À partir da \textbf{\textit{PointerArray}}, o objeto instanciado
+% % % % é uma sequência de ponteiros, os quais referenciam valores dos mesmos tipos que podem ser utilizados
+% % % % pela classe \textbf{\textit{Array}}.
+% % % % 
+% % % % %  Descrição dos arrays - uso de templates.
+% % % % %  Obs: Para templates o compilador instancia as estruturas, classes ou funções para os tipos a
+% % % % %  serem usados, ou seja, tudo é feito em tempo de compilação.
+% % % % Embora estruturas da própria linguagem estejam disponíveis, optou-se pela construção de objetos
+% % % % \textit{arrays}, sem uso de biblioteca externas, para obter flexibilidade no uso de recursos de
+% % % % otimização do código futuramente. Essas classes utilizam \textit{templates}, um artifício em C++ que
+% % % % permite passar como parâmetros os tipos a serem usados, definindo classes, estruturas e funções mais
+% % % % genéricas \cite{vandervoorde2003}. As rotinas em destaque dessas classes são as de acesso aos
+% % % % elementos, busca, cálculo de valores máximo e mínimo, leitura e escrita em banco de dados e
+% % % % arquivos. A arquitetura inicial dessas classes foi apresentada por \citet{ML_Bittencourt2000a}.
+% % % % 
+% % % % %  Descrição das classes Tabelas - OneIndexTable.
+% % % % Igualmente ao caso anterior, as classes \textbf{\textit{OneIndexTable}} e
+% % % % \textbf{\textit{TwoIndexTable}} utilizam tipos parametrizados. De maneira geral, a
+% % % % \textbf{\textit{OneIndexTable}} define uma estrutura para separar grupo de informações, o qual
+% % % % utiliza-se um vetor para armazenar todos as informações sobre um respectivo objeto e um outro vetor
+% % % % de endereços que guarda os índices iniciais para cada grupo de informações. 
+% % % % 
+% % % % %  Descrição das classes Tabelas - TwoIndexTable.
+% % % % A \textbf{\textit{TwoIndexTable}} tem o mesmo intuito, porém com adição de um vetor como atributo
+% % % % denominado \textbf{\textit{SubRowIndicesArray}}, como pode ser visto na Figura~\ref{fig:classeDS}. A
+% % % % idéia é criar sub grupos de dados dentro do grupo de dados endereçado pelo \textit{RowIndicesArray}.
+% % % % Essa estrutura pode ser exemplificada por meio da Figura~\ref{fig:twoindextable}, onde são criados
+% % % % dois grupos de dados, sendo cada grupo divido em 2 sub grupos. Os \textit{arrays} de índices
+% % % % armazenam o endereço do vetor de dados iniciando em 0. Na última posição dos \textit{arrays} de
+% % % % índices é armazenado o total de elementos para facilitar o cálculo do número de dados para último
+% % % % grupo ou sub grupo de elementos.
+% % % % 
+% % % % %	Descrição através do Método de elementos Finitos.
+% % % % Essas duas últimas classes dessa camada foram implementadas totalmente nesse trabalho. O uso dessas
+% % % % tabelas pode ser exemplificado através do funcionamento do $hp^2$FEM. Os valores das funções de
+% % % % interpolação nos pontos de integração são armazenados no vetor de dados e são separados em sub
+% % % % grupos de funções, de acordo com a ordem de integração e em grupos por meio do grau polinomial.
+% % % % Sendo assim, é possível acessar todas funções para todas ordens do integrando ou acessar somente as
+% % % % funções dado a ordem polinomial e uma ordem específica de integração.
+% % % % 
+% % % % \begin{figure}[!thp]
+% % % %   \centering
+% % % %   \includegraphics[width=4.in,height=2.2in]{cap3_arquitetura_proposta/figuras/TwoIndexTable.jpg}
+% % % %   \caption{Representação estrutural da classe \textbf{\textit{TwoIndexTable}}.} 
+% % % %   \label{fig:twoindextable}
+% % % % \end{figure}
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsubsection{Camada \textit{Interpolation}}\label{cap3:logica:interpolation}
+% % % % 
+% % % % 
+% % % % %  O pacote polynomials1D.
+% % % % Por meio do pacote \textbf{\textit{Polynomials1D}} são executadas as primeiras rotinas da camada
+% % % % \textbf{\textit{Interpolation}} responsáveis pela geração das funções polinomiais e suas derivadas
+% % % % para elementos unidimensionais. Esse pacote gera funções para bases nodal e modal através do cálculo
+% % % % dos polinômios de Lagrange padrão e truncado, Jacobi, Hermite e Lobatto como pode ser visto pelo
+% % % % diagrama da Figura~\ref{fig:polynomials1D}. As coordenadas e o grau do polinômio são as principais
+% % % % entradas para a construção dessas funções.
+% % % % 
+% % % % \begin{figure}[!thp]
+% % % %   \includegraphics[width=6.in,
+% % % %   height=3.in]{cap3_arquitetura_proposta/figuras/classes/interpolation/polynomials1d_versao3.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{Polynomials1D}}.} 
+% % % %   \label{fig:polynomials1D}
+% % % % \end{figure}
+% % % % 
+% % % % %  Os pacotes CollocationsPoints1D e Quadrature1D
+% % % % A Figura ~\ref{fig:CollocQuad1D} descreve os diagramas das classes
+% % % % \textbf{\textit{CollocationPoints1D}} e \textbf{\textit{Quadrature1D}}. Nessas classes são
+% % % % calculadas as coordenadas e ponderações para os pontos de colocação e integração unidimensionais. O
+% % % % número de coordenadas é determinado de acordo com o tipo de colocação ou regra de quadratura, como
+% % % % Gauss-Jacobi, Gauss-Radau-Jacobi, Gauss-Lobatto-Jacobi e Newton-Cotes \cite{karniadakis2005}, que é
+% % % % especificado no arquivo de entrada, assim como o grau do polinômio. A diferença entre essas classes
+% % % % é que para objetos \textbf{\textit{Quadrature1D}} são também determinados os coeficientes de
+% % % % ponderação.
+% % % % 
+% % % % %	Diagramas de classe CollocationsPoints1D e Quadrature1D.
+% % % % \begin{figure}[!thp]
+% % % %   \subfigure[\textbf{\textit{CollocationPoints1D}}.]
+% % % %   {\includegraphics[width=3.2in,height=1.7in]
+% % % %   {cap3_arquitetura_proposta/figuras/classes/interpolation/collocationpoints1d_versao2.jpg}} 
+% % % %   \qquad
+% % % %   \subfigure[\textbf{\textit{Quadrature1D}}.]
+% % % %   {\includegraphics[width=2.95in,height=1.7in]
+% % % %   {cap3_arquitetura_proposta/figuras/classes/interpolation/quadrature1d_versao3.jpg}}
+% % % % 
+% % % %   \caption{Diagramas de classes \textbf{\textit{Quadrature1D}} e
+% % % %   \textbf{\textit{CollocationPoints1D}}.} 
+% % % %   \label{fig:CollocQuad1D}
+% % % % \end{figure}
+% % % % 
+% % % % %  Os pacotes CollocationPoints e IntegrationsPoints
+% % % % As classes anteriores são encapsuladas pelo conjunto de classes dos componentes
+% % % % \textbf{\textit{CollocationPoints}} e \textbf{\textit{NumericalIntegration}} que possuem o mesmo
+% % % % propósito. Contudo, essas classes também armazenam pontos para elementos 2D e 3D, estando modeladas
+% % % % estruturas para as seguintes formas de elementos: linha, quadrado, triângulo, tetraedro e hexaedro.
+% % % % Para os elementos não unidimensionais, as coordenadas são armazenadas de acordo com o vetor de
+% % % % índices de tensorização passados como entrada na  \textbf{\textit{CollocationPoints}}, o qual foram
+% % % % criados na classe \textbf{\textit{ShapeFunctions}} (Figura~\ref{fig:shapefunctions} descrita
+% % % % adiante). Para \textbf{\textit{NumericalIntegration}}, esses índices são calculados internamente
+% % % % para armazenamento das coordenadas e do produto tensorial entre os coeficientes de ponderação em
+% % % % elementos 2D e 3D.
+% % % % 
+% % % % % 	Vetor CPSets e IPSets.
+% % % % Para armazenar as coordenadas, utilizam-se instâncias das classes de tabelas de dados da
+% % % % Seção~\ref{cap3:logica:pacotes}~\ref{cap3:logica:ds}. Essa implementação permite flexibilidade ao
+% % % % MEF-AO, armazenando pontos para vários graus polinomiais. No caso das classes
+% % % % \textbf{\textit{CollocationPoints}} e \textbf{\textit{NumericalIntegration}}, o uso da tabela
+% % % % \textbf{\textit{OneIndexTable}} representa um grupo de dados como um conjunto de coordenadas para um
+% % % % certo grau polinomial. Juntamente a isso, aloca-se uma variável para auxiliar o acesso a essa
+% % % % tabela. Essas variáveis são declaradas no código como \textbf{\textit{IPSets}} e
+% % % % \textbf{\textit{CPSets}}, que são \textit{arrays}, cujos os índices indicam o grau do polinômio e os
+% % % % valores armazenados formam o índice do vetor de endereços da tabela \textbf{\textit{OneIndexTable}},
+% % % % onde as coordenadas estão armazenadas.
+% % % % 
+% % % % %	Exemplificando os pacotes CPSets e IPSets.
+% % % % Considere um exemplo do uso do vetor \textbf{\textit{CPSets}} da classe
+% % % % \textbf{\textit{LineCollocationPoints}} na Figura~\ref{fig:sets}. Dadas as entradas de ordens
+% % % % polinomiais 2, 5 e 7, cria-se o vetor com dimensão da maior ordem polinomial. Nesse exemplo,
+% % % % percebe-se que o grau do polinômio são os índices do vetor \textbf{\textit{CPSets}} e que os valores
+% % % % armazenados indicam os índices para acesso às linhas com informações da tabela
+% % % % \textbf{\textit{OneIndexTable}}. As posições inválidas do \textbf{\textit{CPSets}} são preenchidas
+% % % % com -1. Assim, os pontos de colocação de grau 2 são armazenados na linha 0 da tabela; para o grau 5,
+% % % % os pontos estão na linha 1; e para grau 7, as coordenadas de colocação estão na linha 2 da tabela.
+% % % % 
+% % % % \begin{figure}[!thp]
+% % % %   \centering
+% % % %   \includegraphics[width=1.6in,
+% % % %   height=0.9in]{cap3_arquitetura_proposta/figuras/CPSets.jpg}
+% % % %   \caption{Vetores auxiliares para acesso às tabelas \textbf{\textit{OneIndexTable}}
+% % % %   e \textbf{\textit{TwoIndexTable}}.}
+% % % %   \label{fig:sets}
+% % % % \end{figure}
+% % % % 
+% % % % %  O pacote ShapeFunctions
+% % % % Os diagramas das classes \textbf{\textit{CollocationPoints}} e
+% % % % \textbf{\textit{NumericalIntegration}} são similares ao do componente
+% % % % \textbf{\textit{ShapeFunctions}}, como mostrado na Figura~\ref{fig:shapefunctions}. Além de
+% % % % encapsular as classes anteriores, esse pacote calcula as funções de interpolação e suas derivadas
+% % % % nos pontos de integração e colocação armazenados anteriormente. Para o armazenamento desses valores
+% % % % é definido para cada classe da \textbf{\textit{ShapeFunctions}} (Figura~\ref{fig:shapefunctions}),
+% % % % um conjunto de quatro atributos do tipo \textbf{\textit{TwoIndexTable}}. Para a construção das
+% % % % funções de forma para elementos 2D ou 3D, realiza-se produto tensorial entre as funções de
+% % % % interpolação dos elementos unidimensionais \cite{bargos2009}.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \includegraphics[width=8.in, height=6.4in,
+% % % %   angle=90]{cap3_arquitetura_proposta/figuras/classes/interpolation/shapefunctions.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{ShapeFunctions}}.} 
+% % % %   \label{fig:shapefunctions}
+% % % % \end{figure}
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsubsection{Camada \textit{Group}}\label{cap3:logica:group} 
+% % % % 
+% % % % 
+% % % % % Classe Mapping
+% % % % A Figura~\ref{fig:group} apresenta as principais estruturas da camada
+% % % % \textbf{\textit{FiniteElementGroup}}. Entre essas está a classe \textbf{\textit{Mapping}} que é
+% % % % responsável pelo cálculo das matrizes jacobianas e  seus determinantes usados para o mapeamento da
+% % % % geometria dos elementos. Nesse componente,  também computa-se a medida dos elementos, como
+% % % % comprimento, área ou volume. As entradas principais para determinar esses valores são: as
+% % % % coordenadas nodais de mapeamento, a dimensão e a forma do elemento. Utilizam-se os procedimentos
+% % % % \textit{\textbf{STANDARD}} e \textit{\textbf{D1\_MATRICES}}, nessa etapa do código, exemplificados
+% % % % no Capítulo~\ref{cap2}.
+% % % % 
+% % % % %	Figura classe grupo.
+% % % % \begin{figure}[!thp]   
+% % % %   \center
+% % % %   \includegraphics[width=8.in,
+% % % %   height=6.55in, angle=90]{cap3_arquitetura_proposta/figuras/classes/fegroups.jpg}
+% % % %   \caption{Conjunto de classes da camada \textbf{\textit{Group}}.} 
+% % % %   \label{fig:group}
+% % % % \end{figure}
+% % % % 
+% % % % % Classe Mesh - Paragrafo 1
+% % % % A classe \textbf{\textit{Mesh}}, que também está agregada à classe
+% % % % \textbf{\textit{FiniteElementGroup}}, pode ser instanciada em 4 objetos com finalidades para
+% % % % armazenamento de malhas de elementos de entrada, solução, mapeamento e pós-processamento (ver
+% % % % Seção~\ref{cap2:interpolacao_malhapos}). Para cada uma dessas, pode-se utilizar um grau de
+% % % % interpolação diferente. Uma das informações armazenadas na \textbf{\textit{Mesh}} é o número local
+% % % % de entidades topológicas de elementos para cada grau, usando uma instância da classe
+% % % % \textbf{\textit{ElementTopologicalIndices}}. A topologia contém dados como o número de arestas,
+% % % % faces e nós, que são determinadas a partir da forma do elemento e ordens polinomiais.
+% % % % 
+% % % % % Classe Mesh - Paragrafo 2
+% % % % Outros valores armazenados na \textbf{\textit{Mesh}} são as coordenadas, a numeração dos graus de
+% % % % liberdade, número de nós, ordem polinomial e incidência. Esses dados estão associados a cada
+% % % % elemento, o que permite configurar uma malha com ordem polinomial não-uniforme. Além disso, as
+% % % % coordenadas deformadas também são armazenadas depois do cálculo do vetor de solução da equação geral
+% % % % do MEF. O armazenamento da numeração dos graus de liberdade é realizado em dois métodos: um é para
+% % % % armazenar os graus de liberdade na malha de solução, utilizando os dados do objeto
+% % % % \textbf{\textit{Equation}} da camada \textbf{\textit{Model}}, e outro para malha de
+% % % % pós-processamento, cuja a numeração global é criada através da incidência e do número de graus de
+% % % % liberdade para cada nó.
+% % % % 
+% % % % % Classe Material
+% % % % O conjunto de classes ilustrado na Figura~\ref{fig:material} é responsável por implementar uma
+% % % % hierarquia de materiais. Armazena-se também o tipo de aplicação a ser tratada por um conjunto de
+% % % % tipos enumerados em C++. Essas aplicações podem ser, por exemplo, \textit{Poisson} e
+% % % % \textit{Reynolds}, estado plano de tensão, entre outros. O uso de características de herança e
+% % % % polimorfismo dinâmico, discutidos Seção~\ref{cap3:engenharia_software:poo}, permite flexibilidade na
+% % % % construção e redefinição de novos tipos de materiais.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \center
+% % % %   \includegraphics[width=5.in,
+% % % %   height=3.3in]{cap3_arquitetura_proposta/figuras/classes/material.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{Material}}.} 
+% % % %   \label{fig:material}
+% % % % \end{figure}
+% % % % 
+% % % % %	Classe FiniteElement - Descrição Geral.
+% % % % A classe \textbf{\textit{FiniteElement}} é outro objeto da classe
+% % % % \textbf{\textit{FiniteElementGroup}}. É responsável principalmente pelo cálculo dos operadores
+% % % % elementares, por exemplo, vetores de carregamento, matrizes de massa e rigidez, como visto na
+% % % % Seção~\ref{cap2:introducao:direto}. Como podemos ver através da estrutura
+% % % % \textbf{\textit{FiniteElementAttributes\_S}} do diagrama de classes na
+% % % % Figura~\ref{fig:finiteelement}, um objeto \textbf{\textit{FiniteElement}} armazena propriedades
+% % % % gerais para solução de um elemento como a sua forma e dimensão, o número de graus de liberdade por
+% % % % nó, os tipos de aplicação, malha, procedimento de cálculo (D1\_MATRICES ou STANDARD) e grau
+% % % % polinomial.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \center
+% % % %   \includegraphics[width=4.8in,
+% % % %   height=3.5in]{cap3_arquitetura_proposta/figuras/classes/finiteelement.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{FiniteElement}}.}
+% % % %   \label{fig:finiteelement}
+% % % % \end{figure}
+% % % % 
+% % % % %	Classe FiniteElement - Agregação da Classe Gradient Measure.
+% % % % Além desses atributos, a classe \textbf{\textit{FiniteElement}} associa, por composição, a classe
+% % % % \textbf{\textit{GradientMeasure}}, vista no diagrama. Essa classe opera de forma auxiliar para a
+% % % % construção de operadores que compõem as formulações definidas na \textbf{\textit{FiniteElement}}.
+% % % % Por exemplo, a construção da matriz de derivadas globais das funções de interpolação para o cálculo
+% % % % da matriz de rigidez.
+% % % % 
+% % % % %	Classe FiniteElement - Cálculo dos procedimento D1_MATRICES.
+% % % % Dentro da \textbf{\textit{FiniteElement}}, a construção dos vetores de carregamento e das matrizes
+% % % % de massa e rigidez pode ser feita através do produto tensorial de operadores unidimensionais para
+% % % % elementos 2D e 3D (procedimento de cálculo D1\_MATRICES, ver Seção ~\ref{cap2:tensor_matrizes}).
+% % % % 
+% % % % %	Classe FiniteElement - Método de interpolação.
+% % % % Outro método a ser destacado é a interpolação da solução global para a malha de pós-processamento. A
+% % % % operação realiza-se através do cálculo das funções de forma nos pontos de colocação da malha de
+% % % % pós-processamento, obtendo um novo vetor solução através do produto entre a matriz obtida da
+% % % % interpolação e o vetor resultante da malha de solução, como exemplificado na
+% % % % Seção~\ref{cap2:interpolacao_malhapos}.
+% % % %  
+% % % % % Classe Geometric Properties
+% % % % A classe \textbf{\textit{GeometricProperties}} (Figura~\ref{fig:group}) descreve as propriedades
+% % % % geométricas de um determinado elemento, por exemplo, um elemento de barra que tem como propriedade a
+% % % % área da seção transversal. Os principais atributos são o número de propriedades e seus valores
+% % % % associados a todos ou diferentes elementos do grupo.
+% % % % 
+% % % % % Classe FiniteElementGroup - Descrição geral e atributos constituintes.
+% % % % A classe \textbf{\textit{FiniteElementGroup}} se destaca por agregar as classes descritas
+% % % % anteriormente e por operar como interface através da passagem de diversos dados para a formulação do
+% % % % MEF às outras classes. Grande parte desses dados são carregados internamente na classe
+% % % % \textbf{\textit{FiniteElementGroup}}. Além disso, a classe armazena o número do grupo de elementos,
+% % % % o número de elementos e os elementos inicial e final.
+% % % % 
+% % % % % Classe FiniteElementGroup - Agregação dos tipos de malha e definição do tipo de mapeamento.
+% % % % A agregação da classe \textbf{\textit{Mesh}} na \textbf{\textit{FiniteElementGroup}} se dá com a
+% % % % definição de quatros tipos de objetos de malha de elementos finitos, correspondendo às malhas de
+% % % % entrada, solução, mapeamento e pós-processamento. A malha de mapeamento possui um atributo que
+% % % % indica o tipo de mapeamento a ser realizado, podendo ser isoparamétrico ou não-isoparamétrico. O
+% % % % primeiro (isoparamétrico) utiliza o mesmo grau para aproximação da solução na malha de mapeamento, o
+% % % % segundo (não-isoparamétrico) permite usar grau diferente da malha de solução no mapeamento, podendo
+% % % % ser de ordem polinomial uniforme ou não-uniforme.
+% % % % 
+% % % % % Classe FiniteElementGroup - Funções auxiliares para chamada a ShapeFunctions.
+% % % % Para a construção de alguns objetos do grupo de elementos é realizado operações auxiliares na
+% % % % \textbf{\textit{FiniteElementGroup}}. Uma dessas operações é a construção de um vetor de diferentes
+% % % % ordens polinomiais por meio da junção dos graus dos elementos para cada tipo de malha. Esse vetor é
+% % % % passado ao objeto \textbf{\textit{ShapeFunctions}} da camada \textbf{\textit{Interpolation}} para o
+% % % % cálculo da funções de forma.
+% % % % 
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsubsection{Camada \textit{Model}}\label{cap3:logica:model}
+% % % % 
+% % % % % Classe FEGroups - Atributos.
+% % % % Embora a classe \textbf{\textit{FEGroups}} esteja apresentada na Figura~\ref{fig:group}, essa faz
+% % % % parte da camada \textbf{\textit{Model}} e é responsável por armazenar todos os grupos de elementos.
+% % % % Possui como atributos, o número total de elementos globais, o número de grupos e as máximas ordens
+% % % % polinomiais para as malhas de mapeamento e solução.
+% % % % 
+% % % % % Classe FEGroups - Operações principais.
+% % % % Entre as operações que se destacam na \textbf{\textit{FEGroups}} estão as que convertem o número de
+% % % % um elemento do sistema global para o local ou vice-versa, a leitura da incidência dos elementos na
+% % % % malha de entrada e a leitura do grau da malha de pós-processamento. Há também rotinas para retorno
+% % % % do número do grupo em que se encontra um determinado elemento e retorno do número total de graus de
+% % % % liberdade e elementos globais.
+% % % % 
+% % % % % Classe Geometry Mesh.
+% % % % Seguindo a descrição das classes ou componentes que compõem a camada \textit{Model}, apresenta-se,
+% % % % na Figura~\ref{fig:geometrymesh}, a classe \textbf{\textit{GeometryMesh}}, que constrói e associa as
+% % % % propriedades entre malha e geometria. As informações associadas são utilizadas quando é necessário a
+% % % % troca de dados entre malha e geometria. Por exemplo, dado um carregamento sobre uma superfície da
+% % % % geometria, deseja-se obter todos os nós, arestas e faces de elementos que estão agregadas nessa
+% % % % superfície.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \center 
+% % % %   \includegraphics[width=3.9in,height=1.2in]
+% % % %   {cap3_arquitetura_proposta/figuras/classes/geometrymesh.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{GeometryMesh}}.}
+% % % %   \label{fig:geometrymesh}
+% % % % \end{figure}
+% % % % 
+% % % % % Classe BoundaryConditions - Descrição Geral.
+% % % % Na Figura~\ref{fig:boundaryload}, têm-se as classes que representam as condições de contorno. A
+% % % % classe \textbf{\textit{BoundaryConditions}} agrega as condições de contorno homogêneas e não
+% % % % homogêneas \cite{karniadakis2005} através de objetos da classe \textbf{\textit{DirichletBC}}. As
+% % % % condições de contorno foram modeladas para serem aplicadas às entidades da geometria ou malha, como
+% % % % nós, arestas, faces, linhas e superfícies.
+% % % % 
+% % % % % Classe BoundaryConditions - Informações armazenas.
+% % % % Para cada entidade de uma instância da classe \textbf{\textit{DirichletBC}}, armazena-se o número do
+% % % % elemento, número local da entidade, o número de graus de liberdade, a identificação do grau de
+% % % % liberdade e sua cardinalidade em relação ao vetor de graus de liberdade e o valor da condição de
+% % % % contorno aplicada.
+% % % % 
+% % % % \begin{figure}[!th]
+% % % %   \subfigure[\textbf{\textit{BoundaryConditions}}.]
+% % % %   {\includegraphics[width=2.4in,height=2.5in]
+% % % %   {cap3_arquitetura_proposta/figuras/classes/boundaryconditions.jpg}} 
+% % % %   \qquad
+% % % %   \subfigure[\textbf{\textit{LoadSets}}.]
+% % % %   {  \includegraphics[width=3.7in,height=4.9in]
+% % % %   {cap3_arquitetura_proposta/figuras/classes/loadsets.jpg}}
+% % % % 
+% % % %   \caption{Diagramas de classes \textbf{\textit{BoundaryConditions}} e \textbf{\textit{LoadSets}}.} 
+% % % %   \label{fig:boundaryload}
+% % % % \end{figure}
+% % % % 
+% % % % % O que são condições de contorno homogênea e não-homogênea?
+% % % % 
+% % % % % Uma condição de contorno homogênea impõe um deslocamento conhecido, ou seja, um valor definido para
+% % % % % u dentro do campo de deslocamentos admissíveis omega_u. Esse campo de deslocamentos admissíveis são
+% % % % % os possíveis deslocamentos que satisfazem a mínima energia potencial para o sistema em equilíbrio.
+% % % % % Uma condição de contorno não homogênea (Neumann, mas tem outros tipos também) envolve a primeira
+% % % % % derivada dos deslocamentos, e a estratégia de solução já é um pouco mais chata. No entanto, a
+% % % % % condição de contorno não homogênea já aparece naturalmente da formulação do problema. Geralmente é
+% % % % % relacionada ao fluxo de alguma coisa. Por exemplo, em problemas de condução de calor, a temperatura
+% % % % % é a nossa variável principal a ser resolvida. Se tivermos uma condição de contorno homogênea, vai
+% % % % % ser uma temperatura prescrita, e se for uma não homogênea, vai ser um fluxo de calor prescrito.
+% % % % 
+% % % % % Classe LoadSets - Descrição Geral.
+% % % % A classe \textbf{\textit{LoadSets}} (Figura~\ref{fig:boundaryload}(b)) é responsável por armazenar
+% % % % um conjunto de carregamento de um modelo. Assim, como na \textbf{\textit{BoundaryConditions}},
+% % % % armazena valores para entidades da malha e da geometria. Dependendo do tipo de entidade, o
+% % % % carregamento aplicado pode ser uma função simbólica, o que implica o uso do analisador
+% % % % Simbólico-Numérico (ver Seção~\ref{cap3:framework:parse}).
+% % % % 
+% % % % % Classe MeshTopology - Descrição Geral.
+% % % % Os objetos do conjunto de classes \textbf{\textit{MeshTopology}}, como visto na
+% % % % Figura~\ref{fig:meshtopology}, são utilizados para a construção da topologia da malha, através de
+% % % % tabelas que armazenam a relação entre as entidades da malha. Essas tabelas são descritas a seguir:
+% % % % 
+% % % % % Classe MeshTopology - Descrição das tabelas.
+% % % % \begin{itemize}
+% % % % 	\item Tabela \textbf{NodeNode}: Armazena para cada nó da malha os seus nós vizinhos.
+% % % % 	
+% % % % 	\item Tabela \textbf{ElementElement}: Armazena para cada elemento da malha os seus
+% % % % 	elementos vizinhos.
+% % % % 	
+% % % % 	\item Tabela \textbf{NodeEquation}: Para cada nó, armazena a numeração dos graus de
+% % % % 	liberdade vizinhos.
+% % % % 	
+% % % % 	\item Tabela \textbf{NodeElement}: Para cada nó, é armazenado os seus elementos vizinhos.
+% % % % 	Para esse tipo de tabela são instanciados dois objetos da classe
+% % % % 	\textbf{\textit{MeshTopology}}, um para malha de entrada e outra para a malha de solução.
+% % % %  \end{itemize}
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \center
+% % % %   \includegraphics[width=6.55in,
+% % % %   height=3.55in]{cap3_arquitetura_proposta/figuras/classes/meshtopology.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{MeshTopology}}.}
+% % % %   \label{fig:meshtopology}
+% % % % \end{figure}
+% % % % 
+% % % % % Classe MeshTopology - O que é utilizado para construir as relações entre as tabelas.
+% % % % Na tabela \textbf{NodeElement} as relações são construídas por meio da incidência dos elementos.
+% % % % Além desse parâmetro, a tabela \textbf{ElementElement} utiliza-se da topologia dos elementos, e
+% % % % semelhante à tabela \textbf{NodeNode}, usa a tabela \textbf{NodeElement}, que deve ser previamente
+% % % % definida.
+% % % % 
+% % % % 
+% % % % % Classe MeshTopology - HighOrder. 
+% % % % A classe \textbf{\textit{HighOrder}}, mostrada na Figura~\ref{fig:meshtopology} é responsável por
+% % % % gerar, compatibilizar e gerenciar a incidência de alta ordem dos elementos. Nessa classe estão
+% % % % armazenados o número de graus de liberdade e nós das entidades elementares (aresta, face, corpo). A
+% % % % geração de pontos ou nós é realizada nas malhas de pós-processamento, mapeamento e solução. A
+% % % % \textbf{\textit{HighOrder}} utiliza a topologia dos elementos, a forma do elemento e as funções de
+% % % % interpolação nos pontos de colocação para gerar novas incidências e coordenadas. Após isso, a
+% % % % topologia dos elementos é reconstruída por meio da redefinição dos nós nas entidades topológicas.
+% % % % 
+% % % % % Classe Nodes, DOFs, Equations. 
+% % % % As classes \textbf{\textit{Nodes}}, \textbf{\textit{DOFs}} e \textbf{\textit{Equations}}
+% % % % (Figura~\ref{fig:model}) são estruturas auxiliares que armazenam as coordenadas nodais da malha de
+% % % % entrada, os tipos de graus de liberdade e a numeração das equações, respectivamente. A classe
+% % % % \textbf{\textit{Nodes}} contém a dimensão e o número de nós dos elementos e implementa rotinas para
+% % % % acesso às coordenadas de um dado nó e construções de tabelas de relação entre elementos e
+% % % % coordenadas. A classe \textbf{\textit{Equations}} armazena os graus de liberdade em uma tabela
+% % % % \textbf{\textit{OneIndexTable}}, associando a cada nó os tipos de graus de liberdade na seguinte
+% % % % sequência: graus de liberdade restritos para condições de contorno homogênea e não homogênea. Essa
+% % % % contagem de graus de liberdade efetua-se sobre cada entidade da malha como nós, arestas, faces e
+% % % % volume.
+% % % % 
+% % % % % Classe Model
+% % % % A classe \textbf{\textit{Model}} (Figura~\ref{fig:model}) atua como ligação entre aplicações e a
+% % % % construção de dados do MEF-AO, agregando e gerenciando as classes descritas anteriormente. Exemplos
+% % % % importantes desse gerenciamento são as chamadas ao carregamento dos dados para as classes como a
+% % % % numeração dos graus de liberdade; chamadas para construções de incidências e coordenadas nas malhas
+% % % % de entrada, solução e pós-processamento, sendo o armazenamento nas 2 últimas ocorrendo após a
+% % % % construção do objeto \textbf{\textit{HighOrder}}.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \center
+% % % %   \includegraphics[width=6.5in,
+% % % %   height=4.3in]{cap3_arquitetura_proposta/figuras/classes/model.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{Model}}.}
+% % % %   \label{fig:model}
+% % % % \end{figure}
+% % % % 
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsubsection{Camada \textit{Solver}}\label{cap3:logica:solver}
+% % % % 
+% % % % %	Classe Solver - Descrição Geral
+% % % % Na camada \textbf{\textit{Solver}}, utiliza-se o mecanismo de herança em POO. A classe
+% % % % \textbf{\textit{Solver}} possui métodos gerais para aplicações usando o MEF.
+% % % % 
+% % % % %	Classe Solver - Estruturas do Solver
+% % % % Como mostrado na Figura~\ref{fig:solver}, a classe \textbf{\textit{Solver}} agrega a estrutura
+% % % % \textbf{\textit{SolverParam\_S}} utilizada para armazenar parâmetros da solução como o tipo de
+% % % % problema a ser tratado e seus valores relacionados. A estrutura
+% % % % \textbf{\textit{TheoreticalSolution\_S}}, também agregada, armazena dados da solução teórica imposta
+% % % % que pode ser simbólica ou numérica. Sendo simbólica, deve ser representada por coordenadas espaciais
+% % % % $X$, $Y$ e $Z$ e a coordenada de tempo $T$.
+% % % % 
+% % % % %	Classe Solver - Rotinas e atributos.
+% % % % Dentre os principais atributos da classe \textbf{\textit{Solver}} estão o objeto da classe
+% % % % \textbf{\textit{Model}}; o vetor solução da malha; o vetor de soma das medidas dos elementos em cada
+% % % % grau de liberdade; matriz para armazenamento dos tipos de erros calculados. Esses erros são
+% % % % calculados em duas rotinas tanto para o padrão de montagem das funções de interpolação
+% % % % \textit{D1\_MATRICES}, quanto para o \textit{STANDARD}.
+% % % % 
+% % % % %	Classe GlobalSolver
+% % % % A classe \textbf{\textit{GlobalSolver}} é derivada de \textbf{\textit{Solver}} e responsável por
+% % % % resolver os problemas de maneira global. Sendo assim, as matrizes de massa ou rigidez, armazenadas
+% % % % como atributos nessa classe, são construídas a partir da superposição de matrizes de cada elemento
+% % % % (operação de montagem), calculando-se o vetor de solução do MEF após essa operação.
+% % % % 
+% % % % % 	Classe ElementElementSolver.
+% % % % A outra classe derivada, \textbf{\textit{ElementElementSolver}}, trata a solução de maneira local
+% % % % como visto na Seção~\ref{cap2:solver}. Nesse caso, determina-se a solução em cada elemento e a
+% % % % montagem da solução global é ponderada de acordo com a medida do elemento. Na
+% % % % Seção~\ref{cap3:processos}, será mostrado como ocorre a execução elemento a elemento para o problema
+% % % % de projeção, considerando 3 tipos de caso: malhas uniforme e não-uniformes com distribuição
+% % % % polinomial uniforme, malhas não-estruturadas ou aplicação da distribuição polinomial não-uniforme
+% % % % (ver Seção~\ref{cap2:abordagens}).
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \center
+% % % %   \includegraphics[width=8.in,
+% % % %   height=5.2in,angle=90]{cap3_arquitetura_proposta/figuras/classes/solver.jpg}
+% % % %   \caption{Diagrama de classe \textbf{\textit{Solver}}.}
+% % % %   \label{fig:solver}
+% % % % \end{figure}
+% % % % 
+% % % % \newpage
+% % % % 
+% % % % %###################################################################################################
+% % % % % Visualização de Dados
+% % % % \section{Entrada de dados}\label{cap3:EntradaDados}
+% % % % 
+% % % % %	Descrição Geral
+% % % % A entrada de dados do \textit{software} $hp^2$FEM é dividido em dois arquivos com extensões .fem e
+% % % % .def no formato texto. Esses arquivos, descritos no Anexo~\ref{AnexoA}, contêm palavras-chaves, a
+% % % % qual cada uma é associada a determinadas informações para a especificação do modelo de elementos
+% % % % finitos.
+% % % % 
+% % % % %  Distinção entre os arquivos.
+% % % % O arquivo .fem armazena dados gerais da malha como número de elementos, a forma dos elementos para
+% % % % cada grupo, coordenadas e incidência. O arquivo .def armazena informações tanto em relação a toda a
+% % % % malha como para um grupo específico. As informações gerais desse arquivo são relativas ao tipo de
+% % % % análise e método de solução utilizado. Já os dados específicos são os métodos de integração, tipos
+% % % % de base polinomial, condições de contorno, forças aplicadas, grau polinomial, tipo de malha e tipo
+% % % % de distribuição polinomial.
+% % % % 
+% % % % %  Uso de enumerations.
+% % % % Os dados contidos nos arquivos são  valores numéricos, palavras-chaves e identificadores. Para
+% % % % leitura de caracteres que não são palavras-chaves (os identificadores), converte-se para uma
+% % % % estrutura relativa do tipo enumerado em C++. Os atributos dentro dessa estrutura podem ser
+% % % % representados por um tipo inteiro em C++, o que permite comparações mais rápidas na implementação ao
+% % % % invés do uso de cadeias de caracteres.
+% % % % 
+% % % % %	Uso de enumerations - exemplificação.
+% % % % Um exemplo dessa representação pode ser visto na Figura~\ref{fig:enumeration}, o qual define uma
+% % % % estrutura do tipo enumerado contendo os tipos de polinômios a serem utilizados no \textit{software}
+% % % % $hp^2$FEM. Nesse caso, após a leitura da palavra-chave "\textit{INTERPOLATION}", lê-se o tipo de
+% % % % polinômio como uma \textit{string} e em seguida converte-se o para tipo \textit{PolynomialType\_E},
+% % % % assumindo um dos valores da estrutura.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \centering
+% % % %   \includegraphics[width=1.7in,height=1.4in]
+% % % %   {cap3_arquitetura_proposta/figuras/classes/enumeration.jpg}
+% % % %   \caption{Tipo enumerado \textbf{\textit{PolynomialType\_E}}.}
+% % % %   \label{fig:enumeration}
+% % % % \end{figure}
+% % % % 
+% % % % 
+% % % % %###################################################################################################
+% % % % % Classe Groups
+% % % % \section{Visualização de Processos}\label{cap3:processos}
+% % % % 
+% % % % %	Descrição da representação dos diagramas.
+% % % % Os diagramas de atividades a seguir exibem o fluxo de execução do \textit{software} $hp^2$FEM. Os
+% % % % diagramas foram construídos com base em UML e são compostos principalmente por atividades, ações,
+% % % % objetos do sistema e nós inicial, final e de decisões. As características dos diagramas podem ser
+% % % % dadas pelas formas geométricas ou das descrições\cite{melo2010}. As ações são representadas por
+% % % % retângulos mais curvados e palavras-chaves no infinitivo, as atividades por palavras como
+% % % % substantivo, os objetos por palavras sublinhadas e as tomadas de decisão por losangos.
+% % % % 
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Fluxo Geral do \textit{Software} $hp^2$FEM}\label{cap3:processos:geral}
+% % % % 
+% % % % %	Descrição geral do Diagrama de Atividades do hp2fem
+% % % % O diagrama da Figura~\ref{fig:atividades} representa o fluxo de execução do programa descrito de
+% % % % forma geral, considerando a aplicação de qualquer problema ou tipo de \textbf{\textit{solver}}.
+% % % % Algumas atividades desse diagrama podem ser decompostas em várias sub-atividades, umas sendo mais
+% % % % extensas e outras menores. Em resumo, esse diagrama representa a leitura e a construção de dados
+% % % % para a malha de grupos dos elementos.
+% % % % 
+% % % % %	Descrição dos diagramas a partir dos objetos - Paragrafo 1.
+% % % % Das classes descritas na Seção~\ref{cap3:logica:pacotes}, algumas instâncias foram destacadas,
+% % % % representando-as como objetos no diagrama da Figura~\ref{fig:atividades}. Em um primeiro passo,
+% % % % cria-se o objeto \textbf{\textit{Solver}} e carregam-se as informações associadas à solução, podendo
+% % % % ser global ou local. Outras informações são lidas nessa etapa de acordo com o tipo de problema a ser
+% % % % tratado. Na sequência, o objeto \textbf{\textit{Model}}, interno ao \textbf{\textit{Solver}},
+% % % % realiza a leitura de outros dados comuns na malha. No próximo nível, encontra-se o objeto
+% % % % \textbf{\textit{Group}}, podendo ser alocado como único objeto ou um vetor de objetos, onde cada
+% % % % grupo de elementos guardam informações em comum (ver
+% % % % Seção~\ref{cap3:logica:pacotes}~\ref{cap3:logica:group}).
+% % % % 
+% % % % %	Descrição dos diagramas a partir dos objetos - Paragrafo 2.
+% % % % Dentro do objeto \textbf{\textit{Group}} está o objeto \textbf{\textit{ShapeFunctions}} que assume a
+% % % % tarefa de construir as funções de interpolação. Essa é uma outra etapa que pode ser decomposta em
+% % % % várias sub-atividades da camada \textbf{\textit{Interpolation}}. Em seguida, realiza-se a leitura
+% % % % das incidências dos elementos, e caso haja mais grupos, executa-se o próximo objeto
+% % % % \textbf{\textit{Group}}. Após as chamadas das rotinas dos grupos de elementos, serão executadas as
+% % % % atividades de leitura das forças aplicadas e propriedades geométricas da malha.
+% % % % 
+% % % % %	Descrição dos diagramas a partir dos objetos - Paragrafo 3.
+% % % % Outra atividade extensa é a construção da topologia da malha. Destaca-se o objeto
+% % % % \textbf{\textit{HighOrder}}, que através das funções de interpolação, gera mais pontos nos elementos
+% % % % da malha para a solução. Seguindo o fluxo, efetua-se a atividade de numeração das equações, que em
+% % % % seguida serão armazenadas no objeto da malha de solução. Contudo, para a malha de pós-processamento,
+% % % % as equações são construídas novamente baseando na mesma implementação de geração de pontos da classe
+% % % % \textbf{\textit{HighOrder}}.
+% % % % 
+% % % % %	Descrição dos diagramas a partir dos objetos - Paragrafo 4.
+% % % % O armazenamento das equações também é realizado para cada grupo. Após todo esse processo, o solver
+% % % % local ou global será executado. A seguir veremos o fluxo de execução do problema de projeção tratado
+% % % % de forma local, ou seja, solução elemento por elemento. Esse problema será detalhado também na
+% % % % Seção~\ref{cap4:projecao}.
+% % % % 
+% % % % 
+% % % % \begin{figure}[!th]   
+% % % %   \center
+% % % %   \includegraphics[width=6.55in,height=4.in]
+% % % %   {cap3_arquitetura_proposta/figuras/DiagramaDeAtividadesHP2FEM.jpg}
+% % % %   \caption{Diagrama de atividades global do $hp^2$FEM.}
+% % % %   \label{fig:atividades}
+% % % % \end{figure}
+% % % % 
+% % % % 
+% % % % %===================================================================================================
+% % % % \subsection{Fluxo do Solver para Problema de Projeção}\label{cap3:processos:projecao}
+% % % % 
+% % % % %	Diagrama de Atividades - Problema de Projeção - Descrição dos 3 casos.
+% % % % Na Figura~\ref{fig:atividades_projecao}, exibe-se o diagrama de atividades do problema de projeção
+% % % % por meio de principais ações dessa rotina e atividades do $hp^2$FEM. O diagrama refere-se a 3 casos
+% % % % da implementação realizada no projeto: soluções para malha uniforme com distribuição polinomial
+% % % % uniforme, malha não-estruturada e distribuição polinomial não-uniforme.
+% % % % 
+% % % % \begin{figure}[!thp]   
+% % % %   \center
+% % % %   \includegraphics[width=8.in,height=5.9in,angle=90]
+% % % %   {cap3_arquitetura_proposta/figuras/DiagramaAtividadadesElementElementSolver.jpg}
+% % % %   \caption{Diagrama de atividades do \textit{Solver} elemento por elemento - Problema de projeção.}
+% % % %   \label{fig:atividades_projecao}
+% % % % \end{figure}
+% % % % 
+% % % % %	Diagrama de Atividades - Problema de Projeção - Paragrafo 1.
+% % % % O estado inicial desse diagrama representa o estado final do diagrama de atividades anterior
+% % % % Figura~\ref{fig:atividades}, substituindo a atividade de "Execução do \textit{Solver}". Após a
+% % % % chamada da rotina do problema de projeção, aloca-se o vetor de solução de acordo com o grau
+% % % % polinomial determinado da malha de pós-processamento. Do mesmo modo, aloca-se o vetor de medida do
+% % % % elemento que armazena em cada grau de liberdade a medida dos elementos que o compartilha.
+% % % % 
+% % % % %	Diagrama de Atividades - Problema de Projeção - Paragrafo 2.
+% % % % No próximo passo, acessam-se as informações referente ao grupo como tipo de malha e distribuição
+% % % % polinomial, grau da malha de pós-processamento, forma do elemento e número de elementos do grupo. Os
+% % % % primeiros desses dados são usados para a tomada de decisão que vêm em sequência. Se a malha e a
+% % % % distribuição polinomial for uniforme, os próximos passos serão executados apenas para o primeiro
+% % % % elemento da malha do grupo. Caso seja uma malha não-estruturada ou distribuição polinomial
+% % % % não-uniforme as mesmas atividades serão executadas para todos elementos.
+% % % % 
+% % % % %	Diagrama de Atividades - Problema de Projeção - Paragrafo 3.
+% % % % Posteriormente, realiza-se acesso ao grau da malha, coordenadas e a alocação da matriz de massa e
+% % % % vetor de carga a serem calculados. Antes do cálculo da matriz de massa, o algoritmo testa se o
+% % % % procedimento de cálculo é o caso D1\_MATRICES, o qual as matrizes de massa serão calculadas apenas
+% % % % para elementos unidimensionais. No passo seguinte, a atividade de cálculo da matriz de massa possui
+% % % % internamente o mesmo nó de decisão (verificando-se o procedimento é D1\_MATRICES ou STANDARD).
+% % % % Assim, caso os elementos sejam 2D ou 3D, determina-se o cálculo da matriz de massa através do
+% % % % produto tensorial entre as matrizes 1D ou pelo procedimento padrão (STANDARD), sendo esse
+% % % % utilizando-se das próprias funções de interpolação dos elementos 2D ou 3D.
+% % % % 
+% % % % %	Diagrama de Atividades - Problema de Projeção - Paragrafo 4.
+% % % % Após isso, executa-se a triangularização da matriz de massa pelo método de Gauss. Em sequência há
+% % % % uma tomada de decisão em que se calcula o vetor de medida do elemento para o caso da malha ser
+% % % % uniforme e $p$-uniforme. Seguindo o fluxo, acessa-se as coordenadas na malha de mapeamento e a carga
+% % % % aplicada é calculada. Finalmente, determina-se a solução local através do método de Gauss para a
+% % % % solução de sistema lineares. Para o caso do problema de projeção, a solução obtida representa os
+% % % % coeficientes da combinação de funções aproximadas (ver Seção~\ref{cap4:projecao}).
+% % % % 
+% % % % %	Diagrama de Atividades - Problema de Projeção - Paragrafo 5.
+% % % % Seguindo o curso de execução, verifica-se o grau da malha de solução é igual ao da malha de
+% % % % pós-processamento. Caso afirmativo, a solução local é armazenada no vetor global. Caso contrário,
+% % % % interpolam-se os pontos de colocação da malha de pós-processamento usando as funções de interpolação
+% % % % da solução. Nos próximos passos, para a malha não-estruturada ou $p$-não-uniforme, verifica-se há
+% % % % mais elementos, podendo voltar ao passo em que se acessa o grau do elemento, para calcular outra
+% % % % matriz de massa. Para a malha uniforme e $p$-uniforme, verifica-se há mais carga de corpo a ser
+% % % % aplicada, para retornar ou não ao passos que levarão ao cálculo de outro vetor de carga até a
+% % % % solução local.
+% % % % 
+% % % % %	Diagrama de Atividades - Problema de Projeção - Paragrafo 6.
+% % % % Após ao cálculo de todas as soluções locais, a solução global é ponderada, utilizando-se do vetor da
+% % % % medida do elemento calculado nas etapas anteriores. Em seguida, os erros nas normas infinita e
+% % % % $L_{2}$ serão calculados para o caso STANDARD ou D1\_MATRICES. Os resultados serão exibidos no
+% % % % próximo passo. E caso haja mais grupos, todos os passos relativos ao cálculo da matriz de massa,
+% % % % vetor carga e soluções locais serão refeitos, caso contrário, a execução é finalizada.
+% % % % 
+% % % % % A passo de conversão de elementos global para local realiza-se também para o caso de malha
+% % % % % uniforme com $p$-uniforme. Essa etapa é necessária pois a carga configurada no arquivo .def (ver
+% % % % % Subseção~\ref{cap3:EntradaDados} está em relação a todos os grupos e os cálculos realizados nas
+% % % % % próximas etapas são internas a...
+% % % % 
+% % % % 
+% % % % % % Opcional
+% % % % % \section{Tamanho e Desempenho}\label{cap3:desempenho}
+% % % % % 
+% % % % % \section{Qualidade}\label{cap3:qualidade}
+% % % % 
+% % % % 
+% % % % 
+% % % % %###################################################################################################
+% % % % 
+% % % % %%% Para Uso de subfiguras.
+% % % % %\begin{figure}[h]
+% % % % %\center
+% % % % %\subfigure[ref1][Legenda1]{\includegraphics[width=4.in,
+% % % % %height=2.in]{cap3_arquitetura_proposta/figuras/classes/interpolation/quadrature1d_versao3.jpg}}
+% % % % %\qquad
+% % % % %\subfigure[ref2][Legenda2]{\includegraphics[width=2.in,
+% % % % %height=1.8in]
+% % % % %{cap3_arquitetura_proposta/figuras/EnumerationsQuadColloc.jpg}}
+% % % % %\caption{Imagens lado a lado}
+% % % % %\end{figure}
+% % % % 

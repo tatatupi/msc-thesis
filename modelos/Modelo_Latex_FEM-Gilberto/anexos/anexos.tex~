@@ -1,0 +1,213 @@
+% \begin{center}\label{ArquivosEntrada}
+% \chapter{Arquivos de Entrada do $hp^2$FEM}
+% \end{center}
+
+\begin{center}\label{AnexoA}
+\anexo{Arquivos de Entrada do $hp^2$FEM}
+\end{center}
+
+Os dados apresentados a seguir correspondem os arquivos de entrada utilizados para testar o problema
+de projeção para quatro elementos quadrados.
+
+\section{Arquivo .fem}\label{AnexoA:fem}
+
+O arquivo a seguir apresenta as configurações para uma malha estruturada.
+
+{\footnotesize
+\begin{verbatim}
+*TITLE
+Title
+*
+
+*ELEMENT_GROUPS
+1
+1   4   SQUARE  1   4
+
+*INCIDENCES
+1 1 2 5 4
+2 2 3 6 5
+3 4 5 8 7
+4 5 6 9 8
+
+*DIMENSION
+2
+
+*COORDINATES
+9
+1   0   0
+2   1   0
+3   2   0
+4   0   1
+5   1   1
+6   2   1
+7   0   2
+8   1   2
+9   2   2
+
+*GM_KEYPOINT
+0
+
+*GM_LINE
+0 0
+
+*GM_SURFACE
+0 0
+
+*GM_VOLUME
+0 0
+
+*END
+#
+# Developed by Gilberto Luis Valente da Costa
+# e-mail: betogil@gmail.com
+\end{verbatim}
+}
+
+\clearpage
+
+\section{Arquivo .def}\label{AnexoA:def}
+
+O arquivo a seguir apresenta as configurações para uma malha uniforme e p-uniforme.
+
+
+{{\footnotesize
+\begin{verbatim}
+*POST_PROCESSOR
+4 GID
+
+*SOLUTION_DIRECTIVES
+*SOLVER_TYPE
+ELEMENT_ELEMENT
+
+*ANALYSIS_TYPE
+PROJECTION  CONSIST
+
+*SOLUTION_ALGORITHM
+LINEAR_SOLUTION
+
+*LINEAR_SOLUTION_METHOD
+GAUSS
+
+*OPERATOR_TYPE
+SYMMETRIC
+
+*THEORETICAL_SOLUTION
+L2 1 1 P s exp(3.1416*X)*sin((3.1416/4)*Y)*((X-1)^2)*(Y^2)
+
+
+*GROUP_PARAMETERS_1
+
+*MESH_TYPE_1
+UNIFORM pUNIFORM
+
+*SOLUTION_ORDER_1
+4
+
+*DOFS_GROUP_1
+1 P 0 1 P 2 QX QY 0 0 0
+
+*MATERIAL_1
+HOOKE 2100 0.3 1.0E-06 1
+
+*GEOMETRIC_PROPERTIES_1
+1 1 1
+
+*MAPPING_1
+ISOPARAMETRIC
+
+*KINEMATICS_1
+INFINITE MATERIAL TOTAL_LAGRANGIAN
+
+*PROBLEM_PARAMETERS_1
+POISSON D1_MATRICES CONSIST CONSISTENT
+
+*INTERPOLATION_1
+STAND NODAL NON_HIERARCHICAL STANDARDLAGRANGE
+
+*COLLOCATION_POINTS_1
+EQUALLY_SPACED
+
+*INTEGRATION_POINTS_1
+GAUSS_LEGENDRE 2
+
+*DOF
+1
+P
+0
+1
+P
+2
+QX QY
+0
+0
+0
+
+*HOMOGENEOUS_DIRICHLET_BC
+*HDBC_NODES
+0
+*HDBC_EDGES
+0
+*HDBC_FACES
+0
+*HDBC_KEYPOINTS
+0
+*HDBC_LINES
+0
+*HDBC_SURFACES
+0
+
+*NON_HOMOGENEOUS_DIRICHLET_BC
+*NHDBC_NODES
+0
+*NHDBC_EDGES
+0
+*NHDBC_FACES
+0
+*NHDBC_KEYPOINTS
+0
+*NHDBC_LINES
+0
+*NHDBC_SURFACES
+0
+
+
+*LOAD_SETS
+1
+
+*LOAD_SET_1
+
+*NODAL_LOADS_1
+0
+*KEYPOINT_LOADS_1
+0
+*EDGE_LOADS_1
+0
+*LINE_LOADS_1
+0
+*FACE_LOADS_1
+0
+*SURFACE_LOADS_1
+0
+*BODY_LOADS_1
+4
+1 1 P s exp(3.1416*X)*sin((3.1416/4)*Y)*((X-1)^2)*(Y^2)
+2 1 P s exp(3.1416*X)*sin((3.1416/4)*Y)*((X-1)^2)*(Y^2)
+3 1 P s exp(3.1416*X)*sin((3.1416/4)*Y)*((X-1)^2)*(Y^2)
+4 1 P s exp(3.1416*X)*sin((3.1416/4)*Y)*((X-1)^2)*(Y^2)
+*VOLUME_LOADS_1
+0
+*EDGE_PRESSURE_1
+0
+*FACE_PRESSURE_1
+0
+*LINE_PRESSURE_1
+0
+*SURFACE_PRESSURE_1
+0
+
+*END
+#
+# Developed by Gilberto Luis Valente da Costa
+# e-mail: betogil@gmail.com
+\end{verbatim}
+}

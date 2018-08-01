@@ -1,0 +1,380 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                    Configuração do Latex
+%%
+%%      UNICAMP - Faculdade de Engenharia Mecânica
+%%      Gilberto Luis Valente da Costa
+%%      2012
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%===================================================================================================
+%                                      PACOTES PRINCIPAIS
+%===================================================================================================
+%% Codificação e formatação básica do LaTeX
+% Dimensoes da pagina
+\usepackage[top=3cm,left=3cm,right=2cm,bottom=3cm]{geometry}    % Dimensões da página
+\usepackage[portuges, brazilian]{babel} % Hiphenação em portugues
+\usepackage[utf8]{inputenc}             % Codificação do arquivo
+\usepackage[T1]{fontenc}
+\usepackage{times}                      % Pacote de fonte Times
+\usepackage{lhelp}                      % Denine macros úteis
+\usepackage{ccaption}                   % Opções para capítulos
+\usepackage{indentfirst}                % Identação do primeiro parágrafo
+\usepackage{fancyhdr}                   % Controlar os cabeçalhos e rodapés
+\usepackage{enumerate}                  % Para usar enumerações
+\usepackage{cmap}                       % Mapear caracteres especiais no PDF
+
+\usepackage{floatflt}                   % Quebra de texto em figuras e tabelas
+\usepackage{colortbl}                   % Adicionar cor às tabelas
+\usepackage{fancyvrb}                   % Texto verbatim sofisticado
+\usepackage{wrapfig}                    % Produz figuras que o texto pode ficar ao redor
+\usepackage{url}                        % Adiciona URLs
+\usepackage{multirow}                   % Permite construir células multi-linhas
+
+% Essencial para colocar funções e outros símbolos matemáticos
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{amscd, amsfonts, textcomp}
+\usepackage{psfrag,layout}
+
+%% Links dinâmicos
+%% Suporte para hipertexto, links para referências e figuras
+%% To Dvi.
+%\usepackage[dvipdfmx,plainpages=false,pdfpagelabels,colorlinks=true,
+%citecolor=black,linkcolor=black,urlcolor=black,filecolor=black,
+%bookmarksopen=true]{hyperref}
+% To pdflatex
+\usepackage[pdftex, plainpages=false, pdfpagelabels, colorlinks=true,
+citecolor=black,linkcolor=black, urlcolor=black, filecolor=black,
+bookmarksopen=true]{hyperref}
+
+\usepackage[dvipsnames,svgnames,table]{xcolor}
+\usepackage{pdfpages}			% Inclui paginas em pdf no arquivo
+\usepackage{epstopdf}			% Converte figuras em formato eps para pdf
+\usepackage{color}			% Suporte para cores
+\usepackage{transparent}		% Suporte para vários conjuntos de cores
+\usepackage{siunitx}			% Sistema internacional de unidades
+\usepackage{lipsum}
+
+\usepackage[all]{hypcap}                % Soluciona o problema com o hyperref e capítulos
+\usepackage{wasysym}                    % Símbolos especiais com \female e \male etc.
+\usepackage{bigstrut}                   % Espaçamento na tabela
+\usepackage{comment}                    % Comentar várias linhas simultâneas
+\usepackage{epigraph}                   % Epígrafe
+\usepackage[titles,subfigure]{tocloft}  % Permite formatar o sumário
+\usepackage{makeidx}
+\usepackage{emptypage}			 % Retira o número de páginas em branco
+\usepackage{afterpage}
+\usepackage{kantlipsum}			 % mock text
+
+\usepackage{setspace}                   % Para definir espaçamento entre as linhas
+\usepackage{listings}                   % Para Inserir código fonte
+%===================================================================================================
+
+
+%===================================================================================================
+%                                       ELEMENTOS GRÁFICOS
+%===================================================================================================
+\usepackage{graphics}                   % Suporte padrão para gráficos
+\usepackage{graphicx}                   % Suporte avançado para gráficos
+\usepackage[]{graphicx}                 % Para incluir figuras (pacote extendido)
+\usepackage[normalsize]{subfigure}      % Possibilita a utilização de subfiguras
+% \usepackage{subfig}                     % Criar figura dividida em subfiguras
+\usepackage{epsfig}                     % Uso de figuras eps.
+\usepackage{epsf}
+
+% Caso queira guardar as figuras em uma pasta separada
+% (descomente e) defina o caminho para o diretório:
+%\graphicspath{{./figuras/}}
+\usepackage{caption}                    % Customizar as legendas de figuras e tabelas
+\usepackage{multicol}                   % Criar ambientes com 2 ou mais colunas
+%===================================================================================================
+
+
+%===================================================================================================
+%===================================================================================================
+%% Tabelas
+\usepackage{array}                      % Elementos extras para formatação de tabelas
+\usepackage{booktabs}                   % Tabelas com qualidade de publicação
+\usepackage{longtable}                  % Para criar tabelas maiores que uma página
+\usepackage{lscape}                     % adicionar tabelas e figuras como landscape
+
+%% Lista de Abreviações
+% \usepackage[notintoc,portuguese]{nomencl}   % Cria lista de abreviações
+\usepackage{nomencl}
+\makenomenclature
+
+% %  Lista de Tabela de siglas e simbolos.
+%\usepackage{tabela-simbolos} 
+% %  Letras maiúsculas são colocados antes dos símbolos de minúsculas.
+%\usepackage[caixa=Mm]{tabela-simbolos}
+% %  Define a ordem em que vai aparecer os simbolos, as letras gregas e romanas.
+%\usepackage[romanos=2,gregos=3,simbolos=1]{tabela-simbolos}
+
+%% Notas de rodapé
+\usepackage{footnote}                   % Lidar com notas de rodapé em diversas situações
+\makesavenoteenv{tabular}               % Notas criadas nas tabelas ficam no fim das tabelas
+\usepackage{pifont}                     % Acesso a PostScript Symbol padrão e fontes Dingbats
+\usepackage{lastpage}                   % Conta o número de páginas
+\usepackage{ifoddpage}			 % Incluinde páginas impares.
+\newcommand\alwaysodd[1]{%
+  \checkoddpage
+  \ifoddpage
+    #1%
+  \else
+    \mbox{}\clearpage#1%
+  \fi
+}
+% \usepackage{ifthen,changepage}
+
+
+%% Referências bibliográficas e afins
+\usepackage[round]{natbib}              % Citações tipo (nome-ano)
+%\usepackage{natbib}                    % Citações tipo [nome-ano]
+
+% Adicionar bibliografia, índice e conteúdo na Tabela de conteúdo
+% Não inclui lista de tabelas e figuras no índice
+\usepackage[nottoc,notlof,notlot]{tocbibind}
+
+%% Pontuação e unidades
+\usepackage{icomma}		% Posicionar inteligentemente a vírgula como separador decimal
+\usepackage[tight]{units}	% Formatar as unidades com as distâncias corretas
+%===================================================================================================
+
+
+%===================================================================================================
+%                                   FORMATAÇÕES DE TEXTO
+%===================================================================================================
+\special{papersize=215.9mm,279.4mm}     % Tamanho do papel (neste caso papel carta)
+\pagenumbering{roman}                   % Numeração das paginas iniciais em romano
+\setlength{\parindent}{1cm}             % Parágrafo de 1cm
+% \setlength{\mathindent}{1cm}          % Indentação das fórmulas matemáticas
+\setlength{\fboxsep}{1mm}               %   Espaçamento do texto para o frame, também define
+                                        % espaçamento entre colunas da tabela
+\frenchspacing                          % Não põe um espaço adicional após ponto final
+\sloppy                                 % Força que todas as linhas fiquem dentro das margens
+\raggedbottom                           % Para não permitir espaços extra no texto
+\def\figurename{Figura.}                % Define como a palavra figura será escrito
+\def\tablename{Tabela.}                 % Define como a palavra tabela será escrito
+
+\newcommand{\eq}[1]{Equação~(\ref{#1})}	% Facilita a citação de Equações
+\newcommand{\figu}[1]{Figura~\ref{#1}}		% Facilita a citação de Figuras
+\newcommand{\tab}[1]{Tabela~\ref{#1}}		% Facilita a citação de Tabelas
+
+
+% Citação tipo (AUTOR, ano), conforme ABNT
+\renewcommand{\cite}[1]{(\textsc{\citeauthor{#1}},~\citeyear{#1})}
+%
+\theoremstyle{definition}
+\newtheorem{defi}{Definição}[chapter]		% Para introduzir uma definição
+\newtheorem{teo}{Teorema}[chapter]		% Para introduzir um teorema
+\newcommand{\nomunit}[1]{%
+\renewcommand{\nomentryend}{\dotfill[#1]}}	% Colocar unidades na lista de Abreviaturas e siglas
+
+%% Estes comandos criam os subgrupos na Lista de Abreviaturas e Siglas
+\renewcommand{\nomgroup}[1]{%
+  \ifthenelse{\equal{#1}{A}}{\item[\textbf{Letras Latinas}]}{\hrulefill%			a
+    \ifthenelse{\equal{#1}{C}}{\item[\textbf{Letras Gregas}]}{%{}}}				b
+      \ifthenelse{\equal{#1}{E}}{\item[\textbf{Sobrescritos}]}{%}}}}				c
+        \ifthenelse{\equal{#1}{G}}{\item[\textbf{Subscritos}]}{%}}}}}				d
+          \ifthenelse{\equal{#1}{I}}{\item[\textbf{Abreviações}]}{%}}}}}}			e
+           \ifthenelse{\equal{#1}{K}}{\item[\textbf{Siglas}]}{}}{}}{}}{}}{}}{}}%		f
+%
+\setcounter{secnumdepth}{5}	% Serve pra introduzir um quinto nível de seções (subsubsubsection)
+\setcounter{tocdepth}{5}	% Serve pra introduzir um quinto nível de seções (subsubsubsection)
+%
+\makeatletter			% Changes the category code of '@' character to 11
+%===================================================================================================
+
+
+%===================================================================================================
+%                                      PARA INSERIR CÓDIGO FONTE
+%===================================================================================================
+\lstset{
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numberstyle=\tiny,
+  extendedchars=true,
+  breaklines=true,
+  frame=tb,
+  basicstyle=\footnotesize,
+  stringstyle=\ttfamily,
+  showstringspaces=false
+}
+\renewcommand{\lstlistingname}{Código}
+\renewcommand{\lstlistlistingname}{Lista de Listagens}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                          OPERADORES
+%===================================================================================================
+% Conforme a necessidade de cada trabalho
+\newcommand{\vectornorm}[1]{\left|\left|#1\right|\right|}   % Facilita a introdução da norma ||w||
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}       % Facilita a escrita de argmax
+\newcommand{\latex}{\LaTeX~}                                % Facilita a escrita de LaTeX
+\newlength\figureheight
+\newlength\figurewidth
+%==================================================================================================
+
+
+%===================================================================================================
+%                             FORMATANDO SEÇÕES, TABELAS E EQUAÇÕES
+%===================================================================================================
+\@addtoreset{figure}{chapter}
+\renewcommand{\thefigure}{\thechapter.\@arabic\c@figure}
+
+\@addtoreset{equation}{chapter}
+\renewcommand{\theequation}{\thechapter.\@arabic\c@equation}
+
+\@addtoreset{table}{chapter}
+\renewcommand{\thetable}{\thechapter.\@arabic\c@table}
+
+\def\chapter{\@startsection{chapter}{1}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\large\bf}}
+\def\appendix{\@startsection{chapter}{1}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}
+          {\large{\textsf{\textbf{APÊNDICE}}}~~\renewcommand{\rmdefault}{phv}\large\bf}}
+\def\section{\@startsection{section}{2}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\bf}}
+\def\subsection{\@startsection{subsection}{3}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\bf}}
+\def\subsubsection{\@startsection{subsubsection}{4}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\bf}}
+\def\subsubsubsection{\@startsection{subsubsubsection}{5}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}{\renewcommand{\rmdefault}{phv}\bf}}
+         
+\newcounter {anexo}[chapter]
+\def\anexo{\@startsection{chapter}{1}
+          {\z@}{12pt minus 0pt}{12pt minus 0pt}
+	  {\large{\textsf{\textbf{ANEXO}}}~~\renewcommand{\rmdefault}{phv}\large\bf}}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                         SUB-SUB-SUB-SECTION
+%===================================================================================================
+\newcounter {subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{}
+% \newcommand\subsubsubsection{\@startsection{subsubsubsection}{4}{\z@}%
+%                             {12pt minus 0pt}{12pt minus 0pt}{\normalfont\normalsize\it}}
+% Espaçamento do numero da subsubsubseção em relação à marge no sumário.
+\newcommand*\l@subsubsubsection{\@dottedtocline{3}{8em}{2.2em}}
+\newcommand*{\subsubsubsectionmark}[1]{}
+
+%---------------------------------------------------------------------------------------------------
+
+\def\thechapter{\arabic{chapter}}
+\def\thesection{\thechapter.\arabic{section}}	
+\def\thesubsection{\thesection.\arabic{subsection}}
+% \def\thesubsubsection{\Alph{subsubsection}}
+\def\thesubsubsection{}
+\makeatother				% Reverts (\makealetter) this to its original catcode of 12.
+
+%\renewcommand\cftsecfont{\bf}                % Títulos das seções em negrito no sumário
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftnodots}}  % Elimina os pontos na frente das seções no sumário
+%\setlength\cftbeforesecskip{12pt}            % Espaçamento antes da seção no sumário
+%\renewcommand{\cftsecindent}{0 em}           % Espaçamento do numero da seção em relação à marge no sumário
+%\renewcommand{\cftsecnumwidth}{1.9 em}       % Espaçamento do título da seção em relação ao número no sumário
+%\renewcommand{\cftsubsecindent}{1.9 em}      % Espaçamento do numero da subseção em relação à marge no sumário
+%\renewcommand{\cftsubsecnumwidth}{2.8 em}    % Espaçamento do título da subseção em relação ao número no sumário
+%\renewcommand{\cftsubsubsecindent}{4.7 em}   % Espaçamento do numero da subsubseção em relação à marge no sumário
+\renewcommand{\cftsubsubsecnumwidth}{1.9 em}  %     Espaçamento do título da subsubseção em relação
+                                              % ao número no sumário
+%===================================================================================================
+
+
+%===================================================================================================
+%                               FORMATAÇÃO DAS REFERÊNCIAS BIBLIOGRÁFICAS
+%===================================================================================================
+\renewcommand\refname{}
+\makeatletter
+\renewcommand\@biblabel[1]{}
+\newcommand*\clinbiblabel[1]{\hspace\labelsep
+                             \normalfont #1}
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\refname
+        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%    
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+	    \vspace{-50pt}      % Diminui o espaço vertical entre o titulo "Refências" e as referencias
+	    \leftmargin 0cm     % Recuo das linhas seguinets em relação à primeira linha
+	    \labelwidth\z@
+	    \labelsep\z@	    
+	    \itemsep 24pt       % Espaço vertical entre as referências	    
+	    \parsep\z@
+	    \itemindent-\leftmargin
+	    \let\makelabel\clinbiblabel
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+        \renewcommand\newblock{\hskip .11em \@plus.33em \@minus.07em}%
+      \sloppy\clubpenalty4000\widowpenalty4000%
+      \sfcode`\.=\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+        \endlist}
+%===================================================================================================
+
+
+%===================================================================================================
+%                                     ESTILOS DO PACOTE FANCYHDR
+%===================================================================================================
+% Usar os estilos do pacote fancyhdr
+\pagestyle{fancy}
+\fancypagestyle{plain}{\fancyhf{}}
+\fancyhead{}                                % Limpar os campos do cabeçalho atual
+% Número da página do lado esquerdo [L] nas páginas ímpares [O] e do lado direito [R] nas páginas pares [E]
+%\fancyhead[LO,RE]{\thepage}
+%\fancyhead[RO]{\nouppercase{\rightmark}}   % Nome da seção do lado direito em páginas ímpares
+%\fancyhead[LE]{\nouppercase{\leftmark}}    % Nome do capítulo do lado esquerdo em páginas pares
+\fancyfoot{}                                % Limpar os campos do rodapé
+\fancyfoot[CO, CE]{\thepage}
+\renewcommand{\headrulewidth}{0pt}          % Omitir linha de separação entre cabeçalho e conteúdo
+\renewcommand{\footrulewidth}{0pt}          % Omitir linha de separação entre rodapé e conteúdo
+\headheight 14.5pt                          % Altura do cabeçalho
+%===================================================================================================
+
+
+%===================================================================================================
+%                                        COMANDOS CUSTOMIZADOS
+%===================================================================================================
+%  Ambiente para criar exemplos dentro de um capítulo.
+\usepackage{verbatim}
+\usepackage{float}
+\floatstyle{boxed}
+\newfloat{program}{!th}{lop}
+\floatname{program}{Exemplo}
+
+\newbox\examplebox
+\newenvironment{example}[2]{%
+    \program
+    \vskip-.7\baselineskip
+    \caption{#2}%
+    \label{#1}%
+    \verbatim
+}{%
+    \endverbatim
+    \vskip-.7\baselineskip
+    \endprogram
+}
+\numberwithin{program}{chapter}
+
+
+%% Redefinição de marcadores.
+% Types of itemize
+% \circ — An open circle
+% \cdot — A centered dot
+% \star — A five-pointed star
+% \ast — A centered asterisk
+% \rightarrow — A short right-pointing arrow
+% \diamondsuit — An open diamond
+\renewcommand{\labelitemi}{$\circ$}
+\renewcommand{\labelitemii}{$\cdot$}
+\renewcommand{\labelitemiii}{$\diamond$}
+\renewcommand{\labelitemiv}{$\ast$}
+%===================================================================================================
+

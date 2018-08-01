@@ -1,0 +1,50 @@
+%-------------------------------------------------------------------------------
+
+\tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!40, drop shadow,
+text centered, anchor=north, text=white, text width=3cm]
+\tikzstyle{comment}=[rectangle, draw=black, rounded corners, fill=green, drop shadow,
+text centered, anchor=north, text=white, text width=3cm]
+\tikzstyle{myarrow}=[->, >=open triangle 90, thick]
+\tikzstyle{line}=[-, thick]
+
+\begin{center}
+
+\begin{tikzpicture}[grow'=right,level distance=1.25in,sibling distance=.25in]
+\tikzset{edge from parent/.style= 
+	{thick, draw, edge from parent fork right},
+	every tree node/.style=
+	{draw,minimum width=1in,text width=1in,align=center}}
+
+\Tree 
+	[.{Irregular Sampling} 
+		[.{Sensor Networks}
+			[.{Sensor Failure}
+				[.{Packet Loss} ]
+				[.{Uncertain Observations} ]
+			]
+			[.{Transmission Issues}
+				[.{OOSM} ]
+				[.{Time Delay} ]
+				[.{Burst Arrivals} ]
+			]
+			[.{Desynchro- nization} 
+				[.{Aperiodic Sampling} ]
+			]
+		]
+		[.{Measurement Procedures} 
+			[.{Event-Based Sampling} 
+				[.{Aperiodic Sampling} ]
+			]
+			[.{Planned NUS}
+				[.{\textbf{Aperiodic Sampling}} ]
+			]
+			[.{Industrial Processes} 
+				[.{Multi-Rate Sampling} ]
+			]
+		]
+	]
+
+\end{tikzpicture}
+
+
+\end{center}

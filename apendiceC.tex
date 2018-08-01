@@ -1,0 +1,207 @@
+\chapter{Rotinas Computacionais}\label{C}
+
+O presente trabalho teve como uma de suas etapas o desenvolvimento de funções no MATLAB para identificação de sistemas lineares multivariáveis. A seguir são apresentadas as funções implementadas dos métodos de identififcação por subespaços MOESP, MOESP-PI e MOESP-PO. A descrição e a função do método ARC, também estudado neste trabalho, podem ser obtidas na página: \url{http://homes.esat.kuleuven.be/~smc/sysid/software/}.   
+
+\section{\texttt{moesp}}
+
+\textbf{Sintaxe}\\
+
+\texttt{[A,B,C,D,SS]=moesp(u,y,n,k);}\\
+
+
+\textbf{Descrição}\\
+
+O algoritmo \texttt{moesp} estima as matrizes de modelos na
+representação espaço de estados sem tratar ruído de processo e/ou
+de medição. Também pode ser utilizado para determinar a ordem do sistema.\\
+
+\textbf{Dados de Entrada}\\
+
+\texttt{u} $\rightarrow$ matriz de dados medidos das entradas do sistema;\\
+
+\texttt{y} $\rightarrow$ matriz de dados medidos das saídas do sistema;\\
+
+\texttt{n} $\rightarrow$ ordem escolhida para o modelo do sistema;\\
+
+\texttt{k} $\rightarrow$ número de linhas da matriz em blocos de
+Hankel, este número é definido como \hbox{\texttt{k = 2(maxord/nusaida)}}. Em
+que, \texttt{maxord} é a máxima ordem que o usuário pressupõe que o
+sistema tenha e\texttt{nusaida} é o número de saídas que o sistema
+possui. Esta relação é definida de forma
+empírica por \citep{Overschee1996}.\\
+
+\textbf{Dados de Saída}\\
+
+\texttt{A} $\rightarrow$ matriz dinâmica estimada para o sistema em
+espaço de estados;\\
+
+\texttt{B} $\rightarrow$ matriz de entrada estimada para o sistema em
+espaço de estados;\\
+
+\texttt{C} $\rightarrow$ matriz de saída estimada para o sistema em
+espaço de estados;\\
+
+\texttt{D} $\rightarrow$ matriz de transmissão direta estimada para o
+sistema em espaço de estados;\\
+
+\texttt{SS} $\rightarrow$ matriz de valores singulares da projeção oblíqua, utilizada para determinar a ordem do sistema;\\
+
+\textbf{Algoritmo}\\
+
+Nesse algoritmo a seguinte decomposição $LQ$ é feita:
+
+\begin{equation}\label{LQ_moesp}
+\left(\begin{array}{c}
+                                            U_{f} \\
+                                            Y_{f}
+                                          \end{array} \right) = LQ^{T} = \left(\begin{array}{ccc}
+                                                                        L_{11} & 0     & 0 \\
+                                                                        L_{21} & L_{22}& 0
+                                                                      \end{array}
+ \right)\left( \begin{array}{c}
+                 Q^{T}_{1} \\
+                 Q^{T}_{2}\\
+                 Q^{T}_{3}\\
+               \end{array}
+ \right),
+\end{equation}
+
+Da SVD de $L_{22}$ é estimada a ordem $\hat{n}$ do sistema. Do espaço coluna da SVD de $L_{22}$ é obtida a projeção oblíqua $O_{i}$. Por meio dessa projeção são estimadas as matrizes $\hat{A}$ e $\hat{C}$. Por fim, como mostrado na Seção \ref{computando_as_matrizes_do_sistema_cap_3} as matrizes $\hat{B}$ e $\hat{D}$ são estimadas resolvendo-se um problema de mínimos quadrados.
+
+\section{moesp$\_$pi}
+\textbf{Sintaxe}\\
+
+\texttt{[A,B,C,D,SS]=moesp$\_$pi(u,y,n,k);}\\
+
+
+\textbf{Descrição}\\
+
+O algoritmo \texttt{moesp$\_$pi} estima as matrizes de modelos na
+representação espaço de estados sem tratar ruído de processo. Também pode ser utilizado para determinar a ordem do sistema.\\
+
+\textbf{Dados de Entrada}\\
+
+\texttt{u} $\rightarrow$ matriz de dados medidos das entradas do sistema;\\
+
+\texttt{y} $\rightarrow$ matriz de dados medidos das saídas do sistema;\\
+
+\texttt{n} $\rightarrow$ ordem escolhida para o modelo do sistema;\\
+
+\texttt{k} $\rightarrow$ número de linhas da matriz em blocos de
+Hankel, este número é definido como \hbox{\texttt{k = 2(maxord/nusaida)}}. Em
+que, \texttt{maxord} é a máxima ordem que o usuário pressupõe que o
+sistema tenha e \texttt{nusaida} é o número de saídas que o sistema
+possui. Esta relação é definida de forma
+empírica por \citep{Overschee1996}.\\
+
+\textbf{Dados de Saída}\\
+
+\texttt{A} $\rightarrow$ matriz dinâmica estimada para o sistema em
+espaço de estados;\\
+
+\texttt{B} $\rightarrow$ matriz de entrada estimada para o sistema em
+espaço de estados;\\
+
+\texttt{C} $\rightarrow$ matriz de saída estimada para o sistema em
+espaço de estados;\\
+
+\texttt{D} $\rightarrow$ matriz de transmissão direta estimada para o
+sistema em espaço de estados;\\
+
+\texttt{SS} $\rightarrow$ matriz de valores singulares da projeção oblíqua, utilizada para determinar a ordem do sistema;\\
+
+\textbf{Algoritmo}\\
+
+Nesse algoritmo a seguinte decomposição $LQ$ é feita:
+
+\begin{equation}\label{LQ_moesp_pi}
+\left(\begin{array}{c}
+                                            U_{f} \\
+                                            U_{p}\\
+                                            Y_{f}
+                                          \end{array} \right) = LQ^{T} = \left(\begin{array}{ccc}
+                                                                        L_{11} & 0     & 0 \\
+                                                                        L_{21} & L_{22}& 0\\
+                                                                        L_{31} &L_{32}&L_{33}
+                                                                      \end{array}
+ \right)\left( \begin{array}{c}
+                 Q^{T}_{1} \\
+                 Q^{T}_{2}\\
+                 Q^{T}_{3}\\
+               \end{array}
+ \right),
+\end{equation}
+
+Da SVD de $L_{32}$ é estimada a ordem $\hat{n}$ do sistema. Do espaço coluna da SVD de $L_{32}$ é obtida a projeção oblíqua $O_{i}$. Por meio dessa projeção são estimadas as matrizes $\hat{A}$ e $\hat{C}$. Por fim, como mostrado na Seção \ref{computando_as_matrizes_do_sistema_cap_4} as matrizes $\hat{B}$ e $\hat{D}$ são estimadas resolvendo-se um problema de mínimos quadrados.
+
+\section{moesp$\_$po}
+\textbf{Sintaxe}\\
+
+\texttt{[A,B,C,D,SS]=moesp$\_$po(u,y,n,k);}\\
+
+
+\textbf{Descrição}\\
+
+O algoritmo \texttt{moesp$\_$po} estima as matrizes de modelos na
+representação espaço de estados para sistemas com ruído de processo
+e de medição colorido. Também pode ser utilizado para determinar a ordem do sistema.\\
+
+\textbf{Dados de Entrada}\\
+
+\texttt{u} $\rightarrow$ matriz de dados medidos das entradas do sistema;\\
+
+\texttt{y} $\rightarrow$ matriz de dados medidos das saídas do sistema;\\
+
+\texttt{n} $\rightarrow$ ordem escolhida para o modelo do sistema;\\
+
+\texttt{k} $\rightarrow$ número de linhas da matriz em blocos de
+Hankel, este número é definido como \hbox{\texttt{k = 2(maxord/nusaida)}}. Em
+que, \texttt{maxord} é a máxima ordem que o usuário pressupõe que o
+sistema tenha e \texttt{nusaida} é o número de saídas que o sistema
+possui. Esta relação é definida de forma
+empírica por \citep{Overschee1996}.}\\
+
+\textbf{Dados de Saída}\\
+
+\texttt{A} $\rightarrow$ matriz dinâmica estimada para o sistema em
+espaço de estados;\\
+
+\texttt{B} $\rightarrow$ matriz de entrada estimada para o sistema em
+espaço de estados;\\
+
+\texttt{C} $\rightarrow$ matriz de saída estimada para o sistema em
+espaço de estados;\\
+
+\texttt{D} $\rightarrow$ matriz de transmissão direta estimada para o
+sistema em espaço de estados;\\
+
+\texttt{SS} $\rightarrow$ matriz de valores singulares da projeção oblíqua, utilizada para determinar a ordem do sistema;\\
+
+\textbf{Algoritmo}\\
+
+Nesse algoritmo a seguinte decomposição $LQ$ é feita:
+
+\begin{equation}\label{LQ_moesp_po}
+\left(\begin{array}{c}
+                                            U_{f} \\
+                                            U_{p}\\
+                                            Y_{p}\\
+                                            Y_{f}
+                                          \end{array} \right) = LQ^{T} = \left(\begin{array}{cccc}
+                                        L_{11} & 0     & 0 &0\\
+                                        L_{21} & L_{22}& 0 &0\\
+                                        L_{31} &L_{32}&L_{33}&0\\
+                                        L_{41} &L_{42}&L_{43}&L_{44}
+                                                                      \end{array}
+ \right)\left( \begin{array}{c}
+                 Q^{T}_{1} \\
+                 Q^{T}_{2}\\
+                 Q^{T}_{3}\\
+                 Q^{T}_{4}
+               \end{array}
+ \right),
+\end{equation}
+
+Da SVD de $[L_{42}~~L_{43}]$ é estimada a ordem $\hat{n}$ do sistema. Do espaço coluna da SVD de $[L_{42}~~L_{43}]$ é obtida a projeção oblíqua $O_{i}$. Por meio dessa projeção são estimadas as matrizes $\hat{A}$ e $\hat{C}$. Por fim, como mostrado na Seção \ref{computando_as_matrizes_do_sistema_cap_4} as matrizes $\hat{B}$ e $\hat{D}$ são estimadas resolvendo-se um problema de mínimos quadrados.
+
+ \clearpage

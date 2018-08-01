@@ -1,0 +1,376 @@
+%Disserta��o de Mestrado
+%PPGEE - UFMG
+%-------------------------------------------------------------------
+%Defini��es gerais do documento
+\documentclass[12pt,a4paper,titlepage,brazil,english]{book}
+%--------------------------------------------------------------------
+%Pacotes usados
+\usepackage{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+%\usepackage{amssymb, amsmath, amstext} %permite simbolos matematicos
+\usepackage{amsmath,amssymb,amsfonts,amstext,textcomp}
+\usepackage{mathrsfs} %permite o uso de letras trabalhadas
+%\usepackage{mcode}
+%% Pacotes n�o implementados
+% Para n�o sobrar espa�os em branco estranhos
+\widowpenalty=1000 \clubpenalty=1000
+\newcommand{\gepeto}[1]{\vspace*{12pt}\begin{singlespace}\hspace{2cm}\begin{small}\parbox{12cm}{#1}\end{small}\end{singlespace}\vspace*{20pt}}
+%\usepackage{caligra} %letras caligraficas
+%\usepackage{caligr}%letras caligraficas
+%\usepackage{dsfont}%barra escura para conjuntos
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{defi}{Defini��o}[section]
+\newtheorem{propo}{Proposi��o}[section]
+\newtheorem{coro}{Corol�rio}[section]
+\newtheorem{exem}{Exemplo}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{consi}{Considera��o}[section]
+%\usepackage[dvips]{graphicx}
+%\thispagestyle{empty}
+%\usepackage{epsfig,latexsym}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{color}
+\usepackage{booktabs}               % Tabelas com qualidade de publica��o
+\usepackage{indentfirst}
+%\usepackage{psfrag}
+%\usepackage{epsfig}
+\usepackage{rotating}
+%fazer diagramas de blocos
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,calc}
+\usepackage{braket}
+\usepackage[siunitx]{circuitikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\usepackage{makeidx}
+\usepackage{setspace}
+%\usepackage[pdftex]{hyperref}
+\usepackage[colorlinks]{hyperref}% tirar [colorlinks] para imprimir
+%\usepackage[hang,small]{caption}
+\usepackage{ae}
+%\usepackage{hyperref}
+\usepackage[below]{placeins}
+\usepackage{flafter}
+\usepackage{txfonts}
+\usepackage{pxfonts}
+\usepackage{natbib}
+\usepackage{icomma}
+\usepackage{subfigure}
+
+
+\usepackage[left=2.5cm,right=2.5cm,top=4cm,bottom=2.5cm]{geometry}
+\usepackage{appendix}
+
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning, calc}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+
+%Modifica��es em legenda
+\setlength{\belowcaptionskip}{10pt}
+
+%--------------------------------------------------------------------
+%Modifica��es em legenda (quando ocorre quebra das palavras indesejadas)
+\hyphenation{na-tu-ra-is}
+\hyphenation{ge-ra-do}
+
+%--------------------------------------------------------------------
+%Defini��o de comandos
+\newcommand{\comment}[1]{}
+\newcommand{\veq}{\vspace{0.2cm}}
+\newcommand{\x}{\\[5pt]}
+\newcommand{\C}[1]{\relax}
+
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{defin}[teo]{Defini��o}
+\newtheorem{nota}{Nota}[section]
+%--------------------------------------------------------------------
+%Cap�tulo personalizado
+\makeatletter
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1ex \hfill \kern \z@}
+\def\@makechapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \centering \reset@font
+        \thickhrulefill\quad
+        \bfseries \@chapapp{} \thechapter
+        \quad \thickhrulefill
+        \par\nobreak
+        \vspace*{10\p@}%
+        \interlinepenalty\@M
+        \hrule
+        \vspace*{10\p@}%
+        \Huge \bfseries #1\par\nobreak
+        \par
+        \vspace*{10\p@}%
+        \hrule
+    \vskip 70\p@    %100
+  }}
+\def\@makeschapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \centering \reset@font
+        \thickhrulefill
+        \par\nobreak
+        \vspace*{10\p@}%
+        \interlinepenalty\@M
+        \hrule
+        \vspace*{10\p@}%
+        \Huge \bfseries #1\par\nobreak
+        \par
+        \vspace*{10\p@}%
+        \hrule
+    \vskip 70\p@
+ }
+}
+
+%--------------------------------------------------------------------
+%Varia��o da altura da linha
+\renewcommand{\baselinestretch}{1.5}
+
+%--------------------------------------------------------------------
+%Coloca Rascunho e a data
+%\newcommand{\reviewtimetoday}[2]{\special{!userdict begin
+%/bop-hook{gsave 20 710 translate 45 rotate 0.8 0.8 0.8 0.8 0 setcmykcolor
+%/Times-Roman findfont 10 scalefont setfont 0 0   moveto (#1) show
+%0 -12 moveto (#2) show grestore}def end}}
+%% You can turn on or off this option.
+%\reviewtimetoday{\today}{Draft Version}
+
+%--------------------------------------------------------------------
+%Criar o index
+\makeindex
+
+%--------------------------------------------------------------------
+%Devido ao fancyheading
+\headheight 14.7pt
+
+%--------------------------------------------------------------------
+%Trocando os efeitos da v�rgula e ponto
+\DeclareMathSymbol{,}{\mathord}{letters}{"3B}
+\DeclareMathSymbol{.}{\mathpunct}{letters}{"3A}
+
+
+\setlength{\marginparwidth}{2cm}
+
+\usepackage{lipsum}  
+\usepackage{xargs}
+\usepackage[colorinlistoftodos,textsize=scriptsize]{todonotes}
+\newcommand{\duvida}[1]{\todo[color=green!40]{#1}}
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+
+\usetikzlibrary{trees}
+\usepackage{adjustbox}
+%
+%\usepackage{subfig}
+%\usepackage{graphicx}
+
+
+\begin{document}
+%--------------------------------------------------------------------
+%P�gina em algarismos romanos
+\pagenumbering{roman}
+\selectlanguage{english}
+
+%--------------------------------------------------------------------
+%Capa
+\input{capa.tex}
+\clearpage
+\thispagestyle{empty}
+%%\cleardoublepage
+
+%%--------------------------------------------------------------------
+%
+%%--------------------------------------------------------------------
+%%Dedicat�ria
+%\input{dedicatoria.tex}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%%--------------------------------------------------------------------
+%
+%
+%%--------------------------------------------------------------------
+%%Agradecimentos
+%\input{agradecimentos.tex}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%%--------------------------------------------------------------------
+%
+%
+%%--------------------------------------------------------------------
+%%Ep�grafe
+%\input{epigrafe.tex}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%%--------------------------------------------------------------------
+
+
+%%--------------------------------------------------------------------
+%Sum�rio
+\pagestyle{myheadings}
+\begin{spacing}{1.5}
+\tableofcontents
+\end{spacing}
+\listoftodos
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%
+%%%--------------------------------------------------------------------
+%%Resumo
+%\begin{spacing}{1}
+%\input{resumo.tex}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%%%--------------------------------------------------------------------
+%%
+%%%--------------------------------------------------------------------
+%%Abstract
+%\input{abstract.tex}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%\end{spacing}
+%%%--------------------------------------------------------------------
+%%
+%%%--------------------------------------------------------------------
+%%%Lista de figuras
+%\begin{sloppypar}
+%\listoffigures
+%\end{sloppypar}
+%\addcontentsline{toc}{chapter}{List of Figures}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%%
+%%%--------------------------------------------------------------------
+%%%Lista de Tabelas
+%\begin{spacing}{1}
+%\listoftables
+%\addcontentsline{toc}{chapter}{List of Tables}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%%
+%%%%--------------------------------------------------------------------
+%%%%S�mbolos
+%%%%--------------------------------------------------------------------
+%\input{simbolos.tex}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+%%%%--------------------------------------------------------------------
+%%%
+%%%%Abreviaturas
+%%%%--------------------------------------------------------------------
+%\input{abreviacoes.tex}
+%\clearpage \thispagestyle{empty}
+%\cleardoublepage
+%\end{spacing}
+%--------------------------------------------------------------------
+
+
+%Come�ando os cap�tulos
+%--------------------------------------------------------------------
+\clearpage
+\pagestyle{myheadings}
+\pagenumbering{arabic}
+%--------------------------------------------------------------------
+
+%--------------------------------------------------------------------
+%Defini��o de cabe�alhos
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}{}}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.0pt}
+\addtolength{\headheight}{2.5pt}                % 2.5pt
+\fancypagestyle{plain}{
+     \fancyhead{}
+     \renewcommand{\headrulewidth}{0pt}
+     }
+ 
+%--------------------------------------------------------------------
+%Cap�tulo 1 - Introdu��o
+\input{capitulo1.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%--------------------------------------------------------------------
+%Cap�tulo 2 - Literature Review
+\input{capitulo2.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%%--------------------------------------------------------------------
+%Cap�tulo 3 - Methods
+\input{capitulo3.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+%
+%%%%%--------------------------------------------------------------------
+%Cap�tulo 4 - Results
+\input{capitulo4.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+%
+%%%%--------------------------------------------------------------------
+%Cap�tulo 5 - Conclusions
+\input{capitulo5.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+%
+%--------------------------------------------------------------------
+%--------------------------------------------------------------------
+%Bibliografia
+%--------------------------------------------------------------------
+%Defini��o de cabe�alhos
+\bibliographystyle{apalike} %plainnat_mod
+\bibliography{library}
+\addcontentsline{toc}{chapter}{References}
+ \clearpage
+\thispagestyle{empty}
+\cleardoublepage
+
+%Ap�ndices
+%\appendix
+%\include{apendiceA}
+%\clearpage
+%\thispagestyle{empty}
+%\cleardoublepage
+
+%
+% \chapter{Demonstra��es}
+ %\appendix
+%\include{apendiceB}
+%\include{MQ}
+%\include{Grubbs}
+
+%--------------------------------------------------------------------
+\end{document}

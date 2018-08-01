@@ -1,0 +1,32 @@
+\appendix\chapter{Decomposição em Valores Singulares}
+
+O teste de Grubbs é usado para detecção de \textit{outliers} em
+conjuntos de dados monovariados. Em última análise, ele é um teste
+de hipóteses convencional que se baseia no fato de que o conjunto de
+dados a ser analisado seja razoavelmente aproximado por uma
+distribuição normal.
+
+O teste de Grubbs é capaz de detectar um \textit{outlier} por vez e
+o retirar. O teste é realizado iteradas vezes até que não se
+encontrem mais \textit{outliers} no conjunto de dados em análise.
+
+Seja a seguinte hipótese nula $H_0$: \lq Não há outliers no conjunto
+de dados\rq.
+
+Como em todo teste de hipótese, é necessário escolher uma
+estatística. No caso, define-se a estatística do teste de Grubbs
+como:
+
+\begin{equation}
+G=\frac{max|Y_i|-\bar{Y}}{s}
+\end{equation}
+em que $\bar{Y}$ é a média amostral e $s$ o desvio padrão amostral.
+$G$ é o máximo desvio absoluto em relação à média, e é dado em
+unidades de desvio padrão amostral.
+
+Estabelecem-se, então, limites de confiança de tal forma que, se o
+valor de $G$ estiver fora desses limites, o teste pode ser rejeitado
+e o ponto $Y_i$ é considerado um \textit{outlier}. Esses limites
+podem ser de $\bar{Y}\pm3s$, por exemplo, uma vez que a
+probabilidade de uma realização da distribuição normal estar
+compreendida nessa faixa é de $99,7\%$.

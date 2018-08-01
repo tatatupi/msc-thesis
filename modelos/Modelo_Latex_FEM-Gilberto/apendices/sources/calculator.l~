@@ -1,0 +1,82 @@
+%{
+#include "global.h"
+#include "y.tab.h"
+
+#include <stdlib.h>
+
+#undef YY_INPUT
+#define YY_INPUT(buf, result, max_size)     \
+     {                                      \
+         if (global_expr[0]=='\0')          \
+             result = YY_NULL;              \
+         else {                             \
+             strcpy(buf, global_expr);      \
+             result = strlen(global_expr)-1;\
+     }                                      \
+         global_expr[0]='\0';               \
+     }
+%}
+
+
+white    [ \t]+
+digit    [0-9]
+integer  {digit}+
+exponant [eE][+-]?{integer}
+real     {integer}("."{integer})?{exponant}?
+variable [a-z]
+
+
+PLUS              "+"
+MINUS             "-"
+MULTIPLY          "*"
+DIVIDE            "/"
+POWER             "^"
+SQRT              "sqrt"
+SIN               "sin"
+COS               "cos"
+TAN               "tan"
+LOG               "log"
+LN                "ln"
+EXP               "exp"
+EQUAL             "="
+LEFT_PARENTHESIS  "("
+RIGHT_PARENTHESIS ")"
+NEW_LINE          "\n"
+END               ("end"|"END")
+
+
+%%
+
+
+{white}     { /* We ignore white characters */ }
+
+{real}      {
+                yylval = atof(yytext);
+                return NUMBER;
+            }
+
+{variable}  {
+                yylval = *yytext - 'a';
+                return VARIABLE;
+            }
+
+{PLUS}               {return PLUS; }
+{MINUS}              {return MINUS; }
+{MULTIPLY}           {return MULTIPLY; }
+{DIVIDE}             {return DIVIDE; }
+{POWER}              {return POWER; }
+{SQRT}               {return SQRT; }
+{SIN}                {return SIN; }
+{COS}                {return COS; }
+{TAN}                {return TAN; }
+{LOG}                {return LOG; }
+{LN}                 {return LN; }
+{EXP}                {return EXP; }
+{EQUAL}              {return EQUAL; }
+{LEFT_PARENTHESIS}   {return LEFT_PARENTHESIS; }
+{RIGHT_PARENTHESIS}  {return RIGHT_PARENTHESIS; }
+{NEW_LINE}           {return NEW_LINE; }
+{END}                {return END; }
+
+%%
+
