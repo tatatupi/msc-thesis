@@ -76,19 +76,6 @@ Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT
 
 %\todo[caption = {Definir quais problemas serão estudados},inline]{Dependendo de quais e quantos problemas forem estudados, descrever nessa seção.}
 
-\subsubsection{Problema 1: In}\label{sec:entrada_regular}
-
-\textit{As entradas $u(t)$ são medidas em intervalos regularmente espaçados $T$, i.e. $u(iT) \in \mathbb{R}^p$, $\forall i \geq 1$ são conhecidas. $w(t) \in \mathbb{R}^q$ é o ruído de processo. 
-}
-
-\subsubsection{Problema 2: Irregular input sampling}\label{sec:entrada_irregular}
-
-\textit{Medições feitas em instantes de tempo aleatórios $t_{\textrm{u},i}$, $\forall i \in \mathbb{N^+}$, ordenados ($t_{\textrm{u},i+1}>t_{\textrm{u},i}$, $\forall i \in \mathbb{N^+}$) e definidos pelos intervalos de tempo $h_{\textrm{u},0} \triangleq t_{\textrm{u},1}$ e $h_{\textrm{u},i} \triangleq t_{\textrm{u},i}-t_{\textrm{u},i}, \ \forall i \geq 1$. $u(t_{\textrm{u},i}) \in \mathbb{R}^p$, $\forall i \geq 1$ são conhecidas. $w(t_{\textrm{u},i}) \in \mathbb{R}^q$ é o ruído de processo. Assim como para a medição irregular da saída, os instantes de tempo $t_{\textrm{u},i}$ são dados por um processo aleatório de Poisson com parâmetro $\lambda_u=T$, sendo $T$ o valor esperado do intervalo de tempo $h_{\textrm{u},i}$.
-}
-
-\subsubsection{Problema 2: Irregular sampling with time delay}\label{sec:entrada_irregular}
-\hfill 
-
 
 
 Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
@@ -122,3 +109,19 @@ Objetivos específicos
 
 
 \clearpage
+
+%
+%\subsubsection{Problema 1: In}\label{sec:entrada_regular}
+%
+%\textit{As entradas $u(t)$ são medidas em intervalos regularmente espaçados $T$, i.e. $u(iT) \in \mathbb{R}^p$, $\forall i \geq 1$ são conhecidas. $w(t) \in \mathbb{R}^q$ é o ruído de processo. 
+%}
+%
+%\subsubsection{Problema 2: Irregular input sampling}\label{sec:entrada_irregular}
+%
+%\textit{Medições feitas em instantes de tempo aleatórios $t_{\textrm{u},i}$, $\forall i \in \mathbb{N^+}$, ordenados ($t_{\textrm{u},i+1}>t_{\textrm{u},i}$, $\forall i \in \mathbb{N^+}$) e definidos pelos intervalos de tempo $h_{\textrm{u},0} \triangleq t_{\textrm{u},1}$ e $h_{\textrm{u},i} \triangleq t_{\textrm{u},i}-t_{\textrm{u},i}, \ \forall i \geq 1$. $u(t_{\textrm{u},i}) \in \mathbb{R}^p$, $\forall i \geq 1$ são conhecidas. $w(t_{\textrm{u},i}) \in \mathbb{R}^q$ é o ruído de processo. Assim como para a medição irregular da saída, os instantes de tempo $t_{\textrm{u},i}$ são dados por um processo aleatório de Poisson com parâmetro $\lambda_u=T$, sendo $T$ o valor esperado do intervalo de tempo $h_{\textrm{u},i}$.
+%}
+%
+%\subsubsection{Problema 2: Irregular sampling with time delay}\label{sec:entrada_irregular}
+%\hfill 
+%
+
