@@ -76,8 +76,10 @@ Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT
 
 When time-stamp information is available, data assimilation can be performed at the correct measurement time instants $t_k$. If they are not present in the data, however, the assimilation instant is considered to be the random receipt time instant or the next estimation moment, when there are no transmission time delays. 
 
+We wish to estimate the state vector $x(nT)$ recursively, at regularly spaced time intervals $T$. 
 
-Deseja-se estimar o estado $x(nT)$ de forma recursiva, em intervalos regularmente espaçados $T$ igual ao período de amostragem regular dos sinais de entrada para o Problema 1 e valor esperado do intervalo de medição das entradas para o Problema 2. Utiliza-se o conjunto de medições $y(t_k): t_k \leq iT$ e de entradas passadas $u_{i-1}$ ou $u(t_{\textrm{u},i})$. O conhecimento dos intervalos de tempo $h_{k-1}: t_k \leq nT$ e  $h_{\textrm{u},i-1}: t_{\textrm{u},i} \leq nT$ para o Problema 2 também são levados em consideração para o cenário com carimbo de tempo. O tempo médio de observações $\lambda$ é assumidamente maior que o intervalo de tempo de estimação $T$, por um fator $\alpha>1$, ou seja, $\lambda=\alpha T$.
+
+ Utiliza-se o conjunto de medições $y(t_k): t_k \leq iT$ e de entradas passadas $u_{i-1}$ ou $u(t_{\textrm{u},i})$. O conhecimento dos intervalos de tempo $h_{k-1}: t_k \leq nT$ e  $h_{\textrm{u},i-1}: t_{\textrm{u},i} \leq nT$ para o Problema 2 também são levados em consideração para o cenário com carimbo de tempo. O tempo médio de observações $\lambda$ é assumidamente maior que o intervalo de tempo de estimação $T$, por um fator $\alpha>1$, ou seja, $\lambda=\alpha T$.
 
 
 \section{Objectives}\label{objectives}
