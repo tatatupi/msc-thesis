@@ -61,10 +61,6 @@ Para atrasos de transmissão:
 Nas próximas subseções é apresentado como os algoritmos de estimação tratam os cenários \textbf{A}, \textbf{B} e \textbf{C} para os casos em que o carimbo de tempo está e não está disponível.
 
 
-
-
-
-
 \section{With Timestamp}\label{sec:carimbo}
 
 Sabendo o momento exato $t_k$ em que as observações são medidas, é possível assimilá-las no instante correto, considerando intervalos de tempo variáveis para o algoritmo de filtragem. Para isso, o modelo matemático em () é discretizado a uma taxa $\delta t^*_j$ variável. Para a simulação deste artigo, os valores de $\delta t^*_j$ são calculados a partir da união de todos os instantes de tempo correspondentes às chegadas de sinais de entrada ou de medição em um único vetor, de forma ordenada. Por meio da subtração de dois instantes consecutivos, é possível obter os intervalos de tempo de integração $\delta t^*_j$ correspondente. No caso de uma versão \textit{online}, a integração das equações diferenciais é executada a medida que um sinal de entrada ou um sinal de medição de saída é recebido. Nesses momentos, são utilizados o intervalo de tempo entre o último sinal recebido e o instante atual. Além disso, quando o sinal recebido é um sinal de entrada, é executada apenas a etapa de predição. E, quando o sinal for de medição, acontecem as duas etapas de predição e assimilação de dados, considerado um segurador de ordem zero para a entrada. O fluxograma da Fig.~\ref{fig:diagrama} representa o passo a passo desse algoritmo, apresentando as etapas executadas quando o sinal é de entrada ou de observação.
@@ -72,6 +68,25 @@ Sabendo o momento exato $t_k$ em que as observações são medidas, é possível assi
 Dessa forma, no cenário \textbf{B} da Fig.~\ref{fig:esquema}, o algoritmo executa uma etapa completa de predição e assimilação de dados dos instantes $3T$ até $t_1$, considerando o intervalo $\delta t^*_4 =t_1-3T$ (note que há 3 intervalos de tempo $\delta t^*_j$, antes o instante $t_1$). Em seguida é feita uma etapa de predição entre $t_1$ e $4T$. Durante o intervalo de tempo de integração entre $t_1$ e $4T$, considerou-se que a entrada permaneceu constante desde a sua última atualização em 3T. Ou seja, assume-se que não houve variação na entrada para essa etapa de predição. Caso mais de uma observação seja medida entre duas entradas (cenário \textbf{C}), são executadas etapas completas de filtragem para cada observação disponível e, ao final, uma etapa de predição entre a última observação e a próxima entrada.
 
 \section{Without Timestamp}
+
+Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
+\\
+\begin{equation}\label{eq:disc_carimbo}
+x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
+\end{equation}
+\\
+\noindent
+em que $t^*_j= t^*_{j-1} + \delta t^*_j$ e $t^*_0=0$. Cada valor $\delta t^*_j$ corresponde ao intervalo de tempo entre o último instante $t^*_{j-1}$ em que se registrou a chegada de um sinal, seja ele de entrada ou de observação, e o próximo instante de tempo $t^*_{j}$ em que um valor de entrada ou de observação é obtido, conforme será detalhado no Capítulo \ref{cap3}. Entre instantes de observação e de entrada é utilizado um segurador de ordem zero, considerando a ultima informação disponível. 
+
+Por outro lado, se o carimbo de tempo não é levado em conta, (\ref{eq:processo}) pode ser reescrito como
+
+\begin{equation}\label{eq:disc_semcarimbo}
+x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
+\end{equation}
+\\
+\noindent
+em que $t=nT$.
+
 
 Quando não há carimbo de tempo nas medições, o algoritmo de filtragem não sabe o momento exato da medição $t_k$. Assim, o instante de tempo considerado para a etapa de assimilação de dados é sempre o próximo instante múltiplo de \textit{T}, i.e. quando a próxima informação de entrada está disponível.
 %

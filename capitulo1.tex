@@ -47,19 +47,7 @@ y(t_k)=g(x(t_k- \delta_{t_k}),v(t_k),t_k),
 \end{equation}
 \\
 \noindent
-where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, assumedly known. We assume that for all $k \geq 1$, the observations $y(t_k) \in \mathbb{R}^m$ and the probability density functions (PDFs) of $x_0$ and $v(t_k)$ are known, where $x_0 \in \mathbb{R}^n$ is the initial state vector and $v(t_k) \in \mathbb{R}^r$ is the observation noise. Observations are taken at random time instants $t_k$ and are delayed by a random time amount $\delta_{t_k}$, given by an exponential random variables, with parameter $\lambda_{\delta_{t_k}}$, according to Figure ~\ref{fig:delay}. Out-of-sequence measurements (OOSM) are not considered in this work. We assume that, in case a delayed measurement is to arrive later than future measurements, it gets lost in transmission.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=1]{Imagens/esquema5.png}
-	%\setlength{\belowcaptionskip}{-12pt}
-	\caption[poisson]{Randomly delayed measurements.}
-	\label{fig:delay}
-\end{figure}
-
-
-Time instants $\forall k \in \mathbb{N^+}$ are ordered ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. That is, the time intervals $h_k$ are also exponential random variables i.i.d with a known $\lambda_{h_k}$ parameter $h_k \sim \mathcal{E} (\lambda_{h_k})$,  where $\mathcal{E} (\lambda)$ defines an exponential PDF, with parameter $\lambda$, which is also its expected value. An example of time intervals produced by such a random is illustrated in Figure \ref{fig:amost}.
-
+where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, assumedly known. We assume that for all $k \geq 1$, the observations $y(t_k) \in \mathbb{R}^m$ and the probability density functions (PDFs) of $x_0$ and $v(t_k)$ are known, where $x_0 \in \mathbb{R}^n$ is the initial state vector and $v(t_k) \in \mathbb{R}^r$ is the observation noise. Observations are taken at random time instants $t_k$ and are considered to be ordered ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. That is, the time intervals $h_k$ are exponential random variables i.i.d with a known parameter $\lambda_{h_k}$, i.e. $h_k \sim \mathcal{E} (\lambda_{h_k})$,  where $\mathcal{E} (\lambda)$ defines an exponential PDF, with parameter $\lambda$, which is also its expected value. An example of time intervals produced by such a random is illustrated in Figure \ref{fig:amost}.
 
 
 \begin{figure}[h]
@@ -70,31 +58,24 @@ Time instants $\forall k \in \mathbb{N^+}$ are ordered ($t_{k+1}>t_k,\forall k \
 	\label{fig:amost}
 \end{figure}
 
-This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002}, for instance, considers a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They proved that, if the sensors are independents and unsynchronized and $N$ is big enough, the waiting time between the arrival of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
+This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002}, for instance, considers a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They proved that, if the sensors are independents and unsynchronized and $N$ is big enough, the waiting time between the realization of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
+
+Arrival times to the estimator may be delayed during transmission by a random time amount $\delta_{t_k}$, also given by exponential random variables, with parameter $\lambda_{\delta_{t_k}}$, according to Figure~\ref{fig:delay}. Out-of-sequence measurements (OOSM) are not considered in this work. We assume that, in case a delayed measurement is to arrive later than future measurements, it gets lost in transmission.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=1]{Imagens/esquema5.png}
+	%\setlength{\belowcaptionskip}{-12pt}
+	\caption[poisson]{Randomly delayed measurements.}
+	\label{fig:delay}
+\end{figure}
+
 
 Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT) \in \mathbb{R}^p$, $\forall i \geq 1$ are known.  $w(t) \in \mathbb{R}^q$ is process noise.
 
-%\todo[caption = {Definir quais problemas serão estudados},inline]{Dependendo de quais e quantos problemas forem estudados, descrever nessa seção.}
+When time-stamp information is available, data assimilation can be performed at the correct measurement time instants $t_k$. If they are not present in the data, however, the assimilation instant is considered to be the random receipt time instant or the next estimation moment, when there are no transmission time delays. 
 
-
-
-Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
-\\
-\begin{equation}\label{eq:disc_carimbo}
-x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
-\end{equation}
-\\
-\noindent
-em que $t^*_j= t^*_{j-1} + \delta t^*_j$ e $t^*_0=0$. Cada valor $\delta t^*_j$ corresponde ao intervalo de tempo entre o último instante $t^*_{j-1}$ em que se registrou a chegada de um sinal, seja ele de entrada ou de observação, e o próximo instante de tempo $t^*_{j}$ em que um valor de entrada ou de observação é obtido, conforme será detalhado no Capítulo \ref{cap3}. Entre instantes de observação e de entrada é utilizado um segurador de ordem zero, considerando a ultima informação disponível. 
-
-Por outro lado, se o carimbo de tempo não é levado em conta, (\ref{eq:processo}) pode ser reescrito como
-
-\begin{equation}\label{eq:disc_semcarimbo}
-x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
-\end{equation}
-\\
-\noindent
-em que $t=nT$.
 
 Deseja-se estimar o estado $x(nT)$ de forma recursiva, em intervalos regularmente espaçados $T$ igual ao período de amostragem regular dos sinais de entrada para o Problema 1 e valor esperado do intervalo de medição das entradas para o Problema 2. Utiliza-se o conjunto de medições $y(t_k): t_k \leq iT$ e de entradas passadas $u_{i-1}$ ou $u(t_{\textrm{u},i})$. O conhecimento dos intervalos de tempo $h_{k-1}: t_k \leq nT$ e  $h_{\textrm{u},i-1}: t_{\textrm{u},i} \leq nT$ para o Problema 2 também são levados em consideração para o cenário com carimbo de tempo. O tempo médio de observações $\lambda$ é assumidamente maior que o intervalo de tempo de estimação $T$, por um fator $\alpha>1$, ou seja, $\lambda=\alpha T$.
 
