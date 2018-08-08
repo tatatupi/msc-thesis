@@ -16,11 +16,17 @@
 
 %\section{Introdução}
 
+In this chapter, we present simulation results for two different systems: nonholomonic unicycle position estimation, and longitudinal motion dynamics of an advanced aircraft.
+
+We begin investigating the first system with a regularly sampled input signal and a irregularly sampled output with and without time-delay. Three different scenarios are investigated for both conditions: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between input regular sampling rate and output irregular average sampling rate. 
+
+To further analyze the impact of time-stamp availability, we study the velocity estimation problem of an aircraft, using a sampled-data filter, using a continuous process model. The observation is available to the estimator aperiodically with time-delay. The effect on estimation performance is evaluated in three different scenarios: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, variation of the average time-delay.
+
 \section{Unicycle Position Estimation}
 
 \subsection{System Description}
 
-Considere um robô móvel não-holonômico, cujo modelo de processo cinemático é dado por
+Consider a nonholomonic moving robot, with the cinematic process model given by
 
 \setlength{\abovedisplayskip}{0.5pt}
 
@@ -33,12 +39,12 @@ Considere um robô móvel não-holonômico, cujo modelo de processo cinemático é dad
 \end{split}
 \end{equation}
 \noindent
-em que $p_\textrm{x}$ e $p_\textrm{y}$ são as coordenadas de posição, $\theta$ a orientação angular, $v$ a velocidade linear e as entradas $u_1$ e $u_2$ são, respectivamente, a velocidade angular ($\omega$) e a aceleração linear (a).
 
-O sistema descrito por~\ref{eq:sistema} é discretizado por meio do método de Runge-Kutta de 4ª ordem e o vetor de estados $x_i$ é dado por $x_i \overset{\Delta}{=} [p_{\textrm{x},i}\ p_{\textrm{y},i}\ \theta_i\ v_i]^T$.
+where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ the angular orientation, $v$ the linear velocity and inputs $u_1$ and $u_2$ are the angular velocity $\omega$ and the linear acceleration $a$, respectively.
 
+The system described by~\ref{eq:sistema} is discretized by a 4$^{th}$ order Runge-Kutta method and the state vector $x_i$ is given by $x_i \overset{\Delta}{=} [p_{\textrm{x},i}\ p_{\textrm{y},i}\ \theta_i\ v_i]^T$.
 
-O modelo de observações é dado por
+The observation model $y(t_k) \in \mathbb{R}^2$
 
 \begin{equation}
 y(t_k) = 
@@ -49,16 +55,16 @@ p_\textrm{y}(t_k)
 \end{equation}
 
 \noindent
-em que $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ é o ruído de observação com média nula e covariância $R_{t_k}$. Para o cenário sem carimbo de tempo, o vetor de observações é aproximado por $\tilde{y}_i \approx y(t_k)$, em que $i$ é o índice do próximo instante de tempo múltiplo de $T$.
+is given by the position coordinates and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
-O vetor de entradas $u_i = [\omega_i\ a_i]^T$, é medido por meio de girômetro e acelerômetro, respectivamente. Assume-se que
+Input vector $u_i = [\omega_i\ a_i]^T$ is measured by a girometer and accelerometer, respectively. We assume that 
 
 \begin{equation}\label{eq:entrada}
 u_i = \tilde{u}_i - w_i,
 \end{equation}
 
 \noindent
-em que $\tilde{u}$ é o valor medido pelos sensores e $w \sim \mathcal{N} (0, Q_i)$ representa o ruído correspondente, de média nula e covariância $Q_i$. 
+where $\tilde{u}$ is the sensors measured valueand $w \sim \mathcal{N} (0, Q_i)$ represents the corresponded noise, of zero mean and covariance $Q_i$. 
 
 São considerados 60 segundos de simulação, com um passo de integração $\delta t_{\textrm{sim}} = 10^{-4}$. Para simular a amostragem irregular, os intervalos de tempo $h_k$ são calculados por meio da função de distribuição exponencial do MatLab\texttrademark e aproximados para o instante de tempo mais próximo, dentre as 600.000 amostras. As entradas utilizadas para a simulação são apresentadas na Fig.~\ref{fig:entrada}. A Fig.~\ref{fig:exukf} apresenta o deslocamento do robô no plano \textit{xy} partindo do ponto $(0,0)$, uma realização de medições ruidosas com relação sinal-ruído SNR\textsubscript{y} $= 30$ dB e $\lambda=0.3$ s e a estimativa de deslocamento do UKF, considerando carimbo de tempo e um $\alpha=5$. 
 
@@ -122,24 +128,12 @@ Para a análise de resultados desse artigo, foram feitas 3 simulações distintas, 
 %		\caption{}
 		\label{fig:noise}
 	\end{subfigure}
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/noise2.eps}	
-		%		\caption{}
-		\label{fig:noise2}
-	\end{subfigure}
 
 	\begin{subfigure}
 		\centering
 		\includegraphics[scale=0.4]{Imagens/samp.eps}
 %		\caption{}
 		\label{fig:samp}
-	\end{subfigure}
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/samp2.eps}
-		%		\caption{}
-		\label{fig:samp2}
 	\end{subfigure}
 
 	\begin{subfigure}
@@ -149,12 +143,6 @@ Para a análise de resultados desse artigo, foram feitas 3 simulações distintas, 
 		\label{fig:dtu}
 	\end{subfigure}
 
-	\begin{subfigure}
-	\centering
-	\includegraphics[scale=0.4]{Imagens/dtudty2.eps}
-	%		\caption[entrada]{}
-	\label{fig:dtu2}
-	\end{subfigure}
 
 	\caption[Entradas]{Variação do índice desempenho J em função de (a) redução da relação sinal-ruído das observações SNR\textsubscript{y}, (b) aumento do intervalo de tempo médio das observações $\lambda$ e (c) relação entre o intervalo de tempo de entrada $T$ e o valor de $\lambda$, dado por $\alpha$.  O lado esquerdo representa entrada regular e o direito entrada irregular}
 	\label{fig:results}

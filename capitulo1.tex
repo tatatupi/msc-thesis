@@ -78,6 +78,10 @@ When time-stamp information is available, data assimilation can be performed at 
 
 We wish to estimate the state vector $x(t)$ and its covariance recursively, at any time instant $t$, given their initial values ($x_0$, $P_0$), the process model ($f(x(t), u(t), w(t), t)$), the input or control signals ($u(t_u): t_u \leq t$) and the set of past observations $y(t_k): t_k \leq t$. The knowledge of the time intervals $h_{k-1}: t_k \leq t$ is also taken into consideration when time-stamp information is available. When state estimation is done at regularly spaced time intervals $T$, we assume that the average time instant of observations $\lambda_{h_k}$ is greater than $T$ by a factor $\alpha>1$, i.e. $\lambda_{h_k}=\alpha T$.
 
+\todo[caption={Formulação do Problema},inline]{A princípio, acredito que serão simulados um filtro contínuo para o avião e um filtro discreto para o robô. No primeiro caso, estou em dúvida se há necessidade de fazer estimação regular. Ao invés disso, estou pensando em fazer estimações sempre que há informação de observação. No segudo caso, as estimações são feitas em intervalos regulares, conforme frequência do sinal de entrada. Por isso, deixei esse último parágro mais genérico.}
+
+
+
 
 \section{Objectives}\label{objectives}
 
