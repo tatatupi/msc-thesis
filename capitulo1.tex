@@ -58,7 +58,7 @@ where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \math
 	\label{fig:amost}
 \end{figure}
 
-This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002}, for instance, considers a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They proved that, if the sensors are independents and unsynchronized and $N$ is big enough, the waiting time between the realization of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
+This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002}, for instance, considered a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They proved that, if the sensors are independent and unsynchronized and $N$ is big enough, the waiting time between the realization of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
 
 Arrival times to the estimator may be delayed during transmission by a random time amount $\delta_{t_k}$, also given by exponential random variables, with parameter $\lambda_{\delta_{t_k}}$, according to Figure~\ref{fig:delay}. Out-of-sequence measurements (OOSM) are not considered in this work. We assume that, in case a delayed measurement is to arrive later than future measurements, it gets lost in transmission.
 
@@ -67,18 +67,20 @@ Arrival times to the estimator may be delayed during transmission by a random ti
 	\centering
 	\includegraphics[scale=1]{Imagens/esquema5.png}
 	%\setlength{\belowcaptionskip}{-12pt}
-	\caption[poisson]{Randomly delayed measurements.}
+	\caption[poisson]{Randomly delayed measurements, modeled as exponential random variables. Random measurement times $t_k$ are received by the estimator after a random delay $\delta_{t_k}$}
 	\label{fig:delay}
 \end{figure}
 
 
 Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT) \in \mathbb{R}^p$, $\forall i \geq 1$ are known.  $w(t) \in \mathbb{R}^q$ is process noise.
 
-When time-stamp information is available, data assimilation can be performed at the correct measurement instants $t_k$. However if they are not present in the data, the assimilation moment is considered to be the random receipt time instant or the next estimation moment, when there are no transmission time delays. 
+\duvida{Como tratar a questão do filtro contínuo para as entradas u(t)}
 
-We wish to estimate the state vector $x(t)$ and its covariance recursively, at any time instant $t$, given their initial values ($x_0$, $P_0$), the process model ($f(x(t), u(t), w(t), t)$), the input or control signals ($u(t_u): t_u \leq t$) and the set of past observations $y(t_k): t_k \leq t$. The knowledge of the time intervals $h_{k-1}: t_k \leq t$ is also taken into consideration when time-stamp information is available. When state estimation is done at regularly spaced time intervals $T$, we assume that the average time instant of observations $\lambda_{h_k}$ is greater than $T$ by a factor $\alpha>1$, i.e. $\lambda_{h_k}=\alpha T$.
+When time-stamp information is available, data assimilation can be performed at the correct measurement instants $t_k$. When they are not, the assimilation moment is considered to be the random receipt time instant or the next estimation moment, when there are no transmission time delays. 
 
-\todo[caption={Formulação do Problema},inline]{A princípio, acredito que serão simulados um filtro contínuo para o avião e um filtro discreto para o robô. No primeiro caso, estou em dúvida se há necessidade de fazer estimação regular. Ao invés disso, estou pensando em fazer estimações sempre que há informação de observação. No segudo caso, as estimações são feitas em intervalos regulares, conforme frequência do sinal de entrada. Por isso, deixei esse último parágro mais genérico.}
+We wish to estimate the state vector $x(t)$ and its covariance recursively, at regularly spaced time intervals $T$, given their initial values ($x_0$, $P_0$), the process model ($f(x(t), u(t), w(t), t)$), the input or control signals ($u(t): t \leq kT$) and the set of past observations $y(t_k): t_k - \delta_{t_k} \leq kT$. The knowledge of the time intervals $h_{k-1}: t_k - \delta_{t_k} \leq t$ is also taken into consideration when time-stamp information is available. We assume that the average time instant of observations $\lambda_{h_k}$ is greater than $T$ by a factor $\alpha>1$, i.e. $\lambda_{h_k}=\alpha T$.
+
+\duvida{A formulação está completa e matematicamente correta?}
 
 
 
