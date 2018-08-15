@@ -1,138 +1,45 @@
-%-------------------------------------------------------------------------------
-\chapter{Simulation Methods and Assumptions}
-\vspace{-1cm} \label{cap3}
-%
+%------------------------------------------------------------------------------
+\chapter{Sensor Fusion}
+\vspace{-1cm} \label{cap2}
+
 %\begin{flushright}
 %\begin{minipage}{0.7\linewidth}
-%\emph{``Se quiser por à prova o caráter de um homem, dê-lhe
-%poder.''}
+%\emph{``Quando uma criatura humana desperta para um grande sonho e
+%sobre ele lança toda a força de sua alma, todo o universo conspira a
+%seu favor.''}
 %\end{minipage}
 %\end{flushright}
 %
 %\begin{flushright}
-%{Abraham Lincoln}
+%{Goethe}
 %\end{flushright}
 
-%\section{Introdução}\label{introducao_cap_3}
-%%\markright{\thesection ~~~ Modelos de Previsão} \label{previsao}
-%%
+%\vspace{1cm}
 
-\section{State Estimation with Irregular Sampling}
-
-%\todo[caption = {Atualizar Seção de Métodos}, inline]{Falta traduzir e atualizar para o cenário com irregularidade na entrada. Além do texto do artigo, foi introduzido esquemático da nova irregularidade com pequeno texto.}
-%
-%Para avaliar o efeito de se considerar ou não o carimbo de tempo das medições no desempenho de sistemas de estimação via fusão sensorial, filtros de Kalman \textit{unscented} (UKF) são utilizados. O algoritmo UKF é descrito de forma detalhada no trabalho de \citep{Julier2004} e uma revisão recente e bastante completa pode ser encontrada em \citep{Menegaz2015}. Assim como o filtro de Kalman original \citep{Kalman1960}, o UKF é composto pelas etapas de predição e de assimilação de dados. As informações dos modelos em  são utilizadas durante a predição, enquanto as observações medidas são introduzidas nas estimativas de estado na fase de assimilação de dados.
-%
-%
-%Devido à amostragem irregular descrita na Seção 1, os instantes de medição $t_k$ das observações não coincidem com os de estimação $iT$. Além disso, o modelo de processo é discretizado a uma taxa $1/T$ mais rápida que a frequência média das observações $1/\lambda$. Como consequência, há intervalos de tempo $T$ em que apenas a etapa de predição pode ser realizada e outros em que há dados a serem assimilados. Um exemplo de aplicação em que essa característica acontece é o problema de rastreamento de alvos. Sensores inerciais que fornecem as informações de entrada para o modelo, e.g. aceleração linear e velocidade angular, operam em uma frequência mais alta que os sensores GPS, mas, geralmente, apresentam níveis de ruído superiores. 
-%
-Um esquemático ilustrativo é apresentado na Fig., onde $\alpha=5$, i.e. a taxa média de amostragem das observações $1/\lambda$ é cinco vezes mais lenta que a frequência de amostragem $1/T$ dos sensores que disponibilizam informações de entrada. A cada $T$ segundos, ou seja no intervalo de tempo entre dois instantes de amostragem das entradas pode haver ou não informações de observação. No cenário ilustrado pela letra \textbf{A} na Fig.~\ref{fig:esquema}, não há medições disponíveis. Durante o intervalo \textbf{B} há apenas uma medição, ao passo que em \textbf{C} há mais de uma observação disponível.
+%%Colocar uma descrição do capítulo aqui!
+%\section{Introdução}\label{sec int_cap_2}
 
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[scale=0.65]{Imagens/esquema2}
-	\caption[esquemas]{Exemplos de instantes de amostragem da entrada e das estimações (1) e das observações (2). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
-	\label{fig:esquema}
-\end{figure} 
+In this chapter, we review sensor fusion techniques. We start with a brief explanation on the four different types: possibilistic, fuzzy reasoning, evidential belief e probabilistic. The latter is further explained, since it is the one used in the simulated examples. Specific techniques to deal with irregular sampling in sensor fusion are also addressed.
+
+\section{Introduction}
+
+Explicar brevemente sobre os tipos de fusão sensorial: possibilistic, fuzzy reasoning, evidential belief e probabilistic \citep{Khaleghi2013}. Focar no probabilistic. 
 
 
+\section{Probabilistic Sensor Fusion}
 
-\subsection{Input Irregular Sampling}
+Entrar em maiores detalhes do probabilistic, explicando KF e o PF (caso seja utilizado no trabalho).
 
-Em caso de amostragem irregular também na entrada, um esquemático dos instantes de estimação, amostragem e entrada pode ser observado na Fig.~\ref{fig:esquema2}
+\subsection{Kalman Filters}
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[scale=0.65]{Imagens/esquema3}
-	\caption[esquemas]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
-	\label{fig:esquema2}
-\end{figure} 
+\subsection{Particle Filters}
 
-Para atrasos de transmissão:
+\section{Sensor Fusion Techniques}
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[scale=0.65]{Imagens/esquema4}
-	\caption[esquemas]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
-	\label{fig:esquema3}
-\end{figure} 
+Para fusão de informações múltiplas de observações, explicar os quatro grandes grupos: parallel filter (multi-output system, multi-output KF), sequential filter (kfusing first output as the prediction for the secod output), outputs fusion (outputs are fused using the noise covariance) e track-to-track fusion (single-output KFs fused considering correlation). \citep{Willner1976,Fatehi2017}
 
-Nas próximas subseções é apresentado como os algoritmos de estimação tratam os cenários \textbf{A}, \textbf{B} e \textbf{C} para os casos em que o carimbo de tempo está e não está disponível.
-
-
-\section{With Timestamp}\label{sec:carimbo}
-
-Sabendo o momento exato $t_k$ em que as observações são medidas, é possível assimilá-las no instante correto, considerando intervalos de tempo variáveis para o algoritmo de filtragem. Para isso, o modelo matemático em () é discretizado a uma taxa $\delta t^*_j$ variável. Para a simulação deste artigo, os valores de $\delta t^*_j$ são calculados a partir da união de todos os instantes de tempo correspondentes às chegadas de sinais de entrada ou de medição em um único vetor, de forma ordenada. Por meio da subtração de dois instantes consecutivos, é possível obter os intervalos de tempo de integração $\delta t^*_j$ correspondente. No caso de uma versão \textit{online}, a integração das equações diferenciais é executada a medida que um sinal de entrada ou um sinal de medição de saída é recebido. Nesses momentos, são utilizados o intervalo de tempo entre o último sinal recebido e o instante atual. Além disso, quando o sinal recebido é um sinal de entrada, é executada apenas a etapa de predição. E, quando o sinal for de medição, acontecem as duas etapas de predição e assimilação de dados, considerado um segurador de ordem zero para a entrada. O fluxograma da Fig.~\ref{fig:diagrama} representa o passo a passo desse algoritmo, apresentando as etapas executadas quando o sinal é de entrada ou de observação.
-
-Dessa forma, no cenário \textbf{B} da Fig.~\ref{fig:esquema}, o algoritmo executa uma etapa completa de predição e assimilação de dados dos instantes $3T$ até $t_1$, considerando o intervalo $\delta t^*_4 =t_1-3T$ (note que há 3 intervalos de tempo $\delta t^*_j$, antes o instante $t_1$). Em seguida é feita uma etapa de predição entre $t_1$ e $4T$. Durante o intervalo de tempo de integração entre $t_1$ e $4T$, considerou-se que a entrada permaneceu constante desde a sua última atualização em 3T. Ou seja, assume-se que não houve variação na entrada para essa etapa de predição. Caso mais de uma observação seja medida entre duas entradas (cenário \textbf{C}), são executadas etapas completas de filtragem para cada observação disponível e, ao final, uma etapa de predição entre a última observação e a próxima entrada.
-
-\section{Without Timestamp}
-
-Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
-\\
-\begin{equation}\label{eq:disc_carimbo}
-x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
-\end{equation}
-\\
-\noindent
-em que $t^*_j= t^*_{j-1} + \delta t^*_j$ e $t^*_0=0$. Cada valor $\delta t^*_j$ corresponde ao intervalo de tempo entre o último instante $t^*_{j-1}$ em que se registrou a chegada de um sinal, seja ele de entrada ou de observação, e o próximo instante de tempo $t^*_{j}$ em que um valor de entrada ou de observação é obtido, conforme será detalhado no Capítulo \ref{cap3}. Entre instantes de observação e de entrada é utilizado um segurador de ordem zero, considerando a ultima informação disponível. 
-
-Por outro lado, se o carimbo de tempo não é levado em conta, (\ref{eq:processo}) pode ser reescrito como
-
-\begin{equation}\label{eq:disc_semcarimbo}
-x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
-\end{equation}
-\\
-\noindent
-em que $t=nT$.
-
-
-Quando não há carimbo de tempo nas medições, o algoritmo de filtragem não sabe o momento exato da medição $t_k$. Assim, o instante de tempo considerado para a etapa de assimilação de dados é sempre o próximo instante múltiplo de \textit{T}, i.e. quando a próxima informação de entrada está disponível.
-%
-Existem apenas dois cenários de estimação nesse caso. Primeiro, quando não há medições disponíveis entre duas entradas, o estimador executa apenas a etapa de predição entre os intervalos de tempo $iT$ e $(i+1)T$, conforme cenário \textbf{A} da Fig.~\ref{fig:esquema}. Segundo, nos casos representados pela letra \textbf{B}, o estimador considera que a observação foi feita no próximo instante multiplo de $T$ em que há informações de entrada. No exemplo da Fig.~\ref{fig:esquema}, a medição feita no instante $t_1$ é assimilada no instante $4T$. Caso haja mais de uma observação entre duas entradas (cenário \textbf{C}), a mais antiga é descartada. Os passos de discretização do modelo utilizados pelo UKF são sempre $\delta t=T$, havendo ou não observações disponíveis. 
-
-\vspace{0.5cm}
-\begin{figure}
-	\centering
-	\begin{adjustbox}{width=\textwidth/2,height=\textheight,keepaspectratio}
-		
-		\begin{tikzpicture}[node distance=2cm, font = \scriptsize]
-		
-		\node(start)[startstop][text width=3cm,align=center]{\textbf{Início} \\ $t^*_0=0$; \\ $i=j=k=1$; \\};
-		
-		\node (dec1) [decision, below of=start,yshift=-0.5cm] {Sinal Recebido};
-		
-		\node (pro1) [process, below right of=dec1, yshift=-0.7cm, xshift=0.25cm][text width=3cm,align=center]{Calcula \\ $\delta t^*_{j} = iT - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
-		
-		\node (pro12) [process, below of=pro1][text width=3cm,align=center, yshift=0.5cm]{Etapa de Predição};
-		
-		\node (pro2) [process, below left of=dec1,  yshift=-0.7cm, xshift=-0.25cm][text width=3cm,align=center]{Calcula \\ $\delta t^*_{j} = t_k - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
-		
-		\node (pro22) [process, below of=pro2][text width=3cm,align=center, yshift=0.5cm]{Etapa de Predição, utilizando ZOH};
-		
-		\node (pro23) [process, below of=pro22][text width=3cm,align=center, yshift=0.5cm]{Etapa de Assimilação de Dados};
-		
-		\node (pro3) [startstop, below of = pro23][text width=3cm,align=center, xshift=1.8cm]{Estimativa em $t^*_{j}$};
-		
-		\draw [arrow] (start) -- node[pos=0.5](h){} (dec1);
-		\draw [arrow] (dec1) -| node[text width=3cm,align=center,anchor=west,xshift=-1cm] {Sinal de \\ Entrada} (pro1);
-		\draw [arrow] (dec1) -| node[text width=3cm,align=center,anchor=east,xshift=0.8cm] {Sinal de \\ Observação} (pro2);
-		\draw [arrow] (pro1) -- (pro12);
-		\draw [arrow] (pro2) -- (pro22);
-		\draw [arrow] (pro22) -- (pro23);
-		\draw [arrow] (pro12) -- node[text width=3cm,align=center,anchor=south,xshift=1cm] {$i=i+1$} (pro3);
-		\draw [arrow] (pro23) -- node[text width=3cm,align=center,anchor=east,xshift=0.6cm] {$k=k+1$}(pro3);
-		\draw [arrow] (pro3) --+(-4cm,0) |- node[text width=3cm,align=center,anchor=south,xshift=1cm] {$j=j+1$}(h);
-		\end{tikzpicture}
-	\end{adjustbox}
-	
-	\caption{Diagrama ilustrativo da versão \textit{online} do estimador que considera o carimbo de tempo. Os índices $i$, $j$ e $k$ representam, respectivamente os contadores dos sinais de entrada, estimação e da saída.}
-	\label{fig:diagrama}
-\end{figure}	
-
-
-
+Tentar agrupar os principais métodos de filtragem, por tipo de irregularidade (possivelmente uma grande tabela)
 
 
 \clearpage
