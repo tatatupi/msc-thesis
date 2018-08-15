@@ -1,5 +1,5 @@
 %------------------------------------------------------------------------------
-\chapter{Theoretical Background}
+\chapter{Irregular Sampling}
 \vspace{-1cm} \label{cap2}
 
 %\begin{flushright}
@@ -20,10 +20,9 @@
 %\section{Introdução}\label{sec int_cap_2}
 
 
-In this chapter, we review the irregular sampling problem and sensor fusion techniques. First, in Section \ref{irregular-sampling} we categorize the different types of irregularities that may occur in sampling and discuss the main causes and its particularities. A diagram is built by categorizing the main types studied in the scientific literature. Then, in Section \ref{sensor-fusion}, we start a brief explanation on the four techniques used for sensor fusion: possibilistic, fuzzy reasoning, evidential belief e probabilistic. The latter, being the one used in this work, is further explained and specific techniques to deal with irregular sampling in sensor fusion are addressed.
+In this chapter, we review the irregular sampling problem. First, in Section \ref{irregular-sampling} we categorize the different types of irregularities that may occur in sampling and discuss the main causes and its particularities. A diagram is built by categorizing the main types studied in the scientific literature. 
 
-
-\section{Irregular Sampling Survey}\label{irregular-sampling}
+\section{Introduction}\label{irregular-sampling}
 
 Sampling irregularities may occur due to a variety of issues, sometimes as undesired side effects of using large sensor networks architectures and others due to deliberate non-uniform sampling schemes. In this section we try to categorize and review the main irregularities observed in practice. The diagram in  Fig. \ref{fig:diagrama2} provides a simplified overview of them, separated by their sources.
 
@@ -184,25 +183,6 @@ This is a consideration in high-frequency signal conversion, or where the clock 
 \subsection{Multi-Rate Sampling}
 
 Caso típico de processo industrial, com medições laboratoriais e sensores online. \citep{Fatehi2017}
-
-
-\section{Sensor Fusion}\label{sensor-fusion}
-
-Explicar brevemente sobre os tipos de fusão sensorial: possibilistic, fuzzy reasoning, evidential belief e probabilistic \citep{Khaleghi2013}. Focar no probabilistic. 
-
-\subsection{Probabilistic Sensor Fusion}
-
-Entrar em maiores detalhes do probabilistic, explicando KF e o PF (caso seja utilizado no trabalho).
-
-\subsubsection{Kalman Filters}
-
-\subsubsection{Particle Filters}
-
-\subsection{Sensor Fusion Techniques}
-
-Para fusão de informações múltiplas de observações, explicar os quatro grandes grupos: parallel filter (multi-output system, multi-output KF), sequential filter (kfusing first output as the prediction for the secod output), outputs fusion (outputs are fused using the noise covariance) e track-to-track fusion (single-output KFs fused considering correlation). \citep{Willner1976,Fatehi2017}
-
-Tentar agrupar os principais métodos de filtragem, por tipo de irregularidade (possivelmente uma grande tabela)
 
 
 \clearpage

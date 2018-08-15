@@ -1,182 +1,138 @@
 %-------------------------------------------------------------------------------
-\chapter{Results}
-\label{cap4} \vspace{-1cm} \vspace{1cm}
-
+\chapter{Simulation Methods and Assumptions}
+\vspace{-1cm} \label{cap3}
+%
 %\begin{flushright}
 %\begin{minipage}{0.7\linewidth}
-%\emph{``O homem é como uma função, cujo numerador é o que ele é e
-%cujo denominador é o que ele pensa dele mesmo. Quanto maior o
-%denominador, menor a fração.''}
+%\emph{``Se quiser por à prova o caráter de um homem, dê-lhe
+%poder.''}
 %\end{minipage}
 %\end{flushright}
 %
 %\begin{flushright}
-%{L. N. Tolstói}
+%{Abraham Lincoln}
 %\end{flushright}
 
-%\section{Introdução}
+%\section{Introdução}\label{introducao_cap_3}
+%%\markright{\thesection ~~~ Modelos de Previsão} \label{previsao}
+%%
 
-In this chapter, we present simulation results for two different systems: nonholomonic unicycle position estimation, and longitudinal motion dynamics of an advanced aircraft.
+\section{State Estimation with Irregular Sampling}
 
-We begin investigating the first system with a regularly sampled input signal and a irregularly sampled output with and without time-delay. Three different scenarios are investigated for both conditions: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between input regular sampling rate and output irregular average sampling rate. 
+%\todo[caption = {Atualizar Seção de Métodos}, inline]{Falta traduzir e atualizar para o cenário com irregularidade na entrada. Além do texto do artigo, foi introduzido esquemático da nova irregularidade com pequeno texto.}
+%
+%Para avaliar o efeito de se considerar ou não o carimbo de tempo das medições no desempenho de sistemas de estimação via fusão sensorial, filtros de Kalman \textit{unscented} (UKF) são utilizados. O algoritmo UKF é descrito de forma detalhada no trabalho de \citep{Julier2004} e uma revisão recente e bastante completa pode ser encontrada em \citep{Menegaz2015}. Assim como o filtro de Kalman original \citep{Kalman1960}, o UKF é composto pelas etapas de predição e de assimilação de dados. As informações dos modelos em  são utilizadas durante a predição, enquanto as observações medidas são introduzidas nas estimativas de estado na fase de assimilação de dados.
+%
+%
+%Devido à amostragem irregular descrita na Seção 1, os instantes de medição $t_k$ das observações não coincidem com os de estimação $iT$. Além disso, o modelo de processo é discretizado a uma taxa $1/T$ mais rápida que a frequência média das observações $1/\lambda$. Como consequência, há intervalos de tempo $T$ em que apenas a etapa de predição pode ser realizada e outros em que há dados a serem assimilados. Um exemplo de aplicação em que essa característica acontece é o problema de rastreamento de alvos. Sensores inerciais que fornecem as informações de entrada para o modelo, e.g. aceleração linear e velocidade angular, operam em uma frequência mais alta que os sensores GPS, mas, geralmente, apresentam níveis de ruído superiores. 
+%
+Um esquemático ilustrativo é apresentado na Fig., onde $\alpha=5$, i.e. a taxa média de amostragem das observações $1/\lambda$ é cinco vezes mais lenta que a frequência de amostragem $1/T$ dos sensores que disponibilizam informações de entrada. A cada $T$ segundos, ou seja no intervalo de tempo entre dois instantes de amostragem das entradas pode haver ou não informações de observação. No cenário ilustrado pela letra \textbf{A} na Fig.~\ref{fig:esquema}, não há medições disponíveis. Durante o intervalo \textbf{B} há apenas uma medição, ao passo que em \textbf{C} há mais de uma observação disponível.
 
-To further analyze the impact of time-stamp availability, we study the velocity estimation problem of an aircraft, using a sampled-data filter, using a continuous process model. The observation is available to the estimator aperiodically with time-delay. The effect on estimation performance is evaluated in three different scenarios: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, variation of the average time-delay.
-
-\section{Unicycle Position Estimation}
-
-\subsection{System Description}
-
-Consider a nonholomonic moving robot, with the cinematic process model given by
-
-\setlength{\abovedisplayskip}{0.5pt}
-
-\begin{equation}\label{eq:sistema}
-\begin{split}
-\dot{p}_\textrm{x} & = v\cos (\theta),\\
-\dot{p}_\textrm{y} & = v\sin (\theta),\\
-\dot{\theta}  & = u_1(t),\\
-\dot{v} & = u_2(t),
-\end{split}
-\end{equation}
-\noindent
-
-where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ the angular orientation, $v$ the linear velocity and inputs $u_1$ and $u_2$ are the angular velocity $\omega$ and the linear acceleration $a$, respectively.
-
-The system described by~\ref{eq:sistema} is discretized by a 4$^{th}$ order Runge-Kutta method and the state vector $x_i$ is given by $x_i \overset{\Delta}{=} [p_{\textrm{x},i}\ p_{\textrm{y},i}\ \theta_i\ v_i]^T$.
-
-The observation model $y(t_k) \in \mathbb{R}^2$
-
-\begin{equation}
-y(t_k) = 
-\begin{bmatrix}
-p_\textrm{x}(t_k) \\
-p_\textrm{y}(t_k)
-\end{bmatrix}+v(t_k), \\
-\end{equation}
-
-\noindent
-is given by the position coordinates and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
-
-Input vector $u_i = [\omega_i\ a_i]^T$ is measured by a girometer and accelerometer, respectively. We assume that 
-
-\begin{equation}\label{eq:entrada}
-u_i = \tilde{u}_i - w_i,
-\end{equation}
-
-\noindent
-where $\tilde{u}$ is the sensors measured valueand $w \sim \mathcal{N} (0, Q_i)$ represents the corresponded noise, of zero mean and covariance $Q_i$. 
-
-São considerados 60 segundos de simulação, com um passo de integração $\delta t_{\textrm{sim}} = 10^{-4}$. Para simular a amostragem irregular, os intervalos de tempo $h_k$ são calculados por meio da função de distribuição exponencial do MatLab\texttrademark e aproximados para o instante de tempo mais próximo, dentre as 600.000 amostras. As entradas utilizadas para a simulação são apresentadas na Fig.~\ref{fig:entrada}. A Fig.~\ref{fig:exukf} apresenta o deslocamento do robô no plano \textit{xy} partindo do ponto $(0,0)$, uma realização de medições ruidosas com relação sinal-ruído SNR\textsubscript{y} $= 30$ dB e $\lambda=0.3$ s e a estimativa de deslocamento do UKF, considerando carimbo de tempo e um $\alpha=5$. 
 
 \begin{figure}[!htb]
 	\centering
-	\begin{subfigure}
-		\centering
-		\includegraphics[width=\textwidth]{Imagens/entradas1.eps}	
-%		\caption{}
-		\label{fig:sfig1}
-	\end{subfigure}
-	\begin{subfigure}
-		\centering
-		\includegraphics[width=\textwidth]{Imagens/entradas2.eps}
-%		\caption{}
-		\label{fig:sfig2}
-	\end{subfigure}
-	\caption[Entradas]{Entradas utilizadas para a simulação. A sequência temporal da velocidade angular $\omega$ é mostrada em (a), e da aceleração linear $a$ é apresentada em (b).}
-	\label{fig:entrada}
-\end{figure}
+	\includegraphics[scale=0.65]{Imagens/esquema2}
+	\caption[esquemas]{Exemplos de instantes de amostragem da entrada e das estimações (1) e das observações (2). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
+	\label{fig:esquema}
+\end{figure} 
+
+
+
+\subsection{Input Irregular Sampling}
+
+Em caso de amostragem irregular também na entrada, um esquemático dos instantes de estimação, amostragem e entrada pode ser observado na Fig.~\ref{fig:esquema2}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/exemplo_03_30db_desloc.eps}
-	\caption[entrada]{Deslocamento verdadeiro, medições ruidosas e estimativa do UKF considerando o carimbo de tempo, para nível do ruído de medição igual a SNR\textsubscript{y} $= 30$ dB, $\lambda=0.3$ s e $\alpha=5$.}
-	\label{fig:exukf}
+	\includegraphics[scale=0.65]{Imagens/esquema3}
+	\caption[esquemas]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
+	\label{fig:esquema2}
 \end{figure} 
 
-Para comparar a qualidade das estimativas obtidas, o seguinte índice de desempenho é utilizado
+Para atrasos de transmissão:
 
-\begin{equation}\label{eq:inddesemp}
-J = \frac{ \sum_{i=1}^N \sqrt{(\hat{p}_{\textrm{x},i}-p_{\textrm{x},i})^2+(\hat{p}_{\textrm{y},i}-p_{\textrm{y},i})^2}}{N}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.65]{Imagens/esquema4}
+	\caption[esquemas]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
+	\label{fig:esquema3}
+\end{figure} 
+
+Nas próximas subseções é apresentado como os algoritmos de estimação tratam os cenários \textbf{A}, \textbf{B} e \textbf{C} para os casos em que o carimbo de tempo está e não está disponível.
+
+
+\section{With Timestamp}\label{sec:carimbo}
+
+Sabendo o momento exato $t_k$ em que as observações são medidas, é possível assimilá-las no instante correto, considerando intervalos de tempo variáveis para o algoritmo de filtragem. Para isso, o modelo matemático em () é discretizado a uma taxa $\delta t^*_j$ variável. Para a simulação deste artigo, os valores de $\delta t^*_j$ são calculados a partir da união de todos os instantes de tempo correspondentes às chegadas de sinais de entrada ou de medição em um único vetor, de forma ordenada. Por meio da subtração de dois instantes consecutivos, é possível obter os intervalos de tempo de integração $\delta t^*_j$ correspondente. No caso de uma versão \textit{online}, a integração das equações diferenciais é executada a medida que um sinal de entrada ou um sinal de medição de saída é recebido. Nesses momentos, são utilizados o intervalo de tempo entre o último sinal recebido e o instante atual. Além disso, quando o sinal recebido é um sinal de entrada, é executada apenas a etapa de predição. E, quando o sinal for de medição, acontecem as duas etapas de predição e assimilação de dados, considerado um segurador de ordem zero para a entrada. O fluxograma da Fig.~\ref{fig:diagrama} representa o passo a passo desse algoritmo, apresentando as etapas executadas quando o sinal é de entrada ou de observação.
+
+Dessa forma, no cenário \textbf{B} da Fig.~\ref{fig:esquema}, o algoritmo executa uma etapa completa de predição e assimilação de dados dos instantes $3T$ até $t_1$, considerando o intervalo $\delta t^*_4 =t_1-3T$ (note que há 3 intervalos de tempo $\delta t^*_j$, antes o instante $t_1$). Em seguida é feita uma etapa de predição entre $t_1$ e $4T$. Durante o intervalo de tempo de integração entre $t_1$ e $4T$, considerou-se que a entrada permaneceu constante desde a sua última atualização em 3T. Ou seja, assume-se que não houve variação na entrada para essa etapa de predição. Caso mais de uma observação seja medida entre duas entradas (cenário \textbf{C}), são executadas etapas completas de filtragem para cada observação disponível e, ao final, uma etapa de predição entre a última observação e a próxima entrada.
+
+\section{Without Timestamp}
+
+Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
+\\
+\begin{equation}\label{eq:disc_carimbo}
+x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 \end{equation}
-
+\\
 \noindent
-em que $\hat{p}_{\textrm{x},i}$ e $\hat{p}_{\textrm{y},i}$ são as estimativas de posição em intervalos regulares $T$, $\hat{p}_{\textrm{x},i}$ e $\hat{p}_{\textrm{y},i}$ as coordenadas verdadeiras do robô, também em intervalos regulares $T$ e $N$ é a quantidade total de estimativas. Esse índice representa a média dos erros de deslocamento no plano \textit{xy} obtidos pelos estimadores.
+em que $t^*_j= t^*_{j-1} + \delta t^*_j$ e $t^*_0=0$. Cada valor $\delta t^*_j$ corresponde ao intervalo de tempo entre o último instante $t^*_{j-1}$ em que se registrou a chegada de um sinal, seja ele de entrada ou de observação, e o próximo instante de tempo $t^*_{j}$ em que um valor de entrada ou de observação é obtido, conforme será detalhado no Capítulo \ref{cap3}. Entre instantes de observação e de entrada é utilizado um segurador de ordem zero, considerando a ultima informação disponível. 
 
-Uma realização da evolução do índice J para os dois estimadores, considerando $\lambda=0.5$, $\alpha=5$, SNR\textsubscript{y} $=60dB$ dBe SNR\textsubscript{u} $=20$ dB pode ser observada na Fig.~\ref{fig:realizacaoJ}, no intervalo de 0 a 1.3 segundos. Os pontos pretos representam os instantes regulares $kT$ e os asteriscos marcados no eixo das abcissas representam os instantes de medição $t_k$. É possível observar que, antes das primeiras observações serem assimiladas, o índice J de ambos estimadores é igual. Na primeira observação $t_1$, realizada próximo do instante $0.4$ s, não há diferença significativa entre a mudança no índice J para os dois estimadores, pois o instante de tempo real de medição foi muito próximo do instante de entrada e, desta forma, o erro da aproximação $\tilde{y}_i \approx y(t_k)$ é desprezível. No instante $t_2$, no entanto, a diminuição do índice J para o estimador que faz a assimilação no instante correto é visivelmente maior e acontece no momento exato da medição. Esse mesmo efeito pode ser observado no instante $t_4$, após 1 segundo, quando há uma diferença significativa entre o instante de medição $t_k$ e o instante em que a próxima informação de entrada está disponível.
+Por outro lado, se o carimbo de tempo não é levado em conta, (\ref{eq:processo}) pode ser reescrito como
 
-\begin{figure}[!htb]
+\begin{equation}\label{eq:disc_semcarimbo}
+x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
+\end{equation}
+\\
+\noindent
+em que $t=nT$.
+
+
+Quando não há carimbo de tempo nas medições, o algoritmo de filtragem não sabe o momento exato da medição $t_k$. Assim, o instante de tempo considerado para a etapa de assimilação de dados é sempre o próximo instante múltiplo de \textit{T}, i.e. quando a próxima informação de entrada está disponível.
+%
+Existem apenas dois cenários de estimação nesse caso. Primeiro, quando não há medições disponíveis entre duas entradas, o estimador executa apenas a etapa de predição entre os intervalos de tempo $iT$ e $(i+1)T$, conforme cenário \textbf{A} da Fig.~\ref{fig:esquema}. Segundo, nos casos representados pela letra \textbf{B}, o estimador considera que a observação foi feita no próximo instante multiplo de $T$ em que há informações de entrada. No exemplo da Fig.~\ref{fig:esquema}, a medição feita no instante $t_1$ é assimilada no instante $4T$. Caso haja mais de uma observação entre duas entradas (cenário \textbf{C}), a mais antiga é descartada. Os passos de discretização do modelo utilizados pelo UKF são sempre $\delta t=T$, havendo ou não observações disponíveis. 
+
+\vspace{0.5cm}
+\begin{figure}
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao.eps}
-%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
-	\label{fig:realizacaoJ}
-\end{figure} 
-
-\begin{figure}[!]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao-timedelay.eps}
-%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
-	\label{fig:realizacaoJ2}
-\end{figure} 
-
-Para a análise de resultados desse artigo, foram feitas 3 simulações distintas, em que um parâmetro diferente foi variado para cada uma delas e os outros foram mantidos fixos. Em todos os casos foram simuladas 100 realizações para cada filtro e para cada parâmetro. Os valores médios do índice de desempenho $J$ para cada caso, assim como os intervalos de confiança de 95\% são apresentados na Fig.~\ref{fig:results}. As próximas subseções apresentam uma discussão sobre os resultados.
-
-\begin{figure}[h!]
-	\centering
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/noise.eps}	
-%		\caption{}
-		\label{fig:noise}
-	\end{subfigure}
-
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/samp.eps}
-%		\caption{}
-		\label{fig:samp}
-	\end{subfigure}
-
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/dtudty.eps}
-%		\caption[entrada]{}
-		\label{fig:dtu}
-	\end{subfigure}
-
-
-	\caption[Entradas]{Variação do índice desempenho J em função de (a) redução da relação sinal-ruído das observações SNR\textsubscript{y}, (b) aumento do intervalo de tempo médio das observações $\lambda$ e (c) relação entre o intervalo de tempo de entrada $T$ e o valor de $\lambda$, dado por $\alpha$.  O lado esquerdo representa entrada regular e o direito entrada irregular}
-	\label{fig:results}
-	\todo[caption = {Faltam ajustes nas figuras de resultados},inline]{Falta ajustar o posicionamento das figuras. Estou tendo dificuldades no LaTeX e provavelmente vou posicionar as figuras no matlab. Também preciso verificar se o algoritmo para irregularidade na entrada está correto, pois para 100 simulações, a variabilidade está muito grande. Também serão colocadas em escalas semelhantes.}
+	\begin{adjustbox}{width=\textwidth/2,height=\textheight,keepaspectratio}
+		
+		\begin{tikzpicture}[node distance=2cm, font = \scriptsize]
+		
+		\node(start)[startstop][text width=3cm,align=center]{\textbf{Início} \\ $t^*_0=0$; \\ $i=j=k=1$; \\};
+		
+		\node (dec1) [decision, below of=start,yshift=-0.5cm] {Sinal Recebido};
+		
+		\node (pro1) [process, below right of=dec1, yshift=-0.7cm, xshift=0.25cm][text width=3cm,align=center]{Calcula \\ $\delta t^*_{j} = iT - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
+		
+		\node (pro12) [process, below of=pro1][text width=3cm,align=center, yshift=0.5cm]{Etapa de Predição};
+		
+		\node (pro2) [process, below left of=dec1,  yshift=-0.7cm, xshift=-0.25cm][text width=3cm,align=center]{Calcula \\ $\delta t^*_{j} = t_k - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
+		
+		\node (pro22) [process, below of=pro2][text width=3cm,align=center, yshift=0.5cm]{Etapa de Predição, utilizando ZOH};
+		
+		\node (pro23) [process, below of=pro22][text width=3cm,align=center, yshift=0.5cm]{Etapa de Assimilação de Dados};
+		
+		\node (pro3) [startstop, below of = pro23][text width=3cm,align=center, xshift=1.8cm]{Estimativa em $t^*_{j}$};
+		
+		\draw [arrow] (start) -- node[pos=0.5](h){} (dec1);
+		\draw [arrow] (dec1) -| node[text width=3cm,align=center,anchor=west,xshift=-1cm] {Sinal de \\ Entrada} (pro1);
+		\draw [arrow] (dec1) -| node[text width=3cm,align=center,anchor=east,xshift=0.8cm] {Sinal de \\ Observação} (pro2);
+		\draw [arrow] (pro1) -- (pro12);
+		\draw [arrow] (pro2) -- (pro22);
+		\draw [arrow] (pro22) -- (pro23);
+		\draw [arrow] (pro12) -- node[text width=3cm,align=center,anchor=south,xshift=1cm] {$i=i+1$} (pro3);
+		\draw [arrow] (pro23) -- node[text width=3cm,align=center,anchor=east,xshift=0.6cm] {$k=k+1$}(pro3);
+		\draw [arrow] (pro3) --+(-4cm,0) |- node[text width=3cm,align=center,anchor=south,xshift=1cm] {$j=j+1$}(h);
+		\end{tikzpicture}
+	\end{adjustbox}
 	
-\end{figure}
-
-
-\subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido}
-
-Inicialmente, o efeito do nível de ruído de observação no desempenho dos filtros com e sem carimbo de tempo foi é avaliado. A relação sinal ruído dos sensores de entrada e o intervalo de tempo médio das observações são mantidos fixos, SNR\textsubscript{u} $= 20$ dB e $\lambda = 0.1$ s.
-
-Variou-se a relação sinal-ruído das observações conforme SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$, $10$ dB. Ou seja, inicialmente considera-se que não há ruído nas observações e em seguida o nível de ruído é aumentado gradativamente. A Fig.~\ref{fig:noise} apresenta os resultados obtidos.
-
-É possível observar que o estimador que considera o carimbo de tempo possui desempenho estatisticamente superior apenas para baixos níveis de ruído da observação. Quando SNR\textsubscript{y} é igual a $\infty$ e $80$ dB, o índice de desempenho $J$ do filtro com carimbo de tempo é aproximadamente $1.25$ e $1.26$ cm, respectivamente, mais preciso do que sem carimbo de tempo e com variância pequena. Quando a relação sinal ruído se aproxima de $40$ dB, no entanto, não é possível distinguir estatisticamente o efeito de se considerar ou não carimbo de tempo.
-
-\subsection{Average Sampling Rate Variation}\label{sec:lambda}
-
-Em seguida, variou-se o intervalo de tempo médio das observaçõs, conforme $\lambda =$ $0.1$, $0.2$, $0.3$, $0.4$, $0.5$, $0.6$ s, mantendo-se o nível de ruído das entradas e das observações fixos em, respectivamente, SNR\textsubscript{u} $= 20$ dB e SNR\textsubscript{y} $= 40$ dB. Os resultados são apresentados na Fig.\ref{fig:samp}.
-
-Os resultados obtidos demonstram que a diferença no desempenho dos filtros é mais significativa para intervalos de tempo mais espaçados, mantendo-se a dinâmica do sistema e os outros parâmetros fixos. Inicialmente, para valores pequenos de $\lambda$	, não há diferença estatística entre o desempenho dos estimadores, mas a medida que o intervalo cresce, ela aparece, chegando a aproximadamente $3.1$ cm para um $\lambda = 0.6$ s. Uma interpretação possível é que, se o intervalo de tempo médio das observações for muito pequeno em comparação com a velocidade em que a dinâmica do sistema varia, o erro de aproximação do instante de amostragem das observações $t_k$ é reduzido. O ruído do sensor pode acabar sendo mais relevante do que o erro devido ao tempo incorreto de assimilação.
-
-\subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha}
-
-Finalmente, o valor de $\alpha$, i.e. a relação entre o intervalo de tempo regular das entradas $T$ e o intervalo de tempo médio das observações $\lambda$, foi alterado entre $\alpha = 10$, $5$, $2$, $1$. Os resultados são apresentados na Fig.~\ref{fig:dtu}.
-
-Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
-
-
-\section{Other system 1}
+	\caption{Diagrama ilustrativo da versão \textit{online} do estimador que considera o carimbo de tempo. Os índices $i$, $j$ e $k$ representam, respectivamente os contadores dos sinais de entrada, estimação e da saída.}
+	\label{fig:diagrama}
+\end{figure}	
 
 
 
 
-\section{Other system 2}
 
 \clearpage
