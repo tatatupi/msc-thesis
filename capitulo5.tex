@@ -24,9 +24,9 @@ To further analyze the impact of time-stamp availability, we study the velocity 
 
 \duvida{O que acha dos cenários e das simulações? Está suficiente?}
 
-\section{Unicycle Position Estimation}
+\section{System Description}
 
-\subsection{System Description}
+\subsection{Unicycle Position Estimation}
 
 Consider a nonholomonic moving robot, with the cinematic process model given by
 
@@ -68,7 +68,8 @@ u_i = \tilde{u}_i - w_i,
 \noindent
 where $\tilde{u}$ is the sensors measured valueand $w \sim \mathcal{N} (0, Q_i)$ represents the corresponded noise, of zero mean and covariance $Q_i$. 
 
-São considerados 60 segundos de simulação, com um passo de integração $\delta t_{\textrm{sim}} = 10^{-4}$. Para simular a amostragem irregular, os intervalos de tempo $h_k$ são calculados por meio da função de distribuição exponencial do MatLab\texttrademark e aproximados para o instante de tempo mais próximo, dentre as 600.000 amostras. As entradas utilizadas para a simulação são apresentadas na Fig.~\ref{fig:entrada}. A Fig.~\ref{fig:exukf} apresenta o deslocamento do robô no plano \textit{xy} partindo do ponto $(0,0)$, uma realização de medições ruidosas com relação sinal-ruído SNR\textsubscript{y} $= 30$ dB e $\lambda=0.3$ s e a estimativa de deslocamento do UKF, considerando carimbo de tempo e um $\alpha=5$. 
+We simulate 60 seconds of robot movement, considering a step size of $\delta t_{\textrm{sim}} = 10^{-4}$. Irregular sampling time intervals $h_k$ are simulated by the exponential probability distribution function from MatLab\texttrademark \ and approximated to the nearest discrete time instant, from the 600,000 available samples. Input signals were generated arbitrarily according to Fig.~\ref{fig:entrada}. Fig.~\ref{fig:exukf} shows robot trajectory on $xy$-plane for the given input signals, leaving from point $(0,0)$, as well as a realization of noisy and aperiodic measurements with signal-to-noise ratio of SNR\textsubscript{y} $= 30$ dB and $\lambda=0.3$ s as red dots and the hatched blue line represents UKF estimation, considering time-stamp and $\alpha=5$. 
+
 
 \begin{figure}[!htb]
 	\centering
@@ -106,52 +107,110 @@ em que $\hat{p}_{\textrm{x},i}$ e $\hat{p}_{\textrm{y},i}$ são as estimativas de
 
 Uma realização da evolução do índice J para os dois estimadores, considerando $\lambda=0.5$, $\alpha=5$, SNR\textsubscript{y} $=60dB$ dBe SNR\textsubscript{u} $=20$ dB pode ser observada na Fig.~\ref{fig:realizacaoJ}, no intervalo de 0 a 1.3 segundos. Os pontos pretos representam os instantes regulares $kT$ e os asteriscos marcados no eixo das abcissas representam os instantes de medição $t_k$. É possível observar que, antes das primeiras observações serem assimiladas, o índice J de ambos estimadores é igual. Na primeira observação $t_1$, realizada próximo do instante $0.4$ s, não há diferença significativa entre a mudança no índice J para os dois estimadores, pois o instante de tempo real de medição foi muito próximo do instante de entrada e, desta forma, o erro da aproximação $\tilde{y}_i \approx y(t_k)$ é desprezível. No instante $t_2$, no entanto, a diminuição do índice J para o estimador que faz a assimilação no instante correto é visivelmente maior e acontece no momento exato da medição. Esse mesmo efeito pode ser observado no instante $t_4$, após 1 segundo, quando há uma diferença significativa entre o instante de medição $t_k$ e o instante em que a próxima informação de entrada está disponível.
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao.eps}
-%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
-	\label{fig:realizacaoJ}
-\end{figure} 
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao.eps}
+%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
+%	\label{fig:realizacaoJ}
+%\end{figure} 
 
-\begin{figure}[!]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao-timedelay.eps}
 %%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
 	\label{fig:realizacaoJ2}
 \end{figure} 
 
-Para a análise de resultados desse artigo, foram feitas 3 simulações distintas, em que um parâmetro diferente foi variado para cada uma delas e os outros foram mantidos fixos. Em todos os casos foram simuladas 100 realizações para cada filtro e para cada parâmetro. Os valores médios do índice de desempenho $J$ para cada caso, assim como os intervalos de confiança de 95\% são apresentados na Fig.~\ref{fig:results}. As próximas subseções apresentam uma discussão sobre os resultados.
+\subsection{Longitudinal Motion Dynamics of an Advanced Aircraft}
 
-\begin{figure}[h!]
-	\centering
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/noise.eps}	
-%		\caption{}
-		\label{fig:noise}
-	\end{subfigure}
+\todo[caption={Falta incluir figura explicativa do processo},inline]{Ainda pretendo incluir uma figura do processo, para facilitar entendimento}
 
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/samp.eps}
-%		\caption{}
-		\label{fig:samp}
-	\end{subfigure}
+Consider the process model of flight dynamics in continuous time given by:
 
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.4]{Imagens/dtudty.eps}
-%		\caption[entrada]{}
-		\label{fig:dtu}
-	\end{subfigure}
+\begin{equation}\label{eq:aircraft}
+\dot{x}(t) = Fx(t) + Bu(t) + G\omega(t) \\
+\end{equation}
+
+\begin{equation*}
+x(t) =  \begin{bmatrix}
+\delta_e \quad W \quad q 	
+\end{bmatrix}^T; \quad
+u(t) = \delta_a; \quad
+\omega(t) \sim \mathcal{N} (0, 1)
+\end{equation*}
+
+\begin{equation*}
+F =  \begin{bmatrix}
+-\tau^{-1} 	& 0 	& 0 \\
+Z_{de} 		& Z_w 	& S_0 \\
+S_1 		& S_2 	& S_3 
+\end{bmatrix}; \quad
+B =  \begin{bmatrix}
+1 \\
+0 \\
+0 		
+\end{bmatrix}; \quad 
+G =  \begin{bmatrix}
+0.00625 \\
+0.25 \\
+0.025		
+\end{bmatrix}
+\end{equation*}
+
+\begin{center}
+$S_0 = (Z_q + U_o)$ \\
+$S_1 = (M_{de} + M_{wd}Z_{de})$ \\
+$S_2 = (M_w + M_{wd}*Z_w)$ \\
+$S_3 = (M_q + M_{wd}+S_0)$
+\end{center}
+
+\noindent
+where plant variables $\delta_e$ is elevator deflection (radian), $W$ is the normal component of linear velocity at the center of mass (m/s), $q$ is the pitch rate about the center of mass (radian/s) and input $\delta_a$ is the elevator command (radian).
+
+The parameters for the longitudinal motion dynamics were chosen to be the same as the work of~\citep{Ray1993}, knowingly:
 
 
-	\caption[Entradas]{Variação do índice desempenho J em função de (a) redução da relação sinal-ruído das observações SNR\textsubscript{y}, (b) aumento do intervalo de tempo médio das observações $\lambda$ e (c) relação entre o intervalo de tempo de entrada $T$ e o valor de $\lambda$, dado por $\alpha$.  O lado esquerdo representa entrada regular e o direito entrada irregular}
-	\label{fig:results}
-	\todo[caption = {Faltam ajustes nas figuras de resultados},inline]{Falta ajustar o posicionamento das figuras. Estou tendo dificuldades no LaTeX e provavelmente vou posicionar as figuras no matlab. Também preciso verificar se o algoritmo para irregularidade na entrada está correto, pois para 100 simulações, a variabilidade está muito grande. Também serão colocadas em escalas semelhantes.}
+\begin{equation}\label{eq:sistema}
+\begin{split}
+Z_{de} & := (\partial Z/\partial \delta_e)/m = -61.655 \ m/s^2,\\
+Z_q & := (\partial Z/\partial q)/m = -5.132 \ m/s,\\
+Z_w & := (\partial Z/\partial W)/m = -3.1332 \ s^{-1},\\
+M_{de} & := (\partial M/\partial \delta_e)/I_y = -40.465 \ s^{-2},\\
+M_q & := (\partial M/\partial q)/I_y = -2.6864 \ s^{-1},\\
+M_w & := (\partial M/\partial W)/I_y = -0.04688 \ (s-m)^{-1},\\
+\tau & = 0.1 \ s \\
+U_o & = 306.42 \ m/s
+\end{split}
+\end{equation}
+
+\noindent
+where $M$ is the pitch moment ($m^2 / kgm / s^{-2}$), $Z$ is the normal component of the aerodynamics force ($m / kgm / s^{-2}$), $m$ is the lumped mass of the aircraft ($kgm$), $I_y$ is the moment of inertia about the pitching axis ($m^2 / kgm$), $\tau$ is the actuator time constant and $U_o$ the reference flight speed.
+
+Sensor data is available at discrete time instants and the observation model $y(t_k) \in \mathbb{R}^1$ 
+
+\begin{equation}
+y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
+\end{equation} \duvida{É melhor representar y como sendo de 3 dimensoes, considerando 0 para os outros estados?}
+
+\noindent
+is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
+
+
+
+
+%\setlength{\abovedisplayskip}{0.5pt}
+%
+%\begin{equation}\label{eq:sistema}
+%\begin{split}
+%\dot{\delta_e} & = -\tau^{-1},\\
+%\dot{W} & = Z_{de}\delta_e + Z_wW + S_0q,\\
+%\dot{q}  & = S_1 \delta_e + S_2 W + S_3q,\\
+%\end{split}
+%\end{equation}
+%\noindent
+
 	
-\end{figure}
-
+\section{Parameter Variation and Results}
 
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido}
 
@@ -173,12 +232,38 @@ Finalmente, o valor de $\alpha$, i.e. a relação entre o intervalo de tempo regul
 
 Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
 
+Para a análise de resultados desse artigo, foram feitas 3 simulações distintas, em que um parâmetro diferente foi variado para cada uma delas e os outros foram mantidos fixos. Em todos os casos foram simuladas 100 realizações para cada filtro e para cada parâmetro. Os valores médios do índice de desempenho $J$ para cada caso, assim como os intervalos de confiança de 95\% são apresentados na Fig.~\ref{fig:results}. As próximas subseções apresentam uma discussão sobre os resultados.
 
-\section{Other system 1}
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.4]{Imagens/noise.eps}	
+		%		\caption{}
+		\label{fig:noise}
+	\end{subfigure}
+	
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.4]{Imagens/samp.eps}
+		%		\caption{}
+		\label{fig:samp}
+	\end{subfigure}
+	
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.4]{Imagens/dtudty.eps}
+		%		\caption[entrada]{}
+		\label{fig:dtu}
+	\end{subfigure}
+	
+	
+	\caption[Entradas]{Variação do índice desempenho J em função de (a) redução da relação sinal-ruído das observações SNR\textsubscript{y}, (b) aumento do intervalo de tempo médio das observações $\lambda$ e (c) relação entre o intervalo de tempo de entrada $T$ e o valor de $\lambda$, dado por $\alpha$.  O lado esquerdo representa entrada regular e o direito entrada irregular}
+	\label{fig:results}
+	\todo[caption = {Faltam ajustes nas figuras de resultados},inline]{Falta ajustar o posicionamento das figuras. Estou tendo dificuldades no LaTeX e provavelmente vou posicionar as figuras no matlab. Também preciso verificar se o algoritmo para irregularidade na entrada está correto, pois para 100 simulações, a variabilidade está muito grande. Também serão colocadas em escalas semelhantes.}
+	
+\end{figure}
 
 
-
-
-\section{Other system 2}
 
 \clearpage
