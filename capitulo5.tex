@@ -200,7 +200,34 @@ y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
 \noindent
 is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
+\clearpage
+\subsubsection{System simulated with interpolated noise created at 0.1s (sigma = 1)}
 
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_q_noise.eps}	
+		%		\caption{}
+		\label{fig:q_AC-1}
+	\end{subfigure}
+	
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_W_noise.eps}
+		%		\caption{}
+		\label{fig:W_AC-1}
+	\end{subfigure}
+	
+	\caption[Entradas]{One realization of aircraft pitch rate at the center of mass and normal component of linear velocity}
+	\label{fig:aircraft1}
+	
+\end{figure}
+
+
+\clearpage
+
+\subsubsection{System simulated with interpolated noise created at 0.1s (sigma = 10)}
 \begin{figure}[h!]
 	\centering
 	\begin{subfigure}
@@ -222,12 +249,29 @@ is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathca
 	
 \end{figure}
 
-\begin{figure}[!htb]
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise_realization10x.eps}
-	\caption[entrada]{Noise realization with $\sigma=10$ and generated with a time-step of 0.1 s and interpolated for 1e-6 simulation}
-	\label{fig:noise10x}
-\end{figure} 
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_noise-realization1x.eps}	
+		%		\caption{}
+		\label{fig:noise1}
+	\end{subfigure}
+	
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_noise_realization10x.eps}
+		%		\caption{}
+		\label{fig:noise10}
+	\end{subfigure}
+	
+	\caption[Entradas]{Noise realization with $\sigma=1$ and $\sigma=10$ and generated with a time-step of 0.1 s and interpolated for 1e-6 simulation}
+	\label{fig:noise}
+	
+\end{figure}
+
+\clearpage
+
 
 %\setlength{\abovedisplayskip}{0.5pt}
 %
@@ -239,6 +283,7 @@ is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathca
 %\end{split}
 %\end{equation}
 %\noindent
+
 
 	
 \section{Parameter Variation and Results}
