@@ -1,0 +1,381 @@
+%-------------------------------------------------------------------------------
+\chapter{Results}
+\label{cap4} \vspace{-1cm} \vspace{1cm}
+
+%\begin{flushright}
+%\begin{minipage}{0.7\linewidth}
+%\emph{``O homem é como uma função, cujo numerador é o que ele é e
+%cujo denominador é o que ele pensa dele mesmo. Quanto maior o
+%denominador, menor a fração.''}
+%\end{minipage}
+%\end{flushright}
+%
+%\begin{flushright}
+%{L. N. Tolstói}
+%\end{flushright}
+
+%\section{Introdução}
+
+In this chapter, we present simulation results for two different systems: nonholomonic unicycle position estimation, and longitudinal motion dynamics of an advanced aircraft.
+
+We begin investigating the first system with a regularly sampled input signal and a irregularly sampled output with and without time-delay. Three different scenarios are investigated for both conditions: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between estimation regular sampling rate and output irregular average sampling rate. For time-delay scenario, the average time-delay is also varied.
+
+To further analyze the impact of time-stamp availability, we study the velocity estimation problem of an aircraft, using a sampled-data filter, using a continuous process model. The observation is available to the estimator aperiodically with time-delay, while estimation is performed at regularly spaced time intervals. The effect on estimation performance is evaluated for the same scenarios simulated for the first system.
+
+\duvida{O que acha dos cenários e das simulações? Está suficiente?}
+
+\section{System Description}
+
+\subsection{Unicycle Position Estimation}
+
+Consider a nonholomonic moving robot, with the cinematic process model given by
+
+\setlength{\abovedisplayskip}{0.5pt}
+
+\begin{equation}\label{eq:sistema}
+\begin{split}
+\dot{p}_\textrm{x} & = v\cos (\theta),\\
+\dot{p}_\textrm{y} & = v\sin (\theta),\\
+\dot{\theta}  & = u_1(t),\\
+\dot{v} & = u_2(t),
+\end{split}
+\end{equation}
+\noindent
+
+where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ the angular orientation, $v$ the linear velocity and inputs $u_1$ and $u_2$ are the angular velocity $\omega$ and the linear acceleration $a$, respectively.
+
+The system described by~\ref{eq:sistema} is discretized by a 4$^{th}$ order Runge-Kutta method and the state vector $x_i$ is given by $x_i \overset{\Delta}{=} [p_{\textrm{x},i}\ p_{\textrm{y},i}\ \theta_i\ v_i]^T$.
+
+The observation model $y(t_k) \in \mathbb{R}^2$
+
+\begin{equation}
+y(t_k) = 
+\begin{bmatrix}
+p_\textrm{x}(t_k) \\
+p_\textrm{y}(t_k)
+\end{bmatrix}+v(t_k), \\
+\end{equation}
+
+\noindent
+is given by the position coordinates and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
+
+Input vector $u_i = [\omega_i\ a_i]^T$ is measured by a girometer and accelerometer, respectively. We assume that 
+
+\begin{equation}\label{eq:entrada}
+u_i = \tilde{u}_i - w_i,
+\end{equation}
+
+\noindent
+where $\tilde{u}$ is the sensors measured valueand $w \sim \mathcal{N} (0, Q_i)$ represents the corresponded noise, of zero mean and covariance $Q_i$. 
+
+We simulate 60 seconds of robot movement, considering a step size of $\delta t_{\textrm{sim}} = 10^{-4}$. Irregular sampling time intervals $h_k$ are simulated by the exponential probability distribution function from MatLab\texttrademark \ and approximated to the nearest discrete time instant, from the 600,000 available samples. Input signals were generated arbitrarily according to Fig.~\ref{fig:entrada}. Fig.~\ref{fig:exukf} shows robot trajectory on $xy$-plane for the given input signals, leaving from point $(0,0)$, as well as a realization of noisy and aperiodic measurements with signal-to-noise ratio of SNR\textsubscript{y} $= 30$ dB and $\lambda=0.3$ s as red dots and the hatched blue line represents UKF estimation, considering time-stamp and $\alpha=5$. 
+
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[width=\textwidth]{Imagens/entradas1.eps}	
+%		\caption{}
+		\label{fig:sfig1}
+	\end{subfigure}
+	\begin{subfigure}
+		\centering
+		\includegraphics[width=\textwidth]{Imagens/entradas2.eps}
+%		\caption{}
+		\label{fig:sfig2}
+	\end{subfigure}
+	\caption[Entradas]{Entradas utilizadas para a simulação. A sequência temporal da velocidade angular $\omega$ é mostrada em (a), e da aceleração linear $a$ é apresentada em (b).}
+	\label{fig:entrada}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{Imagens/exemplo_03_30db_desloc.eps}
+	\caption[entrada]{Deslocamento verdadeiro, medições ruidosas e estimativa do UKF considerando o carimbo de tempo, para nível do ruído de medição igual a SNR\textsubscript{y} $= 30$ dB, $\lambda=0.3$ s e $\alpha=5$.}
+	\label{fig:exukf}
+\end{figure} 
+
+Comparison among estimation quality is done by
+Para comparar a qualidade das estimativas obtidas, o seguinte índice de desempenho é utilizado
+
+\begin{equation}\label{eq:inddesemp}
+J = \frac{ \sum_{i=1}^N \sqrt{(\hat{p}_{\textrm{x},i}-p_{\textrm{x},i})^2+(\hat{p}_{\textrm{y},i}-p_{\textrm{y},i})^2}}{N}
+\end{equation}
+
+\noindent
+em que $\hat{p}_{\textrm{x},i}$ e $\hat{p}_{\textrm{y},i}$ são as estimativas de posição em intervalos regulares $T$, $\hat{p}_{\textrm{x},i}$ e $\hat{p}_{\textrm{y},i}$ as coordenadas verdadeiras do robô, também em intervalos regulares $T$ e $N$ é a quantidade total de estimativas. Esse índice representa a média dos erros de deslocamento no plano \textit{xy} obtidos pelos estimadores.
+
+Uma realização da evolução do índice J para os dois estimadores, considerando $\lambda=0.5$, $\alpha=5$, SNR\textsubscript{y} $=60dB$ dBe SNR\textsubscript{u} $=20$ dB pode ser observada na Fig.~\ref{fig:realizacaoJ}, no intervalo de 0 a 1.3 segundos. Os pontos pretos representam os instantes regulares $kT$ e os asteriscos marcados no eixo das abcissas representam os instantes de medição $t_k$. É possível observar que, antes das primeiras observações serem assimiladas, o índice J de ambos estimadores é igual. Na primeira observação $t_1$, realizada próximo do instante $0.4$ s, não há diferença significativa entre a mudança no índice J para os dois estimadores, pois o instante de tempo real de medição foi muito próximo do instante de entrada e, desta forma, o erro da aproximação $\tilde{y}_i \approx y(t_k)$ é desprezível. No instante $t_2$, no entanto, a diminuição do índice J para o estimador que faz a assimilação no instante correto é visivelmente maior e acontece no momento exato da medição. Esse mesmo efeito pode ser observado no instante $t_4$, após 1 segundo, quando há uma diferença significativa entre o instante de medição $t_k$ e o instante em que a próxima informação de entrada está disponível.
+
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao.eps}
+%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
+%	\label{fig:realizacaoJ}
+%\end{figure} 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao-timedelay.eps}
+%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
+	\label{fig:realizacaoJ2}
+\end{figure} 
+
+\subsection{Longitudinal Motion Dynamics of an Advanced Aircraft}
+
+\todo[caption={Falta incluir figura explicativa do processo},inline]{Ainda pretendo incluir uma figura do processo, para facilitar entendimento}
+
+Consider the process model of flight dynamics in continuous time given by:
+
+\begin{equation}\label{eq:aircraft}
+\dot{x}(t) = Fx(t) + Bu(t) + G\omega(t) \\
+\end{equation}
+
+\begin{equation*}
+x(t) =  \begin{bmatrix}
+\delta_e \quad W \quad q 	
+\end{bmatrix}^T; \quad
+u(t) = \delta_a; \quad
+\omega(t) \sim \mathcal{N} (0, 1)
+\end{equation*}
+
+\begin{equation*}
+F =  \begin{bmatrix}
+-\tau^{-1} 	& 0 	& 0 \\
+Z_{de} 		& Z_w 	& S_0 \\
+S_1 		& S_2 	& S_3 
+\end{bmatrix}; \quad
+B =  \begin{bmatrix}
+1 \\
+0 \\
+0 		
+\end{bmatrix}; \quad 
+G =  \begin{bmatrix}
+0.00625 \\
+0.25 \\
+0.025		
+\end{bmatrix}
+\end{equation*}
+
+\begin{center}
+$S_0 = (Z_q + U_o)$ \\
+$S_1 = (M_{de} + M_{wd}Z_{de})$ \\
+$S_2 = (M_w + M_{wd}*Z_w)$ \\
+$S_3 = (M_q + M_{wd}+S_0)$
+\end{center}
+
+\noindent
+where plant variables $\delta_e$ is elevator deflection (radian), $W$ is the normal component of linear velocity at the center of mass (m/s), $q$ is the pitch rate about the center of mass (radian/s) and input $\delta_a$ is the elevator command (radian).
+
+The parameters for the longitudinal motion dynamics were chosen to be the same as the work of~\citep{Ray1993}, knowingly:
+
+
+\begin{equation}\label{eq:sistema}
+\begin{split}
+Z_{de} & := (\partial Z/\partial \delta_e)/m = -61.655 \ m/s^2,\\
+Z_q & := (\partial Z/\partial q)/m = -5.132 \ m/s,\\
+Z_w & := (\partial Z/\partial W)/m = -3.1332 \ s^{-1},\\
+M_{de} & := (\partial M/\partial \delta_e)/I_y = -40.465 \ s^{-2},\\
+M_q & := (\partial M/\partial q)/I_y = -2.6864 \ s^{-1},\\
+M_w & := (\partial M/\partial W)/I_y = -0.04688 \ (s-m)^{-1},\\
+\tau & = 0.1 \ s \\
+U_o & = 306.42 \ m/s
+\end{split}
+\end{equation}
+
+\noindent
+where $M$ is the pitch moment ($m^2 / kgm / s^{-2}$), $Z$ is the normal component of the aerodynamics force ($m / kgm / s^{-2}$), $m$ is the lumped mass of the aircraft ($kgm$), $I_y$ is the moment of inertia about the pitching axis ($m^2 / kgm$), $\tau$ is the actuator time constant and $U_o$ the reference flight speed.
+
+Sensor data is available at discrete time instants and the observation model $y(t_k) \in \mathbb{R}^1$ 
+
+\begin{equation}
+y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
+\end{equation} \duvida{É melhor representar y como sendo de 3 dimensoes, considerando 0 para os outros estados?}
+
+\noindent
+is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
+
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/AC_q_noise10x.eps}
+%	\caption[entrada]{One realization of aircraft normal component of linear velocity (in blue) and without noise (orange)}
+%	\label{fig:q_AC}
+%\end{figure} 
+%
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/AC_W_noise10x.eps}
+%	\caption[entrada]{One realization of aircraft pitch rate with noise (in blue) and without noise (orange)}
+%	\label{fig:W_AC}
+%\end{figure} 
+
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_q_noise10x.eps}	
+		%		\caption{}
+		\label{fig:q_AC}
+	\end{subfigure}
+	
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_W_noise10x.eps}
+		%		\caption{}
+		\label{fig:W_AC}
+	\end{subfigure}
+	
+	\caption[Entradas]{One realization of aircraft pitch rate at the center of mass and normal component of linear velocity}
+	\label{fig:aircraft}
+
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise_realization10x.eps}
+	\caption[entrada]{Noise realization with $\sigma=10$ and generated with a time-step of 0.1 s and interpolated for 1e-6 simulation}
+	\label{fig:noise10x}
+\end{figure} 
+
+
+
+
+
+%\setlength{\abovedisplayskip}{0.5pt}
+%
+%\begin{equation}\label{eq:sistema}
+%\begin{split}
+%\dot{\delta_e} & = -\tau^{-1},\\
+%\dot{W} & = Z_{de}\delta_e + Z_wW + S_0q,\\
+%\dot{q}  & = S_1 \delta_e + S_2 W + S_3q,\\
+%\end{split}
+%\end{equation}
+%\noindent
+
+	
+\section{Parameter Variation and Results}
+
+\subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido}
+
+Inicialmente, o efeito do nível de ruído de observação no desempenho dos filtros com e sem carimbo de tempo foi é avaliado. A relação sinal ruído dos sensores de entrada e o intervalo de tempo médio das observações são mantidos fixos, SNR\textsubscript{u} $= 20$ dB e $\lambda = 0.1$ s.
+
+Variou-se a relação sinal-ruído das observações conforme SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$, $10$ dB. Ou seja, inicialmente considera-se que não há ruído nas observações e em seguida o nível de ruído é aumentado gradativamente. A Fig.~\ref{fig:noise} apresenta os resultados obtidos.
+
+É possível observar que o estimador que considera o carimbo de tempo possui desempenho estatisticamente superior apenas para baixos níveis de ruído da observação. Quando SNR\textsubscript{y} é igual a $\infty$ e $80$ dB, o índice de desempenho $J$ do filtro com carimbo de tempo é aproximadamente $1.25$ e $1.26$ cm, respectivamente, mais preciso do que sem carimbo de tempo e com variância pequena. Quando a relação sinal ruído se aproxima de $40$ dB, no entanto, não é possível distinguir estatisticamente o efeito de se considerar ou não carimbo de tempo.
+
+
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/noise.eps}
+%	%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
+%	\label{fig:noise-robot}
+%\end{figure} 
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/noise.eps}	
+		\caption{Robot}
+		\label{fig:noise-robot}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_noise.eps}	
+		\caption{Aircraft}
+		\label{fig:noise-AC}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_noise2.eps}
+		\caption{Aircraft (noise 10x bigger)}
+		\label{fig:noise-AC2}
+	\end{subfigure}
+	
+	\caption[Entradas]{$J$ variation as a function of the measurement noise.
+	}
+	\label{fig:results-noise}
+
+\end{figure}
+
+
+\subsection{Average Sampling Rate Variation}\label{sec:lambda}
+
+Em seguida, variou-se o intervalo de tempo médio das observaçõs, conforme $\lambda =$ $0.1$, $0.2$, $0.3$, $0.4$, $0.5$, $0.6$ s, mantendo-se o nível de ruído das entradas e das observações fixos em, respectivamente, SNR\textsubscript{u} $= 20$ dB e SNR\textsubscript{y} $= 40$ dB. Os resultados são apresentados na Fig.\ref{fig:samp}.
+
+Os resultados obtidos demonstram que a diferença no desempenho dos filtros é mais significativa para intervalos de tempo mais espaçados, mantendo-se a dinâmica do sistema e os outros parâmetros fixos. Inicialmente, para valores pequenos de $\lambda$	, não há diferença estatística entre o desempenho dos estimadores, mas a medida que o intervalo cresce, ela aparece, chegando a aproximadamente $3.1$ cm para um $\lambda = 0.6$ s. Uma interpretação possível é que, se o intervalo de tempo médio das observações for muito pequeno em comparação com a velocidade em que a dinâmica do sistema varia, o erro de aproximação do instante de amostragem das observações $t_k$ é reduzido. O ruído do sensor pode acabar sendo mais relevante do que o erro devido ao tempo incorreto de assimilação.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/samp.eps}	
+		\caption{Robot}
+		\label{fig:lambda-robot}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_samp.eps}	
+		\caption{Aircraft}
+		\label{fig:lambda-AC}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_samp2.eps}
+		\caption{Aircraft (noise 10x bigger)}
+		\label{fig:lambda-AC2}
+	\end{subfigure}
+	
+	\caption[Entradas]{$J$ variation as a function of the lambda.
+	}
+	\label{fig:results-lambda}
+	
+\end{figure}
+
+\subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha}
+
+Finalmente, o valor de $\alpha$, i.e. a relação entre o intervalo de tempo regular das entradas $T$ e o intervalo de tempo médio das observações $\lambda$, foi alterado entre $\alpha = 10$, $5$, $2$, $1$. Os resultados são apresentados na Fig.~\ref{fig:dtu}.
+
+Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
+
+Para a análise de resultados desse artigo, foram feitas 3 simulações distintas, em que um parâmetro diferente foi variado para cada uma delas e os outros foram mantidos fixos. Em todos os casos foram simuladas 100 realizações para cada filtro e para cada parâmetro. Os valores médios do índice de desempenho $J$ para cada caso, assim como os intervalos de confiança de 95\% são apresentados na Fig.~\ref{fig:results}. As próximas subseções apresentam uma discussão sobre os resultados.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/dtudty.eps}	
+		\caption{Robot}
+		\label{fig:dtudty-robot}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_dtudty.eps}	
+		\caption{Aircraft}
+		\label{fig:dtudty-AC}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_dtudty2.eps}
+		\caption{Aircraft (noise 10x bigger)}
+		\label{fig:dtudty-AC2}
+	\end{subfigure}
+	
+	\caption[Entradas]{$J$ variation as a function of the $\alpha$.
+	}
+	\label{fig:results-dtudty}
+	
+\end{figure}
+
+
+
+
+\clearpage

@@ -18,9 +18,12 @@
 
 In this chapter, we present simulation results for two different systems: nonholomonic unicycle position estimation, and longitudinal motion dynamics of an advanced aircraft.
 
-We begin investigating the first system with a regularly sampled input signal and a irregularly sampled output with and without time-delay. Three different scenarios are investigated for both conditions: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between estimation regular sampling rate and output irregular average sampling rate. For time-delay scenario, the average time-delay is also varied.
+We begin by describing the simulated systems as a state-space representation. First system is discretized and a discrete unscented Kalman filter is used for estimation of the robot position. The second one is represented as a continuous-time process model with digital measurements of one state. We wish to estimated a different state by a sampled-data Kalman filter.
 
-To further analyze the impact of time-stamp availability, we study the velocity estimation problem of an aircraft, using a sampled-data filter, using a continuous process model. The observation is available to the estimator aperiodically with time-delay, while estimation is performed at regularly spaced time intervals. The effect on estimation performance is evaluated for the same scenarios simulated for the first system.
+For both cases, we start evaluating the effect of time-stamp information in the estimation algorithm for three different irregular sampling scenarios, without time-delay in the observations: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between estimation regular sampling rate and output irregular average sampling rate. 
+
+Then we add random time-delay to the observation model and evaluate the effect for the same three scenarios plus a fourth one, where we vary the average time-delay.
+
 
 \duvida{O que acha dos cenários e das simulações? Está suficiente?}
 
@@ -85,41 +88,43 @@ We simulate 60 seconds of robot movement, considering a step size of $\delta t_{
 %		\caption{}
 		\label{fig:sfig2}
 	\end{subfigure}
-	\caption[Entradas]{Entradas utilizadas para a simulação. A sequência temporal da velocidade angular $\omega$ é mostrada em (a), e da aceleração linear $a$ é apresentada em (b).}
+	\caption[Entradas]{Simulation input signals. (a) shows temporal sequence of angular velocity $\omega$ and (b) shows linear acceleration $a$.}
 	\label{fig:entrada}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/exemplo_03_30db_desloc.eps}
-	\caption[entrada]{Deslocamento verdadeiro, medições ruidosas e estimativa do UKF considerando o carimbo de tempo, para nível do ruído de medição igual a SNR\textsubscript{y} $= 30$ dB, $\lambda=0.3$ s e $\alpha=5$.}
+	\caption[entrada]{True position, noisy measurements and UKF estimates considering time-stamp, for a measurement noise of SNR\textsubscript{y} $= 30$ dB, $\lambda=0.3$ s and $\alpha=5$.}
 	\label{fig:exukf}
 \end{figure} 
 
-Para comparar a qualidade das estimativas obtidas, o seguinte índice de desempenho é utilizado
+To analyze the effect of considering time-stamp in the estimation algorithm, we use the performance index $J$
 
 \begin{equation}\label{eq:inddesemp}
 J = \frac{ \sum_{i=1}^N \sqrt{(\hat{p}_{\textrm{x},i}-p_{\textrm{x},i})^2+(\hat{p}_{\textrm{y},i}-p_{\textrm{y},i})^2}}{N}
 \end{equation}
 
 \noindent
-em que $\hat{p}_{\textrm{x},i}$ e $\hat{p}_{\textrm{y},i}$ são as estimativas de posição em intervalos regulares $T$, $\hat{p}_{\textrm{x},i}$ e $\hat{p}_{\textrm{y},i}$ as coordenadas verdadeiras do robô, também em intervalos regulares $T$ e $N$ é a quantidade total de estimativas. Esse índice representa a média dos erros de deslocamento no plano \textit{xy} obtidos pelos estimadores.
 
-Uma realização da evolução do índice J para os dois estimadores, considerando $\lambda=0.5$, $\alpha=5$, SNR\textsubscript{y} $=60dB$ dBe SNR\textsubscript{u} $=20$ dB pode ser observada na Fig.~\ref{fig:realizacaoJ}, no intervalo de 0 a 1.3 segundos. Os pontos pretos representam os instantes regulares $kT$ e os asteriscos marcados no eixo das abcissas representam os instantes de medição $t_k$. É possível observar que, antes das primeiras observações serem assimiladas, o índice J de ambos estimadores é igual. Na primeira observação $t_1$, realizada próximo do instante $0.4$ s, não há diferença significativa entre a mudança no índice J para os dois estimadores, pois o instante de tempo real de medição foi muito próximo do instante de entrada e, desta forma, o erro da aproximação $\tilde{y}_i \approx y(t_k)$ é desprezível. No instante $t_2$, no entanto, a diminuição do índice J para o estimador que faz a assimilação no instante correto é visivelmente maior e acontece no momento exato da medição. Esse mesmo efeito pode ser observado no instante $t_4$, após 1 segundo, quando há uma diferença significativa entre o instante de medição $t_k$ e o instante em que a próxima informação de entrada está disponível.
+where $\hat{p}_{\textrm{x},i}$ and $\hat{p}_{\textrm{y},i}$ are filter position estimates produced at a regular interval $T$, $\hat{p}_{\textrm{x},i}$ and $\hat{p}_{\textrm{y},i}$ the true coordinates of the robot at the same time instants and $N$ the total number of estimates. This index represents the average estimator position error in $xy$-plane.
 
-%\begin{figure}[!htb]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao.eps}
-%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
-%	\label{fig:realizacaoJ}
-%\end{figure} 
+Fig.~\ref{fig:realizacaoJ} shows a timespan from 0 to 1.3 seconds of a $J$ realization, considering $\lambda=0.5$, $\alpha=5$, SNR\textsubscript{y} $=60dB$ dB and SNR\textsubscript{u} $=20$ dB, for the UKF considering and not considering time-stamp. Black dots represent the regular time instants $kT$ whereas the asterisks on x-axis match the exact measurement instants $t_k$. As expected, before the first data assimilation steps, both performances are identical. Since the first measurement $t_1$ was taken almost at the same time as regular estimation time interval $4t$, both estimation performances maintain close to each other. That is because the approximation error due to $\tilde{y}_i \approx y(t_k)$ is irrelevant. At $t_2$ we can observe significant deviation from index $J$ in benefit of the algorithm considering time-stamp, since it performs data assimilation at the exact time measurement was taken. The same effect can be noted at $t_4$, after 1 second of simulation, when there is a significant different between time the measurement was taken and the next regular estimation instant.
+
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao-timedelay.eps}
-%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
-	\label{fig:realizacaoJ2}
+	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao.eps}
+	\caption[entrada]{Temporal cut from 0 to 1.3 seconds, for a realization of $J$ of both estimatores, with and without time-stamp. Asterisks on $x$ axis match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants, same as input regular sampling instants.}
+	\label{fig:realizacaoJ}
 \end{figure} 
+
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao-timedelay.eps}
+%%%	\caption[entrada]{Recorte temporal de 1 a 1.3 segundo, do índice J de uma realização dos dois estimadores, com e sem carimbo de tempo. Os asteriscos no eixo $x$ representam os instantes de amostragem das observações $t_k$. Os pontos pretos apresentados nas linhas representam os instantes de tempo regulares de amostragem da entrada}
+%	\label{fig:realizacaoJ2}
+%\end{figure} 
 
 \subsection{Longitudinal Motion Dynamics of an Advanced Aircraft}
 
@@ -196,7 +201,33 @@ y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
 is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
 
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_q_noise10x.eps}	
+		%		\caption{}
+		\label{fig:q_AC}
+	\end{subfigure}
+	
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.75]{Imagens/AC_W_noise10x.eps}
+		%		\caption{}
+		\label{fig:W_AC}
+	\end{subfigure}
+	
+	\caption[Entradas]{One realization of aircraft pitch rate at the center of mass and normal component of linear velocity}
+	\label{fig:aircraft}
+	
+\end{figure}
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise_realization10x.eps}
+	\caption[entrada]{Noise realization with $\sigma=10$ and generated with a time-step of 0.1 s and interpolated for 1e-6 simulation}
+	\label{fig:noise10x}
+\end{figure} 
 
 %\setlength{\abovedisplayskip}{0.5pt}
 %
@@ -212,7 +243,9 @@ is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathca
 	
 \section{Parameter Variation and Results}
 
-\subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido}
+\subsection{Without Time Delay}\label{sec:notimedelay}
+
+\subsubsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido}
 
 Inicialmente, o efeito do nível de ruído de observação no desempenho dos filtros com e sem carimbo de tempo foi é avaliado. A relação sinal ruído dos sensores de entrada e o intervalo de tempo médio das observações são mantidos fixos, SNR\textsubscript{u} $= 20$ dB e $\lambda = 0.1$ s.
 
@@ -220,13 +253,72 @@ Variou-se a relação sinal-ruído das observações conforme SNR\textsubscript{y} = 
 
 É possível observar que o estimador que considera o carimbo de tempo possui desempenho estatisticamente superior apenas para baixos níveis de ruído da observação. Quando SNR\textsubscript{y} é igual a $\infty$ e $80$ dB, o índice de desempenho $J$ do filtro com carimbo de tempo é aproximadamente $1.25$ e $1.26$ cm, respectivamente, mais preciso do que sem carimbo de tempo e com variância pequena. Quando a relação sinal ruído se aproxima de $40$ dB, no entanto, não é possível distinguir estatisticamente o efeito de se considerar ou não carimbo de tempo.
 
-\subsection{Average Sampling Rate Variation}\label{sec:lambda}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/noise.eps}	
+		\caption{Robot}
+		\label{fig:noise-robot}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_noise.eps}	
+		\caption{Aircraft}
+		\label{fig:noise-AC}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_noise2.eps}
+		\caption{Aircraft (noise 10x bigger)}
+		\label{fig:noise-AC2}
+	\end{subfigure}
+	
+	\caption[Entradas]{$J$ variation as a function of the measurement noise.
+	}
+	\label{fig:results-noise}
+	
+\end{figure}
+
+
+\subsubsection{Average Sampling Rate Variation}\label{sec:lambda}
 
 Em seguida, variou-se o intervalo de tempo médio das observaçõs, conforme $\lambda =$ $0.1$, $0.2$, $0.3$, $0.4$, $0.5$, $0.6$ s, mantendo-se o nível de ruído das entradas e das observações fixos em, respectivamente, SNR\textsubscript{u} $= 20$ dB e SNR\textsubscript{y} $= 40$ dB. Os resultados são apresentados na Fig.\ref{fig:samp}.
 
 Os resultados obtidos demonstram que a diferença no desempenho dos filtros é mais significativa para intervalos de tempo mais espaçados, mantendo-se a dinâmica do sistema e os outros parâmetros fixos. Inicialmente, para valores pequenos de $\lambda$	, não há diferença estatística entre o desempenho dos estimadores, mas a medida que o intervalo cresce, ela aparece, chegando a aproximadamente $3.1$ cm para um $\lambda = 0.6$ s. Uma interpretação possível é que, se o intervalo de tempo médio das observações for muito pequeno em comparação com a velocidade em que a dinâmica do sistema varia, o erro de aproximação do instante de amostragem das observações $t_k$ é reduzido. O ruído do sensor pode acabar sendo mais relevante do que o erro devido ao tempo incorreto de assimilação.
 
-\subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/samp.eps}	
+		\caption{Robot}
+		\label{fig:lambda-robot}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_samp.eps}	
+		\caption{Aircraft}
+		\label{fig:lambda-AC}
+	\end{subfigure}
+	~
+	\begin{subfigure}
+		\centering
+		\includegraphics[scale=0.6]{Imagens/AC_samp2.eps}
+		\caption{Aircraft (noise 10x bigger)}
+		\label{fig:lambda-AC2}
+	\end{subfigure}
+	
+	\caption[Entradas]{$J$ variation as a function of the lambda.
+	}
+	\label{fig:results-lambda}
+	
+\end{figure}
+
+\subsubsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha}
 
 Finalmente, o valor de $\alpha$, i.e. a relação entre o intervalo de tempo regular das entradas $T$ e o intervalo de tempo médio das observações $\lambda$, foi alterado entre $\alpha = 10$, $5$, $2$, $1$. Os resultados são apresentados na Fig.~\ref{fig:dtu}.
 
@@ -234,36 +326,43 @@ Nota-se que, quando o carimbo de tempo é considerado, não há diferença significa
 
 Para a análise de resultados desse artigo, foram feitas 3 simulações distintas, em que um parâmetro diferente foi variado para cada uma delas e os outros foram mantidos fixos. Em todos os casos foram simuladas 100 realizações para cada filtro e para cada parâmetro. Os valores médios do índice de desempenho $J$ para cada caso, assim como os intervalos de confiança de 95\% são apresentados na Fig.~\ref{fig:results}. As próximas subseções apresentam uma discussão sobre os resultados.
 
-\begin{figure}[h!]
+\begin{figure}[!htb]
 	\centering
 	\begin{subfigure}
 		\centering
-		\includegraphics[scale=0.4]{Imagens/noise.eps}	
-		%		\caption{}
-		\label{fig:noise}
+		\includegraphics[scale=0.6]{Imagens/dtudty.eps}	
+		\caption{Robot}
+		\label{fig:dtudty-robot}
 	\end{subfigure}
-	
+	~
 	\begin{subfigure}
 		\centering
-		\includegraphics[scale=0.4]{Imagens/samp.eps}
-		%		\caption{}
-		\label{fig:samp}
+		\includegraphics[scale=0.6]{Imagens/AC_dtudty.eps}	
+		\caption{Aircraft}
+		\label{fig:dtudty-AC}
 	\end{subfigure}
-	
+	~
 	\begin{subfigure}
 		\centering
-		\includegraphics[scale=0.4]{Imagens/dtudty.eps}
-		%		\caption[entrada]{}
-		\label{fig:dtu}
+		\includegraphics[scale=0.6]{Imagens/AC_dtudty2.eps}
+		\caption{Aircraft (noise 10x bigger)}
+		\label{fig:dtudty-AC2}
 	\end{subfigure}
 	
-	
-	\caption[Entradas]{Variação do índice desempenho J em função de (a) redução da relação sinal-ruído das observações SNR\textsubscript{y}, (b) aumento do intervalo de tempo médio das observações $\lambda$ e (c) relação entre o intervalo de tempo de entrada $T$ e o valor de $\lambda$, dado por $\alpha$.  O lado esquerdo representa entrada regular e o direito entrada irregular}
-	\label{fig:results}
-	\todo[caption = {Faltam ajustes nas figuras de resultados},inline]{Falta ajustar o posicionamento das figuras. Estou tendo dificuldades no LaTeX e provavelmente vou posicionar as figuras no matlab. Também preciso verificar se o algoritmo para irregularidade na entrada está correto, pois para 100 simulações, a variabilidade está muito grande. Também serão colocadas em escalas semelhantes.}
+	\caption[Entradas]{$J$ variation as a function of the $\alpha$.
+	}
+	\label{fig:results-dtudty}
 	
 \end{figure}
 
+\subsection{With Time Delay}\label{sec:timedelay}
 
+\subsubsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido2}
+
+\subsubsection{Average Sampling Rate Variation}\label{sec:lambda2}
+
+\subsubsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha2}
+
+\subsubsection{Average Time Delay}\label{sec:alpha2}
 
 \clearpage

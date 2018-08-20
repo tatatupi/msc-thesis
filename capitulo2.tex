@@ -24,7 +24,7 @@ In this chapter, we review the irregular sampling problem. First, in Section \re
 
 \section{Introduction}\label{irregular-sampling}
 
-Sampling irregularities may occur due to a variety of issues, sometimes as undesired side effects of using large sensor networks architectures and others due to deliberate non-uniform sampling schemes. In this section we try to categorize and review the main irregularities observed in practice. The diagram in  Fig. \ref{fig:diagrama2} provides a simplified overview of them, separated by their sources.
+Sampling irregularities may occur due to a variety of issues, sometimes as undesired side effects of using large sensor networks architectures and others due to deliberate non-uniform sampling schemes. In this section we try to categorize and review the main irregularities observed in practice. The diagram in  Figure \ref{fig:diagrama2} provides a simplified overview of them, separated by their sources.
 
 \tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!40, drop shadow,
 text centered, anchor=north, text=white, text width=3cm]
@@ -68,7 +68,7 @@ text centered, anchor=north, text=white, text width=3cm]
 			[.{Event-Based Sampling} 
 				{Aperiodic Sampling}
 			]
-			[.{Deliberate NUS}
+			[.{NUS scheme}
 				{Aperiodic Sampling}
 			]
 			[.{Industrial Processes} 
@@ -91,7 +91,7 @@ text centered, anchor=north, text=white, text width=3cm]
 \label{fig:diagrama2}
 \end{figure}
 
-Networked system monitoring and control appears to be the main cause of irregular sampling. Unreliable communication channels may lead to random time delays and loss of information, specially if the data are transmitted using a common media \citep{Sahebsara2007, Moayedi2011}. In case they get randomly interrupted during transmission or if a sensor fails at some point, the signal received may contain predominantly noise, causing uncertain observation or packet dropouts \citep{Hadidi1979, Wang2009}. Systems that are observed by a large number of desynchronized sensors will provide observations at random time intervals \citep{Micheli2002}. If they are synchronized but designed to operate in a centralized fashion, there is a chance that different time delays are produced due to distinct transmission routes for each sensor \citep{Bar-Shalom2000, Challa2003, Anxi2005}. 
+Networked system monitoring and control appears to be the main cause of irregular sampling. Unreliable communication channels may lead to random time delays and loss of information, specially if the data are transmitted using a common media \citep{Sahebsara2007, Moayedi2011}. In case they get randomly interrupted during transmission or if a sensor fails at some point, the signal received may predominantly contain noise, causing uncertain observation or packet dropouts \citep{Hadidi1979, Wang2009}. Systems that are observed by a large number of desynchronized sensors will provide observations at random time intervals \citep{Micheli2002}. If they are synchronized but designed to operate in a centralized fashion, there is a chance that different time delays are produced due to distinct transmission routes for each sensor \citep{Bar-Shalom2000, Challa2003, Anxi2005}. 
 
 However the communication networks shall not always be held responsible. Some applications are designed to be measured in an irregular way. In event-based schemes, for example, the measurements are transmitted only when certain conditions are met \citep{Liu2014,Zou2017}. Such approach can reduce communication resource consumption substantially \citep{Hu2017}, but will cause aperiodic sampling. Non-Uniform Sampling (NUS) is also intentionally used as an alias detection method \citep{Kunoh2015} or to enhance the spectral resolution of signals, largely used in Nuclear Magnetic Resonance (NMR) spectroscopy analysis \citep{Hyberts2013}. In other situations, due to the nature of the process being observed, the measurement strategy relies on different procedures. A lot of chemical processes, for instance, can be measured in a online, fast rate and delay free fashion, but provides inaccurate data. Therefore, lab analyses are used to improve estimation quality, but they are usually gathered at slower rates, sometimes irregularly and with possible time delays \citep{Fatehi2017}. Other industrial applications suffer from the same dilemma, and the sampling scheme ends up with a multi-rate data transmission, with random time delays and possibly measurement scarcity \citep{Penarrocha2012}. 
 
@@ -99,10 +99,10 @@ Finally, sampling irregularities might also appear due to a specific nature of a
 
 %\duvida{Vale a pena introduzir o assunto de irregularidades do controlador para o atuador (e não só do sensor para o controlador)?}
 
-On the next subsections, we review the main irregular sampling effects.
+On the next sections, we review the main irregular sampling effects.
 
 
-\subsection{Time Delay}
+\section{Time Delay}
 
 Time-delay System (TDS) is probably the most common mathematical representation to time delays in practice. The works of \citep{Richard2003, Fridman2014} and the references therein provide a good coverage of the subject. There might be delays in the input or output signals, introduced by the communication networks, or even state delays. The latter phenomenon is called system with aftereffect or dead-time. Since we are studying the irregular sampling issue, only the formers are relevant to us.
 
@@ -111,6 +111,7 @@ Considering delays in the measurement model only, \citep{Lu2005} studied the est
 \begin{equation}\label{eq:delay_model}
 y_i(t)=H_i(t)x(t_i)+v_i(t)
 \end{equation}
+
 
 \noindent
 where $i=0,\ 1,\ ...,\ l$ and $l$ is the number of different known delays. $y_i(t) \in \mathbb{R}^{p_i}$ are delayed measurements and $v_i(t) \in \mathbb{R}^{p_i}$ the measurement noises. The known delayed time instants are given by $t_i=t_{i-1}-d_i$, with $d_0=0$, $d_i>0$ for $i>0$ and $t_0=t$. 
@@ -122,7 +123,6 @@ y(k) = H(k)x(k-d(k))+H(k)v(k)
 \end{equation}
 
 \noindent
-
 where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time Markov Chain observable at each sampling time k.
 
 \begin{figure}
@@ -157,7 +157,7 @@ where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time M
 \textit{Os atrasos podema ainda provocar OOSM \citep{Bar-Shalom2000, Challa2003,Anxi2005,Choi2009,Moayedi2011,Penarrocha2012,Westenberger2013}, de single-lag, multiple-lag ou mixed-lag. Na ocorrência de múltiplos atrasos, as informaçõs podem chegar em conjuntos, burst arrivals \citep{Moayedi2011}.}
 
 
-\subsection{Packet Loss}
+\section{Packet Loss}
 
 \todo[caption={Terminar seções de irregular sampling, da mesma forma que time-delay},inline]{A ideia seria continuar nos mesmos moldes que para o time delay, explicando as diferentes formas que cada irregularidade pode aparecer e como ela é tratada na literatura.}
 
@@ -165,11 +165,11 @@ where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time M
 A falta de dados pode ser por packet dropout \citep{}, quando a informação é perdida na transmissão. Os dropouts podem ser single ou multiple \citep{Sun2011,Zhu2013,ShuliSun2008,Sahebsara2007}, tendo o número de dropouts consecutivos ser limitado ou não.
 
 
-\subsection{Uncertain Observation}
+\section{Uncertain Observation}
 
 Para alguns sistemas, como de target tracking, medições feitas em intervalos discretos podem ser consideradas como existentes ou não (lack of target), com certa probabilidade. Pode ser que, para casos dados como existentes, na verdade não houve medição e a observação é composta apenas por ruído - uncertain observation \citep{Hadidi1979,Sun2011,Nahi1969}.
 
-\subsection{Aperiodic Sampling}
+\section{Aperiodic Sampling}
 
 A maioria dos efeitos mencionados consideram amostragem periódica, mas irregular. Há também os casos em que as amostragem são feitas de forma aperiódica (ou modeladas como tal). Sejam elas causadas por amostragem baseada em eventos ou para aproximar os intervalos de tempo aleatórios causadas por uma grande rede de sensores \citep{Micheli2002,Yan2017}. A falta de periodicidade também pode ser entendida como um intervalos de tempo com ruído \citep{Shen2016}.
 
@@ -180,7 +180,7 @@ Sampling jitter
 In analog to digital and digital to analog conversion of signals, the sampling is normally assumed to be periodic with a fixed period?the time between every two samples is the same. If there is jitter present on the clock signal to the analog-to-digital converter or a digital-to-analog converter, the time between samples varies and instantaneous signal error arises. The error is proportional to the slew rate of the desired signal and the absolute value of the clock error. Various effects such as noise (random jitter), or spectral components (periodic jitter)[specify] can come about depending on the pattern of the jitter in relation to the signal. In some conditions, less than a nanosecond of jitter can reduce the effective bit resolution of a converter with a Nyquist frequency of 22 kHz to 14 bits.
 This is a consideration in high-frequency signal conversion, or where the clock signal is especially prone to interference.
 
-\subsection{Multi-Rate Sampling}
+\section{Multi-Rate Sampling}
 
 Caso típico de processo industrial, com medições laboratoriais e sensores online. \citep{Fatehi2017}
 
