@@ -65,7 +65,7 @@ Arrival times to the estimator may be delayed during transmission by a random ti
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=1]{Imagens/esquema5.png}
+	\includegraphics[width=1\textwidth]{Imagens/scheme-timedelay.pdf}
 	%\setlength{\belowcaptionskip}{-12pt}
 	\caption[poisson]{Randomly delayed measurements, modeled as exponential random variables. Random measurement times $t_k$ are received by the estimator after a random delay $\delta_{t_k}$}
 	\label{fig:delay}
@@ -78,9 +78,9 @@ Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT
 
 When time-stamp information is available, data assimilation can be performed at the correct measurement instants $t_k$. When they are not, the assimilation moment is considered to be the random receipt time instant or the next estimation moment, when there are no transmission time delays. 
 
-We wish to estimate the state vector $x(t)$ and its covariance recursively, at regularly spaced time intervals $T$, given their initial values ($x_0$, $P_0$), the process model (\ref{eq:processo}), the input or control signals ($u(t): t \leq kT$) and the set of past observations $y(t_k): t_k - \delta_{t_k} \leq kT$. The knowledge of the time intervals $h_{k-1}: t_k - \delta_{t_k} \leq t$ is also taken into consideration when time-stamp information is available. We assume that the average time instant of observations $\lambda_{h_k}$ is greater than $T$ by a factor $\alpha>1$, i.e. $\lambda_{h_k}=\alpha T$.
+We wish to estimate the state vector $x(t)$ and its covariance recursively, at regularly spaced time intervals $T$, given their initial values ($x_0$, $P_0$), the process model (\ref{eq:processo}), the input or control signals ($u(t): t \leq kT$) and the set of past observations $y(t_k): t_k - \delta_{t_k} \leq kT$. The knowledge of the time intervals $h_{k-1}: t_k - \delta_{t_k} \leq t$ is also taken into consideration when time-stamp information is available. We assume that the average time instant of observations $\lambda_{h_k}$ is greater than $T$ by a factor $\alpha>1$, i.e. $\lambda_{h_k}=\alpha T$. \duvida{A formulação está completa e matematicamente correta?}
 
-\duvida{A formulação está completa e matematicamente correta?}
+
 
 
 
