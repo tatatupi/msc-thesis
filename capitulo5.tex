@@ -47,9 +47,16 @@ Consider a nonholomonic moving robot, with the cinematic process model given by
 \dot{v} & = u_2(t),
 \end{split}
 \end{equation}
-\noindent
 
-where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ the angular orientation, $v$ the linear velocity and inputs $u_1$ and $u_2$ are the angular velocity $\omega$ and the linear acceleration $a$, respectively.
+\noindent
+where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ the angular orientation, $v$ the linear velocity and inputs $u_1$ and $u_2$ are the angular velocity $\omega$ and the linear acceleration $a$, respectively. Figure~\ref{fig:robot} shows a schematic of the robot and its states,
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagens/Nonholomonic-robot.pdf}
+	\caption[entrada]{Nonholomonic robot system representation. The system states $p_\textrm{x}$, $p_\textrm{y}$, $v$ and $\theta$ are highlighted.}
+	\label{fig:robot}
+\end{figure} 
 
 The system described by~\ref{eq:sistema} is discretized by a 4$^{th}$ order Runge-Kutta method and the state vector $x_i$ is given by $x_i \overset{\Delta}{=} [p_{\textrm{x},i}\ p_{\textrm{y},i}\ \theta_i\ v_i]^T$.
 
@@ -88,7 +95,7 @@ We simulate 60 seconds of robot movement, considering a step size of $\delta t_{
 	\end{subfigure}
 	\begin{subfigure}
 		\centering
-		\includegraphics[width=\textwidth]{Imagens/entradas2.eps}
+			\includegraphics[width=\textwidth]{Imagens/entradas2.eps}
 %		\caption{}
 		\label{fig:sfig2}
 	\end{subfigure}
@@ -110,10 +117,9 @@ J = \frac{ \sum_{i=1}^N \sqrt{(\hat{p}_{\textrm{x},i}-p_{\textrm{x},i})^2+(\hat{
 \end{equation}
 
 \noindent
-
 where $\hat{p}_{\textrm{x},i}$ and $\hat{p}_{\textrm{y},i}$ are filter position estimates produced at a regular interval $T$, $\hat{p}_{\textrm{x},i}$ and $\hat{p}_{\textrm{y},i}$ the true coordinates of the robot at the same time instants and $N$ the total number of estimates. This index represents the average estimator position error in $xy$-plane.
 
-Figure~\ref{fig:realizacaoJ} shows a timespan from 0 to 1.3 seconds of a $J$ realization, considering $\lambda=0.5$, $\alpha=5$, SNR\textsubscript{y} $=60dB$ dB and SNR\textsubscript{u} $=20$ dB, for the UKF considering and not considering time-stamp. Black dots represent the regular time instants $kT$ whereas the asterisks on x-axis match the exact measurement instants $t_k$. As expected, before the first data assimilation steps, both performances are identical. Since the first measurement $t_1$ was taken almost at the same time as regular estimation time interval $4t$, both estimation performances maintain close to each other. That is because the approximation error due to $\tilde{y}_i \approx y(t_k)$ is irrelevant. At $t_2$ we can observe significant deviation from index $J$ in benefit of the algorithm considering time-stamp, since it performs data assimilation at the exact time measurement was taken. The same effect can be noted at $t_4$, after 1 second of simulation, when there is a significant different between time the measurement was taken and the next regular estimation instant.
+Figure~\ref{fig:realizacaoJ} shows a timespan from 0 to 1.3 seconds of a $J$ realization, considering $\lambda=0.5$, $\alpha=5$, SNR\textsubscript{y} $=60dB$ dB and SNR\textsubscript{u} $=20$ dB, for the UKF considering and not considering time-stamp. Black dots represent the regular time instants $kT$ whereas the asterisks on x-axis match the exact measurement instants $t_k$. As expected, before the first data assimilation steps, both performances are identical. Since the first measurement $t_1$ was taken almost at the same time as regular estimation time instant $4T$, both estimation performances maintain close to each other. That is because the approximation error due to $\tilde{y}_i \approx y(t_k)$ is irrelevant. At $t_2$ we can observe significant deviation from index $J$ in benefit of the algorithm considering time-stamp, since it performs data assimilation at the exact time measurement was taken. The same effect can be noted at $t_4$, after 1 second of simulation, when there is a significant different between time the measurement was taken and the next regular estimation instant.
 
 
 \begin{figure}[!htb]
@@ -282,7 +288,7 @@ y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
 \noindent
 is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
-We simulate 5 seconds of flight, considering an input profile $\delta_a$ according to~\ref{fig:AC_input} and a step size of $\delta t_{sim} = 10^{-5}$. Irregular sampling time intervals $h_k$ are generated in the same way as for the unicycle system. Figure~\ref{fig:AC_realization} shows all three system states evolution in time (in blue solid lines) and the SDKF estimates (in red dashed lines). For the third states, which is observed, the measurements are represented by the green dots
+We simulate 5 seconds of flight, considering an input profile $\delta_a$ according to~\ref{fig:AC_input} and a step size of $\delta t_{sim} = 10^{-5}$. Irregular sampling time intervals $h_k$ are generated in the same way as for the unicycle system. Figure~\ref{fig:AC_realization} shows all three system states evolution in time (in blue solid lines) and the SDKF estimates (in red dashed lines). For the observed state, noisy measurements are represented by blue dots
 
 \begin{figure}[!htb]
 	\centering
@@ -299,11 +305,21 @@ We simulate 5 seconds of flight, considering an input profile $\delta_a$ accordi
 	\label{fig:AC_realization}
 \end{figure}
 
+Performance of estimator algorithm is evaluated by the root mean square error (RMSE) of each state, defined by
+
+\begin{equation}\label{eq:inddesemp}
+RMSE_i = \sqrt{\frac{1}{N}\sum_{k=1}^{N} (x_{\textrm{true},i}[k] -x_{\textrm{est},i}[k])^2 }
+\end{equation}
+
+\noindent
+where $i$ is the state index, $N$ is the amount of estimates, $x_{\textrm{true},i}$ the true value of the state $i$ sampled at regular time intervals $T$ and $x_{\textrm{est},i}$ the algorithm estimates at the same time instants.
+
+Figure~\ref{fig:AC_J} presents a window data from 0 to 0.2 seconds of the pitch rate about the center of mass RMSE for the algorithms with and without time-stamp, considering XXXXXXXXXX. Again, as expected, we observe a distancing from the RMSE at the instant the first observation was taken $t_1$, favoring the algorithm that considers time-stamp. The reduction in RMSE is lower for the algorithm that assimilates the observed data at the wrong time instant. At $t_2$ the reduction in RMSE happens at the correct time for the algorithm with time-stamp and at the next regular estimation instant for the algorithm that does not consider the time in which observation was taken.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/AC_J_evolution.eps}
-	\caption[entrada]{Temporal cut from 0 to 0.2 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with and without time-stamp. Vertical dashed lines on $x$ axis match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
+	\caption[entrada]{Temporal cut from 0 to 0.2 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
 	\label{fig:AC_J}
 \end{figure}
 
@@ -311,84 +327,61 @@ We simulate 5 seconds of flight, considering an input profile $\delta_a$ accordi
 
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
 
+In this subsection we compare the estimation performance impact of considering time-stamp in the algorithm, by varying the measurement noise level. The signal-to-noise ratio for the input sensors and the measurement average time interval are held constant, SNR\textsubscript{u} $= 20$ dB and $\lambda = 0.1$ s.
+
+We considered an observation signal-to-noise variation of SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$, $10$ dB. That is, initially the system was simulated considering no measurement noise and then it was gradually increased. For each noise scenario, we ran 100 realizations of the random variables for each algorithm and Figure~\ref{fig:noise} shows the results. Solid lines represent the average values for $J$ and the dashed lines are the 95\% confidence interval.
+
+\todo[inline]{Falta incluir resultados com time-delay}
+
+
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise.eps}
+%	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+%	\label{fig:AC_noise}
+%\end{figure} 
+
+
+\textit{É possível observar que o estimador que considera o carimbo de tempo possui desempenho estatisticamente superior apenas para baixos níveis de ruído da observação. Quando SNR\textsubscript{y} é igual a $\infty$ e $80$ dB, o índice de desempenho $J$ do filtro com carimbo de tempo é aproximadamente $1.25$ e $1.26$ cm, respectivamente, mais preciso do que sem carimbo de tempo e com variância pequena. Quando a relação sinal ruído se aproxima de $40$ dB, no entanto, não é possível distinguir estatisticamente o efeito de se considerar ou não carimbo de tempo.
+}
+
+
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
 
-\subsection{Regular and Average Irregular Time Interval Variation}\label{sec:alpha-AC}
+We now consider the variation of the average time interval that observations are taken, according to $\lambda =$ $0.1$, $0.2$, $0.3$, $0.4$, $0.5$, $0.6$ s, maintaining the other parameters constant, namely the noise level of inputs and observations, SNR\textsubscript{u} $= 20$ dB and SNR\textsubscript{y} $= 40$ dB, respectively. We carried out 100 realizations for each $\lambda$ and for each algorithm and Figure~\ref{fig:samp} presents the results. Again, the solid lines are the average values of $J$ and the 95\% confidence interval is between the dashed lines.
 
-\subsection{Average Time Dela}\label{sec:dt-AC}
-
-
-
-\subsubsection{System simulated with interpolated noise created at 0.1s (sigma = 1)}
-
-\begin{figure}[h!]
-	\centering
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.75]{Imagens/AC_q_noise.eps}	
-		%		\caption{}
-		\label{fig:q_AC-1}
-	\end{subfigure}
-	
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.75]{Imagens/AC_W_noise.eps}
-		%		\caption{}
-		\label{fig:W_AC-1}
-	\end{subfigure}
-	
-	\caption[Entradas]{One realization of aircraft pitch rate at the center of mass and normal component of linear velocity}
-	\label{fig:aircraft1}
-	
-\end{figure}
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/AC_samp.eps}
+%	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+%	\label{fig:AC_samp}
+%\end{figure}
 
 
-\clearpage
+\textit{Os resultados obtidos demonstram que a diferença no desempenho dos filtros é mais significativa para intervalos de tempo mais espaçados, mantendo-se a dinâmica do sistema e os outros parâmetros fixos. Inicialmente, para valores pequenos de $\lambda$	, não há diferença estatística entre o desempenho dos estimadores, mas a medida que o intervalo cresce, ela aparece, chegando a aproximadamente $3.1$ cm para um $\lambda = 0.6$ s. Uma interpretação possível é que, se o intervalo de tempo médio das observações for muito pequeno em comparação com a velocidade em que a dinâmica do sistema varia, o erro de aproximação do instante de amostragem das observações $t_k$ é reduzido. O ruído do sensor pode acabar sendo mais relevante do que o erro devido ao tempo incorreto de assimilação.}
 
-\subsubsection{System simulated with interpolated noise created at 0.1s (sigma = 10)}
-\begin{figure}[h!]
-	\centering
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.75]{Imagens/AC_q_noise10x.eps}	
-		%		\caption{}
-		\label{fig:q_AC}
-	\end{subfigure}
-	
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.75]{Imagens/AC_W_noise10x.eps}
-		%		\caption{}
-		\label{fig:W_AC}
-	\end{subfigure}
-	
-	\caption[Entradas]{One realization of aircraft pitch rate at the center of mass and normal component of linear velocity}
-	\label{fig:aircraft}
-	
-\end{figure}
 
-\begin{figure}[h!]
-	\centering
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.75]{Imagens/AC_noise-realization1x.eps}	
-		%		\caption{}
-		\label{fig:noise1}
-	\end{subfigure}
-	
-	\begin{subfigure}
-		\centering
-		\includegraphics[scale=0.75]{Imagens/AC_noise_realization10x.eps}
-		%		\caption{}
-		\label{fig:noise10}
-	\end{subfigure}
-	
-	\caption[Entradas]{Noise realization with $\sigma=1$ and $\sigma=10$ and generated with a time-step of 0.1 s and interpolated for 1e-6 simulation}
-	\label{fig:noise-realization}
-	
-\end{figure}
+\subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-AC}
 
-\clearpage
+We also analyze the performance impact of varying the parameter $\alpha$, which is the relation between regular input time interval $T$ and average measurements time interval $\lambda$. The simulated values were $\alpha = 10$, $5$, $2$, $1$. That means we start with higher frequency values for input sampling in comparison to measurement sampling and this values is gradually decreased. Other parameters were maintained constant SNR\textsubscript{u} $= 20$ dB and SNR\textsubscript{y} $= 40$ dB.
+
+The same way we did for the other scenarios, 100 realizations were simulated and Figure~\ref{fig:dtudty} presents the results. Solid lines are the average values for $J$ and dashed lines represent the 95\% confidence interval.
+
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/AC_dtudty.eps}
+%	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+%	\label{fig:AC_dtudty}
+%\end{figure}
+
+
+\textit{
+	Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
+}
+
+\subsection{Average Time Delay}\label{sec:dt-AC}
+
+\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
 
 
 \clearpage
