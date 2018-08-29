@@ -82,7 +82,7 @@ u_i = \tilde{u}_i - w_i,
 \noindent
 where $\tilde{u}$ is the sensors measured valueand $w \sim \mathcal{N} (0, Q_i)$ represents the corresponded noise, of zero mean and covariance $Q_i$. 
 
-We simulate 60 seconds of robot movement, considering a step size of $\delta t_{\textrm{sim}} = 10^{-4}$. Irregular sampling time intervals $h_k$ are simulated by the exponential probability distribution function from MatLab\texttrademark \ and approximated to the nearest discrete time instant, from the 600,000 available samples. Input signals were generated arbitrarily according to Figure~\ref{fig:entrada}. Figure~\ref{fig:exukf} shows robot trajectory on $xy$-plane for the given input signals, leaving from point $(0,0)$, as well as a realization of noisy and aperiodic measurements with signal-to-noise ratio of SNR\textsubscript{y} $= 30$ dB and $\lambda=0.3$ s as red dots and the hatched blue line represents UKF estimation, considering time-stamp and $\alpha=5$. 
+We simulate 60 seconds of robot movement, considering a step size of $\delta t_{\textrm{sim}} = 10^{-4}$. Irregular sampling time intervals $h_k$ are simulated by the exponential probability distribution function from MatLab\texttrademark \ and approximated to the nearest discrete time instant, from the 600,000 available samples. Input signals were generated arbitrarily according to Figure~\ref{fig:entrada}. Figure~\ref{fig:exukf} shows robot trajectory on $xy$-plane for the given input signals, leaving from point $(0,0)$, as well as a realization of noisy and aperiodic measurements with signal-to-noise ratio of SNR\textsubscript{y} $= 30$ dB and $\lambda=0.3$ s as red dots and the hatched blue line represents UKF estimation, considering time-stamp, $\alpha=5$ and SNR\textsubscript{u} $= 10$ dB. 
 
 
 \begin{figure}[!htb]
@@ -105,7 +105,7 @@ We simulate 60 seconds of robot movement, considering a step size of $\delta t_{
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/exemplo_03_30db_desloc.eps}
+	\includegraphics[width=0.8\textwidth]{Imagens/exemplo_03_30db_desloc.eps}
 	\caption[entrada]{True position, noisy measurements and UKF estimates considering time-stamp, for a measurement noise of SNR\textsubscript{y} $= 30$ dB, $\lambda=0.3$ s and $\alpha=5$.}
 	\label{fig:exukf}
 \end{figure} 
@@ -258,7 +258,16 @@ G =  \begin{bmatrix}
 \end{center}
 
 \noindent
-where plant variables $\delta_e$ is elevator deflection (radian), $W$ is the normal component of linear velocity at the center of mass (m/s), $q$ is the pitch rate about the center of mass (radian/s) and input $\delta_a$ is the elevator command (radian).
+where plant variables $\delta_e$ is elevator deflection (radian), $W$ is the normal component of linear velocity at the center of mass (m/s), $q$ is the pitch rate about the center of mass (radian/s) and input $\delta_a$ is the elevator command (radian). Figure~\ref{fig:aircraft-scheme} shows a simplified system representation of the longitudinal motion dynamics of an aircraft.
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_schematic.pdf}
+	\caption[entrada]{Aircraft longitudinal motion dynamics schematic, where $\delta_e$ stands for the elevator deflection, $W$ is the normal component of linear velocity at the center of the mass, and $q$ is the pitch angle change rate.}
+	\label{fig:aircraft-scheme}
+\end{figure}
+
 
 The parameters for the longitudinal motion dynamics were chosen to be the same as the work of~\citep{Ray1993}, knowingly:
 
@@ -283,24 +292,31 @@ Sensor data is available at discrete time instants and the observation model $y(
 
 \begin{equation}
 y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
-\end{equation} \duvida{É melhor representar y como sendo de 3 dimensoes, considerando 0 para os outros estados?}
+\end{equation} 
 
 \noindent
 is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
-We simulate 5 seconds of flight, considering an input profile $\delta_a$ according to~\ref{fig:AC_input} and a step size of $\delta t_{sim} = 10^{-5}$. Irregular sampling time intervals $h_k$ are generated in the same way as for the unicycle system. Figure~\ref{fig:AC_realization} shows all three system states evolution in time (in blue solid lines) and the SDKF estimates (in red dashed lines). For the observed state, noisy measurements are represented by blue dots
+We simulate 5 seconds of flight, considering an input profile $\delta_a$ according to~\ref{fig:AC_input} and a step size of $\delta t_{sim} = 10^{-5}$. Noise $\omega(t)$ was generated as white gaussian with unity intensity, with a step size of 0.1 seconds and interpolated for all simulation data points. Figure Irregular sampling time intervals $h_k$ are generated in the same way as for the unicycle system. Figure~\ref{fig:AC_realization} shows all three system states evolution through simulation time, the SDKF estimates and the noisy measurements for the observed state, considering SNR\textsubscript{y} $= 20$ dB, $\lambda = 0.1$ s and $\alpha = 2$.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_input.eps}
+	\includegraphics[width=\textwidth]{Imagens/AC_input.eps}
 	\caption[entrada]{Simulated elevator command $\delta_a$ as a function of time, in degrees}
 	\label{fig:AC_input}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{Imagens/noise-realization.eps}
+	\caption[entrada]{One realization of noise $\omega$ over time}
+	\label{fig:noise-realizatino}
 \end{figure}
 
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_realization.eps}
+	\includegraphics[width=\textwidth]{Imagens/AC_realization.eps}
 	\caption[entrada]{The true values (---) and estimated values (\textcolor{red}{- -}) of all three states. For the observed state (pitch rate), the measurements are also shown (\textcolor{blue}{\textbullet})}
 	\label{fig:AC_realization}
 \end{figure}
@@ -334,12 +350,12 @@ We considered an observation signal-to-noise variation of SNR\textsubscript{y} =
 \todo[inline]{Falta incluir resultados com time-delay}
 
 
-%\begin{figure}[!htb]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise.eps}
-%	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
-%	\label{fig:AC_noise}
-%\end{figure} 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise.eps}
+	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+	\label{fig:AC_noise}
+\end{figure} 
 
 
 \textit{É possível observar que o estimador que considera o carimbo de tempo possui desempenho estatisticamente superior apenas para baixos níveis de ruído da observação. Quando SNR\textsubscript{y} é igual a $\infty$ e $80$ dB, o índice de desempenho $J$ do filtro com carimbo de tempo é aproximadamente $1.25$ e $1.26$ cm, respectivamente, mais preciso do que sem carimbo de tempo e com variância pequena. Quando a relação sinal ruído se aproxima de $40$ dB, no entanto, não é possível distinguir estatisticamente o efeito de se considerar ou não carimbo de tempo.
@@ -367,12 +383,12 @@ We also analyze the performance impact of varying the parameter $\alpha$, which 
 
 The same way we did for the other scenarios, 100 realizations were simulated and Figure~\ref{fig:dtudty} presents the results. Solid lines are the average values for $J$ and dashed lines represent the 95\% confidence interval.
 
-%\begin{figure}[!htb]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{Imagens/AC_dtudty.eps}
-%	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
-%	\label{fig:AC_dtudty}
-%\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_dtudty.eps}
+	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+	\label{fig:AC_dtudty}
+\end{figure}
 
 
 \textit{
