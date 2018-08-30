@@ -323,7 +323,7 @@ We simulate 5 seconds of flight, considering an input profile $\delta_a$ accordi
 
 Performance of estimator algorithm is evaluated by the root mean square error (RMSE) of each state, defined by
 
-\begin{equation}\label{eq:inddesemp}
+\begin{equation}\label{eq:ACinddesemp}
 RMSE_i = \sqrt{\frac{1}{N}\sum_{k=1}^{N} (x_{\textrm{true},i}[k] -x_{\textrm{est},i}[k])^2 }
 \end{equation}
 
@@ -343,7 +343,7 @@ Figure~\ref{fig:AC_J} presents a window data from 0 to 0.2 seconds of the pitch 
 
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
 
-For the aircraft case study, we compare algorithm performance for the same observation signal-to-noise ratio values as for the robot, SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$ an $10$ dB. The sampling rate parameters are held constant, $\lambda = 0.1$ s and $\alpha = $ s.
+For the aircraft case study, we compare algorithm performance for the same observation signal-to-noise ratio values as for the robot, SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$ an $10$ dB. The sampling rate parameters are held constant, $\lambda = 0.1$ s and $\alpha = $ 1s.
 
 We simulate 300 realizations for each scenario and each algorithm. The results for all three system states are shown in Figure~\ref{fig:AC_noise}. Solid lines represent the average values for RMSE and the dashed lines are the 95\% confidence interval.
 
@@ -357,18 +357,25 @@ We simulate 300 realizations for each scenario and each algorithm. The results f
 	\label{fig:AC_noise}
 \end{figure} 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise-DKF.eps}
+	\caption[entrada]{DISCRETE KALMAN FILTER. Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:AC_noise-DKF}
+\end{figure} 
+
 
 \textit{Falta resultados com time-delay, para uma análise abrangente das figuras}
 
 
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
 
-Variation of the observation average time interval for the aircraft was chosen according to $\lambda =$ $0.01$, $0.05$, $0.1$, $0.2$ and $0.5$. We kept noise level and the ratio between estimation and measurement sampling time interval, respectively at SNR\textsubscript{y} $= 40$ and $\alpha = 1$. After 300 realizations for all parameter scenarios and each algorithm, the RMSE results are shown in Figure~\ref{fig:AC_samp}. As usual, the solid lines are the average values of RMSE and the dashed lines comprehend the 95\% confidence interval.
+Variation of the observation average time interval for the aircraft was chosen according to $\lambda =$ $0.01$, $0.05$, $0.1$, $0.2$ and $0.5$. We kept noise level and the ratio between estimation and measurement sampling time interval, respectively at SNR\textsubscript{y} $= 60$ and $\alpha = 1$. After 300 realizations for all parameter scenarios and each algorithm, the RMSE results are shown in Figure~\ref{fig:AC_samp}. As usual, the solid lines are the average values of RMSE and the dashed lines comprehend the 95\% confidence interval.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_samp.eps}
-	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_samp-snr60-a1.eps}
+	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
 	\label{fig:AC_samp}
 \end{figure}
 
@@ -384,8 +391,8 @@ The average variation of RMSE and the 95\% confidence interval for 300 realizati
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_dtudty.eps}
-	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_usamp-snr60-dt1.eps}
+	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
 	\label{fig:AC_dtudty}
 \end{figure}
 
