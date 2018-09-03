@@ -27,9 +27,202 @@ Then we add random time-delay to the observation model and evaluate the effect f
 
 \duvida{O que acha dos cenários e das simulações? Está suficiente?}
 
-\section{Unicycle Position Estimation}
+\section{Longitudinal Dynamics of an Advanced Aircraft}
 
-\subsection{Introduction}
+\textit{Descrever as motivações por trás do estudo da amostragem irregular para problemas de aviação. Exemplos: multiplexed data network is used for communications between the control system components~\cite{Ray1993}.}
+
+
+\subsection{System Description}
+
+Consider the process model of flight dynamics in continuous time given by:
+
+\begin{equation}\label{eq:aircraft}
+\dot{x}(t) = Fx(t) + Bu(t) + G\omega(t) \\
+\end{equation}
+
+\begin{equation*}
+x(t) =  \begin{bmatrix}
+\delta_e \quad W \quad q 	
+\end{bmatrix}^T; \quad
+u(t) = \delta_a; \quad
+\omega(t) \sim \mathcal{N} (0, 1)
+\end{equation*}
+
+\begin{equation*}
+F =  \begin{bmatrix}
+-\tau^{-1} 	& 0 	& 0 \\
+Z_{de} 		& Z_w 	& S_0 \\
+S_1 		& S_2 	& S_3 
+\end{bmatrix}; \quad
+B =  \begin{bmatrix}
+\tau^{-1} \\
+0 \\
+0 		
+\end{bmatrix}; \quad 
+G =  \begin{bmatrix}
+0.00625 \\
+0.25 \\
+0.025		
+\end{bmatrix}
+\end{equation*}
+
+\begin{center}
+	$S_0 = (Z_q + U_o)$ \\
+	$S_1 = (M_{de} + M_{wd}Z_{de})$ \\
+	$S_2 = (M_w + M_{wd}*Z_w)$ \\
+	$S_3 = (M_q + M_{wd}+S_0)$
+\end{center}
+
+\noindent
+where plant variables $\delta_e$ is elevator deflection (radian), $W$ is the normal component of linear velocity at the center o	f mass (m/s), $q$ is the pitch rate about the center of mass (radian/s) and input $\delta_a$ is the elevator command (radian). Figure~\ref{fig:aircraft-scheme} shows a simplified system representation of the longitudinal motion dynamics of an aircraft.
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Imagens/AC_schematic.pdf}
+	\caption[entrada]{Aircraft longitudinal motion dynamics schematic, where $\delta_e$ stands for the elevator deflection, $W$ is the normal component of linear velocity at the center of the mass, and $q$ is the pitch angle change rate.}
+	\label{fig:aircraft-scheme}
+\end{figure}
+
+
+The parameters for the longitudinal motion dynamics were chosen to be the same as the work of~\citep{Ray1993}, knowingly:
+
+
+\begin{equation}\label{eq:sistema}
+\begin{split}
+Z_{de} & := (\partial Z/\partial \delta_e)/m = -61.655 \ m/s^2,\\
+Z_q & := (\partial Z/\partial q)/m = -5.132 \ m/s,\\
+Z_w & := (\partial Z/\partial W)/m = -3.1332 \ s^{-1},\\
+M_{de} & := (\partial M/\partial \delta_e)/I_y = -40.465 \ s^{-2},\\
+M_q & := (\partial M/\partial q)/I_y = -2.6864 \ s^{-1},\\
+M_w & := (\partial M/\partial W)/I_y = -0.04688 \ (s-m)^{-1},\\
+\tau & = 0.1 \ s \\
+U_o & = 306.42 \ m/s
+\end{split}
+\end{equation}
+
+\noindent
+where $M$ is the pitch moment ($m^2 / kgm / s^{-2}$), $Z$ is the normal component of the aerodynamics force ($m / kgm / s^{-2}$), $m$ is the lumped mass of the aircraft ($kgm$), $I_y$ is the moment of inertia about the pitching axis ($m^2 / kgm$), $\tau$ is the actuator time constant and $U_o$ the reference flight speed.
+
+Sensor data is available at discrete time instants and the observation model $y(t_k) \in \mathbb{R}^1$ 
+
+\begin{equation}
+y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
+\end{equation} 
+
+\noindent
+is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
+
+We simulate 5 seconds of flight, considering an input profile $\delta_a$ according to Figure~\ref{fig:AC_input} and a step size of $\delta t_{sim} = 10^{-5}$. Noise $\omega(t)$ was generated as white gaussian with unity intensity, with a step size of 0.1 seconds and interpolated for all simulation data points. Figure~\ref{fig:noise_realization} presents one realization of noise. Irregular sampling time intervals $h_k$ are generated in the same way as for the unicycle system. Figure~\ref{fig:AC_realization} shows all three system states evolution throughout the 5 seconds of simulation time, the SDKF estimates and the noisy measurements for the observed state, considering SNR\textsubscript{y} $= 20$ dB, $\lambda = 0.1$ s and $\alpha = 2$.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{Imagens/AC_input.eps}
+	\caption[entrada]{Simulated elevator command $\delta_a$ as a function of time, in degrees}
+	\label{fig:AC_input}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{Imagens/AC_noise-realization.eps}
+	\caption[entrada]{One realization of noise $\omega$ over time}
+	\label{fig:noise_realization}
+\end{figure}
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{Imagens/AC_realization.eps}
+	\caption[entrada]{The true values (---) and estimated values (\textcolor{red}{- -}) of all three states. For the observed state (pitch rate), the measurements are also shown (\textcolor{blue}{\textbullet})}
+	\label{fig:AC_realization}
+\end{figure}
+
+Performance of estimator algorithm is evaluated by the root mean square error (RMSE) of each state, defined by
+
+\begin{equation}\label{eq:ACinddesemp}
+RMSE_i = \sqrt{\frac{1}{N}\sum_{k=1}^{N} (x_{\textrm{true},i}[k] -x_{\textrm{est},i}[k])^2 }
+\end{equation}
+
+\noindent
+where $i$ is the state index, $N$ is the amount of estimates, $x_{\textrm{true},i}$ the true value of the state $i$ sampled at regular time intervals $T$ and $x_{\textrm{est},i}$ the algorithm estimates at the same time instants.
+
+Figure~\ref{fig:AC_J} presents a window data from 0 to 0.2 seconds of the pitch rate about the center of mass RMSE for the algorithms with and without time-stamp, considering XXXXXXXXXX. Again, as expected, we observe a distancing from the RMSE at the instant the first observation was taken $t_1$, favoring the algorithm that considers time-stamp. The reduction in RMSE is lower for the algorithm that assimilates the observed data at the wrong time instant. At $t_2$ the reduction in RMSE happens at the correct time for the algorithm with time-stamp and at the next regular estimation instant for the algorithm that does not consider the time in which observation was taken.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_J_evolution.eps}
+	\caption[entrada]{Temporal cut from 0 to 0.2 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
+	\label{fig:AC_J}
+\end{figure}
+
+
+
+\subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
+
+For the aircraft case study, we compare algorithm performance for the same observation signal-to-noise ratio values as for the robot, SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$ an $10$ dB. The sampling rate parameters are held constant, $\lambda = 0.1$ s and $\alpha = $ 1s.
+
+We simulate 300 realizations for each scenario and each algorithm. The results for all three system states are shown in Figure~\ref{fig:AC_noise}. Solid lines represent the average values for RMSE and the dashed lines are the 95\% confidence interval.
+
+\todo[inline]{Falta incluir resultados com time-delay}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise.eps}
+	\caption[entrada]{Root mean square error variation, as a function of measurement noise for both SDKF algorithms, considering and not considering time-stamp}
+	\label{fig:AC_noise}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise-DKF.eps}
+	\caption[entrada]{DISCRETE KALMAN FILTER. Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:AC_noise-DKF}
+\end{figure} 
+
+
+\textit{Falta resultados com time-delay, para uma análise abrangente das figuras}
+
+
+\subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
+
+Variation of the observation average time interval for the aircraft was chosen according to $\lambda =$ $0.01$, $0.05$, $0.1$, $0.2$ and $0.5$. We kept noise level and the ratio between estimation and measurement sampling time interval, respectively at SNR\textsubscript{y} $= 60$ and $\alpha = 1$. After 300 realizations for all parameter scenarios and each algorithm, the RMSE results are shown in Figure~\ref{fig:AC_samp}. As usual, the solid lines are the average values of RMSE and the dashed lines comprehend the 95\% confidence interval.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_samp-snr60-a1.eps}
+	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
+	\label{fig:AC_samp}
+\end{figure}
+
+
+\textit{Falta resultados com time-delay, para uma análise abrangente das figuras}
+
+
+\subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-AC}
+
+We also simulate the same values used for the robot case study, for regular and irregular time interval ratio, $\alpha = 10$, $5$, $2$, $1$. Measurement noise was kept at SNR\textsubscript{y} $= 40$, and average time interval for observation at $\lambda = 0.1$ s.
+
+The average variation of RMSE and the 95\% confidence interval for 300 realizations are shown in Figure~\ref{fig:AC_dtudty}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/AC_usamp-snr60-dt1.eps}
+	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
+	\label{fig:AC_dtudty}
+\end{figure}
+
+
+\textit{
+	Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
+}
+
+\subsection{Average Time Delay}\label{sec:dt-AC}
+
+\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
+
+
+\section{Unicycle Position Estimation}
 
 \textit{Descrever as motivações por trás do estudo da amostragem irregular para problemas de rastreamento de robôs. Exemplos: medições feitas por câmeras não sincronizadas e utilizando redes de internet (com time delay).}
 
@@ -53,7 +246,7 @@ where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ t
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/Nonholomonic-robot.pdf}
+	\includegraphics[width=0.4\textwidth]{Imagens/Nonholomonic-robot.pdf}
 	\caption[entrada]{Nonholomonic robot system representation. The system states $p_\textrm{x}$, $p_\textrm{y}$, $v$ and $\theta$ are highlighted.}
 	\label{fig:robot}
 \end{figure} 
@@ -90,13 +283,13 @@ We simulate 60 seconds of robot movement, considering a step size of $\delta t_{
 	\begin{subfigure}
 		\centering
 		\includegraphics[width=\textwidth]{Imagens/entradas1.eps}	
-%		\caption{}
+		%		\caption{}
 		\label{fig:sfig1}
 	\end{subfigure}
 	\begin{subfigure}
 		\centering
-			\includegraphics[width=\textwidth]{Imagens/entradas2.eps}
-%		\caption{}
+		\includegraphics[width=\textwidth]{Imagens/entradas2.eps}
+		%		\caption{}
 		\label{fig:sfig2}
 	\end{subfigure}
 	\caption[Entradas]{Simulation input signals. (a) shows temporal sequence of angular velocity $\omega$ and (b) shows linear acceleration $a$.}
@@ -200,208 +393,10 @@ The same way we did for the other scenarios, 100 realizations were simulated and
 
 
 \textit{
-Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
-}
-
-\subsection{Average Time Delay}\label{sec:dt-robot}
-
-\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
-
-
-\section{Longitudinal Motion Dynamics of an Advanced Aircraft}
-
-\subsection{Introduction}
-
-\textit{Descrever as motivações por trás do estudo da amostragem irregular para problemas de aviação. Exemplos: multiplexed data network is used for communications between the control system components~\cite{Ray1993}.}
-
-
-\subsection{System Description}
-\todo[caption={Falta incluir figura explicativa do processo},inline]{Ainda pretendo incluir uma figura do processo, para facilitar entendimento}
-
-Consider the process model of flight dynamics in continuous time given by:
-
-\begin{equation}\label{eq:aircraft}
-\dot{x}(t) = Fx(t) + Bu(t) + G\omega(t) \\
-\end{equation}
-
-\begin{equation*}
-x(t) =  \begin{bmatrix}
-\delta_e \quad W \quad q 	
-\end{bmatrix}^T; \quad
-u(t) = \delta_a; \quad
-\omega(t) \sim \mathcal{N} (0, 1)
-\end{equation*}
-
-\begin{equation*}
-F =  \begin{bmatrix}
--\tau^{-1} 	& 0 	& 0 \\
-Z_{de} 		& Z_w 	& S_0 \\
-S_1 		& S_2 	& S_3 
-\end{bmatrix}; \quad
-B =  \begin{bmatrix}
-\tau^{-1} \\
-0 \\
-0 		
-\end{bmatrix}; \quad 
-G =  \begin{bmatrix}
-0.00625 \\
-0.25 \\
-0.025		
-\end{bmatrix}
-\end{equation*}
-
-\begin{center}
-	$S_0 = (Z_q + U_o)$ \\
-	$S_1 = (M_{de} + M_{wd}Z_{de})$ \\
-	$S_2 = (M_w + M_{wd}*Z_w)$ \\
-	$S_3 = (M_q + M_{wd}+S_0)$
-\end{center}
-
-\noindent
-where plant variables $\delta_e$ is elevator deflection (radian), $W$ is the normal component of linear velocity at the center of mass (m/s), $q$ is the pitch rate about the center of mass (radian/s) and input $\delta_a$ is the elevator command (radian). Figure~\ref{fig:aircraft-scheme} shows a simplified system representation of the longitudinal motion dynamics of an aircraft.
-
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/AC_schematic.pdf}
-	\caption[entrada]{Aircraft longitudinal motion dynamics schematic, where $\delta_e$ stands for the elevator deflection, $W$ is the normal component of linear velocity at the center of the mass, and $q$ is the pitch angle change rate.}
-	\label{fig:aircraft-scheme}
-\end{figure}
-
-
-The parameters for the longitudinal motion dynamics were chosen to be the same as the work of~\citep{Ray1993}, knowingly:
-
-
-\begin{equation}\label{eq:sistema}
-\begin{split}
-Z_{de} & := (\partial Z/\partial \delta_e)/m = -61.655 \ m/s^2,\\
-Z_q & := (\partial Z/\partial q)/m = -5.132 \ m/s,\\
-Z_w & := (\partial Z/\partial W)/m = -3.1332 \ s^{-1},\\
-M_{de} & := (\partial M/\partial \delta_e)/I_y = -40.465 \ s^{-2},\\
-M_q & := (\partial M/\partial q)/I_y = -2.6864 \ s^{-1},\\
-M_w & := (\partial M/\partial W)/I_y = -0.04688 \ (s-m)^{-1},\\
-\tau & = 0.1 \ s \\
-U_o & = 306.42 \ m/s
-\end{split}
-\end{equation}
-
-\noindent
-where $M$ is the pitch moment ($m^2 / kgm / s^{-2}$), $Z$ is the normal component of the aerodynamics force ($m / kgm / s^{-2}$), $m$ is the lumped mass of the aircraft ($kgm$), $I_y$ is the moment of inertia about the pitching axis ($m^2 / kgm$), $\tau$ is the actuator time constant and $U_o$ the reference flight speed.
-
-Sensor data is available at discrete time instants and the observation model $y(t_k) \in \mathbb{R}^1$ 
-
-\begin{equation}
-y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
-\end{equation} 
-
-\noindent
-is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
-
-We simulate 5 seconds of flight, considering an input profile $\delta_a$ according to Figure~\ref{fig:AC_input} and a step size of $\delta t_{sim} = 10^{-5}$. Noise $\omega(t)$ was generated as white gaussian with unity intensity, with a step size of 0.1 seconds and interpolated for all simulation data points. Figure~\ref{fig:noise_realization} presents one realization of noise. Irregular sampling time intervals $h_k$ are generated in the same way as for the unicycle system. Figure~\ref{fig:AC_realization} shows all three system states evolution throughout the 5 seconds of simulation time, the SDKF estimates and the noisy measurements for the observed state, considering SNR\textsubscript{y} $= 20$ dB, $\lambda = 0.1$ s and $\alpha = 2$.
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/AC_input.eps}
-	\caption[entrada]{Simulated elevator command $\delta_a$ as a function of time, in degrees}
-	\label{fig:AC_input}
-\end{figure}
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/noise-realization.eps}
-	\caption[entrada]{One realization of noise $\omega$ over time}
-	\label{fig:noise_realization}
-\end{figure}
-
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/AC_realization.eps}
-	\caption[entrada]{The true values (---) and estimated values (\textcolor{red}{- -}) of all three states. For the observed state (pitch rate), the measurements are also shown (\textcolor{blue}{\textbullet})}
-	\label{fig:AC_realization}
-\end{figure}
-
-Performance of estimator algorithm is evaluated by the root mean square error (RMSE) of each state, defined by
-
-\begin{equation}\label{eq:ACinddesemp}
-RMSE_i = \sqrt{\frac{1}{N}\sum_{k=1}^{N} (x_{\textrm{true},i}[k] -x_{\textrm{est},i}[k])^2 }
-\end{equation}
-
-\noindent
-where $i$ is the state index, $N$ is the amount of estimates, $x_{\textrm{true},i}$ the true value of the state $i$ sampled at regular time intervals $T$ and $x_{\textrm{est},i}$ the algorithm estimates at the same time instants.
-
-Figure~\ref{fig:AC_J} presents a window data from 0 to 0.2 seconds of the pitch rate about the center of mass RMSE for the algorithms with and without time-stamp, considering XXXXXXXXXX. Again, as expected, we observe a distancing from the RMSE at the instant the first observation was taken $t_1$, favoring the algorithm that considers time-stamp. The reduction in RMSE is lower for the algorithm that assimilates the observed data at the wrong time instant. At $t_2$ the reduction in RMSE happens at the correct time for the algorithm with time-stamp and at the next regular estimation instant for the algorithm that does not consider the time in which observation was taken.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_J_evolution.eps}
-	\caption[entrada]{Temporal cut from 0 to 0.2 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
-	\label{fig:AC_J}
-\end{figure}
-
-
-
-\subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
-
-For the aircraft case study, we compare algorithm performance for the same observation signal-to-noise ratio values as for the robot, SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$ an $10$ dB. The sampling rate parameters are held constant, $\lambda = 0.1$ s and $\alpha = $ 1s.
-
-We simulate 300 realizations for each scenario and each algorithm. The results for all three system states are shown in Figure~\ref{fig:AC_noise}. Solid lines represent the average values for RMSE and the dashed lines are the 95\% confidence interval.
-
-\todo[inline]{Falta incluir resultados com time-delay}
-
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise.eps}
-	\caption[entrada]{Root mean square error variation, as a function of measurement noise for both SDKF algorithms, considering and not considering time-stamp}
-	\label{fig:AC_noise}
-\end{figure} 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise-DKF.eps}
-	\caption[entrada]{DISCRETE KALMAN FILTER. Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
-	\label{fig:AC_noise-DKF}
-\end{figure} 
-
-
-\textit{Falta resultados com time-delay, para uma análise abrangente das figuras}
-
-
-\subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
-
-Variation of the observation average time interval for the aircraft was chosen according to $\lambda =$ $0.01$, $0.05$, $0.1$, $0.2$ and $0.5$. We kept noise level and the ratio between estimation and measurement sampling time interval, respectively at SNR\textsubscript{y} $= 60$ and $\alpha = 1$. After 300 realizations for all parameter scenarios and each algorithm, the RMSE results are shown in Figure~\ref{fig:AC_samp}. As usual, the solid lines are the average values of RMSE and the dashed lines comprehend the 95\% confidence interval.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_samp-snr60-a1.eps}
-	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
-	\label{fig:AC_samp}
-\end{figure}
-
-
-\textit{Falta resultados com time-delay, para uma análise abrangente das figuras}
-
-
-\subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-AC}
-
-We also simulate the same values used for the robot case study, for regular and irregular time interval ratio, $\alpha = 10$, $5$, $2$, $1$. Measurement noise was kept at SNR\textsubscript{y} $= 40$, and average time interval for observation at $\lambda = 0.1$ s.
-
-The average variation of RMSE and the 95\% confidence interval for 300 realizations are shown in Figure~\ref{fig:AC_dtudty}.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_usamp-snr60-dt1.eps}
-	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
-	\label{fig:AC_dtudty}
-\end{figure}
-
-
-\textit{
 	Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
 }
 
-\subsection{Average Time Delay}\label{sec:dt-AC}
+\subsection{Average Time Delay}\label{sec:dt-robot}
 
 \todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
 
