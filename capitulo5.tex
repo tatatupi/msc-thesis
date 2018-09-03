@@ -137,6 +137,23 @@ We simulate 5 seconds of flight, considering an input profile $\delta_a$ accordi
 	\label{fig:AC_realization}
 \end{figure}
 
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/AC_input-noise.eps}
+	\caption[entrada]{For a white noise generated at 0.1s timestep and 0.015 variance.}
+	\label{fig:AC_input2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/AC_realization2.eps}
+	\caption[entrada]{The process simulation without noise (---) and noisy realization (\textcolor{red}{- -}) of all three states. Proce}
+	\label{fig:AC_realization2}
+\end{figure}
+
+
 Performance of estimator algorithm is evaluated by the root mean square error (RMSE) of each state, defined by
 
 \begin{equation}\label{eq:ACinddesemp}
