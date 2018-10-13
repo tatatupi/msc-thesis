@@ -16,223 +16,236 @@
 
 %\section{Introdução}
 
-In this chapter, we present simulation results for two different systems: nonholomonic unicycle position estimation, and longitudinal motion dynamics of an advanced aircraft.
+In this chapter, we present simulation results for two different systems: a linear system with two under damped modes and a nonholomonic unicycle position system.
 
-We begin by describing the simulated systems as a state-space representation. First system is discretized and a discrete unscented Kalman filter is used for the estimation of the unicycle position. The second one is represented as a continuous-time process model with digital measurements of one state. We wish to estimated a all states by a sampled-data Kalman filter.
+REVISAR
+
+\textit{We begin by describing the simulated systems as a state-space representation. First system is discretized and a discrete Kalman filter is used for the estimation of the unicycle position. The second one is represented as a continuous-time process model with digital measurements of one stby aate. We wish to estimated a all states  sampled-data Kalman filter.}
 
 For both cases, we start evaluating the effect of time-stamp information in the estimation algorithm for three different irregular sampling scenarios, without time-delay in the observations: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between estimation regular sampling rate and output irregular average sampling rate. 
 
 Then we add random time-delay to the observation model and evaluate the effect for the same three scenarios plus a fourth one, where we vary the average time-delay.
 
 
-\duvida{O que acha dos cenários e das simulações? Está suficiente?}
+\section{Linear System}
 
-\section{Longitudinal Dynamics of an Advanced Aircraft}
-
-\textit{Descrever as motivações por trás do estudo da amostragem irregular para problemas de aviação. Exemplos: multiplexed data network is used for communications between the control system components~\cite{Ray1993}.}
+\textit{Descrever as motivações por trás do estudo do sistema linear: variáveis controladas, resultado esperado conhecido, comparação mais clara.}
 
 
 \subsection{System Description}
 
-Consider the process model of flight dynamics in continuous time given by:
+The linear system designed for simulation is the serial combination of two under damped modes, with distinct band pass behaviors.
+
+One of the modes, henceforth termed as low-pass (lp) system, has time constant $\tau_{lp} = 1$ s, natural frequency $\omega_{n,lp} = 10$ Hz and a damping constant of $\zeta_{lp}=0.1$. The frequency response is given by:
 
 \begin{equation}\label{eq:aircraft}
-\dot{x}(t) = Fx(t) + Bu(t) + G\omega(t) \\
+G_{lp}(s) = \frac{100}{s^2 + 2s + 100}\\
 \end{equation}
 
-\begin{equation*}
-x(t) =  \begin{bmatrix}
-\delta_e \quad W \quad q 	
-\end{bmatrix}^T; \quad
-u(t) = \delta_a; \quad
-\omega(t) \sim \mathcal{N} (0, 1)
-\end{equation*}
 
-\begin{equation*}
-F =  \begin{bmatrix}
--\tau^{-1} 	& 0 	& 0 \\
-Z_{de} 		& Z_w 	& S_0 \\
-S_1 		& S_2 	& S_3 
-\end{bmatrix}; \quad
-B =  \begin{bmatrix}
-\tau^{-1} \\
-0 \\
-0 		
-\end{bmatrix}; \quad 
-G =  \begin{bmatrix}
-0.00625 \\
-0.25 \\
-0.025		
-\end{bmatrix}
-\end{equation*}
+The second mode is a high-pass (hp) system, with a much lower time constant $\tau_{hp} = 0.01$ s, natural frequency $\omega_{n,hp} = 1000$ Hz, same damping constant of $\zeta_{hp}=0.1$ and two zeros, one at the origin and another one at $0.001$. The high-pass frequency response is given by:
 
-\begin{center}
-	$S_0 = (Z_q + U_o)$ \\
-	$S_1 = (M_{de} + M_{wd}Z_{de})$ \\
-	$S_2 = (M_w + M_{wd}*Z_w)$ \\
-	$S_3 = (M_q + M_{wd}+S_0)$
-\end{center}
+\begin{equation}\label{eq:aircraft}
+G_{hp}(s) = \frac{s^2-0.001s}{s^2 + 200s + 10^6}\\
+\end{equation}
 
-\noindent
-where plant variables $\delta_e$ is elevator deflection (radian), $W$ is the normal component of linear velocity at the center o	f mass (m/s), $q$ is the pitch rate about the center of mass (radian/s) and input $\delta_a$ is the elevator command (radian). Figure~\ref{fig:aircraft-scheme} shows a simplified system representation of the longitudinal motion dynamics of an aircraft.
-
+Figure~\ref{fig:stepResponse} shows the step response of both modes, while the bode diagrams can be seen in Figures~\ref{fig:bode} and~\ref{fig:bodeS}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/AC_schematic.pdf}
-	\caption[entrada]{Aircraft longitudinal motion dynamics schematic, where $\delta_e$ stands for the elevator deflection, $W$ is the normal component of linear velocity at the center of the mass, and $\theta$ is the pitch angle.}
-	\label{fig:aircraft-scheme}
+	\includegraphics[width=0.6\textwidth]{Imagens/stepResponse.eps}
+	\caption[entrada]{Step response of both low-pass and high-pass modes.}
+	\label{fig:stepResponse}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Imagens/bode.eps}
+	\caption[entrada]{Bode diagram of both modes.}
+	\label{fig:bode}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Imagens/bodeS.eps}
+	\caption[entrada]{Bode diagram of the resulting fourth order system.}
+	\label{fig:bodeS}
 \end{figure}
 
 
-The parameters for the longitudinal motion dynamics were chosen to be the same as the work of~\citep{Ray1993}, knowingly:
+The resulting fourth order system is described as a state space representation, in a modal canonical form given by:
 
-
-\begin{equation}\label{eq:sistema}
+\begin{equation}
 \begin{split}
-Z_{de} & := (\partial Z/\partial \delta_e)/m = -61.655 \ m/s^2,\\
-Z_q & := (\partial Z/\partial q)/m = -5.132 \ m/s,\\
-Z_w & := (\partial Z/\partial W)/m = -3.1332 \ s^{-1},\\
-M_{de} & := (\partial M/\partial \delta_e)/I_y = -40.465 \ s^{-2},\\
-M_q & := (\partial M/\partial q)/I_y = -2.6864 \ s^{-1},\\
-M_w & := (\partial M/\partial W)/I_y = -0.04688 \ (s-m)^{-1},\\
-\tau & = 0.1 \ s \\
-U_o & = 306.42 \ m/s
+\dot{x}(t) & = \textbf{A}x(t) + \textbf{B}u(t) \\
+y(t) & = \textbf{C}x(t) + \textbf{D}u(t)
 \end{split}
 \end{equation}
 
-\noindent
-where $M$ is the pitch moment ($m^2 / kgm / s^{-2}$), $Z$ is the normal component of the aerodynamics force ($m / kgm / s^{-2}$), $m$ is the lumped mass of the aircraft ($kgm$), $I_y$ is the moment of inertia about the pitching axis ($m^2 / kgm$), $\tau$ is the actuator time constant and $U_o$ the reference flight speed.
 
-Sensor data is available at discrete time instants and the observation model $y(t_k) \in \mathbb{R}^1$ 
+\noindent
+where $x(t) \in \mathbf{R}^4$ is the state vector, $u(t) \in \mathbf{R}^1$ is the single input vector and $y(t) \in \mathbf{R}^1$ is the single output vector, and
 
 \begin{equation}
-y(t_k) = q(t_k-\delta_{t_k}) + v(t_k)
-\end{equation} 
+\begin{split}
+\textbf{A} & =\begin{bmatrix}
+-100 & 994.99 & 0 & 0\\
+-994.99 & -100 & 0 & 0\\
+0 & 0 & -1 & 9.949\\
+0 & 0 & -9.949 & -1
+\end{bmatrix} \\
+\\
+\textbf{B} & =\begin{bmatrix}
+-24.6435 \\
+-18.8943 \\
+-4.1746 \\
+-0.2675
+\end{bmatrix} \\
+\\
+\textbf{C} & =\begin{bmatrix}
+24.41 & -21.2522 & -0.1537 & 2.3977 \\
+\end{bmatrix} \\
+\\
+\textbf{D} & =1
+\end{split}
+\end{equation}
 
-\noindent
-is given by the pitch rate about the center of mass $q$ and $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
+%
+%\begin{equation}\label{eq:sistemaLinear}
+%\begin{split}
+%Z_{de} & := (\partial Z/\partial \delta_e)/m = -61.655 \ m/s^2,\\
+%Z_q & := (\partial Z/\partial q)/m = -5.132 \ m/s,\\
+%Z_w & := (\partial Z/\partial W)/m = -3.1332 \ s^{-1},\\
+%M_{de} & := (\partial M/\partial \delta_e)/I_y = -40.465 \ s^{-2},\\
+%M_q & := (\partial M/\partial q)/I_y = -2.6864 \ s^{-1},\\
+%M_w & := (\partial M/\partial W)/I_y = -0.04688 \ (s-m)^{-1},\\
+%\tau & = 0.1 \ s \\
+%U_o & = 306.42 \ m/s
+%\end{split}
+%\end{equation}
 
-We simulate 5 seconds of flight, considering an input profile $\delta_a$ according to Figure~\ref{fig:AC_input} and a step size of $\delta t_{sim} = 10^{-5}$. Noise $\omega(t)$ was generated as white gaussian with unity intensity, with a step size of 0.1 seconds and interpolated for all simulation data points. Figure~\ref{fig:noise_realization} presents one realization of noise. Irregular sampling time intervals $h_k$ are generated in the same way as for the unicycle system. Figure~\ref{fig:AC_realization} shows all three system states evolution throughout the 5 seconds of simulation time, the SDKF estimates and the noisy measurements for the observed state, considering SNR\textsubscript{y} $= 20$ dB, $\lambda = 0.1$ s and $\alpha = 2$.
+We simulate a pseudorandom binary sequence (PRBS) as input, with 200 samples in 2 seconds of simulation, according to Figure~\ref{fig:PRBS}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/AC_input.eps}
-	\caption[entrada]{Simulated elevator command $\delta_a$ as a function of time, in degrees}
-	\label{fig:AC_input}
+	\includegraphics[width=0.6\textwidth]{Imagens/PRBS.eps}
+	\caption[entrada]{200 samples of PRBS signal, used as input.}
+	\label{fig:PRBS}
+\end{figure}
+
+Figures~\ref{fig:outputS1} and~\ref{fig:outputS2} show the response of the low-pass and high-pass modes, respectively, to the PRBS input signal.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Imagens/outputS1.eps}
+	\caption[entrada]{Output of low-pass system to the PRBS input signal}
+	\label{fig:outputS1}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/AC_noise-realization.eps}
-	\caption[entrada]{One realization of noise $\omega$ over time}
-	\label{fig:noise_realization}
+	\includegraphics[width=0.6\textwidth]{Imagens/outputS2.eps}
+	\caption[entrada]{Output of high-pass system to the PRBS input signal}
+	\label{fig:outputS2}
 \end{figure}
 
+As expected, the low-pass response is much slower. Just for comparison, if the same 200 samples of PRBS was generated over 20 seconds, the low-pass system response would account for more variations in the input, as shown in Figure~\ref{fig:outputS1_2}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/AC_realization.eps}
-	\caption[entrada]{The true values (---) and estimated values (\textcolor{red}{- -}) of all three states. For the observed state (pitch rate), the measurements are also shown (\textcolor{blue}{\textbullet})}
-	\label{fig:AC_realization}
+	\includegraphics[width=0.6\textwidth]{Imagens/outputS1_2.eps}
+	\caption[entrada]{Output of low-pass system to the PRBS input signal extended over 20 seconds}
+	\label{fig:outputS1_2}
 \end{figure}
 
-
+The response of the final fourth order system, considering both modes is presented in Figure~\ref{fig:outputS}, where both modes dynamics can be observed.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/AC_input-noise.eps}
-	\caption[entrada]{For a white noise generated at 0.1s timestep and 0.015 variance.}
-	\label{fig:AC_input2}
+	\includegraphics[width=0.6\textwidth]{Imagens/outputS.eps}
+	\caption[entrada]{Output of the fourth order system to the PRBS input signal}
+	\label{fig:outputS}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/AC_realization2.eps}
-	\caption[entrada]{The process simulation without noise (---) and noisy realization (\textcolor{red}{- -}) of all three states. Proce}
-	\label{fig:AC_realization2}
-\end{figure}
+The linear system is discretized by:
 
+\begin{equation}
+\begin{split}
+\textbf{A}_d & = e^{\textbf{A}T} \\
+\textbf{B}_d & = \textbf{A}^{-1}(\textbf{A}_d - \textit{I})\textbf{B} \\
+\textbf{C}_d & = \textbf{C} \\
+\textbf{D}_d & = \textbf{D}
+\end{split}
+\end{equation}
 
-Performance of estimator algorithm is evaluated by the root mean square error (RMSE) of each state, defined by
+The sampled-data observations are available according to:
 
-\begin{equation}\label{eq:ACinddesemp}
-RMSE_i = \sqrt{\frac{1}{N}\sum_{k=1}^{N} (x_{\textrm{true},i}[k] -x_{\textrm{est},i}[k])^2 }
+\begin{equation}
+y(t_k) = \textbf{B}_dx(t)+\textbf{D}_du(t) + v(t_k)
 \end{equation}
 
 \noindent
-where $i$ is the state index, $N$ is the amount of estimates, $x_{\textrm{true},i}$ the true value of the state $i$ sampled at regular time intervals $T$ and $x_{\textrm{est},i}$ the algorithm estimates at the same time instants.
+where $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
-Figure~\ref{fig:AC_J} presents a window data from 0 to 0.2 seconds of the pitch rate about the center of mass RMSE for the algorithms with and without time-stamp, considering XXXXXXXXXX. Again, as expected, we observe a distancing from the RMSE at the instant the first observation was taken $t_1$, favoring the algorithm that considers time-stamp. The reduction in RMSE is lower for the algorithm that assimilates the observed data at the wrong time instant. At $t_2$ the reduction in RMSE happens at the correct time for the algorithm with time-stamp and at the next regular estimation instant for the algorithm that does not consider the time in which observation was taken.
+Discrete-time Kalman filter is used for estimation. Realizations of the estimated states and true values for both scenarios, with and without time-stamp, for a signal-to-noise ration in the observations of $40$ dB are shown in Figures~\ref{fig:StatesWithTimeStamp} and~\ref{fig:StatesWithoutTimeStamp}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_J_evolution.eps}
-	\caption[entrada]{Temporal cut from 0 to 0.2 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
-	\label{fig:AC_J}
+	\includegraphics[width=0.8\textwidth]{Imagens/StatesWithTimeStamp.eps}
+	\caption[entrada]{Estimated (red) and true (black) states considering time-stamp in the estimation algorithm.}
+	\label{fig:StatesWithTimeStamp}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/StatesWithoutTimeStamp.eps}
+	\caption[entrada]{Estimated (red) and true (black) states not considering time-stamp in the estimation algorithm.}
+	\label{fig:StatesWithoutTimeStamp}
+\end{figure}
+
+Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds of the first state RMSE for the algorithms with and without time-stamp. As expected, we observe a distancing from the RMSE at the instant the first observation was taken $t_1$, favoring the algorithm that considers time-stamp.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/LinearJEvolutiona.eps}
+	\caption[entrada]{Temporal cut from 0.02 to 0.045 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
+	\label{fig:LinearJevolution}
 \end{figure}
 
 
 
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
 
-For the aircraft case study, we compare algorithm performance for the same observation signal-to-noise ratio values as for the robot, SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$ an $10$ dB. The sampling rate parameters are held constant, $\lambda = 0.1$ s and $\alpha = $ 1s.
-
-We simulate 300 realizations for each scenario and each algorithm. The results for all three system states are shown in Figure~\ref{fig:AC_noise}. Solid lines represent the average values for RMSE and the dashed lines are the 95\% confidence interval.
-
-\todo[inline]{Falta incluir resultados com time-delay}
 
 	
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise.eps}
-	\caption[entrada]{Root mean square error variation, as a function of measurement noise for both SDKF algorithms, considering and not considering time-stamp}
-	\label{fig:AC_noise}
+	\includegraphics[width=0.8\textwidth]{Imagens/linearNoise.eps}
+	\caption[entrada]{Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:linearNoise}
 \end{figure} 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_noise-DKF.eps}
-	\caption[entrada]{DISCRETE KALMAN FILTER. Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
-	\label{fig:AC_noise-DKF}
-\end{figure} 
-
-
-\textit{Falta resultados com time-delay, para uma análise abrangente das figuras}
 
 
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
 
-Variation of the observation average time interval for the aircraft was chosen according to $\lambda =$ $0.01$, $0.05$, $0.1$, $0.2$ and $0.5$. We kept noise level and the ratio between estimation and measurement sampling time interval, respectively at SNR\textsubscript{y} $= 60$ and $\alpha = 1$. After 300 realizations for all parameter scenarios and each algorithm, the RMSE results are shown in Figure~\ref{fig:AC_samp}. As usual, the solid lines are the average values of RMSE and the dashed lines comprehend the 95\% confidence interval.
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_samp-snr60-a1.eps}
-	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
-	\label{fig:AC_samp}
-\end{figure}
+	\includegraphics[width=0.8\textwidth]{Imagens/linearSamp.eps}
+	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:linearSamp}
+\end{figure} 
 
-
-\textit{Falta resultados com time-delay, para uma análise abrangente das figuras}
 
 
 \subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-AC}
 
-We also simulate the same values used for the robot case study, for regular and irregular time interval ratio, $\alpha = 10$, $5$, $2$, $1$. Measurement noise was kept at SNR\textsubscript{y} $= 40$, and average time interval for observation at $\lambda = 0.1$ s.
-
-The average variation of RMSE and the 95\% confidence interval for 300 realizations are shown in Figure~\ref{fig:AC_dtudty}.
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/AC_usamp-snr60-dt1.eps}
-	\caption[entrada]{Root mean square error variation, as a function of measurement noise both SDKF algorithms considering and not considering time-stamp}
-	\label{fig:AC_dtudty}
-\end{figure}
+	\includegraphics[width=0.8\textwidth]{Imagens/linearUsamp.eps}
+	\caption[entrada]{Root mean square error variation, as a function of $\alpha$ for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:linearUSamp}
+\end{figure} 
 
-
-\textit{
-	Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
-}
 
 \subsection{Average Time Delay}\label{sec:dt-AC}
 
