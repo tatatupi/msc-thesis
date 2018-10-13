@@ -104,12 +104,12 @@ On the next sections, we review the main irregular sampling effects.
 
 \section{Time Delay}
 
-Time-delay System (TDS) is probably the most common mathematical representation to time delays in practice. The works of \citep{Richard2003, Fridman2014} and the references therein provide a good coverage of the subject. There might be delays in the input or output signals, introduced by the communication networks, or even state delays. The latter phenomenon is called system with aftereffect or dead-time. Since we are studying the irregular sampling issue, only the formers are relevant to us.
+Time-delay System (TDS) is probably the most common mathematical representation to time delays in practice. The works of \citep{Richard2003, Fridman2014} and the references therein provide a good coverage of the subject. There might be delays in the input or output signals, introduced by the communication networks, or even state delays. The latter phenomenon is called system with aftereffect or dead-time. Since we are studying the irregular sampling issue, only signal delays are relevant to us.
 
 Considering delays in the measurement model only, \citep{Lu2005} studied the estimation problem when they are constant and known. They describe a linear measurement model as
 
 \begin{equation}\label{eq:delay_model}
-y_i(t)=H_i(t)x(t_i)+v_i(t)
+	y_i(t)=H_i(t)x(t_i)+v_i(t)
 \end{equation}
 
 
@@ -159,10 +159,38 @@ where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time M
 
 \section{Packet Loss}
 
-\todo[caption={Terminar seções de irregular sampling, da mesma forma que time-delay},inline]{A ideia seria continuar nos mesmos moldes que para o time delay, explicando as diferentes formas que cada irregularidade pode aparecer e como ela é tratada na literatura.}
+When data are being transmitted by a large network of sensors, there is a probability they can get lost in the way or they might arrive after a significant delay, which is equivalent to a loss for practical	 applications~\citep{Sinopoli2004}. Usually referred to as packet dropout/loss, missing observations or intermittence, they may happen due to node failures, network congestion, limited bandwidth or temporal failure. 
+	
+Mathematical description of packet dropouts can be carried out recursively, as described in~\citep{Sun2011}, by
 
+\begin{align}
+\centering
+\begin{split}
+z(t)=H(t)x(t)+v(t), \\
+y(t) = \xi(t)z(t)+(1-\xi(t))y(t-1),
+\end{split}
+\end{align}
 
-A falta de dados pode ser por packet dropout \citep{}, quando a informação é perdida na transmissão. Os dropouts podem ser single ou multiple \citep{Sun2011,Zhu2013,ShuliSun2008,Sahebsara2007}, tendo o número de dropouts consecutivos ser limitado ou não.
+\noindent
+where $z(t) \in \mathbf{R}^m$ is the measured output transmitted to the estimator, $v(t) \in \mathbf(R)^m$ is white noise, $y(t) \in \mathbf{R}^m$ is the measurement received by the estimator ansd $\xi(t) \sim Ber(p) $ is a Bernoulli random variable that takes the value 1 with probability $p$ and 0 with probability $1-p$. That is, when $\xi(t)$ is 1, there is no packet dropout. If $\xi(t)$ is 0, however, the latest output is used at current time, in a recursive fashion.
+
+Another way of describing multiple packet dropouts is by limiting the amount of consecutive dropouts ~\citep{ShuliSun2008}, where the received measurements are defined by
+
+\begin{equation}
+\begin{split}
+y(t) = 	& \xi(t)z(t) + (1-\xi(t))\xi(t-1)z(t-1)+...\\
+		& + (1-\xi(t))(1-\xi(t-1))...(1-\xi(t-N+1))z(t-N), N \geq 1,\\
+\end{split}
+\end{equation}
+
+\noindent
+subject to:
+
+\begin{equation}
+\xi(t)+(1-\xi(t))\xi(t-1) + ... + (1-\xi(t))(1-\xi(t-1))...(1-\xi(t-N+1)) = 1.
+\end{equation}
+
+Such a model dictates that the measurement used by the estimator will be the most recent, and the amount of missing observations is limited to $N$.
 
 
 \section{Uncertain Observation}
