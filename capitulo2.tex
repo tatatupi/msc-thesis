@@ -183,14 +183,11 @@ y(t) = 	& \xi(t)z(t) + (1-\xi(t))\xi(t-1)z(t-1)+...\\
 \end{split}
 \end{equation}
 
-\noindent
-subject to:
+Such a model dictates that the measurement used by the estimator will be only the most recent available, and the amount of missing observations is limited to $N$. This conclusion can be drawn by the fact that
 
 \begin{equation}
 \xi(t)+(1-\xi(t))\xi(t-1) + ... + (1-\xi(t))(1-\xi(t-1))...(1-\xi(t-N+1)) = 1.
 \end{equation}
-
-Such a model dictates that the measurement used by the estimator will be the most recent, and the amount of missing observations is limited to $N$.
 
 
 \section{Uncertain Observation}
