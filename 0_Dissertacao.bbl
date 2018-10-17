@@ -94,12 +94,6 @@ Julier, S.~J. and Uhlmann, J.~K. (2004).
 \newblock {Unscented Filtering and Nonlinear Estimation}.
 \newblock {\em Proceedings of the IEEE}, 92(3):401--422.
 
-\bibitem[Kalman, 1960]{Kalman1960}
-Kalman, R.~E. (1960).
-\newblock {A new approach to linear filtering and prediction problems}.
-\newblock {\em Transactions of ASME -- Journal of Basic Engineering},
-  82:35--45.
-
 \bibitem[Khaleghi et~al., 2013]{Khaleghi2013}
 Khaleghi, B., Khamis, A., Karray, F.~O., and Razavi, S.~N. (2013).
 \newblock {Multisensor data fusion: A review of the state-of-the-art}.
@@ -121,10 +115,11 @@ Lu, X., Zhang, H., Wang, W., and Teo, K.~L. (2005).
 \newblock {Kalman filtering for multiple time-delay systems}.
 \newblock {\em Automatica}, 41(8):1455--1461.
 
-\bibitem[Menegaz et~al., 2015]{Menegaz2015}
-Menegaz, H. M.~T., Ishihara, J.~Y., Borges, G.~A., and Vargas, A.~N. (2015).
-\newblock {A Systematization of the Unscented Kalman Filter Theory}.
-\newblock {\em IEEE Transactions on Automatic Control}, 60(10):2583--2589.
+\bibitem[Ma and Sun, 2011]{Sun2011}
+Ma, J. and Sun, S. (2011).
+\newblock {Optimal Linear Estimators for Systems With Random Sensor Delays ,
+  Multiple Packet Dropouts and Uncertain Observations}.
+\newblock {\em IEE TRANSACTIONS ON SIGNAL PROCESSING}, 59(11):5181--5192.
 
 \bibitem[Micheli and Jordan, 2002]{Micheli2002}
 Micheli, M. and Jordan, M.~I. (2002).
@@ -186,16 +181,16 @@ Shen, B., Wang, Z., and Huang, T. (2016).
 \newblock {\em IEEE Transactions on Circuits and Systems II: Express Briefs},
   55(7):695--699.
 
+\bibitem[Sinopoli et~al., 2004]{Sinopoli2004}
+Sinopoli, B., Schenato, L., Franceschetti, M., Poolla, K., Jordan, M.~I., and
+  Sastry, S.~S. (2004).
+\newblock {Kalman filtering with intermittent observations}.
+\newblock {\em IEEE Transactions on Automatic Control}, 49(9):1453--1464.
+
 \bibitem[Sivrikaya and Yener, 2004]{Sivrikaya2004}
 Sivrikaya, F. and Yener, B. (2004).
 \newblock {Time Synchronization in Sensor Networks: A Survey}.
 \newblock {\em IEEE Network}, 18(4):45 -- 50.
-
-\bibitem[Sun, 2011]{Sun2011}
-Sun, S. (2011).
-\newblock {Optimal Linear Estimators for Systems With Random Sensor Delays ,
-  Multiple Packet Dropouts and Uncertain Observations}.
-\newblock {\em IEE TRANSACTIONS ON SIGNAL PROCESSING}, 59(11):5181--5192.
 
 \bibitem[Wang et~al., 2009]{Wang2009}
 Wang, Z., Ho, D.~W., Liu, Y., and Liu, X. (2009).

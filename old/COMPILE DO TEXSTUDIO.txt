@@ -1,1 +1,0 @@
-txs:///pre-compile | txs:///conditionally-recompile-bibliography

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.21)  24 JUL 2018 19:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.21)  14 OCT 2018 18:16
 entering extended mode
 **./0_Dissertacao.tex
 (0_Dissertacao.tex
@@ -1621,6 +1621,12 @@ File: tikzlibrarytrees.code.tex 2008/02/24 v3.0.1a (rcs-revision 1.2)
 
 LaTeX Warning: Label `fig:diagrama2' multiply defined.
 
+
+LaTeX Warning: Label `cap2' multiply defined.
+
+
+LaTeX Warning: Label `eq:aircraft' multiply defined.
+
 )
 \openout1 = `0_Dissertacao.aux'.
 
@@ -1812,7 +1818,7 @@ LaTeX Font Info:    Try loading font information for OT1+pxtt on input line 181
 ("C:\Program Files\MiKTeX 2.9\tex\latex\pxfonts\ot1pxtt.fd"
 File: ot1pxtt.fd 2000/12/14 v1.0
 ) (capa.tex
-<Imagens/mac.png, id=138, 97.11281pt x 69.25874pt>
+<Imagens/mac.png, id=170, 97.11281pt x 69.25874pt>
 File: Imagens/mac.png Graphic file (type png)
 <use Imagens/mac.png>
 Package pdftex.def Info: Imagens/mac.png  used on input line 20.
@@ -1859,349 +1865,563 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
 [4]
-<Imagens/esquema5.png, id=303, 435.12563pt x 130.23656pt>
-File: Imagens/esquema5.png Graphic file (type png)
-<use Imagens/esquema5.png>
-Package pdftex.def Info: Imagens/esquema5.png  used on input line 54.
-(pdftex.def)             Requested size: 435.12456pt x 130.23624pt.
-<Imagens/processo_amost.png, id=305, 393.84724pt x 98.4618pt>
+<Imagens/processo_amost.png, id=337, 393.84724pt x 98.4618pt>
 File: Imagens/processo_amost.png Graphic file (type png)
 <use Imagens/processo_amost.png>
-Package pdftex.def Info: Imagens/processo_amost.png  used on input line 67.
+Package pdftex.def Info: Imagens/processo_amost.png  used on input line 55.
 (pdftex.def)             Requested size: 393.84628pt x 98.46155pt.
- [5 <./Imagens/esquema5.png> <./Imagens/processo_amost.png>]
+<Imagens/scheme-timedelay.pdf, id=342, 796.6487pt x 284.4991pt>
+File: Imagens/scheme-timedelay.pdf Graphic file (type pdf)
+<use Imagens/scheme-timedelay.pdf>
+Package pdftex.def Info: Imagens/scheme-timedelay.pdf  used on input line 68.
+(pdftex.def)             Requested size: 455.24411pt x 162.57857pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5 <./Imagens/processo_amost.png>]
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
 ine 77.
-LaTeX Font Info:    Try loading font information for TS1+pxr on input line 93.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\pxfonts\ts1pxr.fd"
-File: ts1pxr.fd 2000/12/14 v1.0
-)
-Underfull \hbox (badness 10000) in paragraph at lines 93--95
+Underfull \vbox (badness 4859) has occurred while \output is active []
 
- []
-
-[6] [7]) [8
+ [6 <./Imagens/scheme-timedelay.pdf>] [7]) [8
 
 
 
 ] (capitulo2.tex
 Chapter 2.
 
-Overfull \hbox (0.66528pt too wide) in paragraph at lines 87--87
+Overfull \hbox (0.66528pt too wide) in paragraph at lines 86--86
  [][][][]\T1/pxr/m/n/12 Measurement 
  []
 
 [9
 
-] [10] [11] [12] [13] [14] [15]) [16
+] [10] [11]
+Underfull \vbox (badness 1062) has occurred while \output is active []
+
+ [12]
+[13] [14] [15]) [16
 
 
 
 ] (capitulo3.tex
 Chapter 3.
-<Imagens/esquema2.png, id=495, 319.4334pt x 126.7134pt>
+[17
+
+] [18]) (capitulo4.tex
+Chapter 4.
+<Imagens/esquema2.png, id=533, 319.4334pt x 126.7134pt>
 File: Imagens/esquema2.png Graphic file (type png)
 <use Imagens/esquema2.png>
 Package pdftex.def Info: Imagens/esquema2.png  used on input line 34.
 (pdftex.def)             Requested size: 207.62923pt x 82.36272pt.
-<Imagens/esquema3.png, id=497, 426.82953pt x 159.57603pt>
+<Imagens/esquema3.png, id=535, 426.82953pt x 159.57603pt>
 File: Imagens/esquema3.png Graphic file (type png)
 <use Imagens/esquema3.png>
 Package pdftex.def Info: Imagens/esquema3.png  used on input line 47.
 (pdftex.def)             Requested size: 277.4359pt x 103.72318pt.
-<Imagens/esquema4.png, id=498, 569.12625pt x 141.52875pt>
+<Imagens/esquema4.png, id=536, 569.12625pt x 141.52875pt>
 File: Imagens/esquema4.png Graphic file (type png)
 <use Imagens/esquema4.png>
 Package pdftex.def Info: Imagens/esquema4.png  used on input line 56.
 (pdftex.def)             Requested size: 369.92767pt x 91.99258pt.
-[17
-
- <./Imagens/esquema2.png>] [18 <./Imagens/esquema3.png> <./Imagens/esquema4.png
->] [19] [20]) (capitulo4.tex
-Chapter 4.
-[21
+[19
 
 
 
+
+ <./Imagens/esquema2.png>] [20 <./Imagens/esquema3.png> <./Imagens/esquema4.png
+>]
+LaTeX Font Info:    Try loading font information for TS1+pxr on input line 72.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\pxfonts\ts1pxr.fd"
+File: ts1pxr.fd 2000/12/14 v1.0
+)
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
+
+ []
+
+[21] [22] [23]) [24
+
+
+
+] (capitulo5.tex
+Chapter 5.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [25
 
 ]
+Package epstopdf Info: Source file: <Imagens/stepResponse.eps>
+(epstopdf)                    date: 2018-10-10 22:09:54
+(epstopdf)                    size: 67526 bytes
+(epstopdf)             Output file: <Imagens/stepResponse-eps-converted-to.pdf>
+
+(epstopdf)                    date: 2018-10-13 18:58:53
+(epstopdf)                    size: 7455 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/stepResponse-eps-co
+nverted-to.pdf Imagens/stepResponse.eps>
+(epstopdf)             \includegraphics on input line 56.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/stepResponse-eps-converted-to.pdf, id=586, 362.35374pt x 291.0875pt>
+File: Imagens/stepResponse-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/stepResponse-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/stepResponse-eps-converted-to.pdf  used on inp
+ut line 56.
+(pdftex.def)             Requested size: 273.14923pt x 219.42993pt.
+Package epstopdf Info: Source file: <Imagens/bode.eps>
+(epstopdf)                    date: 2018-10-10 22:09:55
+(epstopdf)                    size: 67554 bytes
+(epstopdf)             Output file: <Imagens/bode-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:58:54
+(epstopdf)                    size: 9393 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/bode-eps-converted-
+to.pdf Imagens/bode.eps>
+(epstopdf)             \includegraphics on input line 63.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/bode-eps-converted-to.pdf, id=587, 364.36125pt x 294.09875pt>
+File: Imagens/bode-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/bode-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/bode-eps-converted-to.pdf  used on input line 
+63.
+(pdftex.def)             Requested size: 273.14923pt x 220.48376pt.
+Package epstopdf Info: Source file: <Imagens/bodeS.eps>
+(epstopdf)                    date: 2018-10-13 18:57:31
+(epstopdf)                    size: 37233 bytes
+(epstopdf)             Output file: <Imagens/bodeS-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:58:55
+(epstopdf)                    size: 5859 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/bodeS-eps-converted
+-to.pdf Imagens/bodeS.eps>
+(epstopdf)             \includegraphics on input line 70.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/bodeS-eps-converted-to.pdf, id=588, 421.575pt x 316.18124pt>
+File: Imagens/bodeS-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/bodeS-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/bodeS-eps-converted-to.pdf  used on input line
+ 70.
+(pdftex.def)             Requested size: 273.14923pt x 204.86406pt.
+
+[26 <./Imagens/stepResponse-eps-converted-to.pdf>]
+Underfull \vbox (badness 1371) has occurred while \output is active []
+
+ [27 <./Imagens/bode-eps-converted-to.pdf> <./Imagens/bodeS-eps-converted-to.pd
+f>]
+Package epstopdf Info: Source file: <Imagens/PRBS.eps>
+(epstopdf)                    date: 2018-10-10 22:09:56
+(epstopdf)                    size: 365115 bytes
+(epstopdf)             Output file: <Imagens/PRBS-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:58:56
+(epstopdf)                    size: 58297 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/PRBS-eps-converted-
+to.pdf Imagens/PRBS.eps>
+(epstopdf)             \includegraphics on input line 131.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/PRBS-eps-converted-to.pdf, id=616, 365.365pt x 305.14pt>
+File: Imagens/PRBS-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/PRBS-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/PRBS-eps-converted-to.pdf  used on input line 
+131.
+(pdftex.def)             Requested size: 273.14923pt x 228.13274pt.
+Package epstopdf Info: Source file: <Imagens/outputS1.eps>
+(epstopdf)                    date: 2018-10-10 22:09:55
+(epstopdf)                    size: 24456 bytes
+(epstopdf)             Output file: <Imagens/outputS1-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:58:57
+(epstopdf)                    size: 5865 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/outputS1-eps-conver
+ted-to.pdf Imagens/outputS1.eps>
+(epstopdf)             \includegraphics on input line 140.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/outputS1-eps-converted-to.pdf, id=619, 356.33125pt x 291.0875pt>
+File: Imagens/outputS1-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/outputS1-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/outputS1-eps-converted-to.pdf  used on input l
+ine 140.
+(pdftex.def)             Requested size: 273.14923pt x 223.14313pt.
+Package epstopdf Info: Source file: <Imagens/outputS2.eps>
+(epstopdf)                    date: 2018-10-10 22:09:57
+(epstopdf)                    size: 729058 bytes
+(epstopdf)             Output file: <Imagens/outputS2-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:58:59
+(epstopdf)                    size: 186640 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/outputS2-eps-conver
+ted-to.pdf Imagens/outputS2.eps>
+(epstopdf)             \includegraphics on input line 147.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/outputS2-eps-converted-to.pdf, id=620, 348.30125pt x 291.0875pt>
+File: Imagens/outputS2-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/outputS2-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/outputS2-eps-converted-to.pdf  used on input l
+ine 147.
+(pdftex.def)             Requested size: 273.14923pt x 228.29099pt.
+Package epstopdf Info: Source file: <Imagens/outputS1_2.eps>
+(epstopdf)                    date: 2018-10-10 22:09:56
+(epstopdf)                    size: 24718 bytes
+(epstopdf)             Output file: <Imagens/outputS1_2-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:00
+(epstopdf)                    size: 5751 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/outputS1_2-eps-conv
+erted-to.pdf Imagens/outputS1_2.eps>
+(epstopdf)             \includegraphics on input line 156.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/outputS1_2-eps-converted-to.pdf, id=622, 350.30875pt x 291.0875pt>
+File: Imagens/outputS1_2-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/outputS1_2-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/outputS1_2-eps-converted-to.pdf  used on input
+ line 156.
+(pdftex.def)             Requested size: 273.14923pt x 226.98514pt.
+Package epstopdf Info: Source file: <Imagens/outputS.eps>
+(epstopdf)                    date: 2018-10-10 22:09:58
+(epstopdf)                    size: 729866 bytes
+(epstopdf)             Output file: <Imagens/outputS-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:02
+(epstopdf)                    size: 184377 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/outputS-eps-convert
+ed-to.pdf Imagens/outputS.eps>
+(epstopdf)             \includegraphics on input line 165.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/outputS-eps-converted-to.pdf, id=624, 348.30125pt x 291.0875pt>
+File: Imagens/outputS-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/outputS-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/outputS-eps-converted-to.pdf  used on input li
+ne 165.
+(pdftex.def)             Requested size: 273.14923pt x 228.29099pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [28]
+Overfull \vbox (11.95184pt too high) has occurred while \output is active []
+
+
+[29 <./Imagens/PRBS-eps-converted-to.pdf> <./Imagens/outputS1-eps-converted-to.
+pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [30 <./Imagens/outputS2-eps-converted-to.pdf> <./Imagens/outputS1_2-eps-conver
+ted-to.pdf>]
+Package epstopdf Info: Source file: <Imagens/StatesWithTimeStamp.eps>
+(epstopdf)                    date: 2018-10-13 18:57:31
+(epstopdf)                    size: 452435 bytes
+(epstopdf)             Output file: <Imagens/StatesWithTimeStamp-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:03
+(epstopdf)                    size: 133217 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/StatesWithTimeStamp
+-eps-converted-to.pdf Imagens/StatesWithTimeStamp.eps>
+(epstopdf)             \includegraphics on input line 194.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/StatesWithTimeStamp-eps-converted-to.pdf, id=664, 573.14125pt x 625.33
+624pt>
+File: Imagens/StatesWithTimeStamp-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/StatesWithTimeStamp-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/StatesWithTimeStamp-eps-converted-to.pdf  used
+ on input line 194.
+(pdftex.def)             Requested size: 364.19667pt x 397.37036pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [31 <./Imagens/outputS-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Imagens/StatesWithoutTimeStamp.eps>
+(epstopdf)                    date: 2018-10-10 22:11:38
+(epstopdf)                    size: 303303 bytes
+(epstopdf)             Output file: <Imagens/StatesWithoutTimeStamp-eps-convert
+ed-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:05
+(epstopdf)                    size: 81699 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/StatesWithoutTimeSt
+amp-eps-converted-to.pdf Imagens/StatesWithoutTimeStamp.eps>
+(epstopdf)             \includegraphics on input line 201.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/StatesWithoutTimeStamp-eps-converted-to.pdf, id=676, 564.1075pt x 703.
+62875pt>
+File: Imagens/StatesWithoutTimeStamp-eps-converted-to.pdf Graphic file (type pd
+f)
+<use Imagens/StatesWithoutTimeStamp-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/StatesWithoutTimeStamp-eps-converted-to.pdf  u
+sed on input line 201.
+(pdftex.def)             Requested size: 364.19667pt x 454.28262pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [32 <./Imagens/StatesWithTimeStamp-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Imagens/LinearJEvolutiona.eps>
+(epstopdf)                    date: 2018-10-13 18:57:31
+(epstopdf)                    size: 62464 bytes
+(epstopdf)             Output file: <Imagens/LinearJEvolutiona-eps-converted-to
+.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:06
+(epstopdf)                    size: 60090 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/LinearJEvolutiona-e
+ps-converted-to.pdf Imagens/LinearJEvolutiona.eps>
+(epstopdf)             \includegraphics on input line 210.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/LinearJEvolutiona-eps-converted-to.pdf, id=686, 903.375pt x 468.75125p
+t>
+File: Imagens/LinearJEvolutiona-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/LinearJEvolutiona-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/LinearJEvolutiona-eps-converted-to.pdf  used o
+n input line 210.
+(pdftex.def)             Requested size: 364.19667pt x 188.97775pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [33 <./Imagens/StatesWithoutTimeStamp-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Imagens/linearNoise.eps>
+(epstopdf)                    date: 2018-10-10 21:29:45
+(epstopdf)                    size: 31229 bytes
+(epstopdf)             Output file: <Imagens/linearNoise-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:07
+(epstopdf)                    size: 4941 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/linearNoise-eps-con
+verted-to.pdf Imagens/linearNoise.eps>
+(epstopdf)             \includegraphics on input line 223.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/linearNoise-eps-converted-to.pdf, id=696, 396.48125pt x 587.19376pt>
+File: Imagens/linearNoise-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/linearNoise-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/linearNoise-eps-converted-to.pdf  used on inpu
+t line 223.
+(pdftex.def)             Requested size: 364.19667pt x 539.39154pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [34 <./Imagens/LinearJEvolutiona-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Imagens/linearSamp.eps>
+(epstopdf)                    date: 2018-10-10 21:29:39
+(epstopdf)                    size: 28386 bytes
+(epstopdf)             Output file: <Imagens/linearSamp-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:08
+(epstopdf)                    size: 4651 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/linearSamp-eps-conv
+erted-to.pdf Imagens/linearSamp.eps>
+(epstopdf)             \includegraphics on input line 233.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/linearSamp-eps-converted-to.pdf, id=707, 397.485pt x 586.19pt>
+File: Imagens/linearSamp-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/linearSamp-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/linearSamp-eps-converted-to.pdf  used on input
+ line 233.
+(pdftex.def)             Requested size: 364.19667pt x 537.10994pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [35 <./Imagens/linearNoise-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <Imagens/linearUsamp.eps>
+(epstopdf)                    date: 2018-10-10 21:29:49
+(epstopdf)                    size: 28613 bytes
+(epstopdf)             Output file: <Imagens/linearUsamp-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-10-13 18:59:09
+(epstopdf)                    size: 5076 bytes
+(epstopdf)             Command: <epstopdf --outfile=Imagens/linearUsamp-eps-con
+verted-to.pdf Imagens/linearUsamp.eps>
+(epstopdf)             \includegraphics on input line 244.
+Package epstopdf Info: Output file is already uptodate.
+<Imagens/linearUsamp-eps-converted-to.pdf, id=716, 392.46625pt x 586.19pt>
+File: Imagens/linearUsamp-eps-converted-to.pdf Graphic file (type pdf)
+<use Imagens/linearUsamp-eps-converted-to.pdf>
+Package pdftex.def Info: Imagens/linearUsamp-eps-converted-to.pdf  used on inpu
+t line 244.
+(pdftex.def)             Requested size: 364.19667pt x 543.99722pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [36 <./Imagens/linearSamp-eps-converted-to.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [37 <./Imagens/linearUsamp-eps-converted-to.pdf>]
+<Imagens/Nonholomonic-robot.pdf, id=735, 796.9775pt x 796.9775pt>
+File: Imagens/Nonholomonic-robot.pdf Graphic file (type pdf)
+<use Imagens/Nonholomonic-robot.pdf>
+Package pdftex.def Info: Imagens/Nonholomonic-robot.pdf  used on input line 279
+.
+(pdftex.def)             Requested size: 182.09486pt x 182.08487pt.
+ [38]
 Package epstopdf Info: Source file: <Imagens/entradas1.eps>
-(epstopdf)                    date: 2018-03-28 19:05:23
-(epstopdf)                    size: 160805 bytes
+(epstopdf)                    date: 2018-08-03 15:46:04
+(epstopdf)                    size: 161789 bytes
 (epstopdf)             Output file: <Imagens/entradas1-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-05-16 19:33:36
+(epstopdf)                    date: 2018-08-03 15:46:04
 (epstopdf)                    size: 19414 bytes
 (epstopdf)             Command: <epstopdf --outfile=Imagens/entradas1-eps-conve
 rted-to.pdf Imagens/entradas1.eps>
-(epstopdf)             \includegraphics on input line 69.
+(epstopdf)             \includegraphics on input line 315.
 Package epstopdf Info: Output file is already uptodate.
-<Imagens/entradas1-eps-converted-to.pdf, id=537, 421.575pt x 181.67876pt>
+<Imagens/entradas1-eps-converted-to.pdf, id=746, 421.575pt x 181.67876pt>
 File: Imagens/entradas1-eps-converted-to.pdf Graphic file (type pdf)
 <use Imagens/entradas1-eps-converted-to.pdf>
 Package pdftex.def Info: Imagens/entradas1-eps-converted-to.pdf  used on input 
-line 69.
+line 315.
 (pdftex.def)             Requested size: 455.24411pt x 196.19348pt.
 Package epstopdf Info: Source file: <Imagens/entradas2.eps>
-(epstopdf)                    date: 2018-03-28 19:05:38
-(epstopdf)                    size: 74566 bytes
+(epstopdf)                    date: 2018-08-03 15:46:04
+(epstopdf)                    size: 74618 bytes
 (epstopdf)             Output file: <Imagens/entradas2-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-05-16 19:33:38
+(epstopdf)                    date: 2018-08-03 15:46:04
 (epstopdf)                    size: 19658 bytes
 (epstopdf)             Command: <epstopdf --outfile=Imagens/entradas2-eps-conve
 rted-to.pdf Imagens/entradas2.eps>
-(epstopdf)             \includegraphics on input line 75.
+(epstopdf)             \includegraphics on input line 321.
 Package epstopdf Info: Output file is already uptodate.
-<Imagens/entradas2-eps-converted-to.pdf, id=538, 421.575pt x 181.67876pt>
+<Imagens/entradas2-eps-converted-to.pdf, id=747, 421.575pt x 181.67876pt>
 File: Imagens/entradas2-eps-converted-to.pdf Graphic file (type pdf)
 <use Imagens/entradas2-eps-converted-to.pdf>
 Package pdftex.def Info: Imagens/entradas2-eps-converted-to.pdf  used on input 
-line 75.
+line 321.
 (pdftex.def)             Requested size: 455.24411pt x 196.19348pt.
 
-Overfull \hbox (1.8pt too wide) in paragraph at lines 68--79
+Overfull \hbox (1.8pt too wide) in paragraph at lines 314--325
  [] [][][] 
  []
 
 Package epstopdf Info: Source file: <Imagens/exemplo_03_30db_desloc.eps>
-(epstopdf)                    date: 2018-03-16 14:43:27
-(epstopdf)                    size: 38301 bytes
+(epstopdf)                    date: 2018-08-28 14:42:15
+(epstopdf)                    size: 71442 bytes
 (epstopdf)             Output file: <Imagens/exemplo_03_30db_desloc-eps-convert
 ed-to.pdf>
-(epstopdf)                    date: 2018-05-16 19:33:39
+(epstopdf)                    date: 2018-09-03 11:32:28
 (epstopdf)                    size: 19091 bytes
 (epstopdf)             Command: <epstopdf --outfile=Imagens/exemplo_03_30db_des
 loc-eps-converted-to.pdf Imagens/exemplo_03_30db_desloc.eps>
-(epstopdf)             \includegraphics on input line 85.
+(epstopdf)             \includegraphics on input line 331.
 Package epstopdf Info: Output file is already uptodate.
-<Imagens/exemplo_03_30db_desloc-eps-converted-to.pdf, id=539, 421.575pt x 316.1
+<Imagens/exemplo_03_30db_desloc-eps-converted-to.pdf, id=748, 421.575pt x 316.1
 8124pt>
 File: Imagens/exemplo_03_30db_desloc-eps-converted-to.pdf Graphic file (type pd
 f)
 <use Imagens/exemplo_03_30db_desloc-eps-converted-to.pdf>
 Package pdftex.def Info: Imagens/exemplo_03_30db_desloc-eps-converted-to.pdf  u
-sed on input line 85.
-(pdftex.def)             Requested size: 455.24411pt x 341.4417pt.
-
-Underfull \vbox (badness 2189) has occurred while \output is active []
-
- [22]
+sed on input line 331.
+(pdftex.def)             Requested size: 364.19667pt x 273.15047pt.
+[39 <./Imagens/Nonholomonic-robot.pdf>] [40 <./Imagens/entradas1-eps-converted-
+to.pdf> <./Imagens/entradas2-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <Imagens/J_umarealizacao.eps>
-(epstopdf)                    date: 2018-04-13 09:59:05
-(epstopdf)                    size: 20487 bytes
+(epstopdf)                    date: 2018-08-27 13:43:47
+(epstopdf)                    size: 20658 bytes
 (epstopdf)             Output file: <Imagens/J_umarealizacao-eps-converted-to.p
 df>
-(epstopdf)                    date: 2018-05-16 19:33:40
+(epstopdf)                    date: 2018-09-03 11:32:28
 (epstopdf)                    size: 5349 bytes
 (epstopdf)             Command: <epstopdf --outfile=Imagens/J_umarealizacao-eps
 -converted-to.pdf Imagens/J_umarealizacao.eps>
-(epstopdf)             \includegraphics on input line 103.
+(epstopdf)             \includegraphics on input line 350.
 Package epstopdf Info: Output file is already uptodate.
-<Imagens/J_umarealizacao-eps-converted-to.pdf, id=550, 421.575pt x 316.18124pt>
+<Imagens/J_umarealizacao-eps-converted-to.pdf, id=793, 421.575pt x 316.18124pt>
 
 File: Imagens/J_umarealizacao-eps-converted-to.pdf Graphic file (type pdf)
 <use Imagens/J_umarealizacao-eps-converted-to.pdf>
 Package pdftex.def Info: Imagens/J_umarealizacao-eps-converted-to.pdf  used on 
-input line 103.
+input line 350.
 (pdftex.def)             Requested size: 364.19667pt x 273.15047pt.
-
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `!tbp') on input line 108.
-
-Package epstopdf Info: Source file: <Imagens/J_umarealizacao-timedelay.eps>
-(epstopdf)                    date: 2018-07-20 00:40:58
-(epstopdf)                    size: 21534 bytes
-(epstopdf)             Output file: <Imagens/J_umarealizacao-timedelay-eps-conv
-erted-to.pdf>
-(epstopdf)                    date: 2018-07-20 01:20:56
-(epstopdf)                    size: 6774 bytes
-(epstopdf)             Command: <epstopdf --outfile=Imagens/J_umarealizacao-tim
-edelay-eps-converted-to.pdf Imagens/J_umarealizacao-timedelay.eps>
-(epstopdf)             \includegraphics on input line 110.
-Package epstopdf Info: Output file is already uptodate.
-<Imagens/J_umarealizacao-timedelay-eps-converted-to.pdf, id=551, 617.30624pt x 
-449.68pt>
-File: Imagens/J_umarealizacao-timedelay-eps-converted-to.pdf Graphic file (type
- pdf)
-<use Imagens/J_umarealizacao-timedelay-eps-converted-to.pdf>
-Package pdftex.def Info: Imagens/J_umarealizacao-timedelay-eps-converted-to.pdf
-  used on input line 110.
-(pdftex.def)             Requested size: 364.19667pt x 265.3089pt.
-
-Underfull \vbox (badness 4378) has occurred while \output is active []
-
- [23 <./Imagens/entradas1-eps-converted-to.pdf> <./Imagens/entradas2-eps-conver
-ted-to.pdf>]
+ [41 <./Imagens/exemplo_03_30db_desloc-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <Imagens/noise.eps>
-(epstopdf)                    date: 2018-04-13 10:00:12
-(epstopdf)                    size: 18626 bytes
+(epstopdf)                    date: 2018-08-27 13:43:47
+(epstopdf)                    size: 18753 bytes
 (epstopdf)             Output file: <Imagens/noise-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-05-16 19:33:41
+(epstopdf)                    date: 2018-09-03 11:32:28
 (epstopdf)                    size: 3713 bytes
 (epstopdf)             Command: <epstopdf --outfile=Imagens/noise-eps-converted
 -to.pdf Imagens/noise.eps>
-(epstopdf)             \includegraphics on input line 121.
+(epstopdf)             \includegraphics on input line 386.
 Package epstopdf Info: Output file is already uptodate.
-<Imagens/noise-eps-converted-to.pdf, id=569, 421.575pt x 316.18124pt>
+<Imagens/noise-eps-converted-to.pdf, id=803, 421.575pt x 316.18124pt>
 File: Imagens/noise-eps-converted-to.pdf Graphic file (type pdf)
 <use Imagens/noise-eps-converted-to.pdf>
 Package pdftex.def Info: Imagens/noise-eps-converted-to.pdf  used on input line
- 121.
-(pdftex.def)             Requested size: 168.627pt x 126.47025pt.
-Package epstopdf Info: Source file: <Imagens/noise2.eps>
-(epstopdf)                    date: 2018-06-13 23:46:33
-(epstopdf)                    size: 18650 bytes
-(epstopdf)             Output file: <Imagens/noise2-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-06-14 07:15:06
-(epstopdf)                    size: 3787 bytes
-(epstopdf)             Command: <epstopdf --outfile=Imagens/noise2-eps-converte
-d-to.pdf Imagens/noise2.eps>
-(epstopdf)             \includegraphics on input line 127.
-Package epstopdf Info: Output file is already uptodate.
-<Imagens/noise2-eps-converted-to.pdf, id=570, 421.575pt x 316.18124pt>
-File: Imagens/noise2-eps-converted-to.pdf Graphic file (type pdf)
-<use Imagens/noise2-eps-converted-to.pdf>
-Package pdftex.def Info: Imagens/noise2-eps-converted-to.pdf  used on input lin
-e 127.
-(pdftex.def)             Requested size: 168.627pt x 126.47025pt.
+ 386.
+(pdftex.def)             Requested size: 364.19667pt x 273.15047pt.
+
+Underfull \vbox (badness 1584) has occurred while \output is active []
+
+ [42 <./Imagens/J_umarealizacao-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <Imagens/samp.eps>
-(epstopdf)                    date: 2018-04-13 10:00:44
-(epstopdf)                    size: 17692 bytes
+(epstopdf)                    date: 2018-08-27 13:43:47
+(epstopdf)                    size: 17832 bytes
 (epstopdf)             Output file: <Imagens/samp-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-05-16 19:33:42
+(epstopdf)                    date: 2018-09-03 11:32:28
 (epstopdf)                    size: 3989 bytes
 (epstopdf)             Command: <epstopdf --outfile=Imagens/samp-eps-converted-
 to.pdf Imagens/samp.eps>
-(epstopdf)             \includegraphics on input line 134.
+(epstopdf)             \includegraphics on input line 402.
 Package epstopdf Info: Output file is already uptodate.
-<Imagens/samp-eps-converted-to.pdf, id=571, 421.575pt x 316.18124pt>
+<Imagens/samp-eps-converted-to.pdf, id=813, 421.575pt x 316.18124pt>
 File: Imagens/samp-eps-converted-to.pdf Graphic file (type pdf)
 <use Imagens/samp-eps-converted-to.pdf>
 Package pdftex.def Info: Imagens/samp-eps-converted-to.pdf  used on input line 
-134.
-(pdftex.def)             Requested size: 168.627pt x 126.47025pt.
-Package epstopdf Info: Source file: <Imagens/samp2.eps>
-(epstopdf)                    date: 2018-06-15 20:16:51
-(epstopdf)                    size: 17334 bytes
-(epstopdf)             Output file: <Imagens/samp2-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-06-15 20:17:04
-(epstopdf)                    size: 4026 bytes
-(epstopdf)             Command: <epstopdf --outfile=Imagens/samp2-eps-converted
--to.pdf Imagens/samp2.eps>
-(epstopdf)             \includegraphics on input line 140.
-Package epstopdf Info: Output file is already uptodate.
-<Imagens/samp2-eps-converted-to.pdf, id=572, 421.575pt x 316.18124pt>
-File: Imagens/samp2-eps-converted-to.pdf Graphic file (type pdf)
-<use Imagens/samp2-eps-converted-to.pdf>
-Package pdftex.def Info: Imagens/samp2-eps-converted-to.pdf  used on input line
- 140.
-(pdftex.def)             Requested size: 168.627pt x 126.47025pt.
+402.
+(pdftex.def)             Requested size: 364.19667pt x 273.15047pt.
+ [43 <./Imagens/noise-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <Imagens/dtudty.eps>
-(epstopdf)                    date: 2018-04-13 10:02:09
-(epstopdf)                    size: 18419 bytes
+(epstopdf)                    date: 2018-08-27 13:43:47
+(epstopdf)                    size: 18572 bytes
 (epstopdf)             Output file: <Imagens/dtudty-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-05-16 19:33:43
+(epstopdf)                    date: 2018-09-03 11:32:28
 (epstopdf)                    size: 4381 bytes
 (epstopdf)             Command: <epstopdf --outfile=Imagens/dtudty-eps-converte
 d-to.pdf Imagens/dtudty.eps>
-(epstopdf)             \includegraphics on input line 147.
+(epstopdf)             \includegraphics on input line 419.
 Package epstopdf Info: Output file is already uptodate.
-<Imagens/dtudty-eps-converted-to.pdf, id=573, 421.575pt x 316.18124pt>
+<Imagens/dtudty-eps-converted-to.pdf, id=824, 421.575pt x 316.18124pt>
 File: Imagens/dtudty-eps-converted-to.pdf Graphic file (type pdf)
 <use Imagens/dtudty-eps-converted-to.pdf>
 Package pdftex.def Info: Imagens/dtudty-eps-converted-to.pdf  used on input lin
-e 147.
-(pdftex.def)             Requested size: 168.627pt x 126.47025pt.
-Package epstopdf Info: Source file: <Imagens/dtudty2.eps>
-(epstopdf)                    date: 2018-06-15 20:15:34
-(epstopdf)                    size: 16973 bytes
-(epstopdf)             Output file: <Imagens/dtudty2-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-06-15 20:17:05
-(epstopdf)                    size: 4350 bytes
-(epstopdf)             Command: <epstopdf --outfile=Imagens/dtudty2-eps-convert
-ed-to.pdf Imagens/dtudty2.eps>
-(epstopdf)             \includegraphics on input line 154.
-Package epstopdf Info: Output file is already uptodate.
-<Imagens/dtudty2-eps-converted-to.pdf, id=574, 421.575pt x 316.18124pt>
-File: Imagens/dtudty2-eps-converted-to.pdf Graphic file (type pdf)
-<use Imagens/dtudty2-eps-converted-to.pdf>
-Package pdftex.def Info: Imagens/dtudty2-eps-converted-to.pdf  used on input li
-ne 154.
-(pdftex.def)             Requested size: 168.627pt x 126.47025pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[24 <./Imagens/exemplo_03_30db_desloc-eps-converted-to.pdf>]
-Underfull \vbox (badness 1521) has occurred while \output is active []
-
- [25 <./Imagens/J_umarealizacao-eps-converted-to.pdf> <./Imagens/J_umarealizaca
-o-timedelay-eps-converted-to.pdf>] [26] [27] [28 <./Imagens/noise-eps-converted
--to.pdf> <./Imagens/noise2-eps-converted-to.pdf> <./Imagens/samp-eps-converted-
-to.pdf> <./Imagens/samp2-eps-converted-to.pdf> <./Imagens/dtudty-eps-converted-
-to.pdf> <./Imagens/dtudty2-eps-converted-to.pdf>]) (capitulo5.tex
-Chapter 5.
-[29
+e 419.
+(pdftex.def)             Requested size: 364.19667pt x 273.15047pt.
+ [44 <./Imagens/samp-eps-converted-to.pdf>] [45 <./Imagens/dtudty-eps-converted
+-to.pdf>]) [46
 
 
 
+] (capitulo6.tex
+Chapter 6.
+[47
 
-]) [30
+]) [48
 
 
 
-] (0_Dissertacao.bbl [31
+] (0_Dissertacao.bbl [49
 
-] [32] [33] [34]) [35] [36
+] [50] [51] [52]) [53] [54
 
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 376.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 376.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 382.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 382.
  (0_Dissertacao.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 376.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 376.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 382.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 382.
+Package rerunfilecheck Info: File `0_Dissertacao.out' has not changed.
+(rerunfilecheck)             Checksum: 32C2521B191601101AC23C3E0769811C;2833.
 
-
-Package rerunfilecheck Warning: File `0_Dissertacao.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `0_Dissertacao.out':
-(rerunfilecheck)             Before: 122D447189F46FB96387CE5CFD8E6E3D;2254
-(rerunfilecheck)             After:  725C784CB253B4781EA659CBF28E8E80;2254.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 376.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 382.
  ) 
 Here is how much of TeX's memory you used:
- 42363 strings out of 493305
- 912360 string characters out of 3138874
- 1182130 words of memory out of 3000000
- 45019 multiletter control sequences out of 15000+200000
- 573686 words of font info for 118 fonts, out of 3000000 for 9000
+ 42465 strings out of 493305
+ 914817 string characters out of 3138874
+ 1172319 words of memory out of 3000000
+ 45067 multiletter control sequences out of 15000+200000
+ 576344 words of font info for 123 fonts, out of 3000000 for 9000
  1143 hyphenation exceptions out of 8191
- 55i,17n,80p,10392b,978s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{section*.14} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter*.15} has been referenced but does not exist
-, replaced by a fixed one
-
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/pxfonts/pxex.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/pxfonts/pxsy.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/px
-fonts/pxsya.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/pxfonts/pxsyb.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/pxfonts/rpcxr.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/public/pxfonts/rpxmi.pfb><C:/Program Files/MiKTe
-X 2.9/fonts/type1/public/pxfonts/rpxr.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
-pe1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palati
-no/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb
->
-Output written on 0_Dissertacao.pdf (42 pages, 368019 bytes).
+ 55i,20n,80p,10392b,983s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/pxfonts/pxex.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/pxfonts/pxsy.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+pxfonts/pxsya.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/pxfonts/pxsyb
+.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/pxfonts/rpcxr.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/pxfonts/rpxmi.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/pxfonts/rpxr.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/pala
+tino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.p
+fb>
+Output written on 0_Dissertacao.pdf (60 pages, 1142466 bytes).
 PDF statistics:
- 741 PDF objects out of 1000 (max. 8388607)
- 160 named destinations out of 1000 (max. 500000)
- 362 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 955 PDF objects out of 1000 (max. 8388607)
+ 199 named destinations out of 1000 (max. 500000)
+ 481 words of extra memory for PDF output out of 10000 (max. 10000000)
 

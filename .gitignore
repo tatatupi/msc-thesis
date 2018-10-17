@@ -1,0 +1,9 @@
+*.bbl
+*.blg
+*.idx
+*.log
+*.out
+*.pdf
+*.synctex
+*.tdo
+*.toc
