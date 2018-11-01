@@ -49,14 +49,14 @@ The second mode is a high-pass (hp) system, with a much lower time constant $\ta
 G_{hp}(s) = \frac{s^2-0.001s}{s^2 + 200s + 10^6}\\
 \end{equation}
 
-Figure~\ref{fig:stepResponse} shows the step response of both modes, while the bode diagrams can be seen in Figures~\ref{fig:bode} and~\ref{fig:bodeS}
+Figure~\ref{fig:bode} shows the bode diagrams of both systems separately.
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/stepResponse.eps}
-	\caption[entrada]{Step response of both low-pass and high-pass modes.}
-	\label{fig:stepResponse}
-\end{figure}
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.6\textwidth]{Imagens/stepResponse.eps}
+%	\caption[entrada]{Step response of both low-pass and high-pass modes.}
+%	\label{fig:stepResponse}
+%\end{figure}
 
 \begin{figure}[!htb]
 	\centering
@@ -65,12 +65,12 @@ Figure~\ref{fig:stepResponse} shows the step response of both modes, while the b
 	\label{fig:bode}
 \end{figure}
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/bodeS.eps}
-	\caption[entrada]{Bode diagram of the resulting fourth order system.}
-	\label{fig:bodeS}
-\end{figure}
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.6\textwidth]{Imagens/bodeS.eps}
+%	\caption[entrada]{Bode diagram of the resulting fourth order system.}
+%	\label{fig:bodeS}
+%\end{figure}
 
 
 The resulting fourth order system is described as a state space representation, in a modal canonical form given by:
@@ -124,45 +124,35 @@ where $x(t) \in \mathbf{R}^4$ is the state vector, $u(t) \in \mathbf{R}^1$ is th
 %\end{split}
 %\end{equation}
 
-We simulate a pseudorandom binary sequence (PRBS) as input, with 200 samples in 2 seconds of simulation, according to Figure~\ref{fig:PRBS}
-
+We simulate a pseudo-random binary sequence (PRBS) as input, with 200 samples and simulate the high-pass and low-pass systems separately according to Figure~\ref{fig:PRBS_and_systems}. As expected, the low-pass response is much slower. Just for comparison, if the same 200 samples of PRBS was generated over 20 seconds, the low-pass system response would account for more variations in the input. Figure~\ref{fig:outputS} show the response of the final fourth order system.
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/PRBS.eps}
-	\caption[entrada]{200 samples of PRBS signal, used as input.}
-	\label{fig:PRBS}
+	\includegraphics[width=\textwidth]{Imagens/PRBS_and_Systems.eps}
+	\caption[entrada]{PRBS samples used as input; output of high-pass system, considering 2 seconds of simulation and low-pass system results for 2 and 20 seconds simulation}
+	\label{fig:PRBS_and_systems}
 \end{figure}
 
-Figures~\ref{fig:outputS1} and~\ref{fig:outputS2} show the response of the low-pass and high-pass modes, respectively, to the PRBS input signal.
-
+%\begin{figure}[!htb]
+%	\centering
+%%	\includegraphics[width=0.6\textwidth]{Imagens/outputS2.eps}
+%	\caption[entrada]{Output of high-pass system to the PRBS input signal}
+%	\label{fig:outputS2}
+%\end{figure}
+%
+%As expected, the low-pass response is much slower. Just for comparison, if the same 200 samples of PRBS was generated over 20 seconds, the low-pass system response would account for more variations in the input, as shown in Figure~\ref{fig:outputS1_2}
+%
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.6\textwidth]{Imagens/outputS1_2.eps}
+%	\caption[entrada]{Output of low-pass system to the PRBS input signal extended over 20 seconds}
+%	\label{fig:outputS1_2}
+%\end{figure}
+%
+%The response of the final fourth order system, considering both modes is presented in Figure~\ref{fig:outputS}, where both modes dynamics can be observed.
+%
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/outputS1.eps}
-	\caption[entrada]{Output of low-pass system to the PRBS input signal}
-	\label{fig:outputS1}
-\end{figure}
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/outputS2.eps}
-	\caption[entrada]{Output of high-pass system to the PRBS input signal}
-	\label{fig:outputS2}
-\end{figure}
-
-As expected, the low-pass response is much slower. Just for comparison, if the same 200 samples of PRBS was generated over 20 seconds, the low-pass system response would account for more variations in the input, as shown in Figure~\ref{fig:outputS1_2}
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/outputS1_2.eps}
-	\caption[entrada]{Output of low-pass system to the PRBS input signal extended over 20 seconds}
-	\label{fig:outputS1_2}
-\end{figure}
-
-The response of the final fourth order system, considering both modes is presented in Figure~\ref{fig:outputS}, where both modes dynamics can be observed.
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/outputS.eps}
+	\includegraphics[width=0.5\textwidth]{Imagens/outputS.eps}
 	\caption[entrada]{Output of the fourth order system to the PRBS input signal}
 	\label{fig:outputS}
 \end{figure}
@@ -191,15 +181,15 @@ Discrete-time Kalman filter is used for estimation. Realizations of the estimate
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/StatesWithTimeStamp.eps}
-	\caption[entrada]{Estimated (red) and true (black) states considering time-stamp in the estimation algorithm.}
+	\includegraphics[width=\textwidth]{Imagens/StatesWithTimeStamp14.eps}
+	\caption[entrada]{Estimated (red) and true (black) states $x_1$ and $x_4$ considering time-stamp in the estimation algorithm.}
 	\label{fig:StatesWithTimeStamp}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/StatesWithoutTimeStamp.eps}
-	\caption[entrada]{Estimated (red) and true (black) states not considering time-stamp in the estimation algorithm.}
+	\includegraphics[width=\textwidth]{Imagens/StatesWithoutTimeStamp14.eps}
+	\caption[entrada]{Estimated (red) and true (black) states$x_1$ and $x_4$ not considering time-stamp in the estimation algorithm.}
 	\label{fig:StatesWithoutTimeStamp}
 \end{figure}
 
@@ -207,33 +197,56 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/LinearJEvolutiona.eps}
+	\includegraphics[width=0.6\textwidth]{Imagens/LinearJEvolution.eps}
 	\caption[entrada]{Temporal cut from 0.02 to 0.045 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
 	\label{fig:LinearJevolution}
 \end{figure}
 
 
 
+\begin{figure}[!ht]
+	\centering
+	{\includegraphics[width=.45\textwidth]{Imagens/chi_e_with.eps}}\quad
+	{\includegraphics[width=.45\textwidth]{Imagens/chi_eta_with.eps}}\\
+	{\includegraphics[width=.45\textwidth]{Imagens/chi_e_without.eps}}\quad
+	{\includegraphics[width=.45\textwidth]{Imagens/chi_eta_without.eps}}
+	\caption{First group of subfigures.}
+	\label{fig:sub1}
+\end{figure}
+
+
+
+
+
+
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
 
 
-	
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/linearNoise.eps}
-	\caption[entrada]{Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
-	\label{fig:linearNoise}
-\end{figure} 
+%	
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Imagens/linearNoise.eps}
+%	\caption[entrada]{Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
+%	\label{fig:linearNoise}
+%\end{figure} 
 
 
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/linearSamp.eps}
+	\includegraphics[width=0.8\textwidth]{Imagens/samp_results_J.eps}
 	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
 	\label{fig:linearSamp}
 \end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/samp_results_test.eps}
+	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:sampTests}
+\end{figure} 
+
 
 
 
@@ -241,10 +254,18 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/linearUsamp.eps}
-	\caption[entrada]{Root mean square error variation, as a function of $\alpha$ for both KF algorithms, considering and not considering time-stamp}
-	\label{fig:linearUSamp}
+	\includegraphics[width=0.8\textwidth]{Imagens/usamp_results_J.eps}
+	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:ulinearSamp}
 \end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagens/usamp_results_test.eps}
+	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
+	\label{fig:usampTests}
+\end{figure} 
+
 
 
 \subsection{Average Time Delay}\label{sec:dt-AC}
