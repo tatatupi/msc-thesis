@@ -77,8 +77,8 @@ The resulting fourth order system is described as a state space representation, 
 
 \begin{equation}
 \begin{split}
-\dot{x}(t) & = \textbf{A}x(t) + \textbf{B}u(t) \\
-y(t) & = \textbf{C}x(t) + \textbf{D}u(t)
+\dot{x}(t) & = Ax(t) + Bu(t) \\
+y(t) & = Cx(t) + Du(t)
 \end{split}
 \end{equation}
 
@@ -88,25 +88,25 @@ where $x(t) \in \mathbf{R}^4$ is the state vector, $u(t) \in \mathbf{R}^1$ is th
 
 \begin{equation}
 \begin{split}
-\textbf{A} & =\begin{bmatrix}
+A & =\begin{bmatrix}
 -100 & 994.99 & 0 & 0\\
 -994.99 & -100 & 0 & 0\\
 0 & 0 & -1 & 9.949\\
 0 & 0 & -9.949 & -1
 \end{bmatrix} \\
 \\
-\textbf{B} & =\begin{bmatrix}
+B & =\begin{bmatrix}
 -24.6435 \\
 -18.8943 \\
 -4.1746 \\
 -0.2675
 \end{bmatrix} \\
 \\
-\textbf{C} & =\begin{bmatrix}
+C & =\begin{bmatrix}
 24.41 & -21.2522 & -0.1537 & 2.3977 \\
 \end{bmatrix} \\
 \\
-\textbf{D} & =1
+D & =1
 \end{split}
 \end{equation}
 
@@ -157,16 +157,7 @@ We simulate a pseudo-random binary sequence (PRBS) as input, with 200 samples an
 	\label{fig:outputS}
 \end{figure}
 
-The linear system is discretized by:
-
-\begin{equation}
-\begin{split}
-\textbf{A}_d & = e^{\textbf{A}T} \\
-\textbf{B}_d & = \textbf{A}^{-1}(\textbf{A}_d - \textit{I})\textbf{B} \\
-\textbf{C}_d & = \textbf{C} \\
-\textbf{D}_d & = \textbf{D}
-\end{split}
-\end{equation}
+The linear system is discretized using MATLAB's `c2d`fic
 
 The sampled-data observations are available according to:
 
@@ -177,21 +168,28 @@ y(t_k) = \textbf{B}_dx(t)+\textbf{D}_du(t) + v(t_k)
 \noindent
 where $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
-Discrete-time Kalman filter is used for estimation. Realizations of the estimated states and true values for both scenarios, with and without time-stamp, for a signal-to-noise ration in the observations of $40$ dB are shown in Figures~\ref{fig:StatesWithTimeStamp} and~\ref{fig:StatesWithoutTimeStamp}.
+Discrete-time Kalman filter is used for estimation. Realizations of the estimated states and true values for both scenarios, with and without time-stamp, for a signal-to-noise ration in the observations of $40$ dB are shown in Figures~\ref{fig:StatesWithAndWithoutTimeStamp} 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/StatesWithTimeStamp14.eps}
-	\caption[entrada]{Estimated (red) and true (black) states $x_1$ and $x_4$ considering time-stamp in the estimation algorithm.}
-	\label{fig:StatesWithTimeStamp}
+	\includegraphics[width=\textwidth]{Imagens/StatesWithAndWithoutTimeStamp.eps}
+	\caption[entrada]{Estimated with time-stamp (red), without time-stamp (blue) and true (black) states $x_1$ and $x_4$.}
+	\label{fig:StatesWithAndWithoutTimeStamp}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/StatesWithoutTimeStamp14.eps}
-	\caption[entrada]{Estimated (red) and true (black) states$x_1$ and $x_4$ not considering time-stamp in the estimation algorithm.}
-	\label{fig:StatesWithoutTimeStamp}
-\end{figure}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\textwidth]{Imagens/StatesWithTimeStamp14.eps}
+%	\caption[entrada]{Estimated (red) and true (black) states $x_1$ and $x_4$ considering time-stamp in the estimation algorithm.}
+%	\label{fig:StatesWithTimeStamp}
+%\end{figure}
+%
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=\textwidth]{Imagens/StatesWithoutTimeStamp14.eps}
+%	\caption[entrada]{Estimated (red) and true (black) states$x_1$ and $x_4$ not considering time-stamp in the estimation algorithm.}
+%	\label{fig:StatesWithoutTimeStamp}
+%\end{figure}
 
 Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds of the first state RMSE for the algorithms with and without time-stamp. As expected, we observe a distancing from the RMSE at the instant the first observation was taken $t_1$, favoring the algorithm that considers time-stamp.
 
