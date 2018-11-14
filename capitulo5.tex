@@ -170,7 +170,7 @@ where $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero 
 
 Discrete-time Kalman filter is used for estimation. Realizations of the estimated states and true values for both scenarios, with and without time-stamp, for a signal-to-noise ration in the observations of $40$ dB are shown in Figures~\ref{fig:StatesWithAndWithoutTimeStamp} 
 
-\begin{figure}[H]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/StatesWithAndWithoutTimeStamp.eps}
 	\caption[entrada]{Estimated with time-stamp (red), without time-stamp (blue) and true (black) states $x_1$ and $x_4$.}
@@ -202,7 +202,7 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 
 
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 	{\includegraphics[width=.45\textwidth]{Imagens/chi_e_with.eps}}\quad
 	{\includegraphics[width=.45\textwidth]{Imagens/chi_eta_with.eps}}\\
@@ -219,6 +219,25 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
 
+\subsubsection{Changing input and measurement noise jointly}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Imagens/noise_results_all-uy.eps}
+	\caption[entrada]{Performance, as a function of input and observation SNR}
+	\label{fig:ulinearSamp}
+\end{figure} 
+
+\subsubsection{Changing only measurement noise}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Imagens/noise_results_all.eps}
+	\caption[entrada]{Performance, as a function of observation SNR}
+	\label{fig:ulinearSamp}
+\end{figure} 
+
+
 
 %	
 %\begin{figure}[H]
@@ -233,18 +252,10 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/samp_results_J.eps}
-	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
+	\includegraphics[width=1\textwidth]{Imagens/samp_results_all.eps}
+	\caption[entrada]{Performance, as a function of $\lambda$}
 	\label{fig:linearSamp}
 \end{figure} 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/samp_results_test.eps}
-	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
-	\label{fig:sampTests}
-\end{figure} 
-
 
 
 
@@ -252,17 +263,11 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/usamp_results_J.eps}
-	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
+	\includegraphics[width=1\textwidth]{Imagens/usamp_results_all.eps}
+	\caption[entrada]{Performance, as a function of $\alpha$}
 	\label{fig:ulinearSamp}
 \end{figure} 
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Imagens/usamp_results_test.eps}
-	\caption[entrada]{Root mean square error variation, as a function of $\lambda$ for both KF algorithms, considering and not considering time-stamp}
-	\label{fig:usampTests}
-\end{figure} 
 
 
 
