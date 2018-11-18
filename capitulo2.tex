@@ -127,7 +127,7 @@ y(k) = H(k)x(k-d(k))+H(k)v(k)
 \noindent
 where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time Markov Chain observable at each sampling time k.
 
-Multiple of a known lag or not, delayed measurements from a multisensor system are subject to arrive disordely, which leads to the sampling irregularity referred to as out-of-sequence-measurements (OOSM). It can be classified in three ways, depending on the number of lags, according to Figure~\ref{fig:oosm}. 
+Multiple of a known lag or not, delayed measurements from a multisensor system are subject to arrive disordely, which leads to the sampling irregularity commonly known as to as out-of-sequence-measurements (OOSM). It can be classified in three ways, depending on the number of lags, according to Figure~\ref{fig:oosm}. 
 
 \begin{figure}[!htb]
 	\centering
@@ -136,7 +136,7 @@ Multiple of a known lag or not, delayed measurements from a multisensor system a
 	\label{fig:oosm}
 \end{figure} 
 
-\citep{Anxi2005} describes four different filtering approaches to deal with OOSM: reprocessing, that stores filter results to rollback with the time-delayed measurement; data buffering, that holds a set of measurements, greater than maximum expected lag, to be sorted before filtering; discarding data, neglecting time-delayed measurements; and directly updating, that uses the delayed information to update current state estimate. \citep{Bar-Shalom2000} used the last approach to describe an optimal filter for the single-lag case.
+\citep{Anxi2005} describes four different filtering approaches to deal with OOSM: reprocessing, that stores filter results to rollback with the time-delayed measurement; data buffering, that holds a set of measurements, greater than maximum expected lag, to be sorted before filtering; discarding data, that neglects time-delayed measurements; and directly updating, that uses the delayed information to update current state estimate. \citep{Bar-Shalom2000} used the last approach to describe an optimal filter for the single-lag case.
 
 \begin{figure}[!htb]
 	\begin{center}
@@ -179,7 +179,7 @@ y(t) = \xi(t)z(t)+(1-\xi(t))y(t-1),
 \end{align}
 
 \noindent
-where $z(t) \in \mathbf{R}^m$ is the measured output transmitted to the estimator, $v(t) \in \mathbf(R)^m$ is white noise, $y(t) \in \mathbf{R}^m$ is the measurement received by the estimator ansd $\xi(t) \sim Ber(p) $ is a Bernoulli random variable that takes the value 1 with probability $p$ and 0 with probability $1-p$. That is, when $\xi(t)$ is 1, there is no packet dropout. If $\xi(t)$ is 0, however, the latest output is used at current time, in a recursive fashion.
+where $z(t) \in \mathbf{R}^m$ is the measured output transmitted to the estimator, $v(t) \in \mathbf(R)^m$ is white noise, $y(t) \in \mathbf{R}^m$ is the measurement received by the estimator and $\xi(t) \sim Ber(p)$ is a Bernoulli random variable that takes the value 1 with probability $p$ and 0 with probability $1-p$. That is, when $\xi(t)$ is 1, there is no packet dropout. If $\xi(t)$ is 0, however, the latest output is used at current time, in a recursive fashion.
 
 Another way of describing multiple packet dropouts is by limiting the amount of consecutive dropouts ~\citep{ShuliSun2008}, where the received measurements are defined by
 
@@ -199,9 +199,21 @@ Such a model dictates that the measurement used by the estimator will be only th
 
 \section{Uncertain Observation}
 
-Para alguns sistemas, como de target tracking, medições feitas em intervalos discretos podem ser consideradas como existentes ou não (lack of target), com certa probabilidade. Pode ser que, para casos dados como existentes, na verdade não houve medição e a observação é composta apenas por ruído - uncertain observation \citep{Hadidi1979,Sun2011,Nahi1969}.
+For some applications, there is a chance that the observation signal sent to the estimator contains only noise. According to \citep{Jaffer1971}, it happens as a consequence of two situations: the observation was taken, but was lost during transmission, due to communication failures; or it was not transmitted at all, as it may happen for target tracking systems, for example, when the object being observed is not tracked at a sample time. An observation model for a sampled-data system can be described as
+
+\begin{equation}
+y(k) = \gamma(k)Cx(k) + Dv(k)
+\end{equation}
+
+\noindent
+where $\gamma(k) \sim Ber(p(k))$ is a Bernoulli random variables, taking values of 0 or 1, with probabilities $p(k)$ and $1 - p(k)$, respectively.
+
+Unlike the packet dropout problem, when the missing data are associated with the total absence of signal, the issue of uncertain observation has to be dealt with differently. A common approach is to detect the existence of signal prior to the assimilation, using a likelihood ratio test.  \citep{Middleton1968} proposes a joint approach to systematically detect and extract information from observation signals. If the estimator and detector are developed separately, te probability of false alarms is not used in the estimator, making it suboptimal. \citep{Nahi1969} developed an optimal recursive estimator, that uses the information of the random variable $\gamma$ in the algorithm, assuming it is independent and identically distributed. \citep{Hadidi1979} generalized the work of Nahi, for the case when the uncertainty of the signals presence is described by a Markovian sequence of binary random variables.
 
 \section{Aperiodic Sampling}
+	
+Most of the irregularities described are present in a periodic sampling scheme.
+
 
 A maioria dos efeitos mencionados consideram amostragem periódica, mas irregular. Há também os casos em que as amostragem são feitas de forma aperiódica (ou modeladas como tal). Sejam elas causadas por amostragem baseada em eventos ou para aproximar os intervalos de tempo aleatórios causadas por uma grande rede de sensores \citep{Micheli2002,Yan2017}. A falta de periodicidade também pode ser entendida como um intervalos de tempo com ruído \citep{Shen2016}.
 
