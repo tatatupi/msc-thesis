@@ -212,17 +212,12 @@ Unlike the packet dropout problem, when the missing data are associated with the
 
 \section{Aperiodic Sampling}
 	
-Most of the irregularities described are present in a periodic sampling scheme.
+All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like aperiodic faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to sampling frequency similar to clock frequency, sampling requests delayed by the network or imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time intervals are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. 
 
+Sometimes, the system being observed has particularities that causes the aperiodic sampling. One example is seismology, where the spatial coordinates are irregularly sampled, because of natural obstacles \citep{Marvasti2001}. Other large scale systems, such as power grids, have sensors with a huge geographical separations, and different communication links to the estimation hub, which causes multiple and random inter-observation intervals \citep{Yan2017}.
 
-A maioria dos efeitos mencionados consideram amostragem periódica, mas irregular. Há também os casos em que as amostragem são feitas de forma aperiódica (ou modeladas como tal). Sejam elas causadas por amostragem baseada em eventos ou para aproximar os intervalos de tempo aleatórios causadas por uma grande rede de sensores \citep{Micheli2002,Yan2017}. A falta de periodicidade também pode ser entendida como um intervalos de tempo com ruído \citep{Shen2016}.
+Whereas for most cases, the non-uniformities in sampling time intervals appear as unwanted effects, there are cases when the sampling rule is designed to work irregularly. If there are limitations of communication resources (limited bandwidth or computation capacity), for example, time-driven sampling might be neglected in favor of an event-based scheme. 
 
-Random jitter
-Random Jitter, also called Gaussian jitter, is unpredictable electronic timing noise. Random jitter typically follows a normal distribution[citation needed] due to being caused by thermal noise in an electrical circuit or due to the central limit theorem. The central limit theorem states that composite effect of many uncorrelated noise sources, regardless of the distributions, approaches a normal distribution.
-
-Sampling jitter
-In analog to digital and digital to analog conversion of signals, the sampling is normally assumed to be periodic with a fixed period?the time between every two samples is the same. If there is jitter present on the clock signal to the analog-to-digital converter or a digital-to-analog converter, the time between samples varies and instantaneous signal error arises. The error is proportional to the slew rate of the desired signal and the absolute value of the clock error. Various effects such as noise (random jitter), or spectral components (periodic jitter)[specify] can come about depending on the pattern of the jitter in relation to the signal. In some conditions, less than a nanosecond of jitter can reduce the effective bit resolution of a converter with a Nyquist frequency of 22 kHz to 14 bits.
-This is a consideration in high-frequency signal conversion, or where the clock signal is especially prone to interference.
 
 \section{Multi-Rate Sampling}
 
