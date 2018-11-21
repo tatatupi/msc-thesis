@@ -216,7 +216,38 @@ All irregularities discussed so far may be present even in a periodic sampling s
 
 Sometimes, the system being observed has particularities that causes the aperiodic sampling. One example is seismology, where the spatial coordinates are irregularly sampled, because of natural obstacles \citep{Marvasti2001}. Other large scale systems, such as power grids, have sensors with a huge geographical separations, and different communication links to the estimation hub, which causes multiple and random inter-observation intervals \citep{Yan2017}.
 
-Whereas for most cases, the non-uniformities in sampling time intervals appear as unwanted effects, there are cases when the sampling rule is designed to work irregularly. If there are limitations of communication resources (limited bandwidth or computation capacity), for example, time-driven sampling might be neglected in favor of an event-based scheme. 
+Whereas for most cases, the non-uniformities in sampling time intervals appear as unwanted effects, there are cases when the sampling rule is designed to work irregularly. If there are limitations of communication resources (limited bandwidth or computation capacity) or a need for a reduced energy consumption, for example, time-driven sampling might be neglected in favor of an event-based scheme. In such strategy, an event-triggering mechanism is responsible for determining the sampling instants, according to Figure~\ref{fig:event-based}. For time-driven schemes, a clock triggers the transmission instants (a), while event-driven sampling instants depends on the sensor output itself with an optional feedback loop from the estimator, to assess estimation performance. Therefore, the trigger mechanism design provides a trade-off between performance and resource consumption efficiency, attracting a lot of research interest \citep{Liu2014}. The most common strategy for event-driven state estimation is the send-on-delta (SOD) \citep{Miskowicz2006}, which triggers the transmission when the value of the measured state deviates from the previous assimilated observation by an interval $\pm \Delta$, with $\Delta>0$. Other strategies were studied in \citep{Zou2017}. To avoid the risk of unexpected high amount of triggered measurements in a short period of time, which can lead to the dreaded Zeno behavior \citep{Tabuada2007}, lower-bounds can be defined both for the $\Delta$ value or for some explicit minimum inter-event time. 
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\text{(a)}\\
+		\includegraphics[width=0.75\textwidth]{Imagens/Event-based_clock.pdf}	
+		\label{fig:evtb1}
+	\end{subfigure}
+	\vspace{1cm}\\
+	\begin{subfigure}
+		\centering
+		\text{(b)}\\
+		\vspace{0.25cm}
+		\includegraphics[width=0.75\textwidth]{Imagens/Event-based.pdf}
+		%		\caption{}
+		\label{fig:evtb2}
+	\end{subfigure}
+	\caption[Entradas]{Time-driven (a) and event-driven (b) sampling schemes. The connection between sensor and estimator is triggered by different mechanisms.}
+	\label{fig:event-based}
+\end{figure}
+
+Generalizations of aperiodic sampling can be divided in two categories, based on how the estimator perceives the irregularity: as time noise added to a periodic pattern; or as a stochastic process, according to 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{Imagens/noisy_stoch_samp.pdf}	
+	\caption[Entradas]{Time-driven (a) and event-driven (b) sampling schemes. The connection between sensor and estimator is triggered by different mechanisms.}
+	\label{fig:aper-samp}
+\end{figure}
+
 
 
 \section{Multi-Rate Sampling}
