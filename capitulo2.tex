@@ -212,7 +212,7 @@ Unlike the packet dropout problem, when the missing data are associated with the
 
 \section{Aperiodic Sampling}
 	
-All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like aperiodic faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to sampling frequency similar to clock frequency, sampling requests delayed by the network or imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time intervals are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. 
+All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena, causing what is called as aperiodic or asynchronous sampling. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like irregular faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to sampling frequency similar to clock frequency, sampling requests delayed by the network or imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time intervals are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. 
 
 Sometimes, the system being observed has particularities that causes the aperiodic sampling. One example is seismology, where the spatial coordinates are irregularly sampled, because of natural obstacles \citep{Marvasti2001}. Other large scale systems, such as power grids, have sensors with a huge geographical separations, and different communication links to the estimation hub, which causes multiple and random inter-observation intervals \citep{Yan2017}.
 
@@ -239,7 +239,7 @@ Whereas for most cases, the non-uniformities in sampling time intervals appear a
 	\label{fig:event-based}
 \end{figure}
 
-Generalizations of aperiodic sampling can be divided in two categories, based on how the estimator perceives the irregularity: as time noise added to a periodic pattern; or as a stochastic process, according to 
+Generalizations of aperiodic sampling can be divided in two categories, based on how the estimator perceives the irregularity: as time noise added to a periodic pattern; or as a stochastic process, according to Figure~\ref{fig:aper-samp}. 
 
 \begin{figure}[!htb]
 	\centering
@@ -248,11 +248,39 @@ Generalizations of aperiodic sampling can be divided in two categories, based on
 	\label{fig:aper-samp}
 \end{figure}
 
+For the first case, the time interval $\delta_k$ can be defined as:
+
+\begin{equation}
+\begin{split}
+t_k & \triangleq kT + \epsilon_k, \\
+\delta_k & \triangleq t_k - t_{k-1} 
+\end{split}
+\end{equation}
+
+\noindent
+where $t_k$ is the k\textsuperscript{th} sampling instant, $T$ is the periodic time interval and $\epsilon_k$ is the deviation from the expected value $kT$. Note that, if the sampling time instants are a sequence of i.i.d Gaussian random variables, with variance $\sigma^2$, that is $t_k \sim \mathcal{N} (kT, \sigma^2)$, $\forall k \sim \mathbb{N}$, then the time interval random variable is Gaussian, with expected value $T$ and variance $2\sigma^2$, that is $\delta_k \sim \mathcal{N}(T,2\sigma^2)$.
+
+For the stochastic process generalization, time instants $t_k$ can be modeled as ordered ($t_{k+1} > t_k$, $\forall k \sim \mathbb{N}$), and defined by time intervals $\delta_k$, such as:
+
+\begin{equation}
+\begin{split}
+\delta_k & \triangleq t_k - t_{k-1}, \\
+\delta_0 & \triangleq t_1
+\end{split}
+\end{equation}
+
+\noindent
+where time intervals are given by a probability density function, usually of exponential or Erlangen type \citep{Kanchanaharuthai2002}.
 
 
 \section{Multi-Rate Sampling}
 
-Caso típico de processo industrial, com medições laboratoriais e sensores online. \citep{Fatehi2017}
+The last irregularity discussed is the multi-rate sampling. Generally, it refers to multiple sensors measuring the same system at different sampling rates. Many industrial processes need to control challenging variables that can be measured by online instruments that provide regular, fast rate and delay free information, but with low precision. Therefore, more accurate data are needed and usually available after slow and irregular laboratory analysis \citep{Penarrocha2012, Fatehi2017}. The combination of both sources of measurements leads to a multi-rate sampling scenario. 
+
+A more common approach is the use of various sensors measuring the same physical  information, to obtain better estimates, which has been drawing attention from real world applications, such as target tracking, robotics, surveillance and military. For such strategy, the sampling rates perceived by the estimator are often different from one another. The work of \citep{Lin2016} and the references therein provide a wide coverage of scenarios derived from multi-sensor multi-rate systems. 
+
+
+
 
 
 \clearpage
