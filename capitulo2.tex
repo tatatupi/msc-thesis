@@ -166,7 +166,7 @@ Multiple of a known lag or not, delayed measurements from a multisensor system a
 
 \section{Packet Loss}
 
-When data are being transmitted by a large network of sensors, there is a probability they can get lost in the way or they might arrive after a significant delay, which is equivalent to a loss for practical	 applications~\citep{Sinopoli2004}. Usually referred to as packet dropout/loss, missing observations or intermittence, they may happen due to node failures, network congestion, limited bandwidth or temporal failure. 
+When data are being transmitted by a large network of sensors, there is a probability they can get lost in the way or they might arrive after a significant delay, which is equivalent to a loss for practical	 applications~\citep{Sinopoli2004}. Usually referred to as packet dropout/loss, missing or intermittent observations, they may happen due to node failures, network congestion, limited bandwidth or temporal failure. 
 	
 Mathematical description of packet dropouts can be carried out recursively, as described in~\citep{Sun2011}, by
 
@@ -210,7 +210,7 @@ where $\gamma(k) \sim Ber(p(k))$ is a Bernoulli random variables, taking values 
 
 Unlike the packet dropout problem, when the missing data are associated with the total absence of signal, the issue of uncertain observation has to be dealt with differently. A common approach is to detect the existence of signal prior to the assimilation, using a likelihood ratio test.  \citep{Middleton1968} proposes a joint approach to systematically detect and extract information from observation signals. If the estimator and detector are developed separately, te probability of false alarms is not used in the estimator, making it suboptimal. \citep{Nahi1969} developed an optimal recursive estimator, that uses the information of the random variable $\gamma$ in the algorithm, assuming it is independent and identically distributed. \citep{Hadidi1979} generalized the work of Nahi, for the case when the uncertainty of the signals presence is described by a Markovian sequence of binary random variables.
 
-\section{Aperiodic Sampling}
+\section{Aperiodic Sampling}\label{sec:aperiodic}
 	
 All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena, causing what is called as aperiodic or asynchronous sampling. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like irregular faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to sampling frequency similar to clock frequency, sampling requests delayed by the network or imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time intervals are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. 
 
@@ -244,7 +244,7 @@ Generalizations of aperiodic sampling can be divided in two categories, based on
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.85\textwidth]{Imagens/noisy_stoch_samp.pdf}	
-	\caption[Entradas]{Time-driven (a) and event-driven (b) sampling schemes. The connection between sensor and estimator is triggered by different mechanisms.}
+	\caption[Entradas]{Aperiodic sampling categories: (a) noisy sampling over periodic intervals, with a Gaussian random variable added to expected time instants; and (b) sampling instants modeled as a stochastic process, with time intervals characterized by an exponential random variable (cumulative distribution functions are shown, for different $\lambda$ parameter value.)}
 	\label{fig:aper-samp}
 \end{figure}
 
@@ -273,14 +273,38 @@ For the stochastic process generalization, time instants $t_k$ can be modeled as
 where time intervals are given by a probability density function, usually of exponential or Erlangen type \citep{Kanchanaharuthai2002}.
 
 
+The measurement model of a linear system with aperiodic sampling can be modeled as
+
+\begin{equation}\label{eq:aperiodic}
+	y(t_k) = H(t_k)x(t_k) + v(t_k)
+\end{equation}
+
+\noindent
+where $t_k$ are the sampling time instants and matrix $H(t_k)$ is time-varying, if derived from the discretization of a continuous time system.
+
 \section{Multi-Rate Sampling}
 
 The last irregularity discussed is the multi-rate sampling. Generally, it refers to multiple sensors measuring the same system at different sampling rates. Many industrial processes need to control challenging variables that can be measured by online instruments that provide regular, fast rate and delay free information, but with low precision. Therefore, more accurate data are needed and usually available after slow and irregular laboratory analysis \citep{Penarrocha2012, Fatehi2017}. The combination of both sources of measurements leads to a multi-rate sampling scenario. 
 
-A more common approach is the use of various sensors measuring the same physical  information, to obtain better estimates, which has been drawing attention from real world applications, such as target tracking, robotics, surveillance and military. For such strategy, the sampling rates perceived by the estimator are often different from one another. The work of \citep{Lin2016} and the references therein provide a wide coverage of scenarios derived from multi-sensor multi-rate systems. 
+A more common approach is the use of various sensors measuring the same physical information, to obtain better estimates, which has been drawing attention from real world applications, such as target tracking, robotics, surveillance and military. For such strategy, the sampling rates perceived by the estimator are often different from one another. The work of \citep{Lin2016} and the references therein provide a wide coverage of scenarios derived from multi-sensor multi-rate systems. 
 
+Figure \ref{fig:multi-rate} illustrates the ways multi-rate sampling can manifest in a system. The different rates from the various sensor devices can be periodic (a), aperiodic (b) or even a mixture of both, as is the case for most industrial applications with laboratory analysis.
 
+Aperiodic sampling rates can be described the same way as in Section \ref{sec:aperiodic}, by equation \ref{eq:aperiodic}. Periodic multi-rate measurements can be modeled as
 
+\begin{equation}
+	y_i(k_i) = H_i(x(k_i)) + v_i(k_1)
+\end{equation}
+
+\noindent
+where $y_i(k_i)$ represents the $k_i^{th}$ observation from sensor $i$ and $H_i$ is the discrete measurement model matrix.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Imagens/multi_rate.pdf}	
+	\caption[Entradas]{(a) Periodic multi-rate and (b) aperiodic sampling scheme.}
+	\label{fig:multi-rate}
+\end{figure}
 
 
 \clearpage
