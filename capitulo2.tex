@@ -239,6 +239,15 @@ Whereas for most cases, the non-uniformities in sampling time intervals appear a
 	\label{fig:event-based}
 \end{figure}
 
+The measurement model of a linear system with aperiodic sampling can be defined as
+
+\begin{equation}\label{eq:aperiodic}
+y(t_k) = H(t_k)x(t_k) + v(t_k)
+\end{equation}
+
+\noindent
+where $t_k$ is the random sampling time instant and the observation model matrix $H(t_k)$ is time-varying, if derived from the discretization of a continuous time system.
+
 Generalizations of aperiodic sampling can be divided in two categories, based on how the estimator perceives the irregularity: as time noise added to a periodic pattern; or as a stochastic process, according to Figure~\ref{fig:aper-samp}. 
 
 \begin{figure}[!htb]
@@ -248,7 +257,8 @@ Generalizations of aperiodic sampling can be divided in two categories, based on
 	\label{fig:aper-samp}
 \end{figure}
 
-For the first case, the time interval $\delta_k$ can be defined as:
+
+For the first case, random time instants $t_k$ and the random time intervals $\delta_k$ can be defined as:
 
 \begin{equation}
 \begin{split}
@@ -260,7 +270,7 @@ t_k & \triangleq kT + \epsilon_k, \\
 \noindent
 where $t_k$ is the k\textsuperscript{th} sampling instant, $T$ is the periodic time interval and $\epsilon_k$ is the deviation from the expected value $kT$. Note that, if the sampling time instants are a sequence of i.i.d Gaussian random variables, with variance $\sigma^2$, that is $t_k \sim \mathcal{N} (kT, \sigma^2)$, $\forall k \sim \mathbb{N}$, then the time interval random variable is Gaussian, with expected value $T$ and variance $2\sigma^2$, that is $\delta_k \sim \mathcal{N}(T,2\sigma^2)$.
 
-For the stochastic process generalization, time instants $t_k$ can be modeled as ordered ($t_{k+1} > t_k$, $\forall k \sim \mathbb{N}$), and defined by time intervals $\delta_k$, such as:
+For the stochastic process generalization, sampling time instants $t_k$ can be defined by the random time intervals $\delta_k$, such as:
 
 \begin{equation}
 \begin{split}
@@ -270,17 +280,10 @@ For the stochastic process generalization, time instants $t_k$ can be modeled as
 \end{equation}
 
 \noindent
-where time intervals are given by a probability density function, usually of exponential or Erlangen type \citep{Kanchanaharuthai2002}.
+where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(k,\theta)$. If the shape parameter $k$ is a positive integer, it becomes an Erlang distribution, as used in \citep{Kanchanaharuthai2002}. For the most common case, where $k$ is held constant, the random time interval $\delta_k$ follows an exponential pdf the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}.
 
 
-The measurement model of a linear system with aperiodic sampling can be modeled as
 
-\begin{equation}\label{eq:aperiodic}
-	y(t_k) = H(t_k)x(t_k) + v(t_k)
-\end{equation}
-
-\noindent
-where $t_k$ are the sampling time instants and matrix $H(t_k)$ is time-varying, if derived from the discretization of a continuous time system.
 
 \section{Multi-Rate Sampling}
 
@@ -301,7 +304,7 @@ where $y_i(k_i)$ represents the $k_i^{th}$ observation from sensor $i$ and $H_i$
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/multi_rate.pdf}	
+	\includegraphics[width=0.5\textwidth]{Imagens/multi_rate.pdf}	
 	\caption[Entradas]{(a) Periodic multi-rate and (b) aperiodic sampling scheme.}
 	\label{fig:multi-rate}
 \end{figure}
