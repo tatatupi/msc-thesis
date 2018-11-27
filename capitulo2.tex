@@ -116,7 +116,7 @@ Considering delays in the measurement model only, \citep{Lu2005} studied the est
 \noindent
 where $i=0,\ 1,\ ...,\ l$ and $l$ is the number of different known delays. $y_i(t) \in \mathbb{R}^{p_i}$ are delayed measurements and $v_i(t) \in \mathbb{R}^{p_i}$ the measurement noises. The known delayed time instants are given by $t_i=t_{i-1}-d_i$, with $d_0=0$, $d_i>0$ for $i>0$ and $t_0=t$. 
 
-If the delays are multiple of a constant value, observations might be received a burst, when more than one packet arrive between two consecutive sampling instants. In such situations, the estimator might use only the latest measurement and discard all others, or implement a buffer to iterate over all received packets, when burst arrivals happen \citep{Moayedi2011}.
+For some systems, delays might not be known and constant, but still multiple of a fixed value. In such cases, observations might be received in a burst, when more than one packet arrive between two consecutive sampling instants. When that happens, the estimator might use only the latest measurement and discard all others, or implement a buffer to iterate over all received packets \citep{Moayedi2011}.
 
 However, in many applications the measurements are received by the estimator with irregular and unknown delays. In such cases, time delays can be interpreted as a stochastic process $d(k)$, varying randomly throughout time. \citep{Han2009} describes a discrete-time measurement model for random delayed observations as
 
@@ -138,31 +138,40 @@ Multiple of a known lag or not, delayed measurements from a multisensor system a
 
 \citep{Anxi2005} describes four different filtering approaches to deal with OOSM: reprocessing, that stores filter results to rollback with the time-delayed measurement; data buffering, that holds a set of measurements, greater than maximum expected lag, to be sorted before filtering; discarding data, that neglects time-delayed measurements; and directly updating, that uses the delayed information to update current state estimate. \citep{Bar-Shalom2000} used the last approach to describe an optimal filter for the single-lag case.
 
+A summary of causes and effects that time delay causes in an estimator are illustraed in Figure \ref{fig:diagrama_delay}.
+
 \begin{figure}[!htb]
-	\begin{center}
-		
-		\begin{tikzpicture}[grow'=down,level distance=1.25in,sibling distance=.25in]
-		\tikzset{edge from parent/.style= 
-			{thick, draw, edge from parent fork down},
-			every leaf node/.style=
-			{draw,minimum width=1in,text width=1in,align=center,fill=orange!50},
-			every tree node/.style=
-			{draw,minimum width=1in,text width=1in,align=center,fill=blue!50}
-		}
-		
-		\Tree 
-		[.{Time Delay} 
-		{Transmission Issues} 
-		{Sensor Architecture} 
-		{Industrial Processes} 
-		]
-		
-		\end{tikzpicture}
-		
-	\end{center}
-	\caption{Irregular sampling diagram, showing the main causes (in orange) and effects (in blue) of irregularities}
+	\centering
+	\includegraphics[scale=0.85]{Imagens/scheme_time-delay.pdf}
+	\caption{Irregular sampling diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity. The light blue boxes indicate different types that lead to different effects.}
 	\label{fig:diagrama_delay}
-\end{figure}	
+\end{figure}
+
+%\begin{figure}[!htb]
+%	\begin{center}
+%		
+%		\begin{tikzpicture}[grow'=down,level distance=1.25in,sibling distance=.25in]
+%		\tikzset{edge from parent/.style= 
+%			{thick, draw, edge from parent fork down},
+%			every leaf node/.style=
+%			{draw,minimum width=1in,text width=1in,align=center,fill=orange!50},
+%			every tree node/.style=
+%			{draw,minimum width=1in,text width=1in,align=center,fill=blue!50}
+%		}
+%		
+%		\Tree 
+%		[.{Time Delay} 
+%		{Transmission Issues} 
+%		{Sensor Architecture} 
+%		{Industrial Processes} 
+%		]
+%		
+%		\end{tikzpicture}
+%		
+%	\end{center}
+%	\caption{Irregular sampling diagram, showing the main causes (in orange) and effects (in blue) of irregularities}
+%	\label{fig:diagrama_delay}
+%\end{figure}	
 
 \section{Packet Loss}
 
