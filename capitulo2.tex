@@ -138,12 +138,12 @@ Multiple of a known lag or not, delayed measurements from a multisensor system a
 
 \citep{Anxi2005} describes four different filtering approaches to deal with OOSM: reprocessing, that stores filter results to rollback with the time-delayed measurement; data buffering, that holds a set of measurements, greater than maximum expected lag, to be sorted before filtering; discarding data, that neglects time-delayed measurements; and directly updating, that uses the delayed information to update current state estimate. \citep{Bar-Shalom2000} used the last approach to describe an optimal filter for the single-lag case.
 
-A summary of causes and effects that time delay causes in an estimator are illustraed in Figure \ref{fig:diagrama_delay}.
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:diagrama_delay}.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[scale=0.85]{Imagens/scheme_time-delay.pdf}
-	\caption{Irregular sampling diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity. The light blue boxes indicate different types that lead to different effects.}
+	\caption{Time delay diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity. The light blue boxes indicate different types that lead to different effects.}
 	\label{fig:diagrama_delay}
 \end{figure}
 
@@ -205,6 +205,15 @@ Such a model dictates that the measurement used by the estimator will be only th
 \xi(t)+(1-\xi(t))\xi(t-1) + ... + (1-\xi(t))(1-\xi(t-1))...(1-\xi(t-N+1)) = 1.
 \end{equation}
 
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:packet_loss}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.85]{Imagens/scheme_packet-loss.pdf}
+	\caption{Packet loss diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:packet_loss}
+\end{figure}
+
 
 \section{Uncertain Observation}
 
@@ -218,6 +227,15 @@ y(k) = \gamma(k)Cx(k) + Dv(k)
 where $\gamma(k) \sim Ber(p(k))$ is a Bernoulli random variables, taking values of 0 or 1, with probabilities $p(k)$ and $1 - p(k)$, respectively.
 
 Unlike the packet dropout problem, when the missing data are associated with the total absence of signal, the issue of uncertain observation has to be dealt with differently. A common approach is to detect the existence of signal prior to the assimilation, using a likelihood ratio test.  \citep{Middleton1968} proposes a joint approach to systematically detect and extract information from observation signals. If the estimator and detector are developed separately, te probability of false alarms is not used in the estimator, making it suboptimal. \citep{Nahi1969} developed an optimal recursive estimator, that uses the information of the random variable $\gamma$ in the algorithm, assuming it is independent and identically distributed. \citep{Hadidi1979} generalized the work of Nahi, for the case when the uncertainty of the signals presence is described by a Markovian sequence of binary random variables.
+
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:uncertain}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.85]{Imagens/scheme_uncertain.pdf}
+	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:uncertain}
+\end{figure}
 
 \section{Aperiodic Sampling}\label{sec:aperiodic}
 	
@@ -290,8 +308,14 @@ For the stochastic process generalization, sampling time instants $t_k$ can be d
 \noindent
 where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(k,\theta)$. If the shape parameter $k$ is a positive integer, it becomes an Erlang distribution, as used in \citep{Kanchanaharuthai2002}. For the most common case, where $k$ is held constant, the random time interval $\delta_k$ follows an exponential pdf the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}.
 
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:aperiodic}.
 
-
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.85]{Imagens/scheme_aperiodic.pdf}
+	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:aperiodic}
+\end{figure}
 
 \section{Multi-Rate Sampling}
 
@@ -300,6 +324,13 @@ The last irregularity discussed is the multi-rate sampling. Generally, it refers
 A more common approach is the use of various sensors measuring the same physical information, to obtain better estimates, which has been drawing attention from real world applications, such as target tracking, robotics, surveillance and military. For such strategy, the sampling rates perceived by the estimator are often different from one another. The work of \citep{Lin2016} and the references therein provide a wide coverage of scenarios derived from multi-sensor multi-rate systems. 
 
 Figure \ref{fig:multi-rate} illustrates the ways multi-rate sampling can manifest in a system. The different rates from the various sensor devices can be periodic (a), aperiodic (b) or even a mixture of both, as is the case for most industrial applications with laboratory analysis.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagens/multi_rate.pdf}	
+	\caption[Entradas]{(a) Periodic multi-rate and (b) aperiodic sampling scheme.}
+	\label{fig:multi-rate}
+\end{figure}
 
 Aperiodic sampling rates can be described the same way as in Section \ref{sec:aperiodic}, by equation \ref{eq:aperiodic}. Periodic multi-rate measurements can be modeled as
 
@@ -310,11 +341,13 @@ Aperiodic sampling rates can be described the same way as in Section \ref{sec:ap
 \noindent
 where $y_i(k_i)$ represents the $k_i^{th}$ observation from sensor $i$ and $H_i$ is the discrete measurement model matrix.
 
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:multi_rate}.
+
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.5\textwidth]{Imagens/multi_rate.pdf}	
-	\caption[Entradas]{(a) Periodic multi-rate and (b) aperiodic sampling scheme.}
-	\label{fig:multi-rate}
+	\includegraphics[scale=0.85]{Imagens/scheme_multi-rate.pdf}
+	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:multi_rate}
 \end{figure}
 
 
