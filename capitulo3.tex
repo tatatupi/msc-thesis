@@ -39,10 +39,28 @@ We continue this chapter advocating for the benefits of sensor fusion in Section
 
 \section{Motivation and Advantages}\label{sec:motivation}
 
+Whether or not all sensor fusion approaches outperform the use of less sensors in every aspect for any given condition, the fact is that many fields of science and engineering have been benefiting from choosing the former.
 
-elmenreich \citep{Elmenreich2002}
+The reasons why one chooses to fuse information from different sources are various. The works of \citep{Hall1997, Elmenreich2002, Andler2009, Khaleghi2013} provide a detailed study on the motivations and advantages of multisensor data fusion techniques. A common benefit from the use of multiple redundant sensors is the increase in accuracy. By averaging all the measurements, the expected error decreases by the rate of $\frac{1}{\sqrt{n}}$, where $n$ is the number of redundant sensors, in case of i.i.d Gaussian noises. Figure \ref{fig:accuracy} illustrates this concept. 
 
-infofusion \citep{Andler2009}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.75]{Imagens/fusion_accuracy.pdf}
+	\caption{Probability distribution function of different measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
+	\label{fig:accuracy}
+\end{figure}
+
+There are many other reasons to fuse information from multiple sensors, however. Elmenreich gives an interesting example to illustrates some of them. Imagine a car parking assist system with one distance sensor mounted at its rear, with limited precision and considerable update time (sampling interval). Now picture how would be the system's performance, considering that the sensor may suffer from: deprivation, in the sense that it could be blocked by some physical barrier; coverage, both in spatial and temporal contexts, since it can only sense objects in front of him (spatial) and provides information only periodically (temporal); precision, with measurement errors being liable to cause unexpected bumps; and uncertainty, similarly to what was discussed in Section \ref{sec:uncertain}, when an object, such as a small bicycle, might be missed by the sensor. The system would definitely perform at insufficient levels. All these issues could be solved by adding sensors to the architecture.
+
+Based on the studies from Hall, Elmenreich and Andler, we can group most of the advantages in Authenticity and Availability improvements. The first group refers to those benefits that improve the quality of the measurement, whereas the second one encompasses those benefits regarding ranges or data dimensions. The addition of sensors can also be of different types (heterogeneous) or of the same type (homogeneous), with redundant measurements. There may be benefits that are exclusive to the addition of different sensors, others exclusive to the addition of redundant sensors and those that can happen both ways. Figure \ref{fig:advantages} presents a schematic with the different advantages expected in sensor fusion.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.4]{Imagens/fusion_advantages.pdf}
+	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:advantages}
+\end{figure}
+
 
 \section{Taxonomy and Classification}\label{sec:classification}
 
