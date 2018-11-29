@@ -26,9 +26,9 @@ In this chapter, we review sensor fusion techniques. We start with a brief expla
 
 The idea that combining information from multiple sensors to improve overall system performances has been in discussion for several decades. In the early days, there were those who argued against the synergism hype that was being spread in military systems, using the multisensor concept \citep{Fowler1979}. In this work, Fowler created what he called his seventh law: 
 
-\begin{quotation}
+\begin{quote}
 	"Be wary of proposals for synergistic systems. Most of the time when you try to make 2 + 2 = 5, you end up with 3... and sometimes 1.9"
-\end{quotation}
+\end{quote}
 
 Although he was right to affirm that the added complexity and high costs are not always worth it - specially back then, when devices were more expensive - many posterior studies advocated that the fusion of sensor data will always be better, in the sense that the probability of correctly classifying a target increases. A direct answer to Fowler's work came in the year after \citep{Nahin1980}, where Nahin and Pokoski used strict concepts and definitions, but also acknowledged the assumptions of discarding network complexity and costs for the sake of their arguments. This topic continued to draw scientific attention throughout the years, like the work of \citep{Rao1998} and \citep{Dasarathy2000}. Rao focused on fusion methods and its comparison to classifiers' performance and establishing conditions that guarantee that the fused system will at least perform as good as the best classifier. Dasarathy's work extended that of Rao's, but was able to show a scenario at which a two-sensor suite outperforms a three sensor suite from a parametric fusion benefits domain perspective. In order to compare performances of fusion levens or algorithm and assess possible benefits of sensor fusion, \citep{Theil2000} discussed three Measures of Performance (MOP), one for each sensor management process, which are Detection, Tracking and Classification.
 
@@ -41,18 +41,18 @@ We continue this chapter advocating for the benefits of sensor fusion in Section
 
 Whether or not all sensor fusion approaches outperform the use of less sensors in every aspect for any given condition, the fact is that many fields of science and engineering have been benefiting from choosing the former.
 
-The reasons why one chooses to fuse information from different sources are various. The works of \citep{Hall1997, Elmenreich2002, Andler2009, Khaleghi2013} provide a detailed study on the motivations and advantages of multisensor data fusion techniques. A common benefit from the use of multiple redundant sensors is the increase in accuracy. By averaging all the measurements, the expected error decreases by the rate of $\frac{1}{\sqrt{n}}$, where $n$ is the number of redundant sensors, in case of i.i.d Gaussian noises. Figure \ref{fig:accuracy} illustrates this concept. 
+The reasons why one chooses to fuse information from different sources are various. The works of \citep{Hall1997, Elmenreich2002, Andler2009, Khaleghi2013} provide a detailed study on the motivations and advantages of multi-sensor data fusion techniques. A common benefit from the use of multiple redundant sensors is the increase in accuracy. By averaging all the measurements, the expected error decreases by the rate of $\frac{1}{\sqrt{n}}$, where $n$ is the number of homogeneous sensors, in case of the presence of i.i.d Gaussian noises. Figure \ref{fig:accuracy} illustrates this concept. 
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[scale=0.75]{Imagens/fusion_accuracy.pdf}
-	\caption{Probability distribution function of different measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
+	\caption{Probability distribution function of different fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
 	\label{fig:accuracy}
 \end{figure}
 
-There are many other reasons to fuse information from multiple sensors, however. Elmenreich gives an interesting example to illustrates some of them. Imagine a car parking assist system with one distance sensor mounted at its rear, with limited precision and considerable update time (sampling interval). Now picture how would be the system's performance, considering that the sensor may suffer from: deprivation, in the sense that it could be blocked by some physical barrier; coverage, both in spatial and temporal contexts, since it can only sense objects in front of him (spatial) and provides information only periodically (temporal); precision, with measurement errors being liable to cause unexpected bumps; and uncertainty, similarly to what was discussed in Section \ref{sec:uncertain}, when an object, such as a small bicycle, might be missed by the sensor. The system would definitely perform at insufficient levels. All these issues could be solved by adding sensors to the architecture.
+There are many other reasons to fuse information from multiple sensors, however. Elmenreich gives an interesting example to illustrates some of them. Imagine a car parking assist system with only one distance sensor mounted at its rear, with limited precision and considerable update time (sampling interval). Now picture how would be the system's performance, considering that the sensor may suffer from: deprivation, in the sense that it could be blocked by some physical barrier; coverage, both in spatial and temporal contexts, since it can only sense objects in front of him (spatial) and can only provide information periodically (temporal); precision, with measurement errors being liable to be the cause unexpected bumps; and uncertainty, similarly to what was discussed in Section \ref{sec:uncertain}, when an object, such as a small bicycle, might be missed by the sensor. The system would definitely perform at insufficient levels. All these issues could be solved by adding sensors to the architecture.
 
-Based on the studies from Hall, Elmenreich and Andler, we can group most of the advantages in Authenticity and Availability improvements. The first group refers to those benefits that improve the quality of the measurement, whereas the second one encompasses those benefits regarding ranges or data dimensions. The addition of sensors can also be of different types (heterogeneous) or of the same type (homogeneous), with redundant measurements. There may be benefits that are exclusive to the addition of different sensors, others exclusive to the addition of redundant sensors and those that can happen both ways. Figure \ref{fig:advantages} presents a schematic with the different advantages expected in sensor fusion.
+Based on the studies from Hall, Elmenreich and Andler, we can group most of the advantages in two categories: Authenticity and Availability improvements. The first group refers to those benefits that improve the quality of the measurement, whereas the second one encompasses those benefits regarding ranges or data dimensions. The addition of sensors can also be of different types (heterogeneous) or of the same type (homogeneous), with redundant measurements. There may be benefits that are exclusive to the addition of different sensors, others exclusive to the addition of redundant sensors and those that can happen both ways. Figure \ref{fig:advantages} presents a schematic with the different advantages expected in sensor fusion.
 
 \begin{figure}[!htb]
 	\centering
@@ -64,7 +64,15 @@ Based on the studies from Hall, Elmenreich and Andler, we can group most of the 
 
 \section{Taxonomy and Classification}\label{sec:classification}
 
-Classificação: bolstrom
+Together with the evolution in techniques, algorithms and sensor technologies, the definition of this field of science has evolved throughout the years. \cite{Bostrom2007} analyses more than 30 papers on this matter, many of which are already referenced in this study, to propose a more comprehensible and precise definition to the broad area of information, data and sensor fusion, which we reproduce here:
+
+\begin{quote}
+	"Information fusion is the study of efficient methods for automatically or semi-automatically transforming information from different sources and different points in time into a representation that provides effective support for human or automated decision making."
+\end{quote}
+
+
+There are many ways to categorize and classify sensor fusion.
+JDL did this way: \citep{Smith2006}
 3-level fusion (jing progress in china)
 Introduction to multisensor (Hall)
 Input / Output categorization (dasarathy and elmenreich)
