@@ -70,12 +70,30 @@ Together with the evolution in techniques, algorithms and sensor technologies, t
 	"Information fusion is the study of efficient methods for automatically or semi-automatically transforming information from different sources and different points in time into a representation that provides effective support for human or automated decision making."
 \end{quote}
 
+Researchers in the field made additional efforts to categorize the fusion techniques, using different approaches. One of the earliest attempts comes from \citep{Durrant1988}, where he considered the dynamic use of information in the fusion processes, creating a so called dependence model, which grouped sensor fusion in three categories: competitive, complementary and cooperative. The first type of interaction occurs when multiple sensors measures the same properties, also known as redundant architecture. The second one refers to different types of sensors measuring different information about the same object or feature. And the last category happens when the desired information is only made available by the joint use of data from more than one sensor. A illustrative schematic is presented in Figure~\ref{fig:cat_input}
 
-There are many ways to categorize and classify sensor fusion.
-JDL did this way: \citep{Smith2006}
-3-level fusion (jing progress in china)
-Introduction to multisensor (Hall)
-Input / Output categorization (dasarathy and elmenreich)
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.75]{Imagens/fusion_cat_input.pdf}
+	\caption{Classification of data fusion based on sensor interaction.}
+	\label{fig:cat_input}
+\end{figure}
+
+
+
+I/O \citep{Dasarathy1997}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.6]{Imagens/fusion_cat_io.pdf}
+	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:cat_io}
+\end{figure}
+
+
+
+Architecture \citep{Castanedo2013}
+
 
 probabilistic, fuzzy reasoning, evidential belief, possibilistic, rought set \citep{Khaleghi2013}. 
 
