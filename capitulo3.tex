@@ -1,6 +1,6 @@
 %------------------------------------------------------------------------------
 \chapter{Sensor Fusion}
-\vspace{-1cm} \label{cap2}
+\vspace{-1cm} \label{cap3}
 
 %\begin{flushright}
 %\begin{minipage}{0.7\linewidth}
@@ -20,7 +20,7 @@
 %\section{Introdução}\label{sec int_cap_2}
 
 
-In this chapter, we review sensor fusion techniques. We start with a brief explanation on the four different types: possibilistic, fuzzy reasoning, evidential belief e probabilistic. The latter is further explained, since it is the one used in the simulated examples. Specific techniques to deal with irregular sampling in sensor fusion are also addressed.
+In this chapter, we review sensor fusion techniques, advantages and terminologies. We start with a brief explanation on the motivations of this field of science, grouping them in two main categories: data authenticity and data availability. We continue with a definition of sensor fusion and an exploration on the available fusion method classification models. the four different types: possibilistic, fuzzy reasoning, evidential belief e probabilistic. The latter is further explained, since it is the one used in the simulated examples. Specific techniques to deal with irregular sampling in sensor fusion are also addressed.
 
 \section{Introduction}
 
@@ -64,13 +64,13 @@ Based on the studies from Hall, Elmenreich and Andler, we can group most of the 
 
 \section{Taxonomy and Classification}\label{sec:classification}
 
-Together with the evolution in techniques, algorithms and sensor technologies, the definition of this field of science has evolved throughout the years. \cite{Bostrom2007} analyses more than 30 papers on this matter, many of which are already referenced in this study, to propose a more comprehensible and precise definition to the broad area of information, data and sensor fusion, which we reproduce here:
+Sensor fusion definitions have evolved throughout the years. \citep{Bostrom2007} analyses more than 30 papers on this matter - many of which referenced in this study - to propose a more comprehensible and precise definition to the broad area of information, data and sensor fusion, which we reproduce here:
 
 \begin{quote}
 	"Information fusion is the study of efficient methods for automatically or semi-automatically transforming information from different sources and different points in time into a representation that provides effective support for human or automated decision making."
 \end{quote}
 
-Researchers in the field made additional efforts to categorize the fusion techniques, using different approaches. One of the earliest attempts comes from \citep{Durrant1988}, where he considered the dynamic use of information in the fusion processes, creating a so called dependence model, which grouped sensor fusion in three categories: competitive, complementary and cooperative. The first type of interaction occurs when multiple sensors measures the same properties, usually referred to as redundant architecture. The second one describes the fusion scheme of different types of sensors measuring different information about the same global object or feature, enabling a more complete fused information, like multiple cameras covering a large area. And the last category happens when more complex data are combined to provide information that would not be available (or hard to obtain) otherwise. An example would be multiple measurements processed as softs sensors. A illustrative schematic is presented in Figure~\ref{fig:cat_input}
+Researchers in the field made additional efforts to categorize the fusion techniques, using different approaches. One of the earliest attempts comes from \citep{Durrant1988}, where he considered the dynamic use of information in the fusion processes, creating the so called dependence model, which grouped sensor fusion in three categories: competitive, complementary and cooperative. Competitive type occurs when multiple sensors measures the same properties, usually referred to as redundant architecture. Complementary fusion describes the scheme of different types of sensors measuring different information about the same global object or feature, enabling a more complete fused information, like multiple cameras covering a large area. And the last category, cooperative fusion, happens when more complex data are combined to provide information that would not be available (or hard to obtain) otherwise. An example would be multiple measurements processed as softs sensors. A illustrative schematic is presented in Figure~\ref{fig:cat_input}. An abstraction from the human sensory system to Whyte's model is by understanding the way flavors are perceived by our taste (tongue) and smell (nose) sensors in a cooperative fashion. 
 
 \begin{figure}[!htb]
 	\centering
@@ -79,7 +79,7 @@ Researchers in the field made additional efforts to categorize the fusion techni
 	\label{fig:cat_input}
 \end{figure}
 
-Another common way to categorize sensor fusion is by the three-level hierarchy based on input / output characteristics, depending on the processing stage that information is fused. The lower-level is related to raw-data fusion, where signals from sensors are combined. The mid-level is usually related to feature fusion, where information about characteristics of the object are used in the process. The higher level involves decision-fusion, that can be understood as a reasoning process, like the application evidential belief or fuzzy logic. \citep{Dasarathy1997} extended this terminology, proposing five fusion modes, according to Figure~\ref{fig:cat_io}. \textit{Data in - data out fusion}, the lowest level fusion, processes raw data and outputs raw data, but with some improvements, such as increased accuracy. \textit{Data in - feature out fusion} extracts features from raw data, describing characteristics of the measured environment. \textit{Feature in - feature out} aims at the refinement of the feature entering the process, similarly to what DAI - DAO does to raw data. \textit{Feature in - decison out} usually performs classification based on a set of features received as inputs. \textit{Decision in - decision out} outputs better global decision based on local, restricted decisions.
+Another common way to categorize sensor fusion is by the three-level hierarchy based on input / output characteristics, which depends on the processing stage that information is fused. The lower-level is related to raw-data fusion, where signals from sensors are combined. The mid-level is usually related to feature fusion, where information about characteristics of the object are used in the process. The higher level involves decision-fusion, that can be understood as a reasoning process, like the methods of evidential belief or fuzzy logic. \citep{Dasarathy1997} extended this terminology, proposing five fusion modes, according to Figure~\ref{fig:cat_io}. \textit{Data in - data out fusion} (DAI-DAO), the lowest level fusion, processes raw data and outputs raw data, but with some improvements, such as increased accuracy. \textit{Data in - feature out fusion} (DAI-FEO) extracts features from raw data to describe characteristics of the measured environment. \textit{Feature in - feature out} (FEI-FEO) aims at the refinement of the feature entering the process, similarly to what DAI - DAO does to raw data. \textit{Feature in - decison out} (FEI-DEO) usually performs classification based on a set of features received as inputs. \textit{Decision in - decision out} (DEI-DEO) outputs better global decision based on local, restricted decisions. Using our human brain data fusion analogy, many examples can be framed into Dasarathy's terminology. The processing of raw signal from letters symbols into features such as words and texts can be interpreted as DAI-FEO fusion. On the other hand, the process of assimilating features of objects from our eyes and ears, and fuse this features into a decision about what they are, for instance, is an example of FEI-DEO fusion.
 
 
 \begin{figure}[!htb]
@@ -89,17 +89,28 @@ Another common way to categorize sensor fusion is by the three-level hierarchy b
 	\label{fig:cat_io}
 \end{figure}
 
-The work of \citep{Castanedo2013} provides a comprehensive review of these and other classification of data fusion techniques. His efforts went beyond as he proposed an interesting new approach, based on the type of architecture, summarized in Figure~\ref{fig:cat_arch}. Fusion techniques that collects all measurements in a central processor lie on the Centralized Architecture category. Assuming perfect data alignment and association, such scheme should be optimal. However it is keen to many sampling irregularities issue and might provoke network congestion. When a network of nodes is used, each with its own processing capability  the architecture becomes decentralized. Such modular strategy ensures scalability, since there are no limits to centralized bottlenecks, and survivability to the loss of a particular sensing node. However it can greatly increase communication costs. The third and last configuration is the distributed architecture, where each data association is performed by local nodes. The outputs is then transmitted to a fusion node, that processes these locally obtained estimates to produce a fused global estimate. This scheme will reduce both the communication costs from decentralized architecture and computational costs from the centralized one, while lacking some of their benefits. 
+The work of \citep{Castanedo2013} provides a comprehensive review of these and other classification of data fusion techniques. His efforts went beyond as he proposed an interesting new approach, based on the type of architecture, summarized in Figure~\ref{fig:cat_arch}. In his model, fusion techniques that collects all measurements in a central processor lie on the Centralized Architecture category. Assuming perfect data alignment and association, such scheme should be optimal. However it is keen to many sampling irregularities issue and might provoke network congestion. When a network of nodes is used, each with its own processing capability  the architecture becomes decentralized. Such modular strategy ensures scalability, since there are no limits to centralized bottlenecks, and survivability to the loss of a particular sensing node. However it can greatly increase communication costs. The third and last configuration is the distributed architecture, where each data association is performed by local nodes. The outputs is then transmitted to a fusion node, that processes these locally obtained estimates to produce a fused global estimate. This scheme will reduce both the communication costs from decentralized architecture and computational costs from the centralized one, while lacking some of their benefits. A fourth architecture could be defined as hierarchical, which combines decentralized and distributed schemes, performing fusion at multiple levels. Getting back to our human sensory capacity, a very hierarchical complex architecture would best describe our fusion scheme in Castanedo's classification.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.4]{Imagens/fusion_cat_arch.pdf}
+	\includegraphics[scale=0.35]{Imagens/fusion_cat_arch.pdf}
 	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
 	\label{fig:cat_arch}
 \end{figure}
 
+A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, since it has some connection to sensor fusion in the presence of irregularities, like the ones discussed in Chapter \ref{cap2}. The idea was to study the methods based on data-related challenges they address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: imperfect, correlated, inconsistent and disparate. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the three categories are basically methods that try to neutralize, avoid or minimize their challenges, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typical algorithms such as the Kalman Filter are broken, so there are methods to eliminate correlation or to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there is out-of-sequence measurements (OOSM) in data, usual frameworks would be to ignore, reprocess or use backward/forward prediction, or apply sate augmentation to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
 
-probabilistic, fuzzy reasoning, evidential belief, possibilistic, rought set \citep{Khaleghi2013}. 
+Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.5]{Imagens/fusion_challenge.pdf}
+	\caption{Categorization based on data challenges}
+	\label{fig:fusion_challenge}
+\end{figure}
+
+
+
 
 \section{Probabilistic Sensor Fusion}\label{sec:probabilistic}
 
