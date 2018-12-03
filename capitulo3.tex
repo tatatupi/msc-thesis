@@ -45,7 +45,7 @@ The reasons why one chooses to fuse information from different sources are vario
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.75]{Imagens/fusion_accuracy.pdf}
+	\includegraphics[width=0.75\textwidth]{Imagens/fusion_accuracy.pdf}
 	\caption{Probability distribution function of different fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
 	\label{fig:accuracy}
 \end{figure}
@@ -56,7 +56,7 @@ Based on the studies from Hall, Elmenreich and Andler, we can group most of the 
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.4]{Imagens/fusion_advantages.pdf}
+	\includegraphics[width=\textwidth]{Imagens/fusion_advantages.pdf}
 	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
 	\label{fig:advantages}
 \end{figure}
@@ -74,7 +74,7 @@ Researchers in the field made additional efforts to categorize the fusion techni
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.75]{Imagens/fusion_cat_input.pdf}
+	\includegraphics[width=\textwidth]{Imagens/fusion_cat_input.pdf}
 	\caption{Classification of data fusion based on sensor interaction.}
 	\label{fig:cat_input}
 \end{figure}
@@ -84,28 +84,29 @@ Another common way to categorize sensor fusion is by the three-level hierarchy b
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.6]{Imagens/fusion_cat_io.pdf}
+	\includegraphics[width=\textwidth]{Imagens/fusion_cat_io.pdf}
 	\caption{Input / Output model and the three fusion levels.}
 	\label{fig:cat_io}
 \end{figure}
 
-The work of \citep{Castanedo2013} provides a comprehensive review of these and other classification of data fusion techniques. His efforts went beyond as he proposed an interesting new approach, based on the type of architecture, summarized in Figure~\ref{fig:cat_arch}. In his model, fusion techniques that collects all measurements in a central processor lie on the Centralized Architecture category. Assuming perfect data alignment and association, such scheme should be optimal. However it is keen to many sampling irregularities issue and might provoke network congestion. When a network of nodes is used, each with its own processing capability  the architecture becomes decentralized. Such modular strategy ensures scalability, since there are no limits to centralized bottlenecks, and survivability to the loss of a particular sensing node. However it can greatly increase communication costs. The third and last configuration is the distributed architecture, where each data association is performed by local nodes. The outputs is then transmitted to a fusion node, that processes these locally obtained estimates to produce a fused global estimate. This scheme will reduce both the communication costs from decentralized architecture and computational costs from the centralized one, while lacking some of their benefits. A fourth architecture could be defined as hierarchical, which combines decentralized and distributed schemes, performing fusion at multiple levels. Getting back to our human sensory capacity, a very hierarchical complex architecture would best describe our fusion scheme in Castanedo's classification.
+The work of \citep{Castanedo2013} provides a comprehensive review of these and other classification of data fusion techniques. His efforts went beyond as he proposed an interesting new approach, based on the type of architecture, summarized in Figure~\ref{fig:cat_arch}. In his model, fusion techniques that collects all measurements in a central processor lie on the Centralized Architecture category. Assuming perfect data alignment and association, such scheme should be optimal. However it is keen to many sampling irregularities issues and might provoke network congestion. When a network of nodes is used, each with its own processing capability, the architecture becomes decentralized. Such modular strategy ensures scalability, since there are no limits to centralized bottlenecks, and survivability to the loss of a particular sensing node. However it can greatly increase communication costs. The third and last configuration is the distributed architecture, where each data association is performed by local nodes. The separate outputs are then transmitted to a fusion node, that processes these locally obtained estimates to produce a fused global estimate. This scheme will reduce both the communication costs from decentralized architecture and computational costs from the centralized one, while lacking some of their benefits. A fourth architecture could be defined as hierarchical, which combines decentralized and distributed schemes, performing fusion at multiple levels. Getting back to our human sensory capacity, a very complex hierarchical architecture would best describe our fusion scheme in Castanedo's classification.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.35]{Imagens/fusion_cat_arch.pdf}
+	\includegraphics[width=\textwidth]{Imagens/fusion_cat_arch.pdf}
 	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
 	\label{fig:cat_arch}
 \end{figure}
 
-A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, since it has some connection to sensor fusion in the presence of irregularities, like the ones discussed in Chapter \ref{cap2}. The idea was to study the methods based on data-related challenges they address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: imperfect, correlated, inconsistent and disparate. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the three categories are basically methods that try to neutralize, avoid or minimize their challenges, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typical algorithms such as the Kalman Filter are broken, so there are methods to eliminate correlation or to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there is out-of-sequence measurements (OOSM) in data, usual frameworks would be to ignore, reprocess or use backward/forward prediction, or apply sate augmentation to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
+A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, since it has some connection to sensor fusion in the presence of irregularities, like the ones discussed in Chapter \ref{cap2}. The idea was to study the methods based on data-related challenges they address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: imperfect, correlated, inconsistent and disparate. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the other three categories are basically methods that try to neutralize, avoid or minimize their challenges, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typical algorithms such as the Kalman Filter, like data independence, are broken, so there are methods to eliminate correlation or to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there is out-of-sequence measurements (OOSM) in data, usual frameworks would be to ignore, reprocess or use backward/forward prediction, or apply sate augmentation to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
 
-Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area.
+Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. 
+\citep{Florea2007}
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.5]{Imagens/fusion_challenge.pdf}
-	\caption{Categorization based on data challenges}
+	\includegraphics[width=\textwidth]{Imagens/fusion_challenge2.pdf}
+	\caption{Categorization based on data challenges hierarchy. For imperfect data, fusion methods and the issues they deal with are also presented.}
 	\label{fig:fusion_challenge}
 \end{figure}
 
@@ -116,11 +117,7 @@ Being the most fundamental and common challenge present on data, imperfection is
 
 Entrar em maiores detalhes do probabilistic, explicando KF e o PF (caso seja utilizado no trabalho).
 
-\subsection{Kalman Filters}
-
-\subsection{Particle Filters}
-
-\section{Sensor Fusion Techniques}\label{sec:techniques}
+\subsection{Probabilistic Sensor Fusion Techniques}\label{sec:techniques}
 
 Para fusão de informações múltiplas de observações, explicar os quatro grandes grupos: parallel filter (multi-output system, multi-output KF), sequential filter (kfusing first output as the prediction for the secod output), outputs fusion (outputs are fused using the noise covariance) e track-to-track fusion (single-output KFs fused considering correlation). \citep{Willner1976,Fatehi2017}
 
