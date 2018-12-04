@@ -62,7 +62,7 @@
 \usepackage{natbib}
 \usepackage{icomma}
 \usepackage{subfigure}
-
+\usepackage{longtable}
 
 \usepackage[left=2.5cm,right=2.5cm,top=4cm,bottom=2.5cm]{geometry}
 \usepackage{appendix}
@@ -266,29 +266,30 @@
 %%
 %%%--------------------------------------------------------------------
 %%%Lista de Tabelas
-\begin{spacing}{1}
+
 \listoftables
 \addcontentsline{toc}{chapter}{List of Tables}
 \clearpage
 \thispagestyle{empty}
 \cleardoublepage
-\end{spacing}
-%%
-%%%%--------------------------------------------------------------------
-%%%%S�mbolos
-%%%%--------------------------------------------------------------------
-%\input{simbolos.tex}
-%\clearpage
-%\thispagestyle{empty}
-%\cleardoublepage
+
+%
+%%%--------------------------------------------------------------------
+%%%S�mbolos
+%%%--------------------------------------------------------------------
+\input{simbolos.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+\normalsize
 %%%%--------------------------------------------------------------------
 %%%
 %%%%Abreviaturas
-%%%%--------------------------------------------------------------------
+%%%%%--------------------------------------------------------------------
 %\input{abreviacoes.tex}
 %\clearpage \thispagestyle{empty}
 %\cleardoublepage
-%\end{spacing}
+
 %--------------------------------------------------------------------
 
 

@@ -1,0 +1,284 @@
+\chapter*{Lista de Símbolos}
+\addcontentsline{toc}{chapter}{Lista de Símbolos}
+\vspace{-2.0cm}
+\section*{Chapter 1}
+
+\footnotesize
+\begin{tabular}{ll}
+
+$x(t)$					& State vector on time $t$ $\in$ $\mathbb{R}^{n}$;\\
+
+$y_{t_k}$            	& Output signal on time instants $t_k$ $\in$ $\mathbb{R}^{m}$;\\
+$A$                     & Matriz dinâmica do sistema $\in$
+$\mathbb{R}^{n\times n}$ ;\\
+$B$                     & Matriz de entrada $\in$ $\mathbb{R}^{n\times
+m}$;\\
+$C$                     & Matriz de saída $\in$ $\mathbb{R}^{l\times n}$;\\
+$D$                     & Matriz de transmissão direta $\in$ $\mathbb{R}^{l\times m}$;\\
+$w_{k}$                 & Vetor de ruído de processo $\in$
+$\mathbb{R}^{n}$;\\
+$v_{k}$                 & Vetor de ruído de medição  $\in$ $\mathbb{R}^{l}$ ;\\
+$Q$                     & Matriz de covariância da sequência de ruído $w_{k}$, \textbf{E}($w_{k}w_{k}^T$) $\in$ $\mathbb{R}^{n\times n}$;\\
+$R$                     & Matriz de covariância da sequência de ruído $v_{k}$, \textbf{E}($v_{k}v_{k}^T$) $\in$ $\mathbb{R}^{l\times l}$;\\
+$S$                     & Matriz de covariância das sequências de ruído $w_{k}$ e $v_{k}$, \textbf{E}($w_{k}v_{k}^T$) $\in$ $\mathbb{R}^{n\times l}$;\\
+$\mathbb{R}$            & Números reais;\\
+$\mathbb{R}^{n}$        &$\mathbb{R}^{n \times 1}$ (vetores reais tipo coluna);\\
+$\in$                   & Pertence (é um elemento de);\\
+\textbf{E[$\bullet$]}   & Esperança matemática;\\
+$(\bullet)^{T}$         & Transposição de vetores ou matrizes;\\
+$N$                     & Número  de medições;\\
+$n$                     & Ordem do modelo;\\
+$\hat{x}$                & Valor estimado de $x$;\\
+$||A||_F$               & Norma de Frobenius da matriz $A$, $\sqrt{tr\;A^{*}A}$;\\
+$tr\;A$                 & Traço de $A$;\\
+$A^{*}$                 & $\overline{A}^{T}$  Conjugado transposto de $A$; \\
+$\mathbb{N}$            & Espaço dos números naturais; \\
+$U_{0|2i-1}$            & Matriz em blocos de Hankel da entrada $\in$ $\mathbb{R}^{2mi\times j}$;\\
+$i$ e $j$               & Índices definidos pelo usuário $\in$
+$\mathbb{N}$, tal que, $i$ $\geq$ $n$ e $j$ $\gg$ $i$;\\
+$U_{p}$ e $U_{f}$       & Notação utilizada na matriz em blocos de Hankel da entrada para dividí-la\\
+                        & em dados passados ($p$) e futuros ($f$);\\
+$u^{\bullet}$           & Faz referência a uma dada entrada;\\
+$Y_{0|2i-1}$            & Matriz em blocos de Hankel da saída;\\
+$Y_{p}$ e $Y_{f}$       & Notação utilizada na matriz em blocos de Hankel da saída para dividí-la \\
+                        & em dados passados ($p$) e futuros ($f$);\\
+$(\bullet)^{+}$         & Adicionar um bloco linha em $(\bullet)$;\\
+$(\bullet)^{-}$         & Retirar um bloco linha em $(\bullet)$;\\
+$\square$               & Fim de demonstração; \\
+$W_{p}$                 & Matriz em blocos de Hankel definida pelo empilhamento de entradas e saída;\\
+$X_{i}$                 & Sequências de estados $\in \mathbb{R}^{n\times j}$;\\
+$X_{p}$                 & Sequências de estados passados;\\
+$X_{f}$                 & Sequências de estados futuros;\\
+\end{tabular}
+
+\newpage
+\footnotesize
+\begin{tabular}{ll}
+$\Gamma_{i}$            & $ \left( \begin{array}{c}
+                      C \\
+                      CA \\
+                      CA^{2}\\
+                     \vdots\\
+                      CA^{i-1}
+                    \end{array}
+\right) \in \mathbb{R}^{li \times n}$  (matriz de observabilidade estendida);\\
+$\Delta^{d}_{i}$      & $\left( \begin{array}{ccccc}
+                               A^{i-1}B & A^{i-2}B & \cdots & AB & B
+                             \end{array}
+\right)\in \mathbb{R}^{n \times mi}$ (matriz de controlabilidade\\
+                    & estendida determinística);\\
+$\Delta^{s}_{i}$      & $\left( \begin{array}{ccccc}
+                               A^{i-1}K & A^{i-2}K & \cdots & AK & K
+                             \end{array}
+\right)\in \mathbb{R}^{n \times mi} $(matriz de controlabilidade\\
+                        & estendida estocástica);\\
+
+$H^{d}_{i}$            & $\left(\begin{array}{ccccc}
+                             D         & 0         & 0         & \cdots & 0 \\
+                             CB        & D         & 0         & \cdots & 0\\
+                             CAB       & CB        & D         & \ddots & 0 \\
+                             \vdots    &\vdots     &\vdots     & \ddots &\vdots \\
+                             CA^{i-2}B &CA^{i-3}B  &CA^{i-4}B  & \cdots &D
+                           \end{array}
+ \right)\in \mathbb{R}^{li \times mi}$ (matriz em blocos\\
+                       & triangular inferior de Toeplitz determinística);\\
+$H^{s}_{i}$            & $\left(\begin{array}{ccccc}
+                             I         & 0         & 0         & \cdots & 0 \\
+                             CK        & I         & 0         & \cdots & 0\\
+                             CAK       & CK        & I         & \ddots & 0 \\
+                             \vdots    &\vdots     &\vdots     & \ddots &\vdots \\
+                             CA^{i-2}K &CA^{i-3}K  &CA^{i-4}K  & \cdots &I
+                           \end{array}
+ \right)\in \mathbb{R}^{li \times li}$(matriz em blocos\\
+                        & triangular inferior de Toeplitz estocástica);\\
+ max($A$)               & Maior valor de $A$;\\
+ $\Pi_{B}$              & $B^{T}(BB^{T})^{\dag}B\;\in \mathbb{R}^{j \times j}$ (projeta o espaço linha de uma matriz qualquer\\
+ & ortogonalmente no espaço linha da matriz $B$);\\
+ $A^{\dag}$             & (Moore-Penrose) pseudo inversa de $A$;\\
+ $\Pi_{B^{\perp}}$      & $I_{j}-B^{T}(BB^{T})^{\dag}B\;\in \mathbb{R}^{j\times j}$ (projeta o espaço linha de uma matriz qualquer\\
+ & ortogonalmente no espaço linha da matriz $B^{\perp}$);\\
+ $B^{\perp}$            & Complemento ortogonal de $B$;\\
+ $I_{j}$                & Matriz identidade $j \times j$;\\
+ $A/B$                  & $ A\Pi_{B} = AB^{T}(BB^{T})^{\dag}B$ (\emph{projeção ortogonal} do espaço linha de $A$ no espaço linha de $B$);\\
+$A/B^{\perp}$           & $A\Pi_{B^{\perp}}= A-A/B=A(I_{j}-B^{T}(BB^{T})^{\dag}B$ (\emph{projeção ortogonal} de $A$ no complemento ortogonal de $B$);\\
+$C/B^{\perp}$           & \emph{Projeção ortogonal} de $C$ no complemento ortogonal de $B$;\\
+%$\simeq$                &  ;\\
+%$\rightarrow$           & ;\\
+$\triangleq $           & Iguais por definição;\\
+$A/_{C}B$               & \emph{Projeção oblíqua} do espaço linha de $A$ ao longo do espaço
+linha de $C$ no espaço linha de $B$;\\
+$A/_{B}C$               & \emph{Projeção oblíqua} do espaço linha de $A$ ao longo do espaço linha de $B$ no espaço linha de $C$;\\
+$A/\left(
+\begin{array}{c}
+            B \\
+            C
+          \end{array}\right)$   & Projeção ortogonal do espaço linha de $A$ ao longo do espaço linha de $B$ e $C$;\\
+$LQ(A)$               & Decomposição $LQ$ de $A$, $L$ é a matriz triangular inferior e $Q$ é a matriz ortogonal $Q^{T}=Q^{-1}$;\\
+$\textbf{E}_{j}[\bullet]$           & $\lim_{j \rightarrow \infty}\frac{1}{j}[\bullet]$ (Média ao longo de um experimento suficientemente longo);\\
+dim($\bullet$)    & Dimensão de $\bullet$;\\
+$||\bullet||$     & Norma Euclidiana;\\
+$\Phi_{[A,B]}$    & Covariância entre as matrizes $A$ e $B$.\\
+
+
+
+%$e(k)$                  &   Erro no instante $k$, pode ou não ser branco;\\
+%$n_{y}$                  & Máximo atraso entre os regressores de saída;\\
+%$n_{u}$                  & Máximo atraso entre os regressores de entrada;\\
+%$n_{e}$                  & Máximo atraso entre os regressores de ruído;\\
+%$n_{p}$                  & Número de termos de processo;\\
+%$n_{cand}$               & Número de termos  candidatos;\\
+%$n$                     & Número de termos do modelo; \\
+%$d$                     & Retardo do sistema;\\
+%$n_{\theta}$            & Total de termos candidatos de um modelo NARMAX polinomial;\\
+
+
+%$\overline{x(k)}$         & Média temporal de $x(k)$;\\
+%$x(k)'$                  & Indica que o valor médio foi subtraído, ou seja, $x(k)'=x(k)-\overline{x(k)}$;\\
+%$N_{obs}$                & Comprimento da massa de dados utilizada; \\
+%$T_{S}$                 & Tempo de amostragem; \\
+%$\tau$                  & Constante de tempo;\\
+%$\tau_{m}$              &   Atraso da função de autocorrelação; \\
+%$\tau_{\rm d}$          &   Atraso puro de tempo; \\
+%$r_{y'y'}(\tau)   $          &   Autocorrelação linear de $y(k)$ no atraso $\tau$;\\
+%$r_{y^{2'}y^{2'}}(\tau)$      &   Autocorrelação não-linear  de $y(k)$ no atraso $\tau$;\\
+%$\tau_y   $             &   Instante de primeiro mínimo da autocorrelação linear;\\
+%$\tau_{y^2}   $         &   Instante de primeiro mínimo da autocorrelação não-linear;\\
+%$r_{\xi\xi}(\tau)$            & Autocorrelação dos resíduos no atraso $\tau$; \\
+%$r_{u\xi}(\tau)$              & Correlação cruzada dos resíduos com a entrada no atraso $\tau$;\\
+%$r_{\xi^{2'}\xi^{2'}}(\tau)$   & Autocorrelação não-linear dos resíduos no atraso $\tau$; \\
+%$r_{u^{2'}\xi}(\tau)$, $r_{u^{2'}\xi^{2}}(\tau)$ e $r_{\xi\xi u}(\tau) $ &  Correlação cruzada não-lineares dos resíduos com a entrada;\\
+%$\Delta   $             &   Fator de decimação.
+%\end{tabular}
+
+
+
+\end{tabular}
+
+\section*{Capítulo 3}
+\footnotesize
+\begin{tabular}{ll}
+$Y_{f}/_{U_{f}}W_{p}$ & Projeção oblíqua das saídas futuras no espaço linha dos dados passados\\
+& ao longo do espaço linha das entradas futuras;\\
+$O_{i}$              & Matriz obtida pela projeção oblíqua;\\
+$A=USV^{T}$         & $\left( \begin{array}{cc}
+                      U_{1} & U_{2} \\
+                    \end{array}
+                  \right)\left(
+                           \begin{array}{cc}
+                             S_{1} & 0 \\
+                             0 & 0 \\
+                           \end{array}
+                         \right)\left(
+                                  \begin{array}{c}
+                                    V_{1}^{T} \\
+                                    V_{2}^{T} \\
+                                  \end{array}
+                                \right)\;\in\;\mathbb{R}^{m\times
+n}$  (decomposição em valores singulares de $A$);\\
+$\subseteq$           & Está contido;\\
+$\overline{\bullet}$   & Conjugado de $\bullet$;\\
+$\overline{U_{1}S_{1}^{1/2}}$  &  $U_{1}S_{1}^{1/2}$ $\in \mathbb{R}^{l(i-1)\times n}$
+ sem o primeiro bloco linha;\\
+
+$\underline{U_{1}S_{1}^{1/2}}$  & $U_{1}S_{1}^{1/2}$ $\in \mathbb{R}^{l(i-1)\times
+n}$ sem o último bloco linha;\\
+$R^{uu}$          & $\Phi_{[U_{0|2i-1},U_{0|2i-1}]}$ (matriz de
+covariância da entrada);\\
+
+$W_{1}$      & $\in~\mathbb{R}^{li \times li}$ matriz de ponderação definidas pelo usuário;\\
+$W_{2}$     & $\in~\mathbb{R}^{j\times j}$ matriz de ponderação definidas pelo usuário;\\
+$R$, $L$ e $C$  & Resistência (Ohms), indutância (Henry) e capacitância (Farads);\\
+$\sigma$       & Desvio padrão;\\
+$\underline{\Gamma_{i}}$  & $\left( \begin{array}{c}
+                      C \\
+                      \vdots\\
+                      CA^{i-2}
+                    \end{array}
+\right)\in \mathbb{R}^{l(i-1) \times n}$, $\Gamma_{i}$ sem o último bloco
+linha;\\
+$\overline{\Gamma_{i}}$   & $\left( \begin{array}{c}
+                      CA \\
+                      \vdots\\
+                      CA^{i-1}
+                    \end{array}
+\right)\in \mathbb{R}^{l(i-1) \times n}$, $\Gamma_{i}$ sem o primeiro bloco
+linha;\\
+
+$\Gamma^{\perp}_{i}$     &    $\in \mathbb{R}^{(li-n) \times li}$, matriz de posto completo que satisfaz
+$\Gamma^{\perp}_{i}\Gamma_{i}\;=\;0$;\\
+$\left(\begin{array}{cccc}
+        \mathcal{M}_{1}& \mathcal{M}_{2} & \cdots &
+        \mathcal{M}_{i}
+      \end{array}\right)$& $\Gamma^{\perp}_{i}Y_{f}U^{\dag}_{f}$, em que $\mathcal{M}_{i}$ $\in \mathbb{R}^{(li -n)\times m}$;\\
+
+$\left(\begin{array}{cccc}
+        \mathcal{L}_{1} & \mathcal{L}_{2} & \cdots & \mathcal{L}_{i}
+      \end{array}
+\right)$ &  $\Gamma^{\perp}_{i}$, em que $\mathcal{L}_{i}$ $\in \mathbb{R}^{(li -n)\times l}$ ;\\
+
+$\mathcal{X}$ &      $ \left(\begin{array}{c}
+                  \hat{X}_{i} \\ U_{i}
+      \end{array}
+\right)\nonumber
+$;\\
+
+
+$\mathcal{Y}$ & $\left(\begin{array}{c}
+      \hat{X}_{i+1} \\
+       Y_{i}
+      \end{array}
+\right)$;\\
+$\Theta$   & $\left(\begin{array}{cc}
+                                          A & B \\
+                                          C & D
+                                        \end{array}
+\right)$, solução obtida de $\Theta=\mathcal{Y}\mathcal{X}^{\dag}=\mathcal{Y}\mathcal{X}^{T}(\mathcal{X}\mathcal{X}^{T})^{-1}$;\\
+
+$e_{k}$ & Sequência de ruído branco.\\
+
+\end{tabular}
+
+
+\section*{Capítulo 4}
+
+\footnotesize
+\begin{tabular}{ll}
+$K$     & Ganho de Kalman em estado estacionário;\\
+$R_{e}$ & $\textbf{E}[e_{k}e^{T}_{k}]$, matriz de covariância do ruído;\\
+$E_{p}$ & Matriz de ruído passado; \\
+$E_{f}$ & Matriz de ruído futuro; \\
+$Y_{f}$$/\left(\begin{array}{c}W_{p}\\
+U_{f}\end{array}\right)$
+& Projeção ortogonal de $Y_{f}$ no subespaço gerado por $W_{p}$ e $U_{f}$;\\
+$\varepsilon$        & Termo de ruído adicionado aos dados;\\
+$\Pi^{\perp}_{U_{f}}$  & projeta o espaço linha de uma matriz qualquer\\
+ortogonalmente no espaço linha da matriz de entradas futuras;\\
+$Z_{j}$                 & Variável de instrumentos;\\
+$\sigma_{s}^{2}$        & Variância do sinal;\\
+$\sigma_{n}^{2}$      & Variância do ruído;\\
+\end{tabular}
+
+\section*{Capítulo 5}
+\footnotesize
+\begin{tabular}{ll}
+$V/F$                     &  Relação tensão-frequência;\\
+$f_{a}$                   & Frequência de amostragem;\\
+$T_{s}$                   & Taxa de amostragem em segundos;\\
+$f_{s}$                   & Frequência de interesse  contida nos dados;\\
+$T$                       & Constante de tempo dominante;\\
+$\mathcal{F_{\bullet}}$   & Modelo ARMAX ou NARMAX para a saída $y_{\bullet}$;\\
+$\mathcal{P_{\bullet}}$   & Modelo ARMAX para a saída $y_{\bullet}$;\\
+$\mathcal{S}_{\bullet}$   & Modelo ARMAX para a saída $y_{\bullet}$;\\
+$r_{\xi\xi}$              & Autocorrelação dos resíduos;\\
+$r_{\xi u}$               & Correlação cruzada dos resíduos com a entrada;\\
+$r_{\xi\xi^{2}}$, $r_{\xi^{2}\xi^{2}}$   & Autocorrelação não-linear dos resíduos;\\
+$\tau$                    & Atraso;\\
+$\textbf{Ttot(s)}$        & Tempo de simulação total em segundos;\\
+$\textbf{NT}$             & Número de termos de processo;\\
+$\theta(t)$               & Deslocamento angular do rotor;\\
+$J$                       & Momento de inércia;\\
+$b$                       & Coeficiente do atrito viscoso rotacional;\\
+$i(t)$                    & Corrente de armadura no instante $t$;\\
+$w(t)$                    & Velociade angular do rotor;\\
+\end{tabular}
+

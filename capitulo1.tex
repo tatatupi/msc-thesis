@@ -43,11 +43,11 @@ Consider the stochastic nonlinear sampled system
 \dot{x}(t)=f(x(t), u(t), w(t), t),
 \end{equation}
 \begin{equation}\label{eq:obs}
-y(t_k)=g(x(t_k- \delta_{t_k}) ,v(t_k), t_k),
+y(t_k)=g(x(t_k- \delta_{k}) ,v(t_k), t_k),
 \end{equation}
 \\
 \noindent
-where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, assumedly known. We assume that for all $k \geq 1$, the observations $y(t_k) \in \mathbb{R}^m$ and the first two moments of the random variables $x_0$ and $v(t_k)$ are known, where $x_0 \in \mathbb{R}^n$ is the initial state vector and $v(t_k) \in \mathbb{R}^r$ is the observation noise. Observations are taken at random time instants $t_k$ and are considered to be sorted ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. That is, the time intervals $h$ are independent and identically distributed exponential random variables with a known parameter $\lambda_{h}$, that is $h_k \sim \mathcal{E} (\lambda_{h})$,  where $\mathcal{E} (\lambda)$ defines an exponential PDF, with parameter $\lambda$, which is also its expected value. An example of time intervals produced by such a random process is illustrated in Figure \ref{fig:amost}.
+where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, assumedly known. We assume that for all $k \geq 1$, the observations $y(t_k) \in \mathbb{R}^m$ and the first two moments of the random variables $x_0$, $v(t_k)$ and $w(t)$ are known, where $x_0 \in \mathbb{R}^n$ is the initial state vector, $v(t_k) \in \mathbb{R}^r$ is the observation noise and $w(t_k) \in \mathbb{R}^q$ is the process noise. Observations are taken at random time instants $t_k$ and are considered to be sorted ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. That is, the time intervals $h_k$ are independent and identically distributed exponential random variables with a known parameter $\lambda_{h}$, that is $h_k \sim \mathcal{E} (\lambda_{h})$,  where $\mathcal{E} (\lambda)$ defines an exponential PDF, with parameter $\lambda$, which is also its expected value. An example of time intervals produced by such a random process is illustrated in Figure \ref{fig:amost}.
 
 
 \begin{figure}[h]
@@ -60,14 +60,14 @@ where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \math
 
 This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002}, for instance, considers a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They prove that, if the sensors are independent and unsynchronized and $N$ is big enough, the waiting time between the realization of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
 
-Arrival times to the estimator may be delayed during transmission by a random time amount $\delta_{t}$, also given by exponential random variables, with parameter $\lambda_{\delta_{t}}$, according to Figure~\ref{fig:delay}. Out-of-sequence measurements (OOSM) are not considered in this work. We assume that, in case a delayed measurement is to arrive later than future measurements, it gets lost in transmission.
+Arrival times to the estimator may be delayed during transmission by a random time amount $\delta_{k}$, also given by exponential random variables, with parameter $\lambda_{\delta_{k}}$, according to Figure~\ref{fig:delay}. Out-of-sequence measurements (OOSM) are not considered in this work. We assume that, in case a delayed measurement is to arrive later than future measurements, it gets lost in transmission.
 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{Imagens/scheme-timedelay.pdf}
 	%\setlength{\belowcaptionskip}{-12pt}
-	\caption[Randomly delayed measurements, modeled as exponential random variables]{Randomly delayed measurements, modeled as exponential random variables. Random measurement times $t_k$ are received by the estimator after a random delay $\delta_{t_k}$}
+	\caption[Randomly delayed measurements, modeled as exponential random variables]{Randomly delayed measurements, modeled as exponential random variables. Random measurement times $t_k$ are received by the estimator after a random delay $\delta_{k}$}
 	\label{fig:delay}
 \end{figure}
 
@@ -78,7 +78,7 @@ Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT
 
 When time-stamp information is available, data assimilation can be performed at the correct measurement instants $t_k$. When they are not, the assimilation moment is considered to be the random receipt time instant or the next estimation moment, when there are no transmission time delays. 
 
-We wish to estimate the state vector $x(t)$ and its covariance recursively, at regularly spaced time intervals $T$, given their initial values ($x_0$, $P_0$), the process model (\ref{eq:processo}), the input or control signals ($u(t): t \leq kT$) and the set of past observations $y(t_k): t_k - \delta_{t_k} \leq kT$. The knowledge of the time intervals $h_{k-1}: t_k - \delta_{t_k} \leq kT$ is also taken into consideration when time-stamp information is available. We assume that the average time interval of observations $\lambda_{h}$ is greater than or equal to $T$ by a factor $\alpha\geq1$, i.e. $\lambda_{h}=\alpha T$.
+We wish to estimate the state vector $x(t)$ and its covariance recursively, at regularly spaced time intervals $T$, given their initial values ($x_0$, $P_0$), the process model (\ref{eq:processo}), the input or control signals ($u(t): t \leq kT$) and the set of past observations $y(t_k): t_k - \delta_{k} \leq kT$. The knowledge of the time intervals $h_{k-1}: t_k - \delta_{k} \leq kT$ is also taken into consideration when time-stamp information is available. We assume that the average time interval of observations $\lambda_{h}$ is greater than or equal to $T$ by a factor $\alpha\geq1$, i.e. $\lambda_{h}=\alpha T$.
 
 
 
