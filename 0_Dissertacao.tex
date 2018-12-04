@@ -67,6 +67,10 @@
 \usepackage[left=2.5cm,right=2.5cm,top=4cm,bottom=2.5cm]{geometry}
 \usepackage{appendix}
 
+\usepackage{tabularx,ragged2e}
+\renewcommand\tabularxcolumn[1]{>{\RaggedRight}p{#1}}
+
+
 \usepackage{adjustbox}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning, calc}
@@ -252,22 +256,23 @@
 %%
 %%%--------------------------------------------------------------------
 %%%Lista de figuras
-%\begin{sloppypar}
-%\listoffigures
-%\end{sloppypar}
-%\addcontentsline{toc}{chapter}{List of Figures}
-%\clearpage
-%\thispagestyle{empty}
-%\cleardoublepage
+\begin{sloppypar}
+\listoffigures
+\end{sloppypar}
+\addcontentsline{toc}{chapter}{List of Figures}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
 %%
 %%%--------------------------------------------------------------------
 %%%Lista de Tabelas
-%\begin{spacing}{1}
-%\listoftables
-%\addcontentsline{toc}{chapter}{List of Tables}
-%\clearpage
-%\thispagestyle{empty}
-%\cleardoublepage
+\begin{spacing}{1}
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+\end{spacing}
 %%
 %%%%--------------------------------------------------------------------
 %%%%S�mbolos

@@ -9,4 +9,6 @@
 *.toc
 *.synctex.gz
 *.aux
+*.lot
+*.lof
 *eps-converted-to.pdf

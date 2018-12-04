@@ -1,6 +1,6 @@
 %-------------------------------------------------------------------------------
 \chapter{Results}
-\label{cap4} \vspace{-1cm} \vspace{1cm}
+\label{cap5} \vspace{-1cm} \vspace{1cm}
 
 %\begin{flushright}
 %\begin{minipage}{0.7\linewidth}
@@ -61,7 +61,7 @@ Figure~\ref{fig:bode} shows the bode diagrams of both systems separately.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Imagens/bode.eps}
-	\caption[entrada]{Bode diagram of both modes.}
+	\caption[Bode diagram of both modes]{Bode diagram of both modes.}
 	\label{fig:bode}
 \end{figure}
 
@@ -128,7 +128,7 @@ We simulate a pseudo-random binary sequence (PRBS) as input, with 200 samples an
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/PRBS_and_Systems.eps}
-	\caption[entrada]{PRBS samples used as input; output of high-pass system, considering 2 seconds of simulation and low-pass system results for 2 and 20 seconds simulation}
+	\caption[PRBS input and system outputs]{PRBS samples used as input; output of high-pass system, considering 2 seconds of simulation and low-pass system results for 2 and 20 seconds simulation}
 	\label{fig:PRBS_and_systems}
 \end{figure}
 
@@ -153,7 +153,7 @@ We simulate a pseudo-random binary sequence (PRBS) as input, with 200 samples an
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Imagens/outputS.eps}
-	\caption[entrada]{Output of the fourth order system to the PRBS input signal}
+	\caption[Output of the fourth order system to the PRBS input signal]{Output of the fourth order system to the PRBS input signal.}
 	\label{fig:outputS}
 \end{figure}
 
@@ -173,7 +173,7 @@ Discrete-time Kalman filter is used for estimation. Realizations of the estimate
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/StatesWithAndWithoutTimeStamp.eps}
-	\caption[entrada]{Estimated with time-stamp (red), without time-stamp (blue) and true (black) states $x_1$ and $x_4$.}
+	\caption[Estimated and true states]{States $x_1$ and $x_4$ estimates with time-stamp (red), without time-stamp (blue) and true values (black).}
 	\label{fig:StatesWithAndWithoutTimeStamp}
 \end{figure}
 
@@ -196,7 +196,7 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Imagens/LinearJEvolution.eps}
-	\caption[entrada]{Temporal cut from 0.02 to 0.045 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
+	\caption[Performance index temporal cut for one realization]{Temporal cut from 0.02 to 0.045 seconds, for a realization of pitch rate about the center of mass RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants.}
 	\label{fig:LinearJevolution}
 \end{figure}
 
@@ -224,7 +224,7 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Imagens/noise_results_all-uy.eps}
-	\caption[entrada]{Performance, as a function of input and observation SNR}
+	\caption[Performance, as a function of input and observation SNR]{Performance, as a function of input and observation SNR.}
 	\label{fig:ulinearSamp}
 \end{figure} 
 
@@ -233,7 +233,7 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Imagens/noise_results_all.eps}
-	\caption[entrada]{Performance, as a function of observation SNR}
+	\caption[Performance, as a function of observation SNR]{Performance, as a function of observation SNR.}
 	\label{fig:ulinearSamp}
 \end{figure} 
 
@@ -253,7 +253,7 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Imagens/samp_results_all.eps}
-	\caption[entrada]{Performance, as a function of $\lambda$}
+	\caption[Performance, as a function of $\lambda$]{Performance, as a function of $\lambda$.}
 	\label{fig:linearSamp}
 \end{figure} 
 
@@ -264,7 +264,7 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Imagens/usamp_results_all.eps}
-	\caption[entrada]{Performance, as a function of $\alpha$}
+	\caption[Performance, as a function of $\alpha$]{Performance, as a function of $\alpha$.}
 	\label{fig:ulinearSamp}
 \end{figure} 
 
@@ -301,7 +301,7 @@ where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ t
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.4\textwidth]{Imagens/Nonholomonic-robot.pdf}
-	\caption[entrada]{Nonholomonic robot system representation. The system states $p_\textrm{x}$, $p_\textrm{y}$, $v$ and $\theta$ are highlighted.}
+	\caption[Nonholomonic robot system representation]{Nonholomonic robot system representation. The system states $p_\textrm{x}$, $p_\textrm{y}$, $v$ and $\theta$ are highlighted.}
 	\label{fig:robot}
 \end{figure} 
 
@@ -346,14 +346,14 @@ We simulate 60 seconds of robot movement, considering a step size of $\delta t_{
 		%		\caption{}
 		\label{fig:sfig2}
 	\end{subfigure}
-	\caption[Entradas]{Simulation input signals. (a) shows temporal sequence of angular velocity $\omega$ and (b) shows linear acceleration $a$.}
+	\caption[Simulation input signals]{Simulation input signals. (a) shows temporal sequence of angular velocity $\omega$ and (b) shows linear acceleration $a$.}
 	\label{fig:entrada}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/exemplo_03_30db_desloc.eps}
-	\caption[entrada]{True position, noisy measurements and UKF estimates considering time-stamp, for a measurement noise of SNR\textsubscript{y} $= 30$ dB, $\lambda=0.3$ s and $\alpha=5$.}
+	\caption[True position, noisy measurements and UKF estimates]{True position, noisy measurements and UKF estimates considering time-stamp, for a measurement noise of SNR\textsubscript{y} $= 30$ dB, $\lambda=0.3$ s and $\alpha=5$.}
 	\label{fig:exukf}
 \end{figure} 
 
@@ -372,7 +372,7 @@ Figure~\ref{fig:realizacaoJ} shows a timespan from 0 to 1.3 seconds of a $J$ rea
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/J_umarealizacao.eps}
-	\caption[entrada]{Temporal cut from 0 to 1.3 seconds, for a realization of $J$ of both estimators, with and without time-stamp. Asterisks on $x$ axis match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants, same as input regular sampling instants.}
+	\caption[Performance index temporal cut for one realization]{Temporal cut from 0 to 1.3 seconds, for a realization of $J$ of both estimators, with and without time-stamp. Asterisks on $x$ axis match the measurement sampling instants $t_k$. Black dots represent the regular estimation instants, same as input regular sampling instants.}
 	\label{fig:realizacaoJ}
 \end{figure} 
 
@@ -408,7 +408,7 @@ We considered an observation signal-to-noise variation of SNR\textsubscript{y} =
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/noise.eps}
-	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise for both UKF algorithms considering and not considering time-stamp}
+	\caption[Performance index $J$ variation, as a function of measurement noise]{Performance index $J$ variation, as a function of measurement noise for both UKF algorithms considering and not considering time-stamp}
 	\label{fig:noise}
 \end{figure} 
 
@@ -424,7 +424,7 @@ We now consider the variation of the average time interval that observations are
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/samp.eps}
-	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+	\caption[Performance index $J$ variation, as a function of $\lambda$]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
 	\label{fig:samp}
 \end{figure}
 
@@ -441,7 +441,7 @@ The same way we did for the other scenarios, 100 realizations were simulated and
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/dtudty.eps}
-	\caption[entrada]{Performance index $J$ variation, as a function of measurement noise both UKF algorithms considering and not considering time-stamp}
+	\caption[Performance index $J$ variation, as a function of $\alpha$]{Performance index $J$ variation, as a function of $\lambda$ for both UKF algorithms considering and not considering time-stamp}
 	\label{fig:dtudty}
 \end{figure}
 

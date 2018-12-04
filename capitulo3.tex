@@ -46,7 +46,7 @@ The reasons why one chooses to fuse information from different sources are vario
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.75\textwidth]{Imagens/fusion_accuracy.pdf}
-	\caption{Probability distribution function of different fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
+	\caption[Probability distribution functions for different amount of fused measurements]{Probability distribution functions for different amount of fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
 	\label{fig:accuracy}
 \end{figure}
 
@@ -57,7 +57,7 @@ Based on the studies from Hall, Elmenreich and Andler, we can group most of the 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/fusion_advantages.pdf}
-	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\caption[Expected advantages in sensor fusion]{Sensor fusion categorization hierarchy based on expected advantages.}
 	\label{fig:advantages}
 \end{figure}
 
@@ -85,7 +85,7 @@ Another common way to categorize sensor fusion is by the three-level hierarchy b
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/fusion_cat_io.pdf}
-	\caption{Input / Output model and the three fusion levels.}
+	\caption{Input \ Output model and the three fusion levels.}
 	\label{fig:cat_io}
 \end{figure}
 
@@ -94,22 +94,59 @@ The work of \citep{Castanedo2013} provides a comprehensive review of these and o
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/fusion_cat_arch.pdf}
-	\caption{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\caption{Sensor network architectures for data fusion.}
 	\label{fig:cat_arch}
 \end{figure}
 
-A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, since it has some connection to sensor fusion in the presence of irregularities, like the ones discussed in Chapter \ref{cap2}. The idea was to study the methods based on data-related challenges they address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: imperfect, correlated, inconsistent and disparate. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the other three categories are basically methods that try to neutralize, avoid or minimize their challenges, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typical algorithms such as the Kalman Filter, like data independence, are broken, so there are methods to eliminate correlation or to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there is out-of-sequence measurements (OOSM) in data, usual frameworks would be to ignore, reprocess or use backward/forward prediction, or apply sate augmentation to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
-
-Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. 
-\citep{Florea2007}
+A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, since it has some connection to sensor fusion in the presence of irregularities, like the ones discussed in Chapter \ref{cap2}. The idea was to study the methods based on data-related challenges they address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: imperfect, correlated, inconsistent and disparate. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the other three categories are basically methods that try to neutralize, avoid or minimize their challenges, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typicl algorithms such as the Kalman Filter, like data independence, are broken, so there are methods to eliminate correlation ora to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there is out-of-sequence measurements (OOSM) in data, usual frameworks would be to ignore, reprocess or use backward/forward prediction, or apply sate augmentation to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/fusion_challenge2.pdf}
-	\caption{Categorization based on data challenges hierarchy. For imperfect data, fusion methods and the issues they deal with are also presented.}
+	\caption[Data fusion categorization based on data challenges hierarchy]{Categorization based on data challenges hierarchy. For imperfect data, fusion methods and the issues they deal with are also presented.}
 	\label{fig:fusion_challenge}
 \end{figure}
 
+
+Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. Based on Khaleghi's classification, imperfection on data can be manifested as uncertainty, imprecision and granularity. We can distinguish uncertainty and imprecision with two information examples: \textit{I believe Mary is one point eight meter tall}; \textit{I am sure that Mary is tall}. In the first sentence, the information is precise, but uncertain. In the second, the information about Mary's height is certain, but imprecise, with some vagueness (fuzziness) attached to it. Usually the amount of precision in data is inversely proportional to the level of certainty. The source of imprecision can also be ambiguity, as in the phrase: \textit{Mary delivered her baby at 5 yesterday}. We don't know if it was 5 p.m. or 5 a.m., though the information was certain. The last type of imprecision would be for incomplete data, when we have missing information. The sentence "\textit{Mary's height is above one point five meter}", is incomplete, for an example, meaning that any height above one hundred and fifty centimeters is possible and any height less than or equal to it is impossible, defining the so called possibility measures. Finally, granularity is an imprecision related to the internal structure of data, referring to the ability to distinguish among states. Different attributes on the data or a different set of possible states will generate different levels of imprecise information.
+
+\citep{Florea2007}
+\citep{Smets1997}
+
+
+
+\begin{table}[!htb]
+	% increase table row spacing, adjust to taste
+	\renewcommand{\arraystretch}{1.3}
+	% if using array.sty, it might be a good idea to tweak the value of
+	% \extrarowheight as needed to properly center the text within the cells
+	\caption[Data fusion methods for imperfect data]{Data fusion methods for imperfect data. Adapted from \citep{Khaleghi2013}, Table 1, page 35.}
+	\label{tabela_transacoes}
+	\centering
+	% Some packages, such as MDW tools, offer better commands for making tables
+	% than the plain LaTeX2e tabular which is used here.
+	\begin{flushleft}
+	
+	{
+		\footnotesize
+		\begin{tabularx}{\linewidth}{ 	>{\hsize=0.75\hsize}X
+										>{\hsize=1.25\hsize}X
+										>{\hsize=1.1\hsize}X
+										>{\hsize=0.9\hsize}X}
+			\hline
+			\textbf{Algorithm} 			& \textbf{Approach}    			&  \textbf{Advantages} 		& \textbf{Limitations}\\ 
+			\hline
+			Probabilistic & Bayesian framework to fuse uncertain data represented by probability distribution functions & Well-established and optimal for certain conditions & Might be unsuited for other data imperfections \\ \\			
+			Evidential Belief & Data fusion based on probability mass function, using Dempster-Shafer theory and combination rules & Enables fusion of both uncertain and ambiguous information & Incapable of dealing with other aspects of imperfection \\ \\ 
+			Fuzzy Reasoning & Vague data represented by fuzzy set theory and fusion based on fuzzy rules & Intuitive and interpretable approach for vague data, such as human generated & Only applicable to vague data \\ \\
+			Possibilistic & Data fusion based on fuzzy theory, with data representation similar to probabilistic and evidential belief & Indicated for poorly informed environment with incomplete data & Not very common and well-established \\ \\
+			Rough Set & Imprecise data is approximated based on granularity and manipulated via classical set theory & Dispenses preliminary or additional information & Data granularity must be adequate \\ \\
+			Random Set & Extension of Bayesian filter, representing the state space as a random set to capture many aspects of imperfection & Can potentially provide a unified framework for fusion of imperfect data & Not very appreciated by the fusion community \\ \\ 
+			Hybridization & Combination of different fusion methods and data representation & More comprehensive treatment of data imperfection and benefits from complementary fusion & Computational expensive and very problem specific \\
+		\end{tabularx}
+	}
+	\end{flushleft}
+\end{table}
 
 
 
