@@ -111,11 +111,11 @@ A final note on the taxonomy of data fusion methodologies will be given to the w
 
 Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. Based on Khaleghi's classification, imperfection on data can be manifested as uncertainty, imprecision and granularity. We can distinguish uncertainty and imprecision with two information examples: \textit{I believe Mary is one point eight meter tall}; \textit{I am sure that Mary is tall}. In the first sentence, the information is precise, but uncertain. In the second, the information about Mary's height is certain, but imprecise, with some vagueness (fuzziness) attached to it. Usually the amount of precision in data is inversely proportional to the level of certainty. The source of imprecision can also be ambiguity, as in the phrase: \textit{Mary gave birth to her daughter yesterday at 5}. We don't know if it was 5 PM or 5 AM, though the information was certain. The last type of imprecision would be for incomplete data, when we have missing information. The sentence "\textit{Mary's height is above one point five meter}", is incomplete, for an example, meaning that only one bound was given. Any height above one hundred and fifty centimeters is possible and any height less than or equal to it is impossible, defining the so called possibility measures. Finally, granularity is an imprecision related to the internal structure of data, referring to the capacity of distinction among states. Different attributes on the data or a different set of possible states will generate different levels of imprecise information.
 
-Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of the issues and Khaleghi's paper explores methods for all the challenges in his categorization model. In this study we will limit ourselves to imperfect data. The methods that can deal with the sources of imperfection are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering on or multiple aspects. 
+Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of the issues and Khaleghi's paper explores methods for all the challenges in his categorization model. In this study we will limit ourselves to imperfect data. In most cases, the mathematical background of each algorithm relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them.
 
 \subsubsection{Probabilistic}
 
-In most cases, the mathematical background of each algorithm relies on the representation of imperfect data. Uncertainty can be modeled by probability distribution functions, thus probabilistic methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes theorem. The idea is to update the probabilities of an hypothesis $H$ when some evidence $E$ by using his famous equation 
+Uncertainty is the most natural source of data imperfection and it is usually expressed by probability distribution functions (PDFs). Thus probabilistic fusion methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes theorem. The idea is to update the probabilities of an hypothesis $H$ given some evidence $E$ by using his famous equation 
 
 \begin{equation}\label{eq:bayes}
 \rho(H|E) = \frac{\rho(E|H) \rho(H)}{\rho(E)}
@@ -157,17 +157,17 @@ where
 \vspace*{0.4cm}
 
 
-Fuzzy set theory differences itself from probabilistic and evidential reasoning theories by modeling the fuzzy membership of a state which class is ill-defined, whereas the others model uncertainties in the well-defined state classes.
+Fuzzy set theory differences itself from probabilistic and evidential reasoning theories by modeling the fuzzy membership of a state which class is ill-defined, whereas the other methods model uncertainties in well-defined state classes.
 
-It is possible to combine fuzzy theory with DS evidential reasoning to handle the imperfections that both approaches are good at, that is uncertainty, ambiguity and vagueness all together.
+It is possible to combine fuzzy theory with DS evidential reasoning to handle the imperfections that both approaches can deal with, that is uncertainty, ambiguity and vagueness all together, using the Fuzzy Evidential Belief framework.
 
 \subsubsection{Possibilistic}
 
-13 years after developing the mathematical framework of fuzzy information, Zadeh introduced the concept of possibility theory \citep{Zadeh1978}, using fuzzy sets as its basis. According to him, fuzzy sets are to possibility theory what measures are to probability. 
+13 years after developing the mathematical background of fuzzy information, Zadeh introduced the concept of possibility theory \citep{Zadeh1978}, using fuzzy sets as its basis. According to him, fuzzy sets are to possibility theory what measures are to probability. 
 
-A membership function $\mu_A(x)$ of a fuzzy set $A$ of a universe of discourse $X$ can be interpreted as the compatibility of $x$ with the concept labeled as $A$. Letting $U$ be a variable that takes values in $X$, the \textit{possibility function} of $x$ associated with $U$, denoted by $\pi_x$ is defined to be equal to the membership function of $A$, that is $\pi_X(u) \triangleq \mu_F(x)$. The interpretation, however, is that the closer $\pi_X(u)$ is to the unity, the more plausible that value is to be true.
+A membership function $\mu_A(x)$ of a fuzzy set $A$ of a universe of discourse $X$ can be interpreted as the compatibility of $x$ with the concept labeled as $A$. Letting $U$ be a variable that takes values in $X$, we can define the \textit{possibility function} $\pi_x$ of $x$ associated with $U$, to be equal to the membership function of $A$, that is $\pi_X(u) \triangleq \mu_F(x)$. The interpretation, however, is that the closer $\pi_X(u)$ is to the unity, the more plausible that value is to be true.
 
-Another way to understand possibility functions is in its comparison to probability distributions. In the information "Mary has failed a few times in Digital Control course", let us consider $X$ as the number of times in $U = {1, 2, 3...}$. The membership function $\mu_F(x)$ can model how close to "a few times" is the fuzzy variable $x$. From such model, we also define the possibility function $\pi_X(u)$ that can be interpreted as how possible it is that Mary has failed $u$ times in that course. Another way to model such lack of information in data is by a probability function $\rho_X(u)$, as how likely it is for Mary to fail $u$ times. Let us consider that an educated set of criteria was employed to define the values of both distributions as shown in Table~\ref{tab:possibility}
+Another way to understand possibility functions is in its comparison to probability distributions. In the information "Mary has failed a few times in Digital Control course", let us consider $X$ as the number of times in the universe $U = {1, 2, 3...}$. The membership function $\mu_F(x)$ can model how close to "a few times" is the fuzzy variable $x$. From such model, we also define the possibility function $\pi_X(u)$ that can be interpreted as how possible it is that Mary has failed $u$ times in that course. We could also model such lack of information in data by a probability function $\rho_X(u)$, as how likely it is for Mary to fail $u$ times. Let us consider that an educated set of criteria was employed to define the discrete values of both distributions as shown in Table~\ref{tab:possibility}
 
 \begin{table}[!ht]
 	\centering
@@ -184,20 +184,48 @@ Another way to understand possibility functions is in its comparison to probabil
 	\label{tab:possibility}
 \end{table}
 
-Note that according to Table~\ref{tab:possibility} it is perfectly possible for Mary to have failed 1, 2, 3 of 4 times. The degree of possibility decreases for higher values and there is an upper bound, from which Mary would have been expelled, and could not have failed that many times. On the other hand, based on recent flunk history, the most probable number of times for Mary to have failed is 2, whereas since no student failed more than 6 times, the probability that Mary will fail that many is 0. Thus, possibilistic approach can be more appropriate to cope with incomplete data, with missing information about an upper bound, for instance, for which it is clearer that some values are impossible instead of unlikely.
+Note that according to Table~\ref{tab:possibility} it is perfectly possible for Mary to have failed 1, 2, 3 of 4 times. The degree of possibility decreases for higher values and there is an upper bound, from which Mary would have been expelled, and could not have failed that many times. On the other hand, based on recent flunk history, the most probable number of times for Mary to have failed is 2, whereas since no student failed more than 6 times, the probability that Mary will fail that many is 0. Thus, possibilistic approach can be more appropriate to cope with incomplete data, with missing information about a lower or an upper bound, for instance, in which case it is clear that some values are impossible instead of unlikely.
 
 The fusion approach to possibilistic data models was extensively studied by \citep{Dubois2000} and it is similar to the rules employed in fuzzy fusion. The design of the rules set is based on how plausible the sources of data are.
 
 \subsubsection{Random Finite Set}
-
 Note that according to Table~\ref{tab:possibility} it is perfectly possible for Mary to have failed 1, 2, 3 of 4 times. The degree of possibility decreases for higher values and there is an upper bound, from which Mary would have been expelled, and could not have failed that many times. On the other hand, based on recent flunk history, the most probable number of times for Mary to have failed is 2, whereas since no student failed more than 6 times, the probability that Mary will fail that many is 0. Thus, possibilistic approach can be more appropriate to cope with incomplete data, with missing information about an upper bound, for instance, for which it is clearer that some values are impossible instead of unlikely.
 
 The fusion approach to possibilistic data models was extensively studied by \citep{Dubois2000} and it is similar to the rules employed in fuzzy fusion. The design of the rules set is based on how plausible the sources of data are.
+
 
 \subsubsection{Rough Set}
-Note that according to Table~\ref{tab:possibility} it is perfectly possible for Mary to have failed 1, 2, 3 of 4 times. The degree of possibility decreases for higher values and there is an upper bound, from which Mary would have been expelled, and could not have failed that many times. On the other hand, based on recent flunk history, the most probable number of times for Mary to have failed is 2, whereas since no student failed more than 6 times, the probability that Mary will fail that many is 0. Thus, possibilistic approach can be more appropriate to cope with incomplete data, with missing information about an upper bound, for instance, for which it is clearer that some values are impossible instead of unlikely.
 
-The fusion approach to possibilistic data models was extensively studied by \citep{Dubois2000} and it is similar to the rules employed in fuzzy fusion. The design of the rules set is based on how plausible the sources of data are.
+Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be definable considering one set, but undefinable in another set. Data can be collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and there might be indiscernible objects in the data. 
+
+Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined rough set objects, to a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target $X$ that is undefined in $B$, its definition can be approximated by two sets \citep{Pawlak2007}
+
+\begin{equation}\label{eq:rough}
+\begin{split}
+B_{*}(X) & = \{ x \in A : B(x) \subseteq X\}, \\
+B^{*}(X) & = \{ x \in A : B(x) \cap X \neq \emptyset\},
+\end{split}
+\end{equation}
+
+\noindent
+and 
+
+\begin{equation}
+BN_B(X) = B^{x}(X) - B_*(X),
+\end{equation}
+
+where $BN_B(X)$ is the approximated $X$, also called as \textit{B-boundary} region. Figure~\ref{fig:rough} illustrates an approximate space in which the the universe is partitioned into elementary squares and the subset $X$ is approximated by the best upper and lower bounds.
+
+
+\citep{Pawlak1991}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagens/rought_set.pdf}
+	\caption{Approximation of a rough set by lower and upper crips sets.}
+	\label{fig:rough}
+\end{figure}
+
 
 
 
