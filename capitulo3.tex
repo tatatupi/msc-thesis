@@ -111,7 +111,7 @@ A final note on the taxonomy of data fusion methodologies will be given to the w
 
 Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. Based on Khaleghi's classification, imperfection on data can be manifested as uncertainty, imprecision and granularity. We can distinguish uncertainty and imprecision with two information examples: \textit{I believe Mary is one point eight meter tall}; \textit{I am sure that Mary is tall}. In the first sentence, the information is precise, but uncertain. In the second, the information about Mary's height is certain, but imprecise, with some vagueness (fuzziness) attached to it. Usually the amount of precision in data is inversely proportional to the level of certainty. The source of imprecision can also be ambiguity, as in the phrase: \textit{Mary gave birth to her daughter yesterday at 5}. We don't know if it was 5 PM or 5 AM, though the information was certain. The last type of imprecision would be for incomplete data, when we have missing information. The sentence "\textit{Mary's height is above one point five meter}", is incomplete, for an example, meaning that only one bound was given. Any height above one hundred and fifty centimeters is possible and any height less than or equal to it is impossible, defining the so called possibility measures. Finally, granularity is an imprecision related to the internal structure of data, referring to the capacity of distinction among states. Different attributes on the data or a different set of possible states will generate different levels of imprecise information.
 
-Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of the issues and Khaleghi's paper explores methods for all the challenges in his categorization model. In this study we will limit ourselves to imperfect data. In most cases, the mathematical background of each algorithm relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them.
+Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of the issues and Khaleghi's paper explores methods for all the challenges in his categorization model. In this study we will limit ourselves to imperfect data. In most cases, the mathematical background of each algorithm relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them. Table~\ref{tab:methods} presents a summary of all methods with the main advantages and limitations.
 
 \subsubsection{Probabilistic}
 
@@ -127,7 +127,7 @@ where $\rho(A|B)$ represents a conditional probability, that is the probability 
 \subsubsection{Evidential Belief}
 A different framework for managing imperfection is based on Dempster-Shafer (DS) Theory of Evidence \citep{Shafer1976}. Shafer argued that his theory, extended from Dempster findings, includes the Bayesian theory as a special case of evidence combination (or information fusion). The difference between both relies on the assignment of uncertainty. Whereas Bayesian framework considers each state to be uncertain with its own PDF, DS evidential belief theory assigns uncertainties not just to each state, but also to all its possible subsets, using probability mass functions. Imagine the example of Mary giving birth and the information about the time it happened. We can can assign uncertainties to the ambiguous possibilities "5 PM" and "5 AM", in order to use the data. If the uncertainty about the information was also an aspect of the data, DS approach could handle it likewise.
 
-Therefore, DS evidential reasoning can be more adequate when fusion takes place at a higher-level estimation or at the decision-level, referring back to the input / output classification model from Figure~\ref{fig:cat_io}. Situations related to risk assessment configure classical applications \citep{Srivastava2011}, where we have features or local decisions as inputs, usually with ambiguous and conflicting information and we need to take a global decision out of it. 
+Therefore, Dempster-Shafer evidence theory (DSET) can be more adequate when fusion takes place at a higher-level estimation or at the decision-level, referring back to the input / output classification model from Figure~\ref{fig:cat_io}. Situations related to risk assessment configure classical applications \citep{Srivastava2011}, where we have features or local decisions as inputs, usually with ambiguous and conflicting information and we need to take a global decision out of it. 
 
 \subsubsection{Fuzzy Logic}\label{sec:fuzzy}
 
@@ -188,17 +188,61 @@ Note that according to Table~\ref{tab:possibility} it is perfectly possible for 
 
 The fusion approach to possibilistic data models was extensively studied by \citep{Dubois2000} and it is similar to the rules employed in fuzzy fusion. The design of the rules set is based on how plausible the sources of data are.
 
-\subsubsection{Random Finite Set}
-Note that according to Table~\ref{tab:possibility} it is perfectly possible for Mary to have failed 1, 2, 3 of 4 times. The degree of possibility decreases for higher values and there is an upper bound, from which Mary would have been expelled, and could not have failed that many times. On the other hand, based on recent flunk history, the most probable number of times for Mary to have failed is 2, whereas since no student failed more than 6 times, the probability that Mary will fail that many is 0. Thus, possibilistic approach can be more appropriate to cope with incomplete data, with missing information about an upper bound, for instance, for which it is clearer that some values are impossible instead of unlikely.
+\subsubsection{Random Set}
 
-The fusion approach to possibilistic data models was extensively studied by \citep{Dubois2000} and it is similar to the rules employed in fuzzy fusion. The design of the rules set is based on how plausible the sources of data are.
+So far, the methods presented are able to cover all aspects of uncertainty and imprecision. Although some of them can tackle multiple aspects, like DSET and Fuzzy DSET, none of them can handle all the sources of imprecision and uncertainty altogether. The random set approach to data fusion, proposed by \citep{Goodman1997}, offers such potential to integrate all these aspects in one unifying structure. The idea was to generalize the single-sensor, single-target statistics (random variables) to a broader multi-sensor, multi-target statistics (random sets), also known as finite-set statistics (FISST). The direct mathematical parallels between them are presented in Table~\ref{tab:finite-set}.
+
+\begin{table}[!htb]
+	\renewcommand{\arraystretch}{1.2}
+	\caption[Direct mathematical parallels between single-sensor, single-target and multi-sensor, multi-target statistics]{Direct mathematical parallels between single-sensor, single-target and multi-sensor, multi-target. Adapted from \citep{Goodman1997, Mahler2004}}
+	\label{tab:finite-set}
+	\centering
+	\footnotesize
+	\begin{tabular}{l l}
+		\toprule
+		\textbf{Single-sensor / target } 			&  \textbf{Multi-sensor / target}\\ 
+		\midrule
+		random vector, $Z$ 							& finite random set, $\Sigma$ \\ \\
+		
+		sensor 										& global sensor \\
+		target 										& global target \\
+		observation, $z$ 							& global observation-set, $Z$ \\
+		parameter, $\theta$ 						& global parameter-set, $\Theta$ \\ \\ 
+		
+		derivative, $\frac{d p_z}{d z}$ 			& set derivative, $\frac{\delta \beta_\Sigma}{\delta Z}$ \\
+		integral, $\int_{S} f_Z(z|x)d\lambda(z)$	& set integral, $\int_{S} f_{\Sigma}(Z|X)\delta Z$ \\ \\ 
+		
+		probability measure, $p_Z(S|x)$				& belief measure, $\beta_{\Sigma}(S|X)$ \\
+		pior PDF, $f_X(X)$						 	& global PDF, $f_\Gamma (X)$ \\
+		likelihood, $L_z(X)$						& global likelihood, $L_Z(X)$ \\ \\
+		
+		information theory							& multi-target information theory \\
+		filtering theory							& multi-target filtering theory \\
+		\bottomrule	
+	\end{tabular}
+	
+\end{table}
+
+
+By modeling the system states and measurements as random sets of finite size instead of vectors of random variables, a variety of different phenomena can be described, such as target disappearance/appearance, extended/unresolved targets, missing measurements and false alarms \citep{Khaleghi2013}. As described by \citep{Goodman1997}, random set approach can model systems that are comprised of randomly varying numbers of randomly varying objects of various kinds. 
+
+Mathematically speaking, random sets are random elements whose values are sets. A random set $U$ is a finite set, whose power set $\mathcal{P}(U)$ is composed of elements described by some specific probability law. In other words, let
+
+\begin{equation}
+f: \mathcal{P}(U) \rightarrow [0,1] \ \ \ \text{with} \ \  \sum_{A \in \mathcal{P}(U)} f(A) = 1
+\end{equation}
+
+\noindent
+where $f$ can be interpreted as a PDF defined on sets rather than on points of $U$. That is, the probability that the subset $A$ of $U$ is selected is $f(A)$.
+
+Efficient applications of random set theory have been studied in tasks such as system identification and time-series forecasting \citep{Nunez-Garcia2002}, target tracking \citep{Maehlisch2006} and econometrics \citep{Molchanov2014}.
 
 
 \subsubsection{Rough Set}
 
-Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be definable considering one set, but undefinable in another set. Data can be collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and there might be indiscernible objects in the data. 
+Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be definable considering one set, but undefinable in another set. Data can be collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and thus some objects in the data might be indiscernible. 
 
-Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined rough set objects, to a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target $X$ that is undefined in $B$, its definition can be approximated by two sets \citep{Pawlak2007}
+Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined rough set objects in a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target $X$ that is undefined in $B$, its definition can be approximated by two sets \citep{Pawlak2007}
 
 \begin{equation}\label{eq:rough}
 \begin{split}
@@ -211,23 +255,20 @@ B^{*}(X) & = \{ x \in A : B(x) \cap X \neq \emptyset\},
 and 
 
 \begin{equation}
-BN_B(X) = B^{x}(X) - B_*(X),
+BN_B(X) = B^{*}(X) - B_*(X),
 \end{equation}
 
-where $BN_B(X)$ is the approximated $X$, also called as \textit{B-boundary} region. Figure~\ref{fig:rough} illustrates an approximate space in which the the universe is partitioned into elementary squares and the subset $X$ is approximated by the best upper and lower bounds.
-
-
-\citep{Pawlak1991}
+\noindent
+where $B_{*}(X)$ and $B^{*}(X)$ are the \textit{B-lower} and \textit{B-upper} approximation of $X$, respectively and $BN_B(X)$ is the approximated $X$, also called as \textit{B-boundary} region. If the boundary region is empty, set $X$ is crisp or exact with respect to $B$, whereas if it is not empty, set $X$ is rough with respect to $B$. Figure~\ref{fig:rough} illustrates an approximate space in which the the universe is partitioned into elementary squares and the subset $X$ is approximated by the best upper and lower bounds.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.5\textwidth]{Imagens/rought_set.pdf}
+	\includegraphics[width=0.75\textwidth]{Imagens/rought_set.pdf}
 	\caption{Approximation of a rough set by lower and upper crips sets.}
 	\label{fig:rough}
 \end{figure}
 
-
-
+In Pawlak's book and in the references therein, many real life applications of rough set theory are explored, such as civil engineering, medical data analysis, aircraft pilot performance evaluation, vibration analysis and image processing.
 
 \begin{table}[!htb]
 	% increase table row spacing, adjust to taste
@@ -235,7 +276,7 @@ where $BN_B(X)$ is the approximated $X$, also called as \textit{B-boundary} regi
 	% if using array.sty, it might be a good idea to tweak the value of
 	% \extrarowheight as needed to properly center the text within the cells
 	\caption[Data fusion methods for imperfect data]{Data fusion methods for imperfect data. Adapted from \citep{Khaleghi2013}, Table 1, page 35.}
-	\label{tabela_transacoes}
+	\label{tab:methods}
 	\centering
 	% Some packages, such as MDW tools, offer better commands for making tables
 	% than the plain LaTeX2e tabular which is used here.
