@@ -27,6 +27,8 @@ For both cases, we start evaluating the effect of time-stamp information in the 
 Then we add random time-delay to the observation model and evaluate the effect for the same three scenarios plus a fourth one, where we vary the average time-delay.
 
 
+\todo[inline]{Falta incluir time-delay e simulação com filtro de partículas}
+
 \section{Linear System}
 
 \textit{Descrever as motivações por trás do estudo do sistema linear: variáveis controladas, resultado esperado conhecido, comparação mais clara.}
@@ -270,10 +272,10 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.045 seconds
 
 
 
-
-\subsection{Average Time Delay}\label{sec:dt-AC}
-
-\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
+%
+%\subsection{Average Time Delay}\label{sec:dt-AC}
+%
+%\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
 
 
 \section{Unicycle Position Estimation}
@@ -402,9 +404,6 @@ In this subsection we compare the estimation performance impact of considering t
 
 We considered an observation signal-to-noise variation of SNR\textsubscript{y} = $\infty$,  $80$, $60$, $40$, $20$, $10$ dB. That is, initially the system was simulated considering no measurement noise and then it was gradually increased. For each noise scenario, we ran 100 realizations of the random variables for each algorithm and Figure~\ref{fig:noise} shows the results. Solid lines represent the average values for $J$ and the dashed lines are the 95\% confidence interval.
 
-\todo[inline]{Falta incluir resultados com time-delay}
-
-
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/noise.eps}
@@ -450,9 +449,9 @@ The same way we did for the other scenarios, 100 realizations were simulated and
 	Nota-se que, quando o carimbo de tempo é considerado, não há diferença significativa em se variar o $\alpha$ no desempenho do filtro, com o índice de desempenho $J$ se mantendo pouco abaixo dos $3$ cm. Ou seja, não importa a relação entre as frequências de amostragem da observação e das entradas. Por outro lado, quando não se considera o carimbo de tempo, essa relação se torna relevante para o índice de desempenho do estimador. Quanto mais lento a frequência da entrada em comparação com a frequência da saída, maior o erro obtido. Para o caso mais extremo utilizado, $\alpha=1$, a diferença no índice $J$ foi mais do que o dobro. Esse resultado era esperado, uma vez que quanto maior o valor de $\alpha$, mais rápida é a taxa de discretização do modelo de processo em relação à frequência dos sensores de observação. Consequentemente, o erro obtido na aproximação $\tilde{y}(i) \approx y(t_k)$ diminui.
 }
 
-\subsection{Average Time Delay}\label{sec:dt-robot}
-
-\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
+%\subsection{Average Time Delay}\label{sec:dt-robot}
+%
+%\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
 
 
 \clearpage

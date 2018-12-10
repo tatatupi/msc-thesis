@@ -20,29 +20,20 @@
 %\section{Introdução}\label{sec int_cap_2}
 
 
-In this chapter, we review the irregular sampling problem. First, in Section \ref{irregular-sampling} we categorize the different types of irregularities that may occur in sampling and discuss the main causes and its particularities. A diagram is built by categorizing the main types studied in the scientific literature. 
+In this chapter, we review the irregular sampling problem. First, in Section \ref{irregular-sampling} we categorize the different types of irregularities that may occur in sampling and discuss the main causes and its particularities. A diagram is built by categorizing the main types studied in the scientific literature and their causes. Then each irregularity is further discussed, with examples, mathematical models and their subdivisions, where applicable.	
 
 \section{Introduction}\label{irregular-sampling}
 
-Sampling irregularities may occur due to a variety of issues, sometimes as undesired side effects of using large sensor networks architectures and others due to deliberate non-uniform sampling schemes. In this section we try to categorize and review the main irregularities observed in practice. The diagram in  Figure \ref{fig:diagrama2} provides a simplified overview of them, separated by their sources.
-
-\tikzstyle{abstract}=[rectangle, draw=black, rounded corners, fill=blue!40, drop shadow,
-text centered, anchor=north, text=white, text width=3cm]
-\tikzstyle{comment}=[rectangle, draw=black, rounded corners, fill=green, drop shadow,
-text centered, anchor=north, text=white, text width=3cm]
-\tikzstyle{myarrow}=[->, >=open triangle 90, thick]
-\tikzstyle{line}=[-, thick]
+Sampling irregularities may occur due to a variety of issues. Sometimes as undesired side effects of using large sensor networks architectures and others due to deliberate non-uniform sampling schemes. In this section we try to categorize and review the main irregularities observed in practice. The diagram in Figure \ref{fig:diagrama2} provides a simplified overview of them, separated by their sources.
 
 \begin{figure}
-\begin{center}
+\centering
 \includegraphics[width=0.9\textwidth]{Imagens/irreg_sampling.pdf}
-\end{center}
-
 \caption[Irregular sampling diagram]{Irregular sampling diagram, showing the main causes (in orange) and effects (in blue) of irregularities}
 \label{fig:diagrama2}
 \end{figure}
 
-Networked system monitoring and control appears to be the main cause of irregular sampling. Unreliable communication channels may lead to random time delays and loss of information, specially if the data are transmitted using a common media \citep{Sahebsara2007, Moayedi2011}. In case they get randomly interrupted during transmission or if a sensor fails at some point, the signal received may predominantly contain noise, causing uncertain observation or packet dropouts \citep{Hadidi1979, Wang2009}. Systems that are observed by a large number of desynchronized sensors will provide observations at random time intervals \citep{Micheli2002}. If they are synchronized but designed to operate in a centralized fashion, there is a chance that different time delays are produced due to distinct transmission routes for each sensor \citep{Bar-Shalom2000, Challa2003, Anxi2005}. 
+Networked system monitoring and control appears to be the main cause of irregular sampling. Unreliable communication channels may lead to random time delays and loss of information, specially if data are transmitted using a common media \citep{Sahebsara2007, Moayedi2011}. In case they get randomly interrupted during transmission or if a sensor fails at some point, the signal received may predominantly contain noise, causing uncertain observation or packet dropouts \citep{Hadidi1979, Wang2009}. Systems that are observed by a large number of desynchronized sensors will provide observations at random time intervals \citep{Micheli2002}. If they are synchronized but designed to operate in a centralized fashion, there is a chance that different time delays are produced due to distinct transmission routes for each sensor \citep{Bar-Shalom2000, Challa2003, Anxi2005}. 
 
 However the communication networks shall not always be held responsible. Some applications are designed to be measured in an irregular way. In event-based schemes, for example, the measurements are transmitted only when certain conditions are met \citep{Liu2014,Zou2017}. Such approach can reduce communication resource consumption substantially \citep{Hu2017}, but will cause aperiodic sampling. Non-Uniform Sampling (NUS) is also intentionally used as an alias detection method \citep{Kunoh2015} or to enhance the spectral resolution of signals, largely used in Nuclear Magnetic Resonance (NMR) spectroscopy analysis \citep{Hyberts2013}. In other situations, due to the nature of the process being observed, the measurement strategy relies on different procedures. A lot of chemical processes, for instance, can be measured in an online, fast rate and delay free fashion, but provides inaccurate data. Therefore, lab analyses are used to improve estimation quality, but they are usually gathered at slower rates, sometimes irregularly and with possible time delays \citep{Fatehi2017}. Other industrial applications suffer from the same dilemma, and the sampling scheme ends up with a multi-rate data transmission, with random time delays and possibly measurement scarcity \citep{Penarrocha2012}. 
 
@@ -97,32 +88,6 @@ A summary of causes and effects that time delay causes in an estimator are illus
 	\caption[Time delay diagram]{Time delay diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity. The light blue boxes indicate different types that lead to different effects.}
 	\label{fig:diagrama_delay}
 \end{figure}
-
-%\begin{figure}[!htb]
-%	\begin{center}
-%		
-%		\begin{tikzpicture}[grow'=down,level distance=1.25in,sibling distance=.25in]
-%		\tikzset{edge from parent/.style= 
-%			{thick, draw, edge from parent fork down},
-%			every leaf node/.style=
-%			{draw,minimum width=1in,text width=1in,align=center,fill=orange!50},
-%			every tree node/.style=
-%			{draw,minimum width=1in,text width=1in,align=center,fill=blue!50}
-%		}
-%		
-%		\Tree 
-%		[.{Time Delay} 
-%		{Transmission Issues} 
-%		{Sensor Architecture} 
-%		{Industrial Processes} 
-%		]
-%		
-%		\end{tikzpicture}
-%		
-%	\end{center}
-%	\caption{Irregular sampling diagram, showing the main causes (in orange) and effects (in blue) of irregularities}
-%	\label{fig:diagrama_delay}
-%\end{figure}	
 
 \section{Packet Loss}
 
@@ -301,5 +266,11 @@ A summary of causes and effects that time delay causes in an estimator are illus
 	\label{fig:multi_rate}
 \end{figure}
 
+%
+%\section{Chapter Summary}
+%
+%In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic sampling and multi-rate sampling. Diagrams describing their causes, types and effects were built for each of them. We also describe the necessary modifications to the observation models of state estimation. 
+%
+%For the simulated systems of this work, aperiodic sampling with time delay was chosen, since it describes a more general irregularity.
 
 \clearpage

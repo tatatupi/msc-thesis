@@ -17,16 +17,25 @@
 %%\markright{\thesection ~~~ Modelos de Previsão} \label{previsao}
 %%
 
-Conside
 
-If the hypothesis represents some system's state and the event is a set of measurements, 
+\todo[inline]{Inserir texto que faz um link entre amostragem irregular e fusão sensorial.}
 
 
-likelihood function, based on the measurement model, $\rho(x_k|Y^{k-1})$ is the prior distribution, given by the system's transition model and the denominator is a normalizing term. For certain conditions, that is linearity and Gaussianity, the Bayes estimator known as Kalman Filter (KF) provides optimal solution and, due to its simplicity it is one of the most popular state estimation method used to fuse data. As such, it is the chosen method for the next sections of this study and will be further discussed later on.
+
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
-\section{State Estimation with Irregular Sampling}
+A ideia é começar com uma explicação do algoritmo de filtro de kalman e suas versões EKF e UKF.
+Expandir a explicação para o filtro de partículas, caso seja utilizado nas simulações.
+
+\subsection{Kalman Filter}
+
+\subsection{Particle Filter}
+
+
+\section{State Estimation with Aperiodic Sampling}
+
+
 
 %\todo[caption = {Atualizar Seção de Métodos}, inline]{Falta traduzir e atualizar para o cenário com irregularidade na entrada. Além do texto do artigo, foi introduzido esquemático da nova irregularidade com pequeno texto.}
 %
@@ -47,36 +56,36 @@ Um esquemático ilustrativo é apresentado na Fig., onde $\alpha=5$, i.e. a taxa m
 
 
 
-\subsection{Input Irregular Sampling}
+%\subsection{Input Irregular Sampling}
+%
+%Em caso de amostragem irregular também na entrada, um esquemático dos instantes de estimação, amostragem e entrada pode ser observado na Fig.~\ref{fig:esquema2}
+%
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[scale=0.65]{Imagens/esquema3}
+%	\caption[Exemplos de instantes de amostragem de estimação]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
+%	\label{fig:esquema2}
+%\end{figure} 
+%
+%Para atrasos de transmissão:
+%
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[scale=0.65]{Imagens/esquema4}
+%	\caption[Exemplos de instantes de amostragem de estimação com atraso de tempo]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
+%	\label{fig:esquema3}
+%\end{figure} 
+%
+%Nas próximas subseções é apresentado como os algoritmos de estimação tratam os cenários \textbf{A}, \textbf{B} e \textbf{C} para os casos em que o carimbo de tempo está e não está disponível.
+%
 
-Em caso de amostragem irregular também na entrada, um esquemático dos instantes de estimação, amostragem e entrada pode ser observado na Fig.~\ref{fig:esquema2}
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[scale=0.65]{Imagens/esquema3}
-	\caption[Exemplos de instantes de amostragem de estimação]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
-	\label{fig:esquema2}
-\end{figure} 
-
-Para atrasos de transmissão:
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[scale=0.65]{Imagens/esquema4}
-	\caption[Exemplos de instantes de amostragem de estimação com atraso de tempo]{Exemplos de instantes de amostragem de estimação(1), da entrada (2) e das observações (3). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
-	\label{fig:esquema3}
-\end{figure} 
-
-Nas próximas subseções é apresentado como os algoritmos de estimação tratam os cenários \textbf{A}, \textbf{B} e \textbf{C} para os casos em que o carimbo de tempo está e não está disponível.
-
-
-\section{With Timestamp}\label{sec:carimbo}
+\subsection{With Timestamp}\label{sec:carimbo}
 
 Sabendo o momento exato $t_k$ em que as observações são medidas, é possível assimilá-las no instante correto, considerando intervalos de tempo variáveis para o algoritmo de filtragem. Para isso, o modelo matemático em () é discretizado a uma taxa $\delta t^*_j$ variável. Para a simulação deste artigo, os valores de $\delta t^*_j$ são calculados a partir da união de todos os instantes de tempo correspondentes às chegadas de sinais de entrada ou de medição em um único vetor, de forma ordenada. Por meio da subtração de dois instantes consecutivos, é possível obter os intervalos de tempo de integração $\delta t^*_j$ correspondente. No caso de uma versão \textit{online}, a integração das equações diferenciais é executada a medida que um sinal de entrada ou um sinal de medição de saída é recebido. Nesses momentos, são utilizados o intervalo de tempo entre o último sinal recebido e o instante atual. Além disso, quando o sinal recebido é um sinal de entrada, é executada apenas a etapa de predição. E, quando o sinal for de medição, acontecem as duas etapas de predição e assimilação de dados, considerado um segurador de ordem zero para a entrada. O fluxograma da Fig.~\ref{fig:diagrama} representa o passo a passo desse algoritmo, apresentando as etapas executadas quando o sinal é de entrada ou de observação.
 
 Dessa forma, no cenário \textbf{B} da Fig.~\ref{fig:esquema}, o algoritmo executa uma etapa completa de predição e assimilação de dados dos instantes $3T$ até $t_1$, considerando o intervalo $\delta t^*_4 =t_1-3T$ (note que há 3 intervalos de tempo $\delta t^*_j$, antes o instante $t_1$). Em seguida é feita uma etapa de predição entre $t_1$ e $4T$. Durante o intervalo de tempo de integração entre $t_1$ e $4T$, considerou-se que a entrada permaneceu constante desde a sua última atualização em 3T. Ou seja, assume-se que não houve variação na entrada para essa etapa de predição. Caso mais de uma observação seja medida entre duas entradas (cenário \textbf{C}), são executadas etapas completas de filtragem para cada observação disponível e, ao final, uma etapa de predição entre a última observação e a próxima entrada.
 
-\section{Without Timestamp}
+\subsection{Without Timestamp}
 
 Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
 \\
