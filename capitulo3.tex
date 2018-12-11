@@ -53,6 +53,8 @@ The reasons why one chooses to fuse information from different sources are vario
 
 There are many other reasons to fuse information from multiple sensors, however. Elmenreich gives an interesting example to illustrate some of them. Imagine a car parking assist system with only one distance sensor mounted at its rear, with limited precision and considerable update time (sampling interval). Now picture how would be the system's performance, considering that the sensor may suffer from: deprivation, in the sense that it could be blocked by some physical barrier; coverage, both in spatial and temporal contexts, since it can only sense objects in front of him (spatial) and can only provide information periodically (temporal); precision, with measurement errors being liable to be the cause of unexpected bumps; and uncertainty, similarly to what was discussed in Section \ref{sec:uncertain}, when an object, such as a small bicycle, might be missed by the sensor. The system would definitely perform at insufficient levels. All these issues could be solved by adding sensors to the architecture.
 
+%%%% CORRIGIR EM CASO DE TROCA DE ORDEM
+
 Based on the studies from Hall, Elmenreich and Andler, we can group most of the advantages in two categories: Authenticity and Availability improvements. The first group refers to those benefits that improve the quality of the measurement, whereas the second one encompasses those benefits regarding ranges or data dimensions. The addition of sensors can also be of different types (heterogeneous) or of the same type (homogeneous), with redundant measurements. There may be benefits that are exclusive to the addition of different sensors, others exclusive to the addition of redundant sensors and those that can happen both ways. Figure \ref{fig:advantages} presents a schematic with the different advantages expected in sensor fusion.
 
 \begin{figure}[!htb]
@@ -108,13 +110,13 @@ A final note on the taxonomy of data fusion methodologies will be given to the w
 	\label{fig:fusion_challenge}
 \end{figure}
 
-\subsection{Fusion of Imperfect Data}
+\section{Fusion of Imperfect Data}
 
 Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. Based on Khaleghi's classification, imperfection on data can be manifested as uncertainty, imprecision and granularity. We can distinguish uncertainty and imprecision with two information examples: \textit{I believe Mary is one point eight meter tall}; \textit{I am sure that Mary is tall}. In the first sentence, the information is precise, but uncertain. In the second, the information about Mary's height is certain, but imprecise, with some vagueness (fuzziness) attached to it. Usually the amount of precision in data is inversely proportional to the level of certainty. The source of imprecision can also be ambiguity, as in the phrase: \textit{Mary gave birth to her daughter yesterday at 5}. We don't know if it was 5 PM or 5 AM, though the information was certain. The last type of imprecision would be for incomplete data, when we have missing information. The sentence "\textit{Mary's height is above one point five meter}", is incomplete, for example, meaning that only one bound was given. Any height above one hundred and fifty centimeters is possible and any height less than or equal to it is impossible, defining the so called possibility measures. Finally, granularity is an imprecision related to the internal structure of data, referring to the capacity of distinction among states. Different attributes on the data or a different set of possible states will generate different levels of imprecise information.
 
 Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of the issues and Khaleghi's paper explores methods for all the challenges in his categorization model. In this study we will limit ourselves to imperfect data, for which, in most cases, the mathematical background of each algorithm relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them. Table~\ref{tab:methods} presents a summary of all methods with their main advantages and limitations.
 
-\subsubsection{Probabilistic}
+\subsection{Probabilistic}
 
 Uncertainty is the most natural source of data imperfection and it is usually expressed by probability distribution functions (PDFs). Thus probabilistic fusion methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes theorem. The idea is to update the probabilities of an hypothesis $H$ given some evidence $E$ by using his famous equation 
 
@@ -129,12 +131,12 @@ In addition to Bayes' contribution, Gauss' least squares methods and Fisher's ma
 
 When it comes to a multiple sensor system, \citep{Willner1976} introduced three approaches for the discrete Kalman Filter: parallel, sequential and data compression filters. In the parallel filter, all measurements are processed by a KF in parallel, producing a multi-output estimation. For the sequential filter design, multiple KFs are used, where the estimates of a predecessor KF are used as input for the successor KF. Data compression or output fusion filter design compresses similar data using their noise covariance matrix beforehand and the fused output is used as the measurement for a single KF. A fourth method was proposed by \citep{Singer1971}, referred to as track-to-track fusion (TTF), that employs single-output KFs and fuses their outputs considering the correlation between them.
 
-\subsubsection{Evidential Belief}
+\subsection{Evidential Belief}
 A different framework for managing imperfection is based on Dempster-Shafer (DS) Theory of Evidence \citep{Shafer1976}. Shafer argued that his theory, extended from Dempster findings, includes the Bayesian theory as a special case of evidence combination (or information fusion). The difference between both relies on the assignment of uncertainty. Whereas Bayesian framework considers each state to be uncertain with its own PDF, DS evidential belief theory assigns uncertainties not just to each state, but also to all its possible subsets, using probability mass functions. Imagine the example of Mary giving birth and the information about the time it happened. We can can assign uncertainties to the ambiguous possibilities "5 PM" and "5 AM", in order to use the data. If the uncertainty about the information was also an aspect of the data, DS approach could handle it likewise.
 
 Therefore, Dempster-Shafer evidence theory (DSET) can be more adequate when fusion takes place at a higher-level estimation, that is the decision-level, referring back to the input / output classification model from Figure~\ref{fig:cat_io}. Situations related to risk assessment configure classical applications \citep{Srivastava2011}, where we have features or local decisions as inputs, usually with ambiguous and conflicting information and we need to take a global decision out of it. 
 
-\subsubsection{Fuzzy Logic}\label{sec:fuzzy}
+\subsection{Fuzzy Logic}\label{sec:fuzzy}
 
 Fuzzy logic, first proposed by \citep{Zadeh1965} is ideal to handle vagueness in information. Unlike classical crisp definitions, where an element $x$ belongs or not to some definition $A$, fuzzy sets are characterized by a \textit{membership function} $\mu_A(x)$ which associates a degree of pertinence of $x$ in the interval [0, 1] in $A$. That is, the closer $\mu_A (x)$ is to the unity, the higher is the grade of membership of $x$ in $A$. Instead of defining tall people as those with height above certain lower bound, we can define a membership function that assigns continuous degrees of "tallness" to different people. Vague data can be then fused using fuzzy rules to produce outputs. An example of fusion method would be the Mamdani-type fuzzy inference \citep{Mamdani1975}, that classifies an output $y$ from a set of inputs $x$ based on rules $R$, as below:
 
@@ -166,7 +168,7 @@ Fuzzy set theory differences itself from probabilistic and evidential reasoning 
 
 It is possible to combine fuzzy theory with DSET to handle the imperfections that both approaches can deal with, that is uncertainty, ambiguity and vagueness all together, using the Fuzzy Evidential Belief framework.
 
-\subsubsection{Possibilistic}
+\subsection{Possibilistic}
 
 13 years after developing the mathematical background of fuzzy information, Zadeh introduced the concept of possibility theory \citep{Zadeh1978}, using fuzzy sets as its basis. According to him, fuzzy sets are to possibility theory what measures are to probability. 
 
@@ -193,7 +195,7 @@ Note that according to Table~\ref{tab:possibility} it is perfectly possible for 
 
 The fusion approach to possibilistic data models was extensively studied by \citep{Dubois2000} and it is similar to the rules employed in fuzzy fusion. The design of the rules set is based on how plausible the sources of data are.
 
-\subsubsection{Random Set}
+\subsection{Random Set}
 
 So far, the methods presented are able to cover all aspects of uncertainty and imprecision. Although some of them can tackle multiple aspects, like DSET and Fuzzy DSET, none of them can handle all the sources of imprecision and uncertainty altogether. The random set approach to data fusion, proposed by \citep{Goodman1997}, offers such potential to integrate all these aspects in one unifying structure. The idea was to generalize the single-sensor, single-target statistics (random variables) to a broader multi-sensor, multi-target statistics (random sets), also known as finite-set statistics (FISST). The direct mathematical parallels between them are presented in Table~\ref{tab:finite-set}.
 
@@ -243,7 +245,7 @@ where $f$ can be interpreted as a PDF defined on sets rather than on points of $
 Efficient applications of random set theory have been studied in tasks such as system identification and time-series forecasting \citep{Nunez-Garcia2002}, target tracking \citep{Maehlisch2006} and econometrics \citep{Molchanov2014}.
 
 
-\subsubsection{Rough Set}
+\subsection{Rough Set}
 
 Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be definable considering one set, but undefinable in another set. Data can be collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and thus some objects in the data might be indiscernible. 
 
@@ -309,7 +311,7 @@ In Pawlak's book and in the references therein, many real life applications of r
 \end{table}
 %
 %
-%\section{Chapter Summary}
+\section{Chapter Summary}
 
 
 

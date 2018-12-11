@@ -43,8 +43,8 @@ Finally, sampling irregularities might also appear due to a specific nature of a
 
 On the next sections, we review the main irregular sampling effects.
 
-
-\section{Time Delay}
+\section{Irregularity Types}
+\subsection{Time Delay}
 
 Time-delay systems (TDS) are probably the most common mathematical representation to time delays in practice. The works of \citep{Richard2003, Fridman2014} and the references therein provide a good coverage of the subject. In TDSs, there might be delays in the input or in the output signals, introduced by communication networks, or even in the states themselves. The latter phenomenon is called system with aftereffect or dead-time. Since we are studying the irregular sampling issue, only signal delays are relevant to us.
 
@@ -89,7 +89,7 @@ A summary of causes and effects that time delay causes in an estimator are illus
 	\label{fig:diagrama_delay}
 \end{figure}
 
-\section{Packet Loss}
+\subsection{Packet Loss}
 
 When data are being transmitted by a large network of sensors, there is a probability they can get lost in the way or they might arrive after a significant delay, which is equivalent to a loss for practical	 applications~\citep{Sinopoli2004}. Usually referred to as packet dropout/loss, missing, intermittent observations or scarse measurements~\citep{Albertos2004} they may happen due to node failures, network congestion, limited bandwidth or temporal failure. 
 	
@@ -131,7 +131,7 @@ A summary of causes and effects that time delay causes in an estimator are illus
 \end{figure}
 
 
-\section{Uncertain Observation}\label{sec:uncertain}
+\subsection{Uncertain Observation}\label{sec:uncertain}
 
 For some applications, there is a chance that the observation signal sent to the estimator contains only noise. According to \citep{Jaffer1971}, it happens as a consequence of two situations: the observation was taken, but was lost during transmission, due to communication failures; or it was not transmitted at all, as it may happen for target tracking systems, for example, when the object being observed is not tracked at a sample time. An observation model for a sampled-data system can be described as
 
@@ -153,7 +153,7 @@ A summary of causes and effects that time delay causes in an estimator are illus
 	\label{fig:uncertain}
 \end{figure}
 
-\section{Aperiodic Sampling}\label{sec:aperiodic}
+\subsection{Aperiodic Sampling}\label{sec:aperiodic}
 	
 All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena, causing what is called as aperiodic or asynchronous sampling. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like irregular faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to sampling frequency similar to clock frequency, sampling requests delayed by the network or imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time intervals are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. 
 
@@ -233,7 +233,7 @@ A summary of causes and effects that time delay causes in an estimator are illus
 	\label{fig:aperiodic}
 \end{figure}
 
-\section{Multi-Rate Sampling}
+\subsection{Multi-Rate Sampling}
 
 The last irregularity discussed is the multi-rate sampling. Generally, it refers to multiple sensors measuring the same system at different sampling rates. Many industrial processes need to control challenging variables that can be measured by online instruments that provide regular, fast rate and delay free information, but with low precision. Therefore, more accurate data are needed and usually available after slow and irregular laboratory analysis \citep{Penarrocha2012, Fatehi2017}. The combination of both sources of measurements leads to a multi-rate sampling scenario. 
 
@@ -266,11 +266,14 @@ A summary of causes and effects that time delay causes in an estimator are illus
 	\label{fig:multi_rate}
 \end{figure}
 
-%
-%\section{Chapter Summary}
-%
-%In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic sampling and multi-rate sampling. Diagrams describing their causes, types and effects were built for each of them. We also describe the necessary modifications to the observation models of state estimation. 
-%
-%For the simulated systems of this work, aperiodic sampling with time delay was chosen, since it describes a more general irregularity.
+
+\section{Time Synchronization}
+
+
+\section{Chapter Summary}
+
+In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic sampling and multi-rate sampling. Diagrams describing their causes, types and effects were built for each of them. We also describe the necessary modifications to the observation models of state estimation. 
+
+For the simulated systems of this work, aperiodic sampling with time delay was chosen, since it describes a more general irregularity.
 
 \clearpage
