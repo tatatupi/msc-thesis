@@ -19,7 +19,7 @@
 %%Colocar uma descrição do capítulo aqui!
 %\section{Introdução}\label{sec int_cap_2}
 
-In the last chapter, we  reviewed sensor fusion motivations, advantages and techniques. Despite all the growth and benefits from fusing data form multiple sensors, some challenges naturally appear. One of which is related to sampling irregularities introduced in the network.
+In the last chapter, we  reviewed sensor fusion motivations, advantages and techniques. Despite all the growth and benefits from fusing data form multiple sensors, some challenges naturally appear. For the state estimation problem in sampled-data systems, a common challenge is related to sampling irregularities introduced in the network.
 
 In this chapter, we review the irregular sampling problem. First, in Section \ref{irregular-sampling} we categorize the different types of irregularities that may occur in sampling and discuss the main causes and its particularities. A diagram is built by categorizing the main types studied in the scientific literature and their causes. Then each irregularity is further discussed, with examples, mathematical models and their subdivisions, where applicable. We end this chapter with a discussion of time synchronization, which is needed to guarantee a common time scale for all nodes in network, enabling the irregularities to be dealt with appropriately.
 
@@ -40,11 +40,12 @@ However the communication networks shall not always be held responsible. Some ap
 
 Finally, sampling irregularities might also appear due to a specific nature of a system. In some high maneuverable target-tracking applications, for example, there is a chance that the sensor misses the target, transmitting only noise, leading to the so called uncertain observation issue \citep{Wang2009, Chen2013}.
 
-%\duvida{Vale a pena introduzir o assunto de irregularidades do controlador para o atuador (e não só do sensor para o controlador)?}
+Whatever the reason for the irregularities, data need be associated in order to be fused into knowledge. A crucial part of association is temporal synchronization of observations, so that the exact time at which measurements are taken are available \citep{Ping2003}. Most sensor fusion methods for irregularly sampled systems rely on the correct timestamps to 
+develop modification in classical algorithms. If observations are imprecisely timestamped, some alternatives have been proposed \citep{Julier2005, Huck2011} that incorporate some aspects of that imprecision in the estimation method. Still, some knowledge about the irregularity is assumed to be known. Alternatively, many techniques for time synchronization can be performed, to ensure a common time scale for all the sensors. 
 
-On the next sections, we review the main irregular sampling effects.
+On the next sections, we review the main irregular sampling effects and the main approaches to deal with time synchronization in sensor networks.
 
-\section{Irregularity Types}
+\section{Sampling Irregularity Types}
 \subsection{Time Delay}
 
 Time-delay systems (TDS) are probably the most common mathematical representation to time delays in practice. The works of \citep{Richard2003, Fridman2014} and the references therein provide a good coverage of the subject. In TDSs, there might be delays in the input or in the output signals, introduced by communication networks, or even in the states themselves. The latter phenomenon is called system with aftereffect or dead-time. Since we are studying the irregular sampling issue, only signal delays are relevant to us.
@@ -270,25 +271,17 @@ A summary of causes and effects that time delay causes in an estimator are illus
 
 \section{Time Synchronization}
 
-Most of the issues are due to sensor networks or architecture. Sensor fusion without synchronization introduces unknown or uncertain timestamp. They happen because blablabla
+There are techniques to handle all the irregularities discussed in this chapter and perform an effective state estimation. Provided that the estimator acknowledges the exact time the measurements were taken, there are many studies that propose different algorithms with interesting results. For some examples, we encourage the reader to check the references from each subsection in this chapter.
 
-Explain how sensor clock words
+In general, multi-sensor data fusion techniques for state estimation require that exact measurement timestamps are available in order to assimilate data properly \citep{Ping2003, Brahmi2013}. However, that is not always the case and situations may arise in which timestamps were not collected or they are unreliable. Examples of the latter may occur when measurements are time stamped when they are received by the estimator instead of the moment it was taken, or when they are time stamped at local clocks without centralized synchronization \citep{Julier2005}. 
 
-Multi-sensor fusion require the knowledge of measurement timestamp. Julier proved the impact on not knowing. One can synchronize via several techniques or use other approaches, like PDAF, CU, etc.
-
-
+In many practical applications, if sampling irregularity cannot be accounted for accordingly, data are fused using the time of arrival as time-stamp \citep{Huck2011}, or irregularities such as OOSM are just disregarded completely \citep{Kwok2004}. \citep{Julier2005} proved, however, that neglecting the uncertainty in time-stamp information may degrade estimation performance significantly in certain cases. They compared the results from traditional approaches that disregard or underestimate uncertain time stamps to algorithms that take the uncertainty statistics into account, knowingly: using fixed value for time instants derived from a calculated mean delay; a maximum likelihood algorithm for determining the predicted time measurement was taken; probabilistic data association filter (PDAF), proposed by \citep{Bar-shalom2009}; their approach, the Covariance Union (CU) algorithm; and the algorith that uses the perfect time-stamp, to use as reference for the comparison. When irregularities happens in a situation where sensor information is sampled at much faster rates than filter update rates, the real-time particle filter (RTPF), proposed by \citep{Kwok2004}, that makes efficient use of all sensor information, instead of discarding sensor readings. That is achieved by dividing the received measurements among sets and then representing the states as a mixture of those sets.
 
 
-
+Alternatively, one can perform time synchronization... explain how clock works
 \citep{Sivrikaya2004}
 Time synchronization is an important issue in multihop, ad-hoc wireless networks such as sensor
 networks. Many applications of sensor networks need local clocks of sensor nodes to be synchronized, requiring various degrees of precision. Some intrinsic properties of sensor networks such as limited resources of energy, storage, computation, and bandwidth, combined with potentially high density of nodes make traditional synchronization methods unsuitable for these networks. Hence there has been an increasing research focus on designing synchronization algorithms specifically for sensor networks.
-
-
-
-\citep{Brahmi2013}
-The sensor-related time delay and the trend towards multi-sensor data fusion require to know the exact measurement timestamps in order to properly interpret the sensor data and therefore enhance the performance of the environmental perception algorithms by performing an optimal sensor data fusion. Furthermore, the evaluation of the perception sensors, by comparing their measurements to those of a ground- truth system, requires a correct timestamping; otherwise, measurement deviations will be erroneously interpreted as a bad accuracy of the sensor. Therefore, different methods and tools were developed to analyze the time delay and the timestamp of different environmental perception sensors
-
 
 
 \citep{Ping2003}
@@ -307,35 +300,6 @@ DMTS
 Having studied NTP and RBS, we felt the need to develop a more suitable time synchronization technique that avoids round trip time estimation, synchronizes sender and multiple receivers at the same time and require less number of message transfers than RBS. Other design considerations are scalability, energy consumption, computation cost and user application support.
 
 
-\citep{Huck2011}
-unknown latencies pose a problem in data association and temporal synchronization. Consequently, a method to estimate or incorporate the latencies is needed in all sensor fusion algorithms in order to derive the real time of a measurement.
-The crucial first part of every sensor data fusion is the data association, including the temporal synchronization of measurements from different sensors. The exact time at which the measurement was taken is needed. Unfortunately, not all sensors provide such information
-
-Hence, the earliest timestamp available for a radar measurement is the time of arrival at a data acquisition system, where this measurement data is processed
-
-
-
-Y. Bar-Shalom related to Probabilistic Data Association Filters (PDAF). 
-
-
-
-
-\citep{Kwok2004}
-. In many real-time applications of particle filters, how- ever, sensor information arrives at a significantly higher rate than the update rate ofthe filter. The prevalent approach to dealing with such situations is to update the particle filter as often as possible and to discard sensor information that cannot be processed in time. In this paper we present real-time particle filters, which make use of all sensor information even when the filter update rate is below the update rate of the sensors.
-How can we deal with situations in which the rate of incoming sensor data is higher than the update rate of the particle filter?
-Instead of discarding sensor readings, we distribute the samples among the different observations arriving during a filter update	
-
-
-\citep{Julier2005}
-However, all of the methods assume that, although
-the measurements are delayed (by a potentially random amount), the amount of delay is known. However, situations can arise in which the time delay is not known perfectly. Possible reasons include:
-1) Observations are time stamped when they become available to the filter, not when the observation was taken. One example of this is image acquisition using consumer-grade hardware such as a webcamera. Each image acquired by the camera is not time stamped when the image was taken. Rather, the image is time stamped when the data becomes available to an image processing application. Because of non deterministic OS delays (due to buffering, context switches and the like), the latency between acquiring an image and making it available is known imperfectly.
-2) Observations are time stamped from a local clock without centralized clock synchronization. In this case, there will always be deviations between clocks at different nodes and, as a result, latency cannot be calculated by subtracting the observation time from the current filter time
-Even though the latency is unknown, it might be possible
-to statistically characterize it through experimentation1.In this paper we assume that the latency is quantized and is bounded by known values
-The uncertainty of the delay was also resolved by means of Probabilistic Data Association Filter (PDAF).
-Julier and Uhlmann [6] suggested a method in which
-an unknown time delay could be treated by means of the covariance union algorithm. In this method, the covariance was estimated conservatively since the worst case, unknown delay, was considered. But, if the time delay is able to be modeled as a form of a distribution, it is helpful in estimation using that quantity considering the uncertainty of the delayed time.
 
 
 \section{Chapter Summary}
