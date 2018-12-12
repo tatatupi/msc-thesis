@@ -90,11 +90,11 @@ Dessa forma, no cenário \textbf{B} da Fig.~\ref{fig:esquema}, o algoritmo execut
 \subsection{Without Timestamp}
 
 Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
-\\
+
 \begin{equation}\label{eq:disc_carimbo}
 x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 \end{equation}
-\\
+
 \noindent
 em que $t^*_j= t^*_{j-1} + \delta t^*_j$ e $t^*_0=0$. Cada valor $\delta t^*_j$ corresponde ao intervalo de tempo entre o último instante $t^*_{j-1}$ em que se registrou a chegada de um sinal, seja ele de entrada ou de observação, e o próximo instante de tempo $t^*_{j}$ em que um valor de entrada ou de observação é obtido, conforme será detalhado no Capítulo \ref{cap3}. Entre instantes de observação e de entrada é utilizado um segurador de ordem zero, considerando a ultima informação disponível. 
 
@@ -103,7 +103,7 @@ Por outro lado, se o carimbo de tempo não é levado em conta, (\ref{eq:processo})
 \begin{equation}\label{eq:disc_semcarimbo}
 x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
 \end{equation}
-\\
+
 \noindent
 em que $t=nT$.
 

@@ -29,7 +29,7 @@ Sampling irregularities may occur due to a variety of issues. Sometimes as undes
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{Imagens/irreg_sampling.pdf}
+\includegraphics[width=0.85\textwidth]{Imagens/irreg_sampling.pdf}
 \caption[Irregular sampling diagram]{Irregular sampling diagram, showing the main causes (in orange) and effects (in blue) of irregularities}
 \label{fig:diagrama2}
 \end{figure}
@@ -261,7 +261,7 @@ where $y_i(k_i)$ represents the $k_i^{th}$ observation from sensor $i$ and $H_i$
 
 A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:multi_rate}.
 
-\begin{figure}[H]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.75\textwidth]{Imagens/scheme_multi-rate.pdf}
 	\caption[Uncertain observations diagram]{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
@@ -271,34 +271,79 @@ A summary of causes and effects that time delay causes in an estimator are illus
 
 \section{Time Synchronization}
 
-There are techniques to handle all the irregularities discussed in this chapter and perform an effective state estimation. Provided that the estimator acknowledges the exact time the measurements were taken, there are many studies that propose different algorithms with interesting results. For some examples, we encourage the reader to check the references from each subsection in this chapter.
+There are techniques to handle all the irregularities discussed in this chapter and still achieve efficient state estimation performance. Provided that the estimator acknowledges the exact time that measurements were taken, there are many studies that propose different algorithms with interesting results. For some examples, we encourage the reader to check the references from each subsection in this chapter.
 
 In general, multi-sensor data fusion techniques for state estimation require that exact measurement timestamps are available in order to assimilate data properly \citep{Ping2003, Brahmi2013}. However, that is not always the case and situations may arise in which timestamps were not collected or they are unreliable. Examples of the latter may occur when measurements are time stamped when they are received by the estimator instead of the moment it was taken, or when they are time stamped at local clocks without centralized synchronization \citep{Julier2005}. 
 
-In many practical applications, if sampling irregularity cannot be accounted for accordingly, data are fused using the time of arrival as time-stamp \citep{Huck2011}, or irregularities such as OOSM are just disregarded completely \citep{Kwok2004}. \citep{Julier2005} proved, however, that neglecting the uncertainty in time-stamp information may degrade estimation performance significantly in certain cases. They compared the results from traditional approaches that disregard or underestimate uncertain time stamps to algorithms that take the uncertainty statistics into account, knowingly: using fixed value for time instants derived from a calculated mean delay; a maximum likelihood algorithm for determining the predicted time measurement was taken; probabilistic data association filter (PDAF), proposed by \citep{Bar-shalom2009}; their approach, the Covariance Union (CU) algorithm; and the algorith that uses the perfect time-stamp, to use as reference for the comparison. When irregularities happens in a situation where sensor information is sampled at much faster rates than filter update rates, the real-time particle filter (RTPF), proposed by \citep{Kwok2004}, that makes efficient use of all sensor information, instead of discarding sensor readings. That is achieved by dividing the received measurements among sets and then representing the states as a mixture of those sets.
+In many practical applications, if sampling irregularity cannot be accounted for accordingly, data are fused using the time of arrival as time-stamp \citep{Huck2011}, or irregularities such as OOSM are just disregarded completely \citep{Kwok2004}. \citep{Julier2005} proved, however, that neglecting the uncertainty in time-stamp information may degrade estimation performance significantly in certain cases. They compared the results from traditional approaches that disregard or underestimate uncertain time stamps to algorithms that take the uncertainty statistics into account, knowingly: using fixed value for time instants derived from a calculated mean delay; a maximum likelihood algorithm for determining the predicted time measurement was taken; probabilistic data association filter (PDAF), proposed by \citep{Bar-shalom2009}; their approach, the Covariance Union (CU) algorithm; and the algorith that uses the perfect time-stamp, to use as reference for the comparison. When irregularities happens in a situation where sensor information is sampled at much faster rates than filter update rates, the real-time particle filter (RTPF), proposed by \citep{Kwok2004}, makes efficient use of all sensor information, instead of discarding sensor readings. That is achieved by dividing the received measurements among sample sets and then representing the states as a mixture of those sets.
+
+Alternatively, in order to avoid performance degradation, one can make use of time synchronization schemes, widely used in communication networks, to ensure global time stamps. Wireless sensor networks (WSN) are particularly dependent on such techniques, due to limited computation, energy and communication resources of the sensing devices used. The works of \citep{Sivrikaya2004, Kaur2015} provide detailed reviews of the time synchronization problem in sensor networks.
+
+Sivrikaya and Yener explain the synchronization problem through computer clock mechanism. With the aid of a hardware oscillator, local clocks from a sensing device node $i$ approximates real time $t$ as $C_i(t)$ by
+	
+\begin{equation}\label{eq:clock1}
+C_i(t) = a_it+b_i
+\end{equation}
+
+\noindent
+where $a_i(t)$ is the clock \textit{drift}, that is the clock frequency, and $b_i(t)$ represents an \textit{offset} value, or the difference from real value $t$.
+
+Clock approximations from two nodes in a network are compared by
+
+\begin{equation}\label{eq:clock2}
+C_1(t) = a_{12}C_2(t)+b_{12}
+\end{equation}
+
+\noindent
+where $a_{12}$ is the relative \textit{drift} and $b_{12}$ is the relative offset between nodes. 
+
+Under Equations~\ref{eq:clock1} and \ref{eq:clock2}, the synchronization problem becomes the equalization of the computer clocks from all different $n$ devices, in its most strict form. Thus, synchronization strategies can either match all clock frequencies and offsets once or perform repeated offset corrections over time. There are more relaxed versions of synchronizations, such as the one proposed by \cite{Roemer2003}, that aims at maintaining the order of events	only.	
+
+The most traditional are NTP and use of GPS. Other methods were proposed and table X summarizes them.
+
+\begin{table}[!htb]
+	\renewcommand{\arraystretch}{1.3}
+	\caption[Comparison of time synchronization methods]{Comparison of time synchronization methods. Parameters are \textit{Sync Precision, Energy Efficiency (E.E.) and Complexity (Comp).}. Adapted from \citep{Kaur2015}}
+	\label{tab:sync}
+	\centering
+	\begin{flushleft}
+		
+		{
+			\footnotesize
+			\begin{tabularx}{\linewidth}{
+					>{\hsize=0.45\hsize}X
+					>{\hsize=1.475\hsize}X
+					>{\hsize=1.475\hsize}X
+					>{\hsize=0.6\hsize}X}
+				\hline
+				\textbf{Protocol} 			& \textbf{Advantages}    			&  \textbf{Limitations} 		& \textbf{Parameters}\\ 
+				\hline
+				RBS & Eliminates random delays on the sender side & High amount of message exchanges and low transmission range & 29.1 $\mu s$ \ \ \ High E.E. High Comp. \\ \\
+					
+				TPSN & Eliminates the access, byte alignment and propagation times  & Does not estimate the clock drift; does not handle dynamic topology changes and demands high communication load & 16.9 $\mu s$ \ \ \ High E.E. Low Comp. \\ \\
+
+				DMTS & Reduces the number of message exchanges  & Restricted to low resolution and low frequency external clocks & 32 $\mu s$ \ \ \ \ \ \ \ \ \ \ \ \ V. High E.E. Low Comp. \\ \\
+					
+				LTS & Robust and works well in the presence of dynamic links and fading.  & The accuracy of synchronization decreases linearly in the depth of the synchronization tree & Unknown \ \ \ Low E.E. Low Comp. \\ \\
+									
+				Tiny-Sync Mini-Sync & Tolerant to message losses and adequate for networks with limited bandwidth and computational power & Unsuited for mobile sensor networks, high convergence time, not scalable and little robustness & 945 $\mu s$ \ \ \ \ \ \ High E.E. Low Comp. \\ \\		
+									
+				FTSP & Robust, handles dynamic topology changes well and eliminates maximum delay components  & Does not eliminate propagation delay and is not scalable & 1.48 $\mu s$ \ \ \ High E.E. High Comp. \\ \\
+										
+				LEETS & Low power consumption and low amount of message exchanges & Requires a GPS receiver in the root node & 30 $\mu s$ \ \ \ \ \ \ \ 	High E.E. Low Comp. \\ \\
+				
+				TDP & Tolerant to message losses, high mobility and performs well even without external servers  & Very high convergence time & 100 $\mu s$ \ \ \ \ \ \ 	High E.E. High Comp. \\ \\
+									
+				LiMing & Low synchronization error & Not scalable & Unknown  \ \ \ Low E.E. Low Comp. \\ \\
+				
+			\end{tabularx}
+		}
+	\end{flushleft}
+\end{table}
 
 
-Alternatively, one can perform time synchronization... explain how clock works
-\citep{Sivrikaya2004}
-Time synchronization is an important issue in multihop, ad-hoc wireless networks such as sensor
-networks. Many applications of sensor networks need local clocks of sensor nodes to be synchronized, requiring various degrees of precision. Some intrinsic properties of sensor networks such as limited resources of energy, storage, computation, and bandwidth, combined with potentially high density of nodes make traditional synchronization methods unsuitable for these networks. Hence there has been an increasing research focus on designing synchronization algorithms specifically for sensor networks.
 
-
-\citep{Ping2003}
-Network time or time synchronization is essential for any communications networks, especially for wireless sensor networks. For example, data collected by sensors need global time stamps.
-
-NTP --- The Time Synchronization Scheme for Internet
-The time synchronization scheme widely adopted in traditional computer networks is the Network Time Protocol, NTP [13] [14]. A NTP client synchronizes its time with a NTP server using the server?s time provided in a NTP packet and one half of the measured round trip time. In this way a NTP client can be synchronized within a few milliseconds error.
-However, we argue that two-way time synchronization techniques, including NTP are not suitable in wireless sensor networks. The basic assumption of a two-way time synchronization method is that the time transfer path is reciproca
-
-Elson proposed a Reference broadcasting synchronization technique [6][7][8]
-for wireless sensor networks. In RBS, a reference message
-is broadcasted. The receivers record their local time when
-receiving the reference broadcast, and then they exchange their recorded time. In this way, they have the knowledge of their time offset with each other. When each mote takes the average of its time offsets to all other nodes that have observed the same reference, a relative network time is achieved among all the receivers.
-
-DMTS
-Having studied NTP and RBS, we felt the need to develop a more suitable time synchronization technique that avoids round trip time estimation, synchronizes sender and multiple receivers at the same time and require less number of message transfers than RBS. Other design considerations are scalability, energy consumption, computation cost and user application support.
-
+Nevertheless, it is aways costly and sometimes it may not be worth it.
 
 
 
