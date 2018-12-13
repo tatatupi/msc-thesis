@@ -1,6 +1,6 @@
 %------------------------------------------------------------------------------
 \chapter{Irregular Sampling}
-\vspace{-1cm} \label{cap2}
+\vspace{-1cm} \label{cap3}
 
 %\begin{flushright}
 %\begin{minipage}{0.7\linewidth}
@@ -21,9 +21,9 @@
 
 In the last chapter, we  reviewed sensor fusion motivations, advantages and techniques. Despite all the growth and benefits from fusing data form multiple sensors, some challenges naturally appear. For the state estimation problem in sampled-data systems, a common challenge is related to sampling irregularities introduced in the network.
 
-In this chapter, we review the irregular sampling problem. First, in Section \ref{irregular-sampling} we categorize the different types of irregularities that may occur in sampling and discuss the main causes and its particularities. A diagram is built by categorizing the main types studied in the scientific literature and their causes. Then each irregularity is further discussed, with examples, mathematical models and their subdivisions, where applicable. We end this chapter with a discussion of time synchronization, which is needed to guarantee a common time scale for all nodes in network, enabling the irregularities to be dealt with appropriately.
+In this chapter, we review the irregular sampling problem. First, in Section \ref{sec:intro} we categorize the different types of irregularities that may occur in sampling and discuss their main causes and particularities. Then, in Secton~\ref{sec:irreg_types}, each irregularity is further discussed, with examples, mathematical models and their subdivisions, where applicable. We end this chapter with a discussion of time synchronization in Section~\ref{sec:sync}, which is needed to guarantee a common time scale for all nodes in network, enabling the irregularities to be dealt with appropriately.
 
-\section{Introduction}\label{irregular-sampling}
+\section{Introduction}\label{sec:intro}
 
 Sampling irregularities may occur due to a variety of issues. Sometimes as undesired side effects of using large sensor networks architectures and others due to deliberate non-uniform sampling schemes. In this section we try to categorize and review the main irregularities observed in practice. The diagram in Figure \ref{fig:diagrama2} provides a simplified overview of them, separated by their sources.
 
@@ -40,12 +40,12 @@ However the communication networks shall not always be held responsible. Some ap
 
 Finally, sampling irregularities might also appear due to a specific nature of a system. In some high maneuverable target-tracking applications, for example, there is a chance that the sensor misses the target, transmitting only noise, leading to the so called uncertain observation issue \citep{Wang2009, Chen2013}.
 
-Whatever the reason for the irregularities, data need be associated in order to be fused into knowledge. A crucial part of association is temporal synchronization of observations, so that the exact time at which measurements are taken are available \citep{Ping2003}. Most sensor fusion methods for irregularly sampled systems rely on the correct timestamps to 
-develop modification in classical algorithms. If observations are imprecisely timestamped, some alternatives have been proposed \citep{Julier2005, Huck2011} that incorporate some aspects of that imprecision in the estimation method. Still, some knowledge about the irregularity is assumed to be known. Alternatively, many techniques for time synchronization can be performed, to ensure a common time scale for all the sensors. 
+Whatever the reason for the irregularities, data need be associated in order to be fused into knowledge. A crucial part of association is temporal synchronization of observations, so that the exact time at which measurements are taken are available \citep{Ping2003}. Most sensor fusion methods for irregularly sampled systems rely on the correct time-stamps to 
+develop modifications in classical algorithms. If observations are imprecisely time stamped, some alternatives have been proposed \citep{Julier2005, Huck2011} that incorporate some aspects of that imprecision in the estimation method. Still, some knowledge about the irregularity is assumed to be known. Alternatively, many techniques for time synchronization can be performed, to ensure a common time scale for all the sensors. 
 
 On the next sections, we review the main irregular sampling effects and the main approaches to deal with time synchronization in sensor networks.
 
-\section{Sampling Irregularity Types}
+\section{Sampling Irregularity Types}\label{sec:irreg_types}
 \subsection{Time Delay}
 
 Time-delay systems (TDS) are probably the most common mathematical representation to time delays in practice. The works of \citep{Richard2003, Fridman2014} and the references therein provide a good coverage of the subject. In TDSs, there might be delays in the input or in the output signals, introduced by communication networks, or even in the states themselves. The latter phenomenon is called system with aftereffect or dead-time. Since we are studying the irregular sampling issue, only signal delays are relevant to us.
@@ -62,25 +62,25 @@ where $i=0,\ 1,\ ...,\ l$ and $l$ is the number of different known delays. $y_i(
 
 For some systems, delays might not be known and constant, but still multiple of a fixed value. In such cases, observations might be received in a burst, when more than one packet arrive between two consecutive sampling instants. When that happens, the estimator might use only the latest measurement and discard all others, or implement a buffer to iterate over all received packets \citep{Moayedi2011}.
 
-However, in many applications the measurements are received by the estimator with irregular and unknown delays. In such cases, time delays can be interpreted as a stochastic process $d(k)$, varying randomly throughout time. \citep{Han2009} describes a discrete-time measurement model for random delayed observations as
+However, in many applications the measurements are received by the estimator with irregular and unknown delays, although taken at regular time intervals. In such cases, time delays can be interpreted as a stochastic process $d(k)$, varying randomly throughout time. \citep{Han2009} describes a discrete-time measurement model for random delayed observations as
 
 \begin{equation}\label{eq:delay_model2}
 y(k) = H(k)x(k-d(k))+L(k)v(k)
 \end{equation}
 
 \noindent
-where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time Markov Chain observable at each sampling time k.
+where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time Markov Chain observable at each sampling time $k$.
 
-Multiple of a known lag or not, delayed measurements from a multisensor system are subject to arrive disordely, which leads to the sampling irregularity commonly known as to as out-of-sequence-measurements (OOSM). It can be classified in three ways, depending on the number of lags, according to Figure~\ref{fig:oosm}. 
+Multiple of a known lag or not, delayed measurements from a multisensor system are subject to arrive disordely, which leads to the sampling irregularity commonly known as out-of-sequence-measurements (OOSM). It can be classified in three ways, depending on the number of lags, according to Figure~\ref{fig:oosm}. 
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/oosm.pdf}
+	\includegraphics[width=0.85\textwidth]{Imagens/oosm.pdf}
 	\caption{Different classes of out-of-sequence measurements irregularities}
 	\label{fig:oosm}
 \end{figure} 
 
-\citep{Anxi2005} describes four different filtering approaches to deal with OOSM: reprocessing, that stores filter results to rollback with the time-delayed measurement; data buffering, that holds a set of measurements, greater than maximum expected lag, to be sorted before filtering; discarding data, that neglects time-delayed measurements; and directly updating, that uses the delayed information to update current state estimate. \citep{Bar-Shalom2000} used the last approach to describe an optimal filter for the single-lag case.
+\citep{Anxi2005} describes four different filtering approaches to deal with OOSM: reprocessing, that stores filter results to rollback with the time-delayed measurement; data buffering, that holds a set of measurements, greater than the maximum expected lag, to be sorted before filtering; discarding data, that neglects time-delayed measurements; and directly updating, that uses the delayed information to update current state estimate. \citep{Bar-Shalom2000} used the last approach to describe an optimal filter for the single-lag case.
 
 A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:diagrama_delay}.
 
@@ -93,17 +93,17 @@ A summary of causes and effects that time delay causes in an estimator are illus
 
 \subsection{Packet Loss}
 
-When data are being transmitted by a large network of sensors, there is a probability they can get lost in the way or they might arrive after a significant delay, which is equivalent to a loss for practical	 applications~\citep{Sinopoli2004}. Usually referred to as packet dropout/loss, missing, intermittent observations or scarse measurements~\citep{Albertos2004} they may happen due to node failures, network congestion, limited bandwidth or temporal failure. 
+When data are being transmitted by a large network of sensors, there is a probability that they get lost in the way or they might arrive after a significant delay, which is equivalent to a loss for practical	 applications~\citep{Sinopoli2004}. Usually referred to as packet dropout/loss, missing/intermittent observations or scarse measurements~\citep{Albertos2004} they may happen due to node failures, network congestion, limited bandwidth or temporal failure. 
 	
 Mathematical description of packet dropouts can be carried out recursively, as described in~\citep{Sun2011}, by
 
-\begin{align}
+\begin{equation}
 \centering
 \begin{split}
-z(t)=H(t)x(t)+v(t), \\
-y(t) = \xi(t)z(t)+(1-\xi(t))y(t-1),
+z(t) & = H(t)x(t)+v(t), \\
+y(t) & = \xi(t)z(t)+(1-\xi(t))y(t-1),
 \end{split}
-\end{align}
+\end{equation}
 
 \noindent
 where $z(t) \in \mathbf{R}^m$ is the measured output transmitted to the estimator, $v(t) \in \mathbf(R)^m$ is white noise, $y(t) \in \mathbf{R}^m$ is the measurement received by the estimator and $\xi(t) \sim Ber(p)$ is a Bernoulli random variable that takes the value 1 with probability $p$ and 0 with probability $1-p$. That is, when $\xi(t)$ is 1, there is no packet dropout. If $\xi(t)$ is 0, however, the latest output is used at current time, in a recursive fashion.
@@ -135,7 +135,7 @@ A summary of causes and effects that time delay causes in an estimator are illus
 
 \subsection{Uncertain Observation}\label{sec:uncertain}
 
-For some applications, there is a chance that the observation signal sent to the estimator contains only noise. According to \citep{Jaffer1971}, it happens as a consequence of two situations: the observation was taken, but was lost during transmission, due to communication failures; or it was not transmitted at all, as it may happen for target tracking systems, for example, when the object being observed is not tracked at a sample time. An observation model for a sampled-data system can be described as
+For some applications, there is a chance that the observation signal sent to the estimator contains only noise. According to \citep{Jaffer1971}, it happens as a consequence of two situations: the observation was taken, but was lost during transmission, due to communication failures; or it was not transmitted at all, as it may happen for target tracking systems, for example, when the object being observed is not tracked at a sample time. An observation model for a sampled-data system with uncertain observations can be described as
 
 \begin{equation}
 y(k) = \gamma(k)Cx(k) + Dv(k)
@@ -144,7 +144,7 @@ y(k) = \gamma(k)Cx(k) + Dv(k)
 \noindent
 where $\gamma(k) \sim Ber(p(k))$ is a Bernoulli random variables, taking values of 0 or 1, with probabilities $p(k)$ and $1 - p(k)$, respectively.
 
-Unlike the packet dropout problem, when the missing data are associated with the total absence of signal, the issue of uncertain observation has to be dealt with differently. A common approach is to detect the existence of signal prior to the assimilation, using a likelihood ratio test.  \citep{Middleton1968} proposes a joint approach to systematically detect and extract information from observation signals. If the estimator and detector are developed separately, te probability of false alarms is not used in the estimator, making it suboptimal. \citep{Nahi1969} developed an optimal recursive estimator, that uses the information of the random variable $\gamma$ in the algorithm, assuming it is independent and identically distributed. \citep{Hadidi1979} generalized the work of Nahi, for the case when the uncertainty of the signals presence is described by a Markovian sequence of binary random variables.
+Unlike the packet dropout problem, when the missing data are associated with the total absence of signal, the issue of uncertain observation has to be dealt with differently. A common approach is to detect the existence of signal prior to the assimilation, using a likelihood ratio test.  \citep{Middleton1968} proposes a joint approach to systematically detect and extract information from observation signals. If the estimator and detector are developed separately, the probability of false alarms is not used in the estimator, making it sub-optimal. \citep{Nahi1969} developed an optimal recursive estimator, that uses the information of the random variable $\gamma$ in the algorithm, assuming its sequence is independent and identically distributed. \citep{Hadidi1979} generalized the work of Nahi, for the case when the uncertainty of the signals presence is described by a Markovian sequence of binary random variables.
 
 A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:uncertain}.
 
@@ -157,11 +157,9 @@ A summary of causes and effects that time delay causes in an estimator are illus
 
 \subsection{Aperiodic Sampling}\label{sec:aperiodic}
 	
-All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena, causing what is called as aperiodic or asynchronous sampling. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like irregular faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to sampling frequency similar to clock frequency, sampling requests delayed by the network or imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time intervals are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. 
+All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena, causing the so called aperiodic or asynchronous sampling. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like irregular faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to a sampling frequency similar to the clock frequency; to sampling requests delayed by the network; or to imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time instants are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. Sometimes, the system being observed has particularities that causes the aperiodic sampling. One example is seismology, where the spatial coordinates are irregularly sampled, because of natural obstacles \citep{Marvasti2001}. Other large scale systems, such as power grids, have sensors with huge geographical separations and different communication links to the estimation hub, which causes multiple and random inter-observation intervals \citep{Yan2017}.
 
-Sometimes, the system being observed has particularities that causes the aperiodic sampling. One example is seismology, where the spatial coordinates are irregularly sampled, because of natural obstacles \citep{Marvasti2001}. Other large scale systems, such as power grids, have sensors with a huge geographical separations, and different communication links to the estimation hub, which causes multiple and random inter-observation intervals \citep{Yan2017}.
-
-Whereas for most cases, the non-uniformities in sampling time intervals appear as unwanted effects, there are cases when the sampling rule is designed to work irregularly. If there are limitations of communication resources (limited bandwidth or computation capacity) or a need for a reduced energy consumption, for example, time-driven sampling might be neglected in favor of an event-based scheme. In such strategy, an event-triggering mechanism is responsible for determining the sampling instants, according to Figure~\ref{fig:event-based}. For time-driven schemes, a clock triggers the transmission instants (a), while event-driven sampling instants depends on the sensor output itself with an optional feedback loop from the estimator, to assess estimation performance. Therefore, the trigger mechanism design provides a trade-off between performance and resource consumption efficiency, attracting a lot of research interest \citep{Liu2014}. The most common strategy for event-driven state estimation is the send-on-delta (SOD) \citep{Miskowicz2006}, which triggers the transmission when the value of the measured state deviates from the previous assimilated observation by an interval $\pm \Delta$, with $\Delta>0$. Other strategies were studied in \citep{Zou2017}. To avoid the risk of unexpected high amount of triggered measurements in a short period of time, which can lead to the dreaded Zeno behavior \citep{Tabuada2007}, lower-bounds can be defined both for the $\Delta$ value or for some explicit minimum inter-event time. 
+Whereas for most cases the deformities in sampling time intervals appear as unwanted effects, there are cases when the sampling rule is designed to work aperiodically. If there are limitations of communication resources (limited bandwidth or computation capacity) or a need for a reduced energy consumption, for example, time-driven sampling might be neglected in favor of an event-based scheme. In such strategy, an event-triggering mechanism is responsible for determining the sampling instants, according to Figure~\ref{fig:event-based}. For time-driven schemes, a clock triggers the transmission instants, while event-driven sampling instants depends on the sensor output itself with an optional feedback loop from the estimator, to assess estimation performance. Therefore, the trigger mechanism design provides a trade-off between performance and resource consumption efficiency, attracting a lot of research interest \citep{Liu2014}. The most common strategy for event-driven state estimation is the send-on-delta (SOD) \citep{Miskowicz2006}, which triggers the transmission when the value of the measured state deviates from the previous assimilated observation by an interval $\pm \Delta$, with $\Delta>0$. Other strategies were studied in \citep{Zou2017}. To avoid the risk of unexpected high amount of triggered measurements in a short period of time, which can lead to the dreaded Zeno behavior \citep{Tabuada2007}, lower-bounds can be defined both for the $\Delta$ value or for some explicit minimum inter-event time. 
 
 \begin{figure}[!htb]
 	\centering
@@ -224,29 +222,30 @@ For the stochastic process generalization, sampling time instants $t_k$ can be d
 \end{equation}
 
 \noindent
-where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(\kappa,\theta)$. If the shape parameter $k$ is a positive integer, it becomes an Erlang distribution, as used in \citep{Kanchanaharuthai2002}. For the most common case, where $k$ is held constant, the random time interval $\delta_k$ follows an exponential pdf the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}.
+where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(\kappa,\theta)$. If the shape parameter $k$ is a positive integer, it becomes an Erlang distribution, as used in \citep{Kanchanaharuthai2002}. For the most common case, where $\kappa$ is held constant, the random time interval $\delta_k$ follows an exponential PDF and the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}. In fact, Micheli and Jordan provided mathematical proof that for a network with $N$ unsynchronized sensors with sampling period $T$, the waiting time between two arrivals tends, in distribution, to the exponential random variable, that is 
+$\delta_k \sim \mathcal{E} (\lambda)$, where $\lambda = N/T$, as $N$ tends to infinity.
 
-A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:aperiodic}.
+A summary of causes and types of aperodic sampling is presented Figure \ref{fig:aperiodic}.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.75\textwidth]{Imagens/scheme_aperiodic.pdf}
-	\caption[Uncertain observations diagram]{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\caption[Aperiodic sampling diagram]{Aperiodic sampling diagram, showing the main causes (in orange) and types (in dark blue) of irregularity.}
 	\label{fig:aperiodic}
 \end{figure}
 
 \subsection{Multi-Rate Sampling}
 
-The last irregularity discussed is the multi-rate sampling. Generally, it refers to multiple sensors measuring the same system at different sampling rates. Many industrial processes need to control challenging variables that can be measured by online instruments that provide regular, fast rate and delay free information, but with low precision. Therefore, more accurate data are needed and usually available after slow and irregular laboratory analysis \citep{Penarrocha2012, Fatehi2017}. The combination of both sources of measurements leads to a multi-rate sampling scenario. 
+The last irregularity discussed is the multi-rate sampling. Generally, it refers to multiple sensors measuring the same system at different sampling rates. Many industrial processes need to control challenging variables that can be measured by online instruments that provide regular, fast rate and delay free information, but with low precision. Therefore, more accurate data are needed and usually available after slow, irregular and human-dependent laboratory analysis \citep{Penarrocha2012, Fatehi2017}. The combination of both sources of measurements leads to a multi-rate sampling scenario. 
 
 A more common approach is the use of various sensors measuring the same physical information, to obtain better estimates, which has been drawing attention from real world applications, such as target tracking, robotics, surveillance and military. For such strategy, the sampling rates perceived by the estimator are often different from one another. The work of \citep{Lin2016} and the references therein provide a wide coverage of scenarios derived from multi-sensor multi-rate systems. 
 
-Figure \ref{fig:multi-rate} illustrates the ways multi-rate sampling can manifest in a system. The different rates from the various sensor devices can be periodic (a), aperiodic (b) or even a mixture of both, as is the case for most industrial applications with laboratory analysis.
+Figure \ref{fig:multi-rate} illustrates the ways multi-rate sampling can be manifested in a system. The different rates from the various sensor devices can be periodic (a), aperiodic (b) or even a mixture of both, as it is the case for most industrial applications with laboratory analysis.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Imagens/multi_rate.pdf}	
-	\caption[Periodic and aperiodic multi-rate sampling scheme]{(a) Periodic and (b) aperiodic multi-rate sampling scheme.}
+	\caption[Periodic and aperiodic multi-rate sampling scheme]{(a) Periodic and (b) aperiodic multi-rate sampling scheme. Labels $S_1$, $S_2$, $S_3$ refers to the sampling instants of three different sensors, from the highest rate to the lowest rate.}
 	\label{fig:multi-rate}
 \end{figure}
 
@@ -257,29 +256,29 @@ Aperiodic sampling rates can be described the same way as in Section \ref{sec:ap
 \end{equation}
 
 \noindent
-where $y_i(k_i)$ represents the $k_i^{th}$ observation from sensor $i$ and $H_i$ is the discrete measurement model matrix.
+where $y_i(k_i)$ represents the $k_i^{th}$ observation from sensor $i$ and $H_i$ is the discrete measurement model matrix related to that sensor.
 
-A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:multi_rate}.
+Figure \ref{fig:multi_rate} shows a schematic of causes and types of the multi-rate sampling irregularity.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.75\textwidth]{Imagens/scheme_multi-rate.pdf}
-	\caption[Uncertain observations diagram]{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\caption[Multi-rate sampling diagram]{Multi-rate sampling diagram, showing the main causes (in orange) and types (in dark blue) of multi-rate sampling.}
 	\label{fig:multi_rate}
 \end{figure}
 
 
-\section{Time Synchronization}
+\section{Time Synchronization}\label{sec:sync}
 
-There are techniques to handle all the irregularities discussed in this chapter and still achieve efficient state estimation performance. Provided that the estimator acknowledges the exact time that measurements were taken, there are many studies that propose different algorithms with interesting results. For some examples, we encourage the reader to check the references from each subsection in this chapter.
+There are techniques to handle all the irregularities discussed in this chapter and still achieve efficient state estimation performance. Provided that the estimator acknowledges the time that measurements were taken, there are many studies that propose different algorithms with interesting results. For some examples, we encourage the reader to check the references from each subsection in this chapter.
 
-In general, multi-sensor data fusion techniques for state estimation require that exact measurement timestamps are available in order to assimilate data properly \citep{Ping2003, Brahmi2013}. However, that is not always the case and situations may arise in which timestamps were not collected or they are unreliable. Examples of the latter may occur when measurements are time stamped when they are received by the estimator instead of the moment it was taken, or when they are time stamped at local clocks without centralized synchronization \citep{Julier2005}. 
+In general, multi-sensor data fusion techniques for state estimation require that exact measurement time-stamps are available in order to assimilate data properly \citep{Ping2003, Brahmi2013}. However, that is not always the case and situations may arise in which time-stamps were not collected or their values are unreliable. Examples of the latter may occur when measurements are time stamped when they are received by the estimator instead of the moment it was taken, or when they are time stamped at local clocks without centralized synchronization \citep{Julier2005}. 
 
-In many practical applications, if sampling irregularity cannot be accounted for accordingly, data are fused using the time of arrival as time-stamp \citep{Huck2011}, or irregularities such as OOSM are just disregarded completely \citep{Kwok2004}. \citep{Julier2005} proved, however, that neglecting the uncertainty in time-stamp information may degrade estimation performance significantly in certain cases. They compared the results from traditional approaches that disregard or underestimate uncertain time stamps to algorithms that take the uncertainty statistics into account, knowingly: using fixed value for time instants derived from a calculated mean delay; a maximum likelihood algorithm for determining the predicted time measurement was taken; probabilistic data association filter (PDAF), proposed by \citep{Bar-shalom2009}; their approach, the Covariance Union (CU) algorithm; and the algorith that uses the perfect time-stamp, to use as reference for the comparison. When irregularities happens in a situation where sensor information is sampled at much faster rates than filter update rates, the real-time particle filter (RTPF), proposed by \citep{Kwok2004}, makes efficient use of all sensor information, instead of discarding sensor readings. That is achieved by dividing the received measurements among sample sets and then representing the states as a mixture of those sets.
+In many practical applications, if sampling irregularity cannot be accounted for accordingly, data are fused using the time of arrival as time-stamp \citep{Huck2011}, or irregularities such as OOSM are just disregarded completely \citep{Kwok2004}. \citep{Julier2005} proved, however, that neglecting the uncertainty in time-stamp information may degrade estimation performance significantly in certain cases. For that, they compared the results from traditional approaches that disregard or underestimate uncertain time stamps to algorithms that take the uncertainty statistics into account, knowingly: using fixed value for time instants derived from an estimated mean delay; a maximum likelihood algorithm for determining the predicted time measurement was taken; probabilistic data association filter (PDAF), proposed by \citep{Bar-shalom2009}; their approach, the Covariance Union (CU) algorithm; and the algorithm that uses the perfect time-stamp, to use as reference for the comparison. When irregularities happens in a situation where sensor information is sampled at much faster rates than filter update rates, the real-time particle filter (RTPF), proposed by \citep{Kwok2004}, makes efficient use of all sensor information, instead of discarding sensor readings. That is achieved by dividing the received measurements among sample sets and then representing the states as a mixture of those sets.
 
-Alternatively, in order to avoid performance degradation, one can make use of time synchronization schemes, widely used in communication networks, to ensure global time stamps. Wireless sensor networks (WSN) are particularly dependent on such techniques, due to limited computation, energy and communication resources of the sensing devices used. The work of \citep{Sivrikaya2004} provide detailed reviews of the time synchronization problem in sensor networks.
+Alternatively, in order to avoid performance degradation, one can make use of time synchronization schemes, widely used in communication networks, to ensure global time stamps. Wireless sensor networks (WSN) are particularly dependent on such techniques, due to limited computation, energy and communication resources of the sensing devices used. The work of \citep{Sivrikaya2004} provide detailed reviews of the time synchronization problem in sensor networks. They explain the problem through computer clock mechanism. 
 
-Sivrikaya and Yener explain the synchronization problem through computer clock mechanism. With the aid of a hardware oscillator, local clocks from a sensing device node $i$ approximates real time $t$ as $C_i(t)$ by
+With the aid of a hardware oscillator, local clocks from a sensing device node $i$ approximates real time $t$ as $C_i(t)$ by
 	
 \begin{equation}\label{eq:clock1}
 C_i(t) = a_it+b_i
@@ -299,9 +298,9 @@ where $a_{12}$ is the relative \textit{drift} and $b_{12}$ is the relative offse
 
 Under Equations~\ref{eq:clock1} and \ref{eq:clock2}, the synchronization problem becomes the equalization of the computer clocks from all different $n$ devices, in its most strict form. Thus, synchronization strategies can either match all clock frequencies and offsets once or perform repeated offset corrections over time. There are more relaxed versions of synchronizations, such as the one proposed by \cite{Roemer2003}, that aims at maintaining the order of events	only.	
 
-Probably the most popular time synchronization method is the one governing in the internet environment for years, Network Time Protocol (NTP), described by \citep{Mills1991}. For most control and WNS applications, however, it is not suitable, due to very different requirements, such as energy consumption, precision and scalability \citep{Ganeriwal2003}. All sensing devices in the network could be equipped with a global positioning system (GPS) for an easy global time synchronization, but such solution is very expensive and also, very energy efficient and its signal might not work properly in every environment.
+Probably the most popular time synchronization method is the one being used in the internet environment for years, the Network Time Protocol (NTP), designed by \citep{Mills1991}. For most control and WNS applications, however, it is not suitable, due to very different requirements, such as energy consumption, precision and scalability \citep{Ganeriwal2003}. An easy solution would be to equip all sensing devices in the network with a global positioning system (GPS) for a global time synchronization, but such solution is very expensive, not energy efficient and its signal might not work properly in every environment.
 
-Therefore, many alternative methods have been proposed, and the work of \citep{Kaur2015} updates Sivrikaya and Yener's studies with an exploration on the most recent synchronization protocols, that is: reference broadcast synchronization (RBS) \citep{Elson2002}; timing-sync protocol for sensor networks (TPSN) \citep{Ganeriwal2003};  delay measurement time synchronization (DMTS) \citep{Ping2003}; lightweight tree-based synchronization (LTS) \citep{Greunen2003}; tiny-sync mini-sync \citep{Sichitiu2003}; flooding time synchronization protocol (FTSP) \citep{Maroti2004}; lightweight and energy efficient time synchronization (LEETS) \citep{MingxiaXu2005}; time diffusion protocol (TDP) \citep{Su2005}; and time synchronization based on spanning tree (TSST) \citep{He2008}. A comparison adapted from Kaur ad Abhilasha is presented in Table~\ref{tab:sync}.
+Therefore, many alternative methods have been proposed, and the work of \citep{Kaur2015} updates Sivrikaya and Yener's studies with an exploration of the most recent synchronization protocols for sensor networks, that is: reference broadcast synchronization (RBS) \citep{Elson2002}; timing-sync protocol for sensor networks (TPSN) \citep{Ganeriwal2003};  delay measurement time synchronization (DMTS) \citep{Ping2003}; lightweight tree-based synchronization (LTS) \citep{Greunen2003}; tiny-sync mini-sync \citep{Sichitiu2003}; flooding time synchronization protocol (FTSP) \citep{Maroti2004}; lightweight and energy efficient time synchronization (LEETS) \citep{MingxiaXu2005}; time diffusion protocol (TDP) \citep{Su2005}; and time synchronization based on spanning tree (TSST) \citep{He2008}. A comparison adapted from Kaur ad Abhilasha is presented in Table~\ref{tab:sync}.
 
 
 \begin{table}[!htb]
@@ -351,7 +350,7 @@ Therefore, many alternative methods have been proposed, and the work of \citep{K
 
 \section{Chapter Summary and Final Remarks}
 
-In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic sampling and multi-rate sampling. Diagrams describing their causes, types and effects are shown for each of them. We also describe the necessary modifications to the observation models of state estimation. Most of the methods proposed in the literature to handle sampling irregularities rely on correct time stamping of observations. Thus, the time synchronization problem is explored and the most recent protocols developed to ensure a global time scale from sensing devices in large sensor networks are shown and compared.
+In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic sampling and multi-rate sampling. Diagrams describing their causes, types and effects are shown for each of them. We also describe the necessary modifications to the observation models of state estimation algorithms. Most of the methods proposed in the literature to handle sampling irregularities rely on correct time stamping of observations. Thus, time synchronization in sensor networks becomes crucial and its further explored. The most recent protocols developed to ensure a global time scale from sensing devices in large sensor networks are shown and compared.
 
 However, the use of any time synchronization method will require computational, energy and resource consumption to some extent, apart from complex algorithms implementations. For sensor fusion performance applications in state estimation of sampled-data systems with irregular sampling, the investment might not be worth it. Thus, the next chapters try to shed some light in the evaluation of performance degradation in state estimation in the presence of irregular sampling, if time-stamps are not available.
 
