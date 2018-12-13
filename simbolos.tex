@@ -8,67 +8,138 @@
 \subsection*{Chapter 1}
 
 \begin{longtable}{ll}
-$\mathbb{N}^+$			& positive integers; \\
-$\mathbb{R}$			& real numbers; \\
-$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
-
-$\forall$				& for all; \\
-$\in$					& belongs to; \\
-$>$						& greater than; \\
-$<$						& less than; \\
-$\geq$					& greater than or equal to; \\
-$\leq$					& less than or equal to; \\
-$\triangleq$			& equals by definition; \\	
-$\approx$				& approximately equal to; \\
-$\sim$					& is distributed as; \\
-
-$\mathcal{N}$			& Gaussian distribution; \\
-$\mathcal{E}$			& Exponential distribution; \\
-$x_i$					& $i$th entry of x; \\	
-
-$f$						& process model; \\
-$g$						& observation model; \\
-$t$						& continuous-time index; \\
-$k$						& discrete-time index of measurements; \\
-$i$						& discrete-time index of input; \\
-$t_k$					& continuous-time sampled instants; \\
-$T$						& input sampling interval; \\
-$x(t)$					& state vector; \\
-$x(t_k)$				& state vector at continuous-time sampled instants; \\
-$u(t)$					& input vector; \\
-$u(iT)$					& input vector at continuous-time sampled at time $t = iT$; \\						
-$w(t)$					& process noise vector; \\
-$y_{t_k}$            	& output vector at continuous-time sampled instants;\\
-$\delta_{k}$			& measurements time-delay; \\
-$v(t_k)$				& measurement noise vector; \\
-$h_k$					& time intervals between two continuous-time sampled instants; \\
-$\lambda$ 				& parameter of the exponential distribution; \\
-$\lambda_h$				& parameter of the exponentially distributed random variable $h_k$; \\
-$\lambda_{\delta_{k}}$	& parameter of the exponentially distributed random variable $\delta_{k}$; \\
-$N$						& amount of identical sensors in the sampling model; \\
-$L$						& sampling period of the identical sensors in the sampling model; \\
-$P$						& covariance matrix; \\
-$\alpha$				& relation between output (expected) and input sampling time intervals . \\
+	$\mathbb{N}^+$			& positive integers; \\
+	$\mathbb{R}$			& real numbers; \\
+	$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
+	
+	$\forall$				& for all; \\
+	$\in$					& belongs to; \\
+	$>$						& greater than; \\
+	$<$						& less than; \\
+	$\geq$					& greater than or equal to; \\
+	$\leq$					& less than or equal to; \\
+	$\triangleq$			& equals by definition; \\	
+	$\approx$				& approximately equal to; \\
+	$\sim$					& is distributed as; \\
+	
+	$\mathcal{N}$			& Gaussian distribution; \\
+	$\mathcal{E}$			& Exponential distribution; \\
+	$x_i$					& $i$th entry of x; \\	
+	
+	$f$						& process model; \\
+	$g$						& observation model; \\
+	$t$						& continuous-time index; \\
+	$k$						& discrete-time index of measurements; \\
+	$i$						& discrete-time index of input; \\
+	$t_k$					& continuous-time sampled instants; \\
+	$T$						& input sampling interval; \\
+	$x(t)$					& state vector; \\
+	$x(t_k)$				& state vector at continuous-time sampled instants; \\
+	$u(t)$					& input vector; \\
+	$u(iT)$					& input vector at continuous-time sampled at time $t = iT$; \\						
+	$w(t)$					& process noise vector; \\
+	$y_{t_k}$            	& output vector at continuous-time sampled instants;\\
+	$\delta_{k}$			& measurements time-delay; \\
+	$v(t_k)$				& measurement noise vector; \\
+	$h_k$					& time intervals between two continuous-time sampled instants; \\
+	$\lambda$ 				& parameter of the exponential distribution; \\
+	$\lambda_h$				& parameter of the exponentially distributed random variable $h_k$; \\
+	$\lambda_{\delta_{k}}$	& parameter of the exponentially distributed random variable $\delta_{k}$; \\
+	$N$						& amount of identical sensors in the sampling model; \\
+	$L$						& sampling period of the identical sensors in the sampling model; \\
+	$P$						& covariance matrix; \\
+	$\alpha$				& relation between output (expected) and input sampling time intervals . \\
 \end{longtable}
 
 \subsection*{Chapter 2}
+
+\begin{longtable}{ll}
+	$\mathcal{N}$			& Gaussian distribution; \\
+	$\mathbb{P}$			& power set; \\
+	
+	$\mu$ 					& mean of a random variable; \\
+	$\sigma$ 				& standard deviation of a random variable;\\
+	
+	$n$						& number of homogeneous sensors; \\
+	$E$						& evidence; \\ 
+	$H$						& hypothesis; \\
+	$R_r$					& $r^{th}$ fuzzy rule; \\
+	$x_k$					& $k^{th}$ input fuzzy variable; \\
+	$A_i$					& $i^{th}$ antecedent linguistic value; \\
+	$y$						& output variable; \\
+	$C_j$					& $j^{th}$ consequent class; \\
+	$A$						& fuzzy set; \\
+	$U$						& universe of discourse; \\
+	$B$						& subset of features; \\
+	$B_*(X)$				& \textit{B-lower} approximation of $X$; \\
+	$B^*(X)$				& \textit{B-upper} approximation of $X$; \\
+	$BN_B(X)$				& \textit{B-boundary} region of $X$; \\
+	
+	$\rho(x)$				& probability distribution of $x$; \\
+	$\rho(A|B)$				& conditional probability distribution of $A$ given $B$; \\
+	$\pi_x(u)$				& possibility distribution of $x$ associated with $u$; \\
+	$\mu_A(x)$				& membership function of $x$ of a fuzzy se $A$; \\
+	
+	
+	$\subseteq$				& is a subset of; \\
+	$\cap$					& set intersection; \\
+	$\emptyset$				& empty set; \\
+	
+\end{longtable}
 
 
 \subsection*{Chapter 3}
 
 \begin{longtable}{ll}
+	$\mathbb{N}$			& natural numbers; \\
+	$\mathbb{R}$			& real numbers; \\
+	$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
+	
+	$Ber(p)$				& Bernoulli distribution; \\
 	$\mathcal{N}$			& Gaussian distribution; \\
-	$\mu$ 					& mean of a random variable; \\
-	$\sigma$ 				& standard deviation of a random variable;\\
-	$n$						& number of homogeneous sensors; \\
-	$\rho(x)$				& probability distribution of x; \\
-	$\rho(A|B)$				& conditional probability distribution of A given B; \\
-	$\pi(x)$				& possibility distribution; \\
-	$\subseteq$				& is a subset of; \\
-	$\cap$					& set intersection; \\
-	$\emptyset$				& empty set; \\
+	$\Gamma$				& gamma distribution; \\
+	
+	$\forall$				& for all; \\
+	$>$						& greater than; \\
+	$\geq$					& greater than or equal to; \\
+	$\sim$					& is distributed as; \\
+	$\pm$					& plus or minus; \\
+	
+	$y_{t}, y{k}$           & output vector at continuous-time sampled instants;\\
+	$z(t)$					& measurement output; \\
+	$H(k), L(k), C, D$		& matrices of the observation model; \\
+	$v(t), v(k)$			& measurement noise vector; \\
+	$t_i$ 					& continuous-time sampled index; \\
+	$k$						& discrete-time index of measurements;  \\
+	$T$						& expected time interval; \\
+	$d(k)$					& observation sampling time delays; \\
+	$l$						& amount of different known delays; \\
+	$\xi(t)$				& random variable that models packet dropout; \\
+	$\gamma(t)$				& random variable that models uncertain observation; \\
+	$C_i(t)$				& real time approximation from the $i^{th}$ computer clock; \\
+	$a_i$					& $i^{th}$ clock drift; \\
+	$b_i$					& $i^{th}$ clock offset; \\
+	$a_ij$					& relative drift between $i^{th}$ and $j^{th}$ node; \\
+	$b_ij$					& relative offset between $i^{th}$ and $j^{th}$ node; \\
+
+	$\Delta$				& time interval between observations; \\
+	$\delta_k$				& random time interval; \\
+	
+	$p(k)$					& Bernoulli distribution parameter; \\
+	$\epsilon_k$			& deviation from expected time instants; \\
+	$\sigma$				& standard deviation; \\
+	$\kappa$				& shape parameter; \\
+	$\theta$				& scale parameter; \\
+	
+	$\mu s$					& micro seconds; \\
+	$E.E$					& energy efficiency; \\
+	$Comp.$					& complexity; \\
+	
+	
+		
 
 \end{longtable}
+
 
 \subsection*{Chapter 4}
 
@@ -84,25 +155,35 @@ $\alpha$				& relation between output (expected) and input sampling time interva
 	DAO			& Data Out; \\
 	DEI			& Decision In; \\
 	DEO 		& Decision Out; \\
+	DMTS		& Delay Measurement Time Synchronization; \\
 	DS			& Dempster-Shafer; \\
 	DSET 		& Dempster-Shafer Evidence Theory; \\		
 	EKF			& Extended Kalman Filter; \\
 	FEI			& Feature In; \\
 	FEO			& Feature Out; \\
 	FISST		& Finite-Set Statistics; \\
+	FTSP		& Flooding Time Synchronization Protocol; \\
+	GPS			& Global Positioning System; \\
 	KF 			& Kalman Filter; \\
+	LEETS		& Lightweight and Energy Efficient Time Synchronization; \\
+	LTS			& Lightweight Tree-based Synchronization; \\
 	MOP 		& Measures Of Performance; \\
 	NMR 		& Nuclear Magnetic Resonance; \\
+	NTP			& Network Time Protocol; \\
 	NUS 		& Non-Uniform Sampling; \\ 
 	OOSM 		& Out-Of-Sequence Measurement; \\
 	PDF         & Probability Distribution Function; \\
 	PDAF		& Probabilistic Data Association Filter; \\
 	PF 			& Particle Filter; \\
+	RBS			& Reference Broadcast Synchronization; \\
 	RMSE		& Root Mean Square Error; \\
 	RTPF		& Real-Time Particle Filter; \\
 	SOD			& Send-On-Delta; \\
 	SNR			& Signal-to-Noise Ratio; \\
 	TDS			& Time-Delay System; \\
+	TDP			& Time-Diffusion Protocol; \\
+	TPSN		& Timing-sync Protocol for Sensor Networks; \\
+	TSST		& Time Synchronization based on Spanning Tree; \\
 	TTF 		& Track-to-Track Fusion; \\
 	UKF			& Unscented Kalman Filter; \\
 	WSN			& Wireless Sensor Networks; \\

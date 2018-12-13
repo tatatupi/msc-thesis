@@ -1,6 +1,6 @@
 %------------------------------------------------------------------------------
-\chapter{Sensor Fusion}
-\vspace{-1cm} \label{cap3}
+\chapter{Irregular Sampling}
+\vspace{-1cm} \label{cap2}
 
 %\begin{flushright}
 %\begin{minipage}{0.7\linewidth}
@@ -19,302 +19,341 @@
 %%Colocar uma descrição do capítulo aqui!
 %\section{Introdução}\label{sec int_cap_2}
 
+In the last chapter, we  reviewed sensor fusion motivations, advantages and techniques. Despite all the growth and benefits from fusing data form multiple sensors, some challenges naturally appear. For the state estimation problem in sampled-data systems, a common challenge is related to sampling irregularities introduced in the network.
 
-In this chapter, we review sensor fusion techniques, advantages and terminologies. We start with a brief explanation on the motivations of this field of science, grouping them in two main categories: data authenticity and data availability. We continue with a definition of sensor fusion and an exploration on the available fusion method classification models. The model based on data challenges, that is uncertainty, imperfection, inconsistency and disparateness, is further discussed, specially the data fusion methods that handle imperfect data, the most fundamental challenge present in data. We end the chapter narrowing the focus on probabilistic methods used to fuse information from sampled-data systems.
+In this chapter, we review the irregular sampling problem. First, in Section \ref{irregular-sampling} we categorize the different types of irregularities that may occur in sampling and discuss the main causes and its particularities. A diagram is built by categorizing the main types studied in the scientific literature and their causes. Then each irregularity is further discussed, with examples, mathematical models and their subdivisions, where applicable. We end this chapter with a discussion of time synchronization, which is needed to guarantee a common time scale for all nodes in network, enabling the irregularities to be dealt with appropriately.
 
-\section{Introduction}
+\section{Introduction}\label{irregular-sampling}
 
-The idea that combining information from multiple sensors to improve overall system performances has been in discussion for several decades. In the early days, there were those who argued against the synergism hype that was being spread in military systems, using the multi-sensor concept \citep{Fowler1979}. In his work, Fowler created what he called his seventh law: 
+Sampling irregularities may occur due to a variety of issues. Sometimes as undesired side effects of using large sensor networks architectures and others due to deliberate non-uniform sampling schemes. In this section we try to categorize and review the main irregularities observed in practice. The diagram in Figure \ref{fig:diagrama2} provides a simplified overview of them, separated by their sources.
 
-\begin{quote}
-	"Be wary of proposals for synergistic systems. Most of the time when you try to make 2 + 2 = 5, you end up with 3... and sometimes 1.9"
-\end{quote}
-
-Although he was right to affirm that the added complexity and high costs are not always worth it - specially back then, when devices were more expensive - many posterior studies advocated that the fusion of sensor data will always be better, in the sense that the probability of correctly classifying a target increases. A direct answer to Fowler's work came in the year after \citep{Nahin1980}, where Nahin and Pokoski used strict concepts and definitions, but also acknowledged their assumptions of discarding network complexity and costs for the sake of their arguments. This topic continued to draw scientific attention throughout the years, like the work of \citep{Rao1998} and \citep{Dasarathy2000}. Rao focused on fusion methods and its comparison to classifiers' performance. He also established conditions that guaranteed that the fused system will at least perform as good as the best classifier. Dasarathy's work extended that of Rao's, but was able to show a scenario at which a two-sensor suite outperforms a three sensor suite from a parametric fusion benefits domain perspective. In order to compare performances of fusion levels or algorithms and assess possible benefits of sensor fusion, \citep{Theil2000} discussed three Measures of Performance (MOP), one for each sensor management process, which are Detection, Tracking and Classification.
-
-Despite all philosophical discussions, many real applications have been taking advantage of sensor fusion benefits since its advent, like remote sensing \citep{Foster1981}, robotics \citep{Richardson1988} and intelligent systems \citep{Luo1989}. Recently, with the modernization and popularization of sensors, its use has grown significantly, with hot topics emerging in the area, such as body sensor networks for health-care applications \citep{Gravina2017}, artificial intelligence \citep{Safari2014, Jordao2018} and smart grids \citep{Liu2012, Kordestani2017}. Recent reviews of the state of the art \citep{Khaleghi2013, Jing2013} provide a very broad understanding of the field and its advances. 
-
-We continue this chapter advocating for the benefits of sensor fusion in Section \ref{sec:motivation}, describing its motivations and advantages. In Section \ref{sec:classification}, some of the taxonomy and classifications used in the area are discussed. We end the chapter with a deeper discussion of the aspects of data fusion related to imperfect data.
-
-
-\section{Motivation and Advantages}\label{sec:motivation}
-
-Whether or not all sensor fusion approaches outperform the use of less sensors in every aspect for any given condition, the fact is that many fields of science and engineering have been benefiting from choosing the fusion approach.
-
-The reasons why one chooses to fuse information from different sources are various. The works of \citep{Hall1997, Elmenreich2002, Andler2009, Khaleghi2013} provide a detailed study on the motivations and advantages of multi-sensor data fusion techniques. A common benefit from the use of multiple redundant sensors, for instance, is the increase in accuracy. By averaging all the measurements, the expected error decreases by the rate of $\frac{1}{\sqrt{n}}$, where $n$ is the number of homogeneous sensors, in case of the presence of i.i.d Gaussian noises. In Figure \ref{fig:accuracy} different probability distribution functions with different standard deviations, thus different expected errors are shown. 
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/fusion_accuracy.pdf}
-	\caption[Probability distribution functions for different amount of fused measurements]{Probability distribution functions for different amount of fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
-	\label{fig:accuracy}
+\begin{figure}
+\centering
+\includegraphics[width=0.85\textwidth]{Imagens/irreg_sampling.pdf}
+\caption[Irregular sampling diagram]{Irregular sampling diagram, showing the main causes (in orange) and effects (in blue) of irregularities}
+\label{fig:diagrama2}
 \end{figure}
 
-There are many other reasons to fuse information from multiple sensors, however. Elmenreich gives an interesting example to illustrate some of them. Imagine a car parking assist system with only one distance sensor mounted at its rear, with limited precision and considerable update time (sampling interval). Now picture how would be the system's performance, considering that the sensor may suffer from: deprivation or occlusion, in the sense that it could be blocked by some physical barrier; coverage, both in spatial and temporal contexts, since it can only sense objects in front of him (spatial) and can only provide information periodically (temporal); precision, with measurement errors being liable to be the cause of unexpected bumps; and uncertainty, when an object, such as a small bicycle, might be missed by the sensor. The system would definitely perform at insufficient levels. All these issues could be solved by adding sensors to the architecture.
+Networked system monitoring and control appears to be the main cause of irregular sampling. Unreliable communication channels may lead to random time delays and loss of information, specially if data are transmitted using a common media \citep{Sahebsara2007, Moayedi2011}. In case they get randomly interrupted during transmission or if a sensor fails at some point, the signal received may predominantly contain noise, causing uncertain observation or packet dropouts \citep{Hadidi1979, Wang2009}. Systems that are observed by a large number of desynchronized sensors will provide observations at random time intervals \citep{Micheli2002}. If they are synchronized but designed to operate in a centralized fashion, there is a chance that different time delays are produced due to distinct transmission routes for each sensor \citep{Bar-Shalom2000, Challa2003, Anxi2005}. 
 
-%%%% CORRIGIR EM CASO DE TROCA DE ORDEM
+However the communication networks shall not always be held responsible. Some applications are designed to be measured in an irregular way. In event-based schemes, for example, the measurements are transmitted only when certain conditions are met \citep{Liu2014,Zou2017}. Such approach can reduce communication resource consumption substantially \citep{Hu2017}, but will cause aperiodic sampling. Non-Uniform Sampling (NUS) is also intentionally used as an alias detection method \citep{Kunoh2015} or to enhance the spectral resolution of signals, largely used in Nuclear Magnetic Resonance (NMR) spectroscopy analysis \citep{Hyberts2013}. In other situations, due to the nature of the process being observed, the measurement strategy relies on different procedures. A lot of chemical processes, for instance, can be measured in an online, fast rate and delay free fashion, but provides inaccurate data. Therefore, lab analyses are used to improve estimation quality, but they are usually gathered at slower rates, sometimes irregularly and with possible time delays \citep{Fatehi2017}. Other industrial applications suffer from the same dilemma, and the sampling scheme ends up with a multi-rate data transmission, with random time delays and possibly measurement scarcity \citep{Penarrocha2012}. 
 
-Based on the studies from Hall, Elmenreich and Andler, we can group most of the advantages in two categories: Authenticity and Availability improvements. The first group refers to those benefits that improve the quality of the measurement, whereas the second one encompasses those benefits regarding ranges or data dimensions. The addition of sensors can also be of different types (heterogeneous) or of the same type (homogeneous), with redundant measurements. There may be benefits that are exclusive to the addition of different sensors, others exclusive to the addition of redundant sensors and those that can happen both ways. Figure \ref{fig:advantages} presents a schematic with the different advantages expected in sensor fusion.
+Finally, sampling irregularities might also appear due to a specific nature of a system. In some high maneuverable target-tracking applications, for example, there is a chance that the sensor misses the target, transmitting only noise, leading to the so called uncertain observation issue \citep{Wang2009, Chen2013}.
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/fusion_advantages.pdf}
-	\caption[Expected advantages in sensor fusion]{Sensor fusion categorization hierarchy based on expected advantages.}
-	\label{fig:advantages}
-\end{figure}
+Whatever the reason for the irregularities, data need be associated in order to be fused into knowledge. A crucial part of association is temporal synchronization of observations, so that the exact time at which measurements are taken are available \citep{Ping2003}. Most sensor fusion methods for irregularly sampled systems rely on the correct timestamps to 
+develop modification in classical algorithms. If observations are imprecisely timestamped, some alternatives have been proposed \citep{Julier2005, Huck2011} that incorporate some aspects of that imprecision in the estimation method. Still, some knowledge about the irregularity is assumed to be known. Alternatively, many techniques for time synchronization can be performed, to ensure a common time scale for all the sensors. 
 
+On the next sections, we review the main irregular sampling effects and the main approaches to deal with time synchronization in sensor networks.
 
-\section{Taxonomy and Classification}\label{sec:classification}
+\section{Sampling Irregularity Types}
+\subsection{Time Delay}
 
-Sensor fusion definitions have evolved throughout the years. \citep{Bostrom2007} analyses more than 30 papers on this matter - many of which referenced in this study - to propose a more comprehensible and precise definition to the broad area of information, data and sensor fusion, which we reproduce here:
+Time-delay systems (TDS) are probably the most common mathematical representation to time delays in practice. The works of \citep{Richard2003, Fridman2014} and the references therein provide a good coverage of the subject. In TDSs, there might be delays in the input or in the output signals, introduced by communication networks, or even in the states themselves. The latter phenomenon is called system with aftereffect or dead-time. Since we are studying the irregular sampling issue, only signal delays are relevant to us.
 
-\begin{quote}
-	"Information fusion is the study of efficient methods for automatically or semi-automatically transforming information from different sources and different points in time into a representation that provides effective support for human or automated decision making."
-\end{quote}
+Considering delays in the measurement model only, \citep{Lu2005} studied the estimation problem when they are constant and known. They describe a linear measurement model as
 
-Researchers in the field made additional efforts to categorize the fusion techniques, using different approaches. One of the earliest attempts comes from \citep{Durrant1988}, where he considered the dynamic use of information in the fusion processes, creating the so called dependence model, which grouped sensor fusion in three categories: competitive, complementary and cooperative. Competitive type occurs when multiple sensors measure the same properties, usually referred to as redundant architecture. Complementary fusion describes the scheme of different types of sensors measuring different information about the same global object or feature, enabling a more complete fused information, like multiple cameras covering a large area. And the last category, cooperative fusion, happens when more complex data are combined to provide information that would not be available (or hard to obtain) otherwise. An example would be multiple measurements processed as softs sensors. A illustrative schematic is presented in Figure~\ref{fig:cat_input}. An abstraction from the human sensory system to Whyte's model is by understanding the way flavors are perceived by our taste (tongue) and smell (nose) sensors in a cooperative fashion. 
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/fusion_cat_input.pdf}
-	\caption{Classification of data fusion based on sensor interaction.}
-	\label{fig:cat_input}
-\end{figure}
-
-Another common way to categorize sensor fusion is by the three-level hierarchy based on input / output characteristics, which depends on the processing stage that information is fused. The lower-level is related to raw-data fusion, where signals from sensors are combined. The mid-level is usually related to feature fusion, where information about characteristics of the object are used in the process. The higher level involves decision-fusion, that can be understood as a reasoning process, like the methods of evidential belief or fuzzy logic. \citep{Dasarathy1997} extended this terminology, proposing five fusion modes, according to Figure~\ref{fig:cat_io}. \textit{Data in - data out fusion} (DAI-DAO), the lowest level fusion, processes raw data and outputs raw data, but with some improvements, such as increased accuracy. \textit{Data in - feature out fusion} (DAI-FEO) extracts features from raw data to describe characteristics of the measured environment. \textit{Feature in - feature out} (FEI-FEO) aims at the refinement of the features entering the process, similarly to what DAI - DAO does to raw data. \textit{Feature in - decison out} (FEI-DEO) usually performs classification based on a set of features received as inputs. \textit{Decision in - decision out} (DEI-DEO) outputs better global decision based on local, restricted decisions. Using our human brain data fusion analogy, many examples can be framed into Dasarathy's terminology. The processing of raw signal from letters symbols into features such as words and texts can be interpreted as DAI-FEO fusion. On the other hand, the process of assimilating features of objects from our eyes and ears, and fuse this features into a decision about what they are, for instance, is an example of FEI-DEO fusion.
+\begin{equation}\label{eq:delay_model}
+	y_i(t)=H_i(t)x(t_i)+v_i(t)
+\end{equation}
 
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/fusion_cat_io.pdf}
-	\caption{Input \ Output model and the three fusion levels.}
-	\label{fig:cat_io}
-\end{figure}
+\noindent
+where $i=0,\ 1,\ ...,\ l$ and $l$ is the number of different known delays. $y_i(t) \in \mathbb{R}^{p_i}$ are delayed measurements and $v_i(t) \in \mathbb{R}^{p_i}$ the measurement noises. The known delayed time instants are given by $t_i=t_{i-1}-d_i$, with $d_0=0$, $d_i>0$ for $i>0$ and $t_0=t$. 
 
-The work of \citep{Castanedo2013} provides a comprehensive review of these and other classification of data fusion techniques. His efforts went beyond as he proposed an interesting new approach, based on the type of architecture, summarized in Figure~\ref{fig:cat_arch}. In his model, fusion techniques that collects all measurements in a central processor lie on the Centralized Architecture category. Assuming perfect data alignment and association, such scheme should be optimal. However it is keen to many sampling irregularities issues and might provoke network congestion. When a network of nodes is used, each with its own processing capability, the architecture becomes decentralized. Such modular strategy ensures scalability, since there are no limits to centralized bottlenecks, and survivability to the loss of a particular sensing node. However it can greatly increase communication costs. The third and last configuration is the distributed architecture, where each data association is performed by local nodes. The separate outputs are then transmitted to a fusion node, that processes these locally obtained estimates to produce a fused global estimate. This scheme will reduce both the communication costs from decentralized architecture and computational costs from the centralized one, while lacking some of their benefits. A fourth architecture could be defined as hierarchical, which combines decentralized and distributed schemes, performing fusion at multiple levels. Getting back to our human sensory capacity, a very complex hierarchical architecture would best describe our fusion scheme in Castanedo's classification.
+For some systems, delays might not be known and constant, but still multiple of a fixed value. In such cases, observations might be received in a burst, when more than one packet arrive between two consecutive sampling instants. When that happens, the estimator might use only the latest measurement and discard all others, or implement a buffer to iterate over all received packets \citep{Moayedi2011}.
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/fusion_cat_arch.pdf}
-	\caption{Sensor network architectures for data fusion.}
-	\label{fig:cat_arch}
-\end{figure}
+However, in many applications the measurements are received by the estimator with irregular and unknown delays. In such cases, time delays can be interpreted as a stochastic process $d(k)$, varying randomly throughout time. \citep{Han2009} describes a discrete-time measurement model for random delayed observations as
 
-A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, since it has some connection to sensor fusion in the presence of irregularities, like the ones discussed in Chapter \ref{cap2}. The idea was to study the methods based on data-related challenges they address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: imperfect, correlated, inconsistent and disparate. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the other three categories are basically methods that try to neutralize, avoid or minimize their aspects, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typical algorithms such as the Kalman Filter, like data independence, are broken, so there are methods to eliminate correlation or to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there is out-of-sequence measurements (OOSM) in data, usual frameworks would be to ignore, reprocess or use backward/forward prediction, or apply sate augmentation to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{Imagens/fusion_challenge2.pdf}
-	\caption[Data fusion categorization based on data challenges hierarchy]{Categorization based on data challenges hierarchy. For imperfect data, fusion methods and the issues they deal with are also presented.}
-	\label{fig:fusion_challenge}
-\end{figure}
-
-\section{Fusion of Imperfect Data}
-
-Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. Based on Khaleghi's classification, imperfection on data can be manifested as uncertainty, imprecision and granularity. We can distinguish uncertainty and imprecision with two information examples: \textit{I believe Mary is one point eight meter tall}; \textit{I am sure that Mary is tall}. In the first sentence, the information is precise, but uncertain. In the second, the information about Mary's height is certain, but imprecise, with some vagueness (fuzziness) attached to it. Usually the amount of precision in data is inversely proportional to the level of certainty. The source of imprecision can also be ambiguity, as in the phrase: \textit{Mary gave birth to her daughter yesterday at 5}. We don't know if it was 5 PM or 5 AM, though the information was certain. The last type of imprecision would be for incomplete data, when we have missing information. The sentence "\textit{Mary's height is above one point five meter}", is incomplete, for example, meaning that only one bound was given. Any height above one hundred and fifty centimeters is possible and any height less than or equal to it is impossible, defining the so called possibility measures. Finally, granularity is an imprecision related to the internal structure of data, referring to the capacity of distinction among states. Different attributes on the data or a different set of possible states will generate different levels of imprecise information.
-
-Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of the issues and Khaleghi's paper explores methods for all the challenges in his categorization model. In this study we will limit ourselves to imperfect data, for which, in most cases, the mathematical background of each algorithm relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them. Table~\ref{tab:methods} presents a summary of all methods with their main advantages and limitations.
-
-\subsection{Probabilistic}
-
-Uncertainty is the most natural source of data imperfection and it is usually expressed by probability distribution functions (PDFs). Thus probabilistic fusion methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes theorem. The idea is to update the probabilities of an hypothesis $H$ given some evidence $E$ by using his famous equation 
-
-\begin{equation}\label{eq:bayes}
-\rho(H|E) = \frac{\rho(E|H) \rho(H)}{\rho(E)}
+\begin{equation}\label{eq:delay_model2}
+y(k) = H(k)x(k-d(k))+L(k)v(k)
 \end{equation}
 
 \noindent
-where $\rho(A|B)$ represents a conditional probability, that is the probability of $A$ being true, given $E$. We can interpret Equation~\ref{eq:bayes} as a fusion of \textit{a-priori} belief of an hypothesis and some current evidence to come up with a better current estimate of the hypothesis. 
+where $d(k)$ is a random but bounded time delay, assumed to be a discrete-time Markov Chain observable at each sampling time k.
 
-In addition to Bayes' contribution, Gauss' least squares methods and Fisher's maximum likelihood estimation are the foundations of all probabilistic approaches to data fusion, recursive filtering and state estimation. \citep{Kolmogorov1962}, in 1941 and \citep{Wiener1949} in 1942\footnote{Their discoveries went public a few years later due to secrecy during war times.} designed a linear minimum mean-square estimation technique, that is considered to be the first probabilistic designed filter. A few years later, perfecting the work of its predecessors, \citep{Kalman1960} developed the recursive mean-square filter, a groundbreaking method known as Kalman Filter (KF). Its impact was so big, that only one year after its publication, Kalman's algorithm was used in Apollo Project \citep{Mohinder2010}, to solve its guidance and navigation problem. A review on the evolution of least-squares estimation is provided by \citep{Sorenson1970}.
+Multiple of a known lag or not, delayed measurements from a multisensor system are subject to arrive disordely, which leads to the sampling irregularity commonly known as to as out-of-sequence-measurements (OOSM). It can be classified in three ways, depending on the number of lags, according to Figure~\ref{fig:oosm}. 
 
-When it comes to a multiple sensor system, \citep{Willner1976} introduced three approaches for the discrete Kalman Filter: parallel, sequential and data compression filters. In the parallel filter, all measurements are processed by a KF in parallel, producing a multi-output estimation. For the sequential filter design, multiple KFs are used, where the estimates of a predecessor KF are used as input for the successor KF. Data compression or output fusion filter design compresses similar data using their noise covariance matrix beforehand and the fused output is used as the measurement for a single KF. A fourth method was proposed by \citep{Singer1971}, referred to as track-to-track fusion (TTF), that employs single-output KFs and fuses their outputs considering the correlation between them.
-
-\subsection{Evidential Belief}
-A different framework for managing imperfection is based on Dempster-Shafer (DS) Theory of Evidence \citep{Shafer1976}. Shafer argued that his theory, extended from Dempster findings, includes the Bayesian theory as a special case of evidence combination (or information fusion). The difference between both relies on the assignment of uncertainty. Whereas Bayesian framework considers each state to be uncertain with its own PDF, DS evidential belief theory assigns uncertainties not just to each state, but also to all its possible subsets, using probability mass functions. Imagine the example of Mary giving birth and the information about the time it happened. We can can assign uncertainties to the ambiguous possibilities "5 PM" and "5 AM", in order to use the data. If the uncertainty about the information was also an aspect of the data, DS approach could handle it likewise.
-
-Therefore, Dempster-Shafer evidence theory (DSET) can be more adequate when fusion takes place at a higher-level estimation, that is the decision-level, referring back to the input / output classification model from Figure~\ref{fig:cat_io}. Situations related to risk assessment configure classical applications \citep{Srivastava2011}, where we have features or local decisions as inputs, usually with ambiguous and conflicting information and we need to take a global decision out of it. 
-
-\subsection{Fuzzy Logic}\label{sec:fuzzy}
-
-Fuzzy logic, first proposed by \citep{Zadeh1965} is ideal to handle vagueness in information. Unlike classical crisp definitions, where an element $x$ belongs or not to some definition $A$, fuzzy sets are characterized by a \textit{membership function} $\mu_A(x)$ which associates a degree of pertinence of $x$ in the interval [0, 1] in $A$. That is, the closer $\mu_A (x)$ is to the unity, the higher is the grade of membership of $x$ in $A$. Instead of defining tall people as those with height above certain lower bound, we can define a membership function that assigns continuous degrees of "tallness" to different people. Vague data can be then fused using fuzzy rules to produce outputs. An example of fusion method would be the Mamdani-type fuzzy inference \citep{Mamdani1975}, that classifies an output $y$ from a set of inputs $x$ based on rules $R$, as below:
-
-\vspace*{0.2cm}
-
-\begin{tabular}{l l}
+\begin{figure}[!htb]
 	\centering
-	Rule $R_r$: & If $x_{k}$ is $A_{j}$ and ... $x_{n}$ is $A_{m}$, Then $y$ is $C_l$
-\end{tabular}
+	\includegraphics[width=0.75\textwidth]{Imagens/oosm.pdf}
+	\caption{Different classes of out-of-sequence measurements irregularities}
+	\label{fig:oosm}
+\end{figure} 
 
-\vspace*{0.2cm}
-\noindent
-where
-\vspace*{0.2cm}
+\citep{Anxi2005} describes four different filtering approaches to deal with OOSM: reprocessing, that stores filter results to rollback with the time-delayed measurement; data buffering, that holds a set of measurements, greater than maximum expected lag, to be sorted before filtering; discarding data, that neglects time-delayed measurements; and directly updating, that uses the delayed information to update current state estimate. \citep{Bar-Shalom2000} used the last approach to describe an optimal filter for the single-lag case.
 
-\begin{tabular}{l l}
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:diagrama_delay}.
+
+\begin{figure}[!htb]
 	\centering
-	$R_r$: 	 	& fuzzy rules, with $r=1,...,r$ \\
-	$x_{k}$:  	& input fuzzy variables, with $k=1,...,n$ \\
-	$A_{i}$: 	& antecedent linguistic value, with $i=1,...,m$ \\
-	$y$: 	 	& output variable \\
-	$C_j:$   	& consequent class, with $j=1,...,c$ \\
-\end{tabular}
+	\includegraphics[width=0.75\textwidth]{Imagens/scheme_time-delay.pdf}
+	\caption[Time delay diagram]{Time delay diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity. The light blue boxes indicate different types that lead to different effects.}
+	\label{fig:diagrama_delay}
+\end{figure}
 
-\vspace*{0.4cm}
+\subsection{Packet Loss}
 
-
-Fuzzy set theory differences itself from probabilistic and evidential reasoning theories by modeling the fuzzy membership of a state whose class is ill-defined, whereas the other methods model uncertainties in well-defined state classes.
-
-It is possible to combine fuzzy theory with DSET to handle the imperfections that both approaches can deal with, that is uncertainty, ambiguity and vagueness all together, using the Fuzzy Evidential Belief framework.
-
-\subsection{Possibilistic}
-
-13 years after developing the mathematical background of fuzzy information, Zadeh introduced the concept of possibility theory \citep{Zadeh1978}, using fuzzy sets as its basis. According to him, fuzzy sets are to possibility theory what measures are to probability. 
-
-A membership function $\mu_A(x)$ of a fuzzy set $A$ of a universe of discourse $X$ can be interpreted as the compatibility of $x$ with the concept labeled as $A$. Letting $U$ be a variable that takes values in $X$, we can define the \textit{possibility function} $\pi_x$ of $x$ associated with $U$, to be equal to the membership function of $A$, that is $\pi_X(u) \triangleq \mu_F(x)$. The interpretation, however, is that the closer $\pi_X(u)$ is to the unity, the more plausible that value is to be true.
-
-Another way to understand possibility functions is in its comparison to probability distributions. In the information "Mary has failed a few times in Digital Control course", let us consider $X$ as the number of times in the universe $U = {1, 2, 3...}$. The membership function $\mu_F(x)$ can model how close to "a few times" is the fuzzy variable $x$. From such model, we also define the possibility function $\pi_X(u)$ that can be interpreted as how possible it is that Mary has failed $u$ times in that course. We could also model such lack of information in data by a probability function $\rho_X(u)$, as how likely it is for Mary to fail $u$ times. Let us consider that an educated set of criteria was employed to define the discrete values of both distributions as shown in Table~\ref{tab:possibility}
-
-\begin{table}[!ht]
-	\centering
-	\setlength{\tabcolsep}{12pt}
-	\caption[Possibility and Probability functions associated with $X$]{Possibility and probability functions associated with how many times Mary has failed Digital Control}
-	\begin{tabular}{l  c  c  c  c  c  c  c  c  c}
-		\toprule
-		$u$				& 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
-		\midrule
-		$\pi_X(u)$ 		& 1 & 1 & 1 & 1 & 0.8 & 0.6 & 0.4 & 0.2 & 0.1 \\
-		$\rho_X(u)$ 	& 0.3 & 0.4 & 0.2 & 0.05 & 0.03 & 0.02 & 0 & 0 & 0 \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:possibility}
-\end{table}
-
-Note that according to Table~\ref{tab:possibility} it is perfectly possible for Mary to have failed 1, 2, 3 of 4 times. The degree of possibility decreases for higher values and there is an upper bound, from which Mary would have been expelled, and could not have failed that many times. On the other hand, based on recent flunk history, the most probable number of times for Mary to have failed is 2, whereas since no student failed more than 6 times, the probability that Mary will fail that many is 0. Thus, possibilistic approach can be more appropriate to cope with incomplete data, with missing information about a lower or an upper bound, for instance, in which case it is clear that some values are impossible instead of unlikely.
-
-The fusion approach to possibilistic data models was extensively studied by \citep{Dubois2000} and it is similar to the rules employed in fuzzy fusion. The design of the rules set is based on how plausible the sources of data are.
-
-\subsection{Random Set}
-
-So far, the methods presented are able to cover all aspects of uncertainty and imprecision. Although some of them can tackle multiple aspects, like DSET and Fuzzy DSET, none of them can handle all the sources of imprecision and uncertainty altogether. The random set approach to data fusion, proposed by \citep{Goodman1997}, offers such potential to integrate all these aspects in one unifying structure. The idea was to generalize the single-sensor, single-target statistics (random variables) to a broader multi-sensor, multi-target statistics (random sets), also known as finite-set statistics (FISST). The direct mathematical parallels between them are presented in Table~\ref{tab:finite-set}.
-
-\begin{table}[!htb]
-	\renewcommand{\arraystretch}{1.2}
-	\caption[Direct mathematical parallels between single-sensor, single-target and multi-sensor, multi-target statistics]{Direct mathematical parallels between single-sensor, single-target and multi-sensor, multi-target. Adapted from \citep{Goodman1997, Mahler2004}}
-	\label{tab:finite-set}
-	\centering
-	\footnotesize
-	\begin{tabular}{l l}
-		\toprule
-		\textbf{Single-sensor / target } 			&  \textbf{Multi-sensor / target}\\ 
-		\midrule
-		random vector, $Z$ 							& finite random set, $\Sigma$ \\ \\
-		
-		sensor 										& global sensor \\
-		target 										& global target \\
-		observation, $z$ 							& global observation-set, $Z$ \\
-		parameter, $\theta$ 						& global parameter-set, $\Theta$ \\ \\ 
-		
-		derivative, $\frac{d p_z}{d z}$ 			& set derivative, $\frac{\delta \beta_\Sigma}{\delta Z}$ \\
-		integral, $\int_{S} f_Z(z|x)d\lambda(z)$	& set integral, $\int_{S} f_{\Sigma}(Z|X)\delta Z$ \\ \\ 
-		
-		probability measure, $p_Z(S|x)$				& belief measure, $\beta_{\Sigma}(S|X)$ \\
-		pior PDF, $f_X(X)$						 	& global PDF, $f_\Gamma (X)$ \\
-		likelihood, $L_z(X)$						& global likelihood, $L_Z(X)$ \\ \\
-		
-		information theory							& multi-target information theory \\
-		filtering theory							& multi-target filtering theory \\
-		\bottomrule	
-	\end{tabular}
+When data are being transmitted by a large network of sensors, there is a probability they can get lost in the way or they might arrive after a significant delay, which is equivalent to a loss for practical	 applications~\citep{Sinopoli2004}. Usually referred to as packet dropout/loss, missing, intermittent observations or scarse measurements~\citep{Albertos2004} they may happen due to node failures, network congestion, limited bandwidth or temporal failure. 
 	
-\end{table}
+Mathematical description of packet dropouts can be carried out recursively, as described in~\citep{Sun2011}, by
 
+\begin{align}
+\centering
+\begin{split}
+z(t)=H(t)x(t)+v(t), \\
+y(t) = \xi(t)z(t)+(1-\xi(t))y(t-1),
+\end{split}
+\end{align}
 
-By modeling the system states and measurements as random sets of finite size instead of vectors of random variables, a variety of different phenomena can be described, such as target disappearance/appearance, extended/unresolved targets, missing measurements and false alarms \citep{Khaleghi2013}. As described by \citep{Goodman1997}, random set approach can model systems that are comprised of randomly varying numbers of randomly varying objects of various kinds. 
+\noindent
+where $z(t) \in \mathbf{R}^m$ is the measured output transmitted to the estimator, $v(t) \in \mathbf(R)^m$ is white noise, $y(t) \in \mathbf{R}^m$ is the measurement received by the estimator and $\xi(t) \sim Ber(p)$ is a Bernoulli random variable that takes the value 1 with probability $p$ and 0 with probability $1-p$. That is, when $\xi(t)$ is 1, there is no packet dropout. If $\xi(t)$ is 0, however, the latest output is used at current time, in a recursive fashion.
 
-Mathematically speaking, random sets are random elements whose values are sets. A random set $U$ is a finite set, whose power set $\mathcal{P}(U)$ is composed of elements described by some specific probability law. In other words, let
+Another way of describing multiple packet dropouts is by limiting the amount of consecutive dropouts ~\citep{ShuliSun2008}, where the received measurements are defined by
 
 \begin{equation}
-f: \mathcal{P}(U) \rightarrow [0,1] \ \ \ \text{with} \ \  \sum_{A \in \mathcal{P}(U)} f(A) = 1
+\begin{split}
+y(t) = 	& \xi(t)z(t) + (1-\xi(t))\xi(t-1)z(t-1)+...\\
+		& + (1-\xi(t))(1-\xi(t-1))...(1-\xi(t-N+1))z(t-N), N \geq 1,\\
+\end{split}
+\end{equation}
+
+Such a model dictates that the measurement used by the estimator will be only the most recent available, and the amount of missing observations is limited to $N$. This conclusion can be drawn by the fact that
+
+\begin{equation}
+\xi(t)+(1-\xi(t))\xi(t-1) + ... + (1-\xi(t))(1-\xi(t-1))...(1-\xi(t-N+1)) = 1.
+\end{equation}
+
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:packet_loss}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/scheme_packet-loss.pdf}
+	\caption[Packet loss diagram]{Packet loss diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:packet_loss}
+\end{figure}
+
+
+\subsection{Uncertain Observation}\label{sec:uncertain}
+
+For some applications, there is a chance that the observation signal sent to the estimator contains only noise. According to \citep{Jaffer1971}, it happens as a consequence of two situations: the observation was taken, but was lost during transmission, due to communication failures; or it was not transmitted at all, as it may happen for target tracking systems, for example, when the object being observed is not tracked at a sample time. An observation model for a sampled-data system can be described as
+
+\begin{equation}
+y(k) = \gamma(k)Cx(k) + Dv(k)
 \end{equation}
 
 \noindent
-where $f$ can be interpreted as a PDF defined on sets rather than on points of $U$. That is, the probability that the subset $A$ of $U$ is selected is $f(A)$.
+where $\gamma(k) \sim Ber(p(k))$ is a Bernoulli random variables, taking values of 0 or 1, with probabilities $p(k)$ and $1 - p(k)$, respectively.
 
-Efficient applications of random set theory have been studied in tasks such as system identification and time-series forecasting \citep{Nunez-Garcia2002}, target tracking \citep{Maehlisch2006} and econometrics \citep{Molchanov2014}.
+Unlike the packet dropout problem, when the missing data are associated with the total absence of signal, the issue of uncertain observation has to be dealt with differently. A common approach is to detect the existence of signal prior to the assimilation, using a likelihood ratio test.  \citep{Middleton1968} proposes a joint approach to systematically detect and extract information from observation signals. If the estimator and detector are developed separately, te probability of false alarms is not used in the estimator, making it suboptimal. \citep{Nahi1969} developed an optimal recursive estimator, that uses the information of the random variable $\gamma$ in the algorithm, assuming it is independent and identically distributed. \citep{Hadidi1979} generalized the work of Nahi, for the case when the uncertainty of the signals presence is described by a Markovian sequence of binary random variables.
 
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:uncertain}.
 
-\subsection{Rough Set}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/scheme_uncertain.pdf}
+	\caption[Uncertain observations diagram]{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:uncertain}
+\end{figure}
 
-Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be definable considering one set, but undefinable in another set. Data can be collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and thus some objects in the data might be indiscernible. 
+\subsection{Aperiodic Sampling}\label{sec:aperiodic}
+	
+All irregularities discussed so far may be present even in a periodic sampling scheme. However, for some applications, the sampling intervals are time-varying due to a variety of phenomena, causing what is called as aperiodic or asynchronous sampling. It can be the case of networked and embedded control systems, with unpredictable networked-induced issues, like irregular faults on samplers, oscillated loads, intermittent saturation or even variations in system components or parameters \citep{Shen2016}. Some imperfections may cause what is known as sampling jitter noise, which leads to time intervals being almost uniform. Automotive applications, radar imaging or event controlled systems are a few examples. In them, jitter noise happens due to sampling frequency similar to clock frequency, sampling requests delayed by the network or imperfect synchronization \citep{Eng2005}. For networks with a large amount of unsynchronized sensors, measurement arrival time intervals are randomly spaced and can be modeled as a stochastic process \citep{Micheli2002}. 
 
-Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined rough set objects in a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target $X$ that is undefined in $B$, its definition can be approximated by two sets \citep{Pawlak2007}
+Sometimes, the system being observed has particularities that causes the aperiodic sampling. One example is seismology, where the spatial coordinates are irregularly sampled, because of natural obstacles \citep{Marvasti2001}. Other large scale systems, such as power grids, have sensors with a huge geographical separations, and different communication links to the estimation hub, which causes multiple and random inter-observation intervals \citep{Yan2017}.
 
-\begin{equation}\label{eq:rough}
+Whereas for most cases, the non-uniformities in sampling time intervals appear as unwanted effects, there are cases when the sampling rule is designed to work irregularly. If there are limitations of communication resources (limited bandwidth or computation capacity) or a need for a reduced energy consumption, for example, time-driven sampling might be neglected in favor of an event-based scheme. In such strategy, an event-triggering mechanism is responsible for determining the sampling instants, according to Figure~\ref{fig:event-based}. For time-driven schemes, a clock triggers the transmission instants (a), while event-driven sampling instants depends on the sensor output itself with an optional feedback loop from the estimator, to assess estimation performance. Therefore, the trigger mechanism design provides a trade-off between performance and resource consumption efficiency, attracting a lot of research interest \citep{Liu2014}. The most common strategy for event-driven state estimation is the send-on-delta (SOD) \citep{Miskowicz2006}, which triggers the transmission when the value of the measured state deviates from the previous assimilated observation by an interval $\pm \Delta$, with $\Delta>0$. Other strategies were studied in \citep{Zou2017}. To avoid the risk of unexpected high amount of triggered measurements in a short period of time, which can lead to the dreaded Zeno behavior \citep{Tabuada2007}, lower-bounds can be defined both for the $\Delta$ value or for some explicit minimum inter-event time. 
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}
+		\centering
+		\text{(a)}\\
+		\includegraphics[width=0.75\textwidth]{Imagens/Event-based_clock.pdf}	
+		\label{fig:evtb1}
+	\end{subfigure}
+	\vspace{1cm}\\
+	\begin{subfigure}
+		\centering
+		\text{(b)}\\
+		\vspace{0.25cm}
+		\includegraphics[width=0.75\textwidth]{Imagens/Event-based.pdf}
+		%		\caption{}
+		\label{fig:evtb2}
+	\end{subfigure}
+	\caption[Time-driven and event-driven sampling schemes]{Time-driven (a) and event-driven (b) sampling schemes. The connection between sensor and estimator is triggered by different mechanisms.}
+	\label{fig:event-based}
+\end{figure}
+
+The measurement model of a linear system with aperiodic sampling can be defined as
+
+\begin{equation}\label{eq:aperiodic}
+y(t_k) = H(t_k)x(t_k) + v(t_k)
+\end{equation}
+
+\noindent
+where $t_k$ is the random sampling time instant and the observation model matrix $H(t_k)$ is time-varying, if derived from the discretization of a continuous time system.
+
+Generalizations of aperiodic sampling can be divided in two categories, based on how the estimator perceives the irregularity: as time noise added to a periodic pattern; or as a stochastic process, according to Figure~\ref{fig:aper-samp}. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{Imagens/noisy_stoch_samp.pdf}	
+	\caption[Aperiodic sampling categories]{Aperiodic sampling categories: (a) noisy sampling over periodic intervals, with a Gaussian random variable added to expected time instants $kT$; and (b) sampling instants modeled as a stochastic process, with time intervals characterized by an exponential random variable (cumulative distribution functions are shown, for different $\lambda$ parameter values.)}
+	\label{fig:aper-samp}
+\end{figure}
+
+For the first case, random time instants $t_k$ and the random time intervals $\delta_k$ can be defined as:
+
+\begin{equation}
 \begin{split}
-B_{*}(X) & = \{ x \in A : B(x) \subseteq X\}, \\
-B^{*}(X) & = \{ x \in A : B(x) \cap X \neq \emptyset\},
+t_k & \triangleq kT + \epsilon_k, \\
+\delta_k & \triangleq t_k - t_{k-1} 
 \end{split}
 \end{equation}
 
 \noindent
-and 
+where $t_k$ is the k\textsuperscript{th} sampling instant, $T$ is the periodic time interval and $\epsilon_k$ is the deviation from the expected value $kT$. Note that, if the sampling time instants are a sequence of i.i.d Gaussian random variables, with variance $\sigma^2$, that is $t_k \sim \mathcal{N} (kT, \sigma^2)$, $\forall k \sim \mathbb{N}$, then the time interval random variable is Gaussian, with expected value $T$ and variance $2\sigma^2$, that is $\delta_k \sim \mathcal{N}(T,2\sigma^2)$.
+
+For the stochastic process generalization, sampling time instants $t_k$ can be defined by the random time intervals $\delta_k$, such as:
 
 \begin{equation}
-BN_B(X) = B^{*}(X) - B_*(X),
+\begin{split}
+\delta_k & \triangleq t_k - t_{k-1}, \\
+\delta_0 & \triangleq t_1
+\end{split}
 \end{equation}
 
 \noindent
-where $B_{*}(X)$ and $B^{*}(X)$ are the \textit{B-lower} and \textit{B-upper} approximation of $X$, respectively and $BN_B(X)$ is the approximated $X$, also called as \textit{B-boundary} region. If the boundary region is empty, set $X$ is crisp or exact with respect to $B$, whereas if it is not empty, set $X$ is rough with respect to $B$. Figure~\ref{fig:rough} illustrates an approximate space in which the the universe is partitioned into elementary squares and the subset $X$ is approximated by the best upper and lower bounds.
+where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(\kappa,\theta)$. If the shape parameter $k$ is a positive integer, it becomes an Erlang distribution, as used in \citep{Kanchanaharuthai2002}. For the most common case, where $k$ is held constant, the random time interval $\delta_k$ follows an exponential pdf the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}.
+
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:aperiodic}.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/rought_set.pdf}
-	\caption{Approximation of a rough set by lower and upper crips sets.}
-	\label{fig:rough}
+	\includegraphics[width=0.75\textwidth]{Imagens/scheme_aperiodic.pdf}
+	\caption[Uncertain observations diagram]{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:aperiodic}
 \end{figure}
 
-In Pawlak's book and in the references therein, many real life applications of rough set theory are explored, such as civil engineering, medical data analysis, aircraft pilot performance evaluation, vibration analysis and image processing.
+\subsection{Multi-Rate Sampling}
+
+The last irregularity discussed is the multi-rate sampling. Generally, it refers to multiple sensors measuring the same system at different sampling rates. Many industrial processes need to control challenging variables that can be measured by online instruments that provide regular, fast rate and delay free information, but with low precision. Therefore, more accurate data are needed and usually available after slow and irregular laboratory analysis \citep{Penarrocha2012, Fatehi2017}. The combination of both sources of measurements leads to a multi-rate sampling scenario. 
+
+A more common approach is the use of various sensors measuring the same physical information, to obtain better estimates, which has been drawing attention from real world applications, such as target tracking, robotics, surveillance and military. For such strategy, the sampling rates perceived by the estimator are often different from one another. The work of \citep{Lin2016} and the references therein provide a wide coverage of scenarios derived from multi-sensor multi-rate systems. 
+
+Figure \ref{fig:multi-rate} illustrates the ways multi-rate sampling can manifest in a system. The different rates from the various sensor devices can be periodic (a), aperiodic (b) or even a mixture of both, as is the case for most industrial applications with laboratory analysis.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagens/multi_rate.pdf}	
+	\caption[Periodic and aperiodic multi-rate sampling scheme]{(a) Periodic and (b) aperiodic multi-rate sampling scheme.}
+	\label{fig:multi-rate}
+\end{figure}
+
+Aperiodic sampling rates can be described the same way as in Section \ref{sec:aperiodic}, by equation \ref{eq:aperiodic}. Periodic multi-rate measurements can be modeled as
+
+\begin{equation}
+	y_i(k_i) = H_i(x(k_i)) + v_i(k_1)
+\end{equation}
+
+\noindent
+where $y_i(k_i)$ represents the $k_i^{th}$ observation from sensor $i$ and $H_i$ is the discrete measurement model matrix.
+
+A summary of causes and effects that time delay causes in an estimator are illustrated in Figure \ref{fig:multi_rate}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/scheme_multi-rate.pdf}
+	\caption[Uncertain observations diagram]{Uncertain observations diagram, showing the main causes (in orange) and effects (in dark blue) of time delay irregularity.}
+	\label{fig:multi_rate}
+\end{figure}
+
+
+\section{Time Synchronization}
+
+There are techniques to handle all the irregularities discussed in this chapter and still achieve efficient state estimation performance. Provided that the estimator acknowledges the exact time that measurements were taken, there are many studies that propose different algorithms with interesting results. For some examples, we encourage the reader to check the references from each subsection in this chapter.
+
+In general, multi-sensor data fusion techniques for state estimation require that exact measurement timestamps are available in order to assimilate data properly \citep{Ping2003, Brahmi2013}. However, that is not always the case and situations may arise in which timestamps were not collected or they are unreliable. Examples of the latter may occur when measurements are time stamped when they are received by the estimator instead of the moment it was taken, or when they are time stamped at local clocks without centralized synchronization \citep{Julier2005}. 
+
+In many practical applications, if sampling irregularity cannot be accounted for accordingly, data are fused using the time of arrival as time-stamp \citep{Huck2011}, or irregularities such as OOSM are just disregarded completely \citep{Kwok2004}. \citep{Julier2005} proved, however, that neglecting the uncertainty in time-stamp information may degrade estimation performance significantly in certain cases. They compared the results from traditional approaches that disregard or underestimate uncertain time stamps to algorithms that take the uncertainty statistics into account, knowingly: using fixed value for time instants derived from a calculated mean delay; a maximum likelihood algorithm for determining the predicted time measurement was taken; probabilistic data association filter (PDAF), proposed by \citep{Bar-shalom2009}; their approach, the Covariance Union (CU) algorithm; and the algorith that uses the perfect time-stamp, to use as reference for the comparison. When irregularities happens in a situation where sensor information is sampled at much faster rates than filter update rates, the real-time particle filter (RTPF), proposed by \citep{Kwok2004}, makes efficient use of all sensor information, instead of discarding sensor readings. That is achieved by dividing the received measurements among sample sets and then representing the states as a mixture of those sets.
+
+Alternatively, in order to avoid performance degradation, one can make use of time synchronization schemes, widely used in communication networks, to ensure global time stamps. Wireless sensor networks (WSN) are particularly dependent on such techniques, due to limited computation, energy and communication resources of the sensing devices used. The work of \citep{Sivrikaya2004} provide detailed reviews of the time synchronization problem in sensor networks.
+
+Sivrikaya and Yener explain the synchronization problem through computer clock mechanism. With the aid of a hardware oscillator, local clocks from a sensing device node $i$ approximates real time $t$ as $C_i(t)$ by
+	
+\begin{equation}\label{eq:clock1}
+C_i(t) = a_it+b_i
+\end{equation}
+
+\noindent
+where $a_i(t)$ is the clock \textit{drift}, that is the clock frequency, and $b_i(t)$ represents an \textit{offset} value, or the difference from real value $t$.
+
+Clock approximations from two nodes in a network are compared by
+
+\begin{equation}\label{eq:clock2}
+C_1(t) = a_{12}C_2(t)+b_{12}
+\end{equation}
+
+\noindent
+where $a_{12}$ is the relative \textit{drift} and $b_{12}$ is the relative offset between nodes. 
+
+Under Equations~\ref{eq:clock1} and \ref{eq:clock2}, the synchronization problem becomes the equalization of the computer clocks from all different $n$ devices, in its most strict form. Thus, synchronization strategies can either match all clock frequencies and offsets once or perform repeated offset corrections over time. There are more relaxed versions of synchronizations, such as the one proposed by \cite{Roemer2003}, that aims at maintaining the order of events	only.	
+
+Probably the most popular time synchronization method is the one governing in the internet environment for years, Network Time Protocol (NTP), described by \citep{Mills1991}. For most control and WNS applications, however, it is not suitable, due to very different requirements, such as energy consumption, precision and scalability \citep{Ganeriwal2003}. All sensing devices in the network could be equipped with a global positioning system (GPS) for an easy global time synchronization, but such solution is very expensive and also, very energy efficient and its signal might not work properly in every environment.
+
+Therefore, many alternative methods have been proposed, and the work of \citep{Kaur2015} updates Sivrikaya and Yener's studies with an exploration on the most recent synchronization protocols, that is: reference broadcast synchronization (RBS) \citep{Elson2002}; timing-sync protocol for sensor networks (TPSN) \citep{Ganeriwal2003};  delay measurement time synchronization (DMTS) \citep{Ping2003}; lightweight tree-based synchronization (LTS) \citep{Greunen2003}; tiny-sync mini-sync \citep{Sichitiu2003}; flooding time synchronization protocol (FTSP) \citep{Maroti2004}; lightweight and energy efficient time synchronization (LEETS) \citep{MingxiaXu2005}; time diffusion protocol (TDP) \citep{Su2005}; and time synchronization based on spanning tree (TSST) \citep{He2008}. A comparison adapted from Kaur ad Abhilasha is presented in Table~\ref{tab:sync}.
+
 
 \begin{table}[!htb]
-	% increase table row spacing, adjust to taste
 	\renewcommand{\arraystretch}{1.3}
-	% if using array.sty, it might be a good idea to tweak the value of
-	% \extrarowheight as needed to properly center the text within the cells
-	\caption[Data fusion methods for imperfect data]{Data fusion methods for imperfect data. Adapted from \citep{Khaleghi2013}, Table 1, page 35.}
-	\label{tab:methods}
+	\caption[Comparison of time synchronization methods]{Comparison of time synchronization methods. Parameters are \textit{Precision, Energy Efficiency ($E.E.$) and Complexity ($Comp.$)}. Adapted from \citep{Kaur2015}}
+	\label{tab:sync}
 	\centering
-	% Some packages, such as MDW tools, offer better commands for making tables
-	% than the plain LaTeX2e tabular which is used here.
 	\begin{flushleft}
-	
-	{
-		\footnotesize
-		\begin{tabularx}{\linewidth}{ 	>{\hsize=0.75\hsize}X
-										>{\hsize=1.25\hsize}X
-										>{\hsize=1.1\hsize}X
-										>{\hsize=0.9\hsize}X}
-			\hline
-			\textbf{Algorithm} 			& \textbf{Approach}    			&  \textbf{Advantages} 		& \textbf{Limitations}\\ 
-			\hline
-			Probabilistic & Bayesian framework to fuse uncertain data represented by probability distribution functions & Well-established and optimal for certain conditions & Might be unsuited for other data imperfections \\ \\			
-			Evidential Belief & Data fusion based on probability mass function, using Dempster-Shafer theory and combination rules & Enables fusion of both uncertain and ambiguous information & Incapable of dealing with other aspects of imperfection \\ \\ 
-			Fuzzy Reasoning & Vague data represented by fuzzy set theory and fusion based on fuzzy rules & Intuitive and interpretable approach for vague data, such as human generated & Only applicable to vague data \\ \\
-			Possibilistic & Data fusion based on fuzzy theory, with data representation similar to probabilistic and evidential belief & Indicated for poorly informed environment with incomplete data & Not very common and well-established \\ \\
-			Rough Set & Imprecise data is approximated based on granularity and manipulated via classical set theory & Dispenses preliminary or additional information & Data granularity must be adequate \\ \\
-			Random Set & Extension of Bayesian filter, representing the state space as a random set to capture many aspects of imperfection & Can potentially provide a unified framework for fusion of imperfect data & Not very appreciated by the fusion community \\ \\ 
-			Hybridization & Combination of different fusion methods and data representation & More comprehensive treatment of data imperfection and benefits from complementary fusion & Computational expensive and very problem specific \\
-		\end{tabularx}
-	}
+		
+		{
+			\footnotesize
+			\begin{tabularx}{\linewidth}{
+					>{\hsize=0.45\hsize}X
+					>{\hsize=1.475\hsize}X
+					>{\hsize=1.475\hsize}X
+					>{\hsize=0.6\hsize}X}
+				\hline
+				\textbf{Protocol} 			& \textbf{Advantages}    			&  \textbf{Limitations} 		& \textbf{Parameters}\\ 
+				\hline
+				RBS & Eliminates random delays on the sender side & High amount of message exchanges and low transmission range & 29.1 $\mu s$ \ \ \ High $E.E.$ High $Comp.$ \\ \\
+					
+				TPSN & Eliminates the access, byte alignment and propagation times  & Does not estimate the clock drift; does not handle dynamic topology changes and demands high communication load & 16.9 $\mu s$ \ \ \ High $E.E.$ Low $Comp.$ \\ \\
+
+				DMTS & Reduces the number of message exchanges  & Restricted to low resolution and low frequency external clocks & 32 $\mu s$ \ \ \ \ \ \ \ \ \ \ \ \ V. High $E.E.$ Low $Comp.$ \\ \\
+					
+				LTS & Robust and works well in the presence of dynamic links and fading.  & The accuracy of synchronization decreases linearly in the depth of the synchronization tree & Unknown \ \ \ Low $E.E.$ Low $Comp.$ \\ \\
+									
+				Tiny-Sync Mini-Sync & Tolerant to message losses and adequate for networks with limited bandwidth and computational power & Unsuited for mobile sensor networks, high convergence time, not scalable and little robustness & 945 $\mu s$ \ \ \ \ \ \ High $E.E.$ Low $Comp.$ \\ \\		
+									
+				FTSP & Robust, handles dynamic topology changes well and eliminates maximum delay components  & Does not eliminate propagation delay and is not scalable & 1.48 $\mu s$ \ \ \ High $E.E.$ High $Comp.$ \\ \\
+										
+				LEETS & Low power consumption and low amount of message exchanges & Requires a GPS receiver in the root node & 30 $\mu s$ \ \ \ \ \ \ \ 	High $E.E.$ Low $Comp.$ \\ \\
+				
+				TDP & Tolerant to message losses, high mobility and performs well even without external servers  & Very high convergence time & 100 $\mu s$ \ \ \ \ \ \ 	High $E.E.$ High $Comp.$ \\ \\
+									
+				TSST & Low synchronization error & Not scalable & Unknown  \ \ \ Low $E.E.$ Low $Comp.$ \\ \\
+				
+			\end{tabularx}
+		}
 	\end{flushleft}
 \end{table}
-%
-%
+
+
+
+
+
+
 \section{Chapter Summary and Final Remarks}
 
-In this chapter, sensor fusion literature is reviewed. We explore the discussion about performance improvement from the combination of information from multiple sources, that have been drawing attention for many decades. The main reasons for the evolution of sensor fusion as a field of science are presented in a comprehensive way, divided by the expected advantages in data authenticity and data availability. There are mixed benefits from exploiting information from heterogeneous and homogeneous sources. We continue with the definition and classification of sensor fusion approaches. Four main taxonomies are reviewed: classification based on sensor interaction; the input/output model and three fusion levels; different sensor network architecture designs; and the categorization based on data challenge hierarchy. The last approach is specially interesting, since it relates to the core of this study: challenges presented by data. Algorithms that deal with the many aspects of data imperfection are summarized in Table~\ref{tab:methods}, such as: probabilistic; evidential belief; fuzzy logic; possibilistic; random set; and rough set theory. Hybrid methods have also being researched in the field.
+In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic sampling and multi-rate sampling. Diagrams describing their causes, types and effects are shown for each of them. We also describe the necessary modifications to the observation models of state estimation. Most of the methods proposed in the literature to handle sampling irregularities rely on correct time stamping of observations. Thus, the time synchronization problem is explored and the most recent protocols developed to ensure a global time scale from sensing devices in large sensor networks are shown and compared.
 
-Being the most popular method in the fusion community, the remaining of our study will focus on probabilistic methods for data fusion and its application on state estimation for sampled-data systems. A new data challenge is often present when complex sensor architectures are used to observe system states, which is sampling irregularities.
+However, the use of any time synchronization method will require computational, energy and resource consumption to some extent, apart from complex algorithms implementations. For sensor fusion performance applications in state estimation of sampled-data systems with irregular sampling, the investment might not be worth it. Thus, the next chapters try to shed some light in the evaluation of performance degradation in state estimation in the presence of irregular sampling, if time-stamps are not available.
 
 
 \clearpage
