@@ -13,22 +13,28 @@
 %\begin{flushright}
 %{Abraham Lincoln}
 %\end{flushright}
-
+%
 %\section{Introdução}\label{introducao_cap_3}
-%%\markright{\thesection ~~~ Modelos de Previsão} \label{previsao}
-%%
+%\markright{\thesection ~~~ Modelos de Previsão} \label{previsao}
+%
+%
+
+This chapter narrows the field of sensor fusion under irregular sampling down to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a review of the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
+In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for results assessment, designed to quantify estimation accuracy and consistency.
+
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
-A ideia é começar com uma explicação do algoritmo de filtro de kalman e suas versões EKF e UKF.
-Expandir a explicação para o filtro de partículas, caso seja utilizado nas simulações.
+
+
+
 
 \subsection{Kalman Filter}
 
-\subsection{Particle Filter}
+\subsection{Unscented Kalman Filter}
 
 
-\section{State Estimation with Aperiodic Sampling}
+\section{State Estimation with Aperiodic Sampling} \label{sec:estimation_aperiodic}
 
 
 
@@ -145,7 +151,7 @@ Existem apenas dois cenários de estimação nesse caso. Primeiro, quando não há me
 \end{figure}	
 
 
-
+\section{Performance Metrics} \label{sec:metrics}
 
 
 \clearpage
