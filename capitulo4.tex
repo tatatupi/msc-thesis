@@ -27,20 +27,81 @@ In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the
 
 The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated continuously as new information arrives. For that, both the desired knowledge of the states and the continuous information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
 
-The goal of the estimator is to statistically infer the value of the sates of a system, say a random vector $X$, from the conditional PDF $\rho(X|Y)$, that is given the noisy observation vector $Y$. This inference is performed by~\citep{Candy2008}
+The goal of the estimator is to statistically and recursively infer the values of the system's states, the random vector $x_k \in \mathbb{R}^n$, from noisy data, the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$. The respective conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} density function, describing the statistics of the random vector $x_k, \in \mathbb{R}^n$ after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been taken. Thus we can find the \textit{maximum a posteriori} (MAP) estimation of $x_k, \in \mathbb{R}^n$, defined by the mode of the conditional density, that is~\citep{Candy2008}
 
-\begin{equation}
-\hat{X} \triangleq \operatorname{arg}  \underset{X}{\operatorname{max}} \ \hat{\rho}(X|Y)
+\begin{equation}\label{eq:posterior_pdf}
+\hat{x}_k \triangleq \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k))
 \end{equation}
 
-where...
+\noindent
+where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior density of $x_k$ given the observation sequence and $\operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k))$ means the argument $x_k \in \mathbb{R}^n$ that maximizes the function $\hat{\rho}(x_k|(y_1,...,y_k))$. Finding $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimate $\hat{x_k} \in \mathbb{R}^n$ that maximizes the conditional PDF is the optimal state estimate, under the \textit{maximum a posteriori} approach~\citep{Teixeira2008}.
 
-Finding this conditional probability is the complete solution to the estimation problem and $\hat{X}$ is the optimal state estimate. (citar bruno)
+The posterior PDF given by (~\ref{eq:posterior_pdf}) can be computed by the famous \textit{Bayes' rule}~\citep{Stone2013}
+
+\begin{equation}
+\rho(x_k|(y_1,...,y_k)) = \frac{\rho((y_1,...,y_k)|x_k)\rho(x_k)}{\rho(y_1,...,y_k)}
+\end{equation}
+
+
+
+\citep{Bergman1999}
+
+
 
 Introduce the Bayes Theorem. Adapt to the measurements. Introduce the conditional PDF of the next time step in x (bergman). Considering a markovian process, it becomes the chapman kolmogorov equation.
 
 Combining two equations we have the bayesian recursive solution to state estimation.
 
+
+
+Proposition 3.2
+A recursive estimation problem is an estimation problem where the states evolve in
+time according to a Markov process with an initial state x 0 ? p(x 0 ) and transition
+kernel,
+p(x t+1 | x t )
+t = 0, 1, . . .
+This transition kernel may explicitly depend on the time index. The measure-
+ment observed at the time instant t is conditionally independent of the previously
+observed measurements given the current state value. The likelihood
+p(y t | x t )
+t = 0, 1, . . .
+(3.15)
+may explicitly depend on the time index t.
+A recursive estimation problem is uniquely specified when the prior p(x 0 ), the
+transition kernel p(x t+1 | x t ) and the likelihood p(y t | x t ) are given. Note that this
+coincides with Proposition 3.1 since these entities define the joint density of all
+measurements and all states from time zero to time t. An example of a Bayesian
+formulation of a recursive estimation problem follows, its Bayesian solution is illustrated in the subsequent section.
+
+
+Applying Bayes? rule (3.1) to the last element of the measurement vector
+Y t yields
+p(y t | x t , Y t?1 )p(x t | Y t?1 )
+p(y t | Y t?1 )
+p(y t | x t )p(x t | Y t?1 )
+=
+p(y t | Y t?1 )
+p(x t | Y t ) =
+(3.16)
+since, by (3.15), we assume that the observation y t is conditionally independent of
+previous measurements given the state x t . The expression (3.16) is referred to as
+the measurement update in the Bayesian recursion. As in (3.1) the denominator
+can be expressed through the law of total probability, i.e., by marginalization.
+The effect of a time step is obtained by observing that
+p(x t+1 , x t | Y t ) = p(x t+1 | x t , Y t ) p(x t | Y t )
+= p(x t+1 | x t ) p(x t | Y t )
+which follows from the assumption that the process {x t } is Markovian, and that
+x t+1 is independent of Y t when x t is given. Integrating both sides with respect to
+x t yields the time update equation
+Z
+p(x t+1 | Y t ) =
+p(x t+1 | x t )p(x t | Y t ) dx t .
+(3.17)
+R n
+This relation is also referred to as the Chapman-Kolmogorov equation [94]. Af-
+ter (3.17) has been evaluated, the time index can be increased and the effect of a
+new measurement incorporated as in (3.16). To summarize, a recursive propagation
+of the posterior filter density of the states given the measurements is obtained.
 
 
 

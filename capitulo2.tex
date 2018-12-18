@@ -41,12 +41,12 @@ We continue this chapter advocating for the benefits of sensor fusion in Section
 
 Whether or not all sensor fusion approaches outperform the use of less sensors in every aspect for any given condition, the fact is that many fields of science and engineering have been benefiting from choosing the fusion approach.
 
-The reasons why one chooses to fuse information from different sources are various. The works of \citep{Hall1997, Elmenreich2002, Andler2009, Khaleghi2013} provide a detailed study on the motivations and advantages of multi-sensor data fusion techniques. A common benefit from the use of multiple redundant sensors, for instance, is the increase in accuracy. By averaging all the measurements, the expected error decreases by the rate of $\frac{1}{\sqrt{n}}$, where $n$ is the number of homogeneous sensors, in case of the presence of i.i.d Gaussian noises. In Figure \ref{fig:accuracy} different probability distribution functions with different standard deviations - thus different expected errors - are shown for various quantities of random variables being averaged.
+The reasons why one chooses to fuse information from different sources are various. The works of \citep{Hall1997, Elmenreich2002, Andler2009, Khaleghi2013} provide a detailed study on the motivations and advantages of multi-sensor data fusion techniques. A common benefit from the use of multiple redundant sensors, for instance, is the increase in accuracy. By averaging all the measurements, the expected error decreases by the rate of $\frac{1}{\sqrt{n}}$, where $n$ is the number of homogeneous sensors, in case of the presence of i.i.d Gaussian noises. In Figure \ref{fig:accuracy} different probability density functions (PDFs) with different standard deviations - thus different expected errors - are shown for various quantities of random variables being averaged.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.75\textwidth]{Imagens/fusion_accuracy.pdf}
-	\caption[Probability distribution functions for different amount of fused measurements]{Probability distribution functions for different amount of fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
+	\caption[Probability density functions for different amount of fused measurements]{Probability distribution functions for different amount of fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
 	\label{fig:accuracy}
 \end{figure}
 
@@ -117,7 +117,7 @@ Given the amount of potential problems in data and their particularities, it is 
 
 \subsection{Probabilistic}
 
-Uncertainty is the most natural source of data imperfection and it is usually expressed by probability distribution functions (PDFs). Thus probabilistic fusion methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes theorem. The idea is to update the probabilities of an hypothesis $H$ given some evidence $E$ by using his famous equation 
+Uncertainty is the most natural source of data imperfection and it is usually expressed by probability density functions (PDFs). Thus probabilistic fusion methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes theorem. The idea is to update the probabilities of an hypothesis $H$ given some evidence $E$ by using his famous equation 
 
 \begin{equation}\label{eq:bayes}
 \rho(H|E) = \frac{\rho(E|H) \rho(H)}{\rho(E)}
@@ -173,7 +173,7 @@ It is possible to combine fuzzy theory with DSET to handle the imperfections tha
 
 A membership function $\mu_A(x)$ of a fuzzy set $A$ of a universe of discourse $X$ can be interpreted as the compatibility of $x$ with the concept labeled as $A$. Letting $U$ be a variable that takes values in $X$, we can define the \textit{possibility function} $\pi_x$ of $x$ associated with $U$, to be equal to the membership function of $A$, that is $\pi_X(u) \triangleq \mu_F(x)$. The interpretation, however, is that the closer $\pi_X(u)$ is to the unity, the more plausible that value is to be true.
 
-Another way to understand possibility functions is in its comparison to probability distributions. In the information "Mary has failed a few times in Digital Control course", let us consider $X$ as the number of times in the universe $U = {1, 2, 3...}$. The membership function $\mu_F(x)$ can model how close to "a few times" is the fuzzy variable $x$. From such model, we also define the possibility function $\pi_X(u)$ that can be interpreted as how possible it is that Mary has failed $u$ times in that course. We could also model such lack of information in data by a probability function $\rho_X(u)$, as how likely it is for Mary to fail $u$ times. Let us consider that an educated set of criteria was employed to define the discrete values of both distributions as shown in Table~\ref{tab:possibility}
+Another way to understand possibility functions is in its comparison to density functions in probability. In the information "Mary has failed a few times in Digital Control course", let us consider $X$ as the number of times in the universe $U = {1, 2, 3...}$. The membership function $\mu_F(x)$ can model how close to "a few times" is the fuzzy variable $x$. From such model, we also define the possibility function $\pi_X(u)$ that can be interpreted as how possible it is that Mary has failed $u$ times in that course. We could also model such lack of information in data by a probability function $\rho_X(u)$, as how likely it is for Mary to fail $u$ times. Let us consider that an educated set of criteria was employed to define the discrete values of both functions as shown in Table~\ref{tab:possibility}
 
 \begin{table}[!ht]
 	\centering
@@ -297,7 +297,7 @@ In Pawlak's book and in the references therein, many real life applications of r
 			\hline
 			\textbf{Algorithm} 			& \textbf{Approach}    			&  \textbf{Advantages} 		& \textbf{Limitations}\\ 
 			\hline
-			Probabilistic & Bayesian framework to fuse uncertain data represented by probability distribution functions & Well-established and optimal for certain conditions & Might be unsuited for other data imperfections \\ \\			
+			Probabilistic & Bayesian framework to fuse uncertain data represented by probability density functions & Well-established and optimal for certain conditions & Might be unsuited for other data imperfections \\ \\			
 			Evidential Belief & Data fusion based on probability mass function, using Dempster-Shafer theory and combination rules & Enables fusion of both uncertain and ambiguous information & Incapable of dealing with other aspects of imperfection \\ \\ 
 			Fuzzy Reasoning & Vague data represented by fuzzy set theory and fusion based on fuzzy rules & Intuitive and interpretable approach for vague data, such as human generated & Only applicable to vague data \\ \\
 			Possibilistic & Data fusion based on fuzzy theory, with data representation similar to probabilistic and evidential belief & Indicated for poorly informed environment with incomplete data & Not very common and well-established \\ \\
