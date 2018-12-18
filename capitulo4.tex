@@ -13,30 +13,44 @@
 %\begin{flushright}
 %{Abraham Lincoln}
 %\end{flushright}
-
+%
 %\section{Introdução}\label{introducao_cap_3}
-%%\markright{\thesection ~~~ Modelos de Previsão} \label{previsao}
-%%
+%\markright{\thesection ~~~ Modelos de Previsão} \label{previsao}
+%
+%
 
-
-
-
-\todo[inline]{Inserir texto que faz um link entre amostragem irregular e fusão sensorial.}
-
-
+This chapter narrows the field of sensor fusion under irregular sampling down to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a review of the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
+In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for results assessment, designed to quantify estimation accuracy and consistency.
 
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
-A ideia é começar com uma explicação do algoritmo de filtro de kalman e suas versões EKF e UKF.
-Expandir a explicação para o filtro de partículas, caso seja utilizado nas simulações.
+The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated continuously as new information arrives. For that, both the desired knowledge of the states and the continuous information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
+
+The goal of the estimator is to statistically infer the value of the sates of a system, say a random vector $X$, from the conditional PDF $\rho(X|Y)$, that is given the noisy observation vector $Y$. This inference is performed by~\citep{Candy2008}
+
+\begin{equation}
+\hat{X} \triangleq \operatorname{arg}  \underset{X}{\operatorname{max}} \ \hat{\rho}(X|Y)
+\end{equation}
+
+where...
+
+Finding this conditional probability is the complete solution to the estimation problem and $\hat{X}$ is the optimal state estimate. (citar bruno)
+
+Introduce the Bayes Theorem. Adapt to the measurements. Introduce the conditional PDF of the next time step in x (bergman). Considering a markovian process, it becomes the chapman kolmogorov equation.
+
+Combining two equations we have the bayesian recursive solution to state estimation.
+
+
+
+
 
 \subsection{Kalman Filter}
 
-\subsection{Particle Filter}
+\subsection{Unscented Kalman Filter}	
 
 
-\section{State Estimation with Aperiodic Sampling}
+\section{State Estimation with Aperiodic Sampling} \label{sec:estimation_aperiodic}
 
 
 
@@ -153,7 +167,7 @@ Existem apenas dois cenários de estimação nesse caso. Primeiro, quando não há me
 \end{figure}	
 
 
-
+\section{Performance Metrics} \label{sec:metrics}
 
 
 \clearpage
