@@ -34,17 +34,16 @@ To the best of the author's knowledge, no method was proposed so far to take the
 
 Knowing to what extent the estimation accuracy is deteriorated by ignoring the additional uncertainty caused by the sampling irregularity is important to decide whether or not to invest in synchronization. In addition, the investment in more sensors to the network in order to improve accuracy might not pay off, if it increases the occurrence of irregularities. However there are no detailed studies on the behavior of the degradation in accuracy due to neglecting the irregularity in the sampling process. Therefore, this work assesses the differences in state estimation performance for systems with random sampling intervals with and without timestamp for different scenarios. The purpose is to shed some light on the trade-off for investments in sensor networks and synchronization.
 
-\section{Problem Formulation}\label{problem-formulation} 
+\section{Problem Formulation}\label{sec:problem_form} 
 
 Consider the stochastic nonlinear sampled system
 	
-\begin{equation}\label{eq:processo}
-\dot{x}(t)=f(x(t), u(t), w(t), t),
-\end{equation}
-\begin{equation}\label{eq:obs}
-y(t_k)=g(x(t_k- \delta_{k}) ,v(t_k), t_k),
-\end{equation}
-\\
+
+\begin{align}
+\dot{x}(t) &= f(x(t), u(t), w(t), t),   \label{eq:prob_process} \\ 
+y(t_k) &= g(x(t_k- \delta_{k}) ,v(t_k), t_k, \label{eq:prob_obs}
+\end{align}
+
 \noindent
 where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, considered as known. We assume that for all $k \geq 1$, the observations $y(t_k) \in \mathbb{R}^m$ and the first two moments of the random variables $x_0$, $v(t_k)$ and $w(t)$ are known, where $x_0 \in \mathbb{R}^n$ is the initial state vector, $v(t_k) \in \mathbb{R}^r$ is the observation noise and $w(t_k) \in \mathbb{R}^q$ is the process noise. Observations are taken at random time instants $t_k$ and are considered to be sorted ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. That is, the time intervals $h_k$ are independent and identically distributed (i.i.d.) exponential random variables with a known parameter $\lambda_{h}$, that is $h_k \sim \mathcal{E} (\lambda_{h})$,  where $\mathcal{E} (\lambda)$ defines an exponential PDF, with parameter $\lambda$, which is also its expected value. An example of time intervals produced by such a random process is illustrated in Figure \ref{fig:amost}.
 

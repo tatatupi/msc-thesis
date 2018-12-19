@@ -27,7 +27,7 @@ In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the
 
 The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated continuously as new information arrives. For that, both the desired knowledge of the states and the continuous information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
 
-The goal of the estimator is to statistically and recursively infer the values of the system's states, the random vector $x_k \in \mathbb{R}^n$, from noisy data, the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$. The respective conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} density function, describing the statistics of the random vector $x_k, \in \mathbb{R}^n$ after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been taken. Thus we can find the \textit{maximum a posteriori} (MAP) estimation of $x_k, \in \mathbb{R}^n$, defined by the mode of the conditional density, that is~\citep{Candy2008}
+The goal of the estimator is to statistically and recursively infer the values of the system's states, the random vector $x_k \in \mathbb{R}^n$, from noisy data, the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$. The respective conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} density function, describing the statistics of the random vector $x_k \in \mathbb{R}^n$, after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been taken. Thus we can find the \textit{maximum a posteriori} (MAP) estimation of $x_k, \in \mathbb{R}^n$, defined by the mode of the conditional density, that is~\citep{Candy2008}
 
 \begin{equation}\label{eq:posterior_pdf}
 \hat{x}_k \triangleq \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k))
@@ -36,73 +36,94 @@ The goal of the estimator is to statistically and recursively infer the values o
 \noindent
 where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior density of $x_k$ given the observation sequence and $\operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k))$ means the argument $x_k \in \mathbb{R}^n$ that maximizes the function $\hat{\rho}(x_k|(y_1,...,y_k))$. Finding $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimate $\hat{x_k} \in \mathbb{R}^n$ that maximizes the conditional PDF is the optimal state estimate, under the \textit{maximum a posteriori} approach~\citep{Teixeira2008}.
 
-The posterior PDF given by (~\ref{eq:posterior_pdf}) can be computed by the famous \textit{Bayes' rule}~\citep{Stone2013}
+A recursive Bayesian solution to the state estimation problem, considering that the systems evolve according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. For that, we need to define one lemma.
+
+\begin{lema}\label{lemma:markov} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition density of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
 
 \begin{equation}
-\rho(x_k|(y_1,...,y_k)) = \frac{\rho((y_1,...,y_k)|x_k)\rho(x_k)}{\rho(y_1,...,y_k)}
+\rho(x_{k+1} | (x_0,...,x_k)) = \rho(x_{k+1}|x_k)
 \end{equation}
 
+\noindent
+and observation vector $y_k$ is independent of past observations and past states, if present state $x_k$ is given, that is
 
+\begin{equation}
+\rho(y_k|(x_0,...,x_k,y_0,...,y_{k-1}) = \rho(y_k|x_k)
+\end{equation}
 
-\citep{Bergman1999}
+\end{lema}
 
+Note that the system described in Section~\ref{sec:problem_form} is Markovian, since transition model given by (\ref{eq:prob_process}) and the observation model given by (\ref{eq:prob_obs}) follow the definitions (\ref{eq:prop_xk}) and (\ref{eq:prop_xk1}), respectively.
 
+\begin{propo}\label{prop:bayes_solution} The posterior density of system states $x_k \in \mathbb{R}^n$ conditioned on the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ is recursively given by
 
-Introduce the Bayes Theorem. Adapt to the measurements. Introduce the conditional PDF of the next time step in x (bergman). Considering a markovian process, it becomes the chapman kolmogorov equation.
+\begin{align}
+\rho(x_k|(y_1,...,y_k)) &= \frac{\rho(y_k|x_k) \rho(x_k | (y_1,...,y_{k-1}))}{\rho(y_k|(y_1,...,y_{k-1}))}   \label{eq:prop_xk} \\ \notag \\
+\rho(x_{k+1}|(y_1,...,y_k)) &= \int_{\mathbb{R}^n}\rho(x_{k+1}|x_k) \rho(x_k|y_1,...,y_k) \label{eq:prop_xk1}dx_k,
+\end{align}
+	
 
-Combining two equations we have the bayesian recursive solution to state estimation.
+\noindent
+where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood distribution}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior distribution}, defined before the latest measurement, $\rho(x_{k+1}|x_k)$ is the \textit{transition distribution} that models the evolution of $x_k$, $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, given by
 
+\begin{equation}
+\rho(y_k|(y_1,...,y_{k-1}) = \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k,
+\end{equation}
 
+The algorithm is initiated by $\rho(x_0|(y_1,...,y_{k-1}) = \rho(x_0)$ and recursion is achieved by introducing (\ref{eq:prop_xk}) in (\ref{eq:prop_xk1})
+\end{propo}
 
-Proposition 3.2
-A recursive estimation problem is an estimation problem where the states evolve in
-time according to a Markov process with an initial state x 0 ? p(x 0 ) and transition
-kernel,
-p(x t+1 | x t )
-t = 0, 1, . . .
-This transition kernel may explicitly depend on the time index. The measure-
-ment observed at the time instant t is conditionally independent of the previously
-observed measurements given the current state value. The likelihood
-p(y t | x t )
-t = 0, 1, . . .
-(3.15)
-may explicitly depend on the time index t.
-A recursive estimation problem is uniquely specified when the prior p(x 0 ), the
-transition kernel p(x t+1 | x t ) and the likelihood p(y t | x t ) are given. Note that this
-coincides with Proposition 3.1 since these entities define the joint density of all
-measurements and all states from time zero to time t. An example of a Bayesian
-formulation of a recursive estimation problem follows, its Bayesian solution is illustrated in the subsequent section.
+\begin{proof}
 
+The posterior PDF can be computed by the \textit{Bayes' rule}~\citep{Stone2013}
 
-Applying Bayes? rule (3.1) to the last element of the measurement vector
-Y t yields
-p(y t | x t , Y t?1 )p(x t | Y t?1 )
-p(y t | Y t?1 )
-p(y t | x t )p(x t | Y t?1 )
-=
-p(y t | Y t?1 )
-p(x t | Y t ) =
-(3.16)
-since, by (3.15), we assume that the observation y t is conditionally independent of
-previous measurements given the state x t . The expression (3.16) is referred to as
-the measurement update in the Bayesian recursion. As in (3.1) the denominator
-can be expressed through the law of total probability, i.e., by marginalization.
-The effect of a time step is obtained by observing that
-p(x t+1 , x t | Y t ) = p(x t+1 | x t , Y t ) p(x t | Y t )
-= p(x t+1 | x t ) p(x t | Y t )
-which follows from the assumption that the process {x t } is Markovian, and that
-x t+1 is independent of Y t when x t is given. Integrating both sides with respect to
-x t yields the time update equation
-Z
-p(x t+1 | Y t ) =
-p(x t+1 | x t )p(x t | Y t ) dx t .
-(3.17)
-R n
-This relation is also referred to as the Chapman-Kolmogorov equation [94]. Af-
-ter (3.17) has been evaluated, the time index can be increased and the effect of a
-new measurement incorporated as in (3.16). To summarize, a recursive propagation
-of the posterior filter density of the states given the measurements is obtained.
+\begin{equation}\label{eq:post_pdf}
+\rho(x_k|(y_1,...,y_k)) = \frac{\rho((y_1,...,y_k)|x_k)\rho(x_k)}{\rho(y_1,...,y_k)}.\\
+\end{equation}
 
+Using the definition of the conditional probability, given by ~\citep{Papoulis1984}
+
+\begin{equation}\label{eq:cond_prob}
+\rho((x_1,...,x_k)|(x_{k+1},...,x_n)) = \frac{ \rho(x_1,...,x_k,...,x_n)}{\rho(x_{k+1},...,x_n)} \\
+\end{equation}
+
+\noindent
+and the chain rule of probability, that is ~\citep{Papoulis1984}
+
+\begin{equation}\label{eq:chain_rule}
+\rho(x_1,...,x_n) = \rho(x_n|x_1,...x_{n-1})\rho(x_1,...x_{n-1})\\
+\end{equation}
+\noindent
+it is possible to rewrite (\ref{eq:post_pdf}) as
+
+\begin{equation}\label{eq:post_pdf2}
+\rho(x_k|(y_1,...,y_k)) = \frac{\rho(y_k|(y_1,...,y_{k-1},x_k))\rho(y_1,...,y_{k-1}|x_k)\rho(x_k)}{\rho(y_k|(y_1,...,y_{k-1}))  \rho(y_1,...,y_{k-1})}. \\
+\end{equation}
+
+From Lemma~\ref{lemma:markov}, given current state $x_k$, $y_k$ is independent of past states, thus the first term of the dividend becomes $\rho(y_k|x_k)$. Additionally, Bayes' rule in the second term yields
+
+\begin{equation}\label{eq:post_pdf3}
+\rho((y_1,...,y_{k-1})|x_k)) = \frac{\rho(x_k|(y_1,...,y_{k-1})) \rho((y_1,...,y_{k-1}))}{\rho(x_k)}.\\
+\end{equation}
+
+Finally, by combining all together, we have
+
+\begin{equation}\label{eq:final_cond_pdf}
+\rho(x_k|(y_1,...,y_k)) = \frac{\rho(y_k|x_k) \rho(x_k|(y_1,...,y_{k-1})) {\color{gray}\rho((y_1,...,y_{k-1})) \rho(x_k)}} {\rho(y_k|(y_1,...,y_{k-1}))  {\color{gray}\rho(y_1,...,y_{k-1}) \rho(x_k)}},\\
+\end{equation}
+
+which, after canceling the equal terms (in gray), proves (\ref{eq:prop_xk}).
+
+To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the posterior PDF, that is $\rho(x_{k+1},x_k|(y_1,...,y_k))$ ~\citep{Bergman1999}. Rewriting the new conditional density, with the aid of (\ref{eq:cond_prob}), (\ref{eq:chain_rule}) and Lemma~\ref{lemma:markov}, we have
+
+\begin{align}
+\rho(x_{k+1}, x_k | (y_1,...,y_k)) &= \rho(x_{k+1}|(x_k,y_1,...,y_k))\rho(x_k|(y_1,...,y_k)) \notag \\
+&=\rho(x_{k+1}|(x_k)\rho(x_k|(y_1,...,y_k)) \label{eq:forecast_condPDF}
+\end{align}
+
+The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_k$ yelds (\ref{eq:prop_xk1}), which is also known as Chapman-Kolmogorov equation~\citep{Papoulis1984}.
+
+\end{proof}
 
 
 
