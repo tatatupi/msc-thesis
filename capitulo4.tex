@@ -40,20 +40,20 @@ A recursive Bayesian solution to the state estimation problem, considering that 
 
 \begin{lema}\label{lemma:markov} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition density of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
 
-\begin{equation}
+\begin{equation}\label{eq:lemma_transition}
 \rho(x_{k+1} | (x_0,...,x_k)) = \rho(x_{k+1}|x_k)
 \end{equation}
 
 \noindent
 and observation vector $y_k$ is independent of past observations and past states, if present state $x_k$ is given, that is
 
-\begin{equation}
+\begin{equation}\label{eq:lemma_likelihood}
 \rho(y_k|(x_0,...,x_k,y_0,...,y_{k-1}) = \rho(y_k|x_k)
 \end{equation}
 
 \end{lema}
 
-Note that the system described in Section~\ref{sec:problem_form} is Markovian, since transition model given by (\ref{eq:prob_process}) and the observation model given by (\ref{eq:prob_obs}) follow the definitions (\ref{eq:prop_xk}) and (\ref{eq:prop_xk1}), respectively.
+Note that the system described in Section~\ref{sec:problem_form} is Markovian, since the transition or process model given by (\ref{eq:prob_process}) and the observation model given by (\ref{eq:prob_obs}) follow the definitions (\ref{eq:lemma_transition}) and (\ref{eq:lemma_likelihood}), respectively.
 
 \begin{propo}\label{prop:bayes_solution} The posterior density of system states $x_k \in \mathbb{R}^n$ conditioned on the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ is recursively given by
 
@@ -64,13 +64,13 @@ Note that the system described in Section~\ref{sec:problem_form} is Markovian, s
 	
 
 \noindent
-where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood distribution}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior distribution}, defined before the latest measurement, $\rho(x_{k+1}|x_k)$ is the \textit{transition distribution} that models the evolution of $x_k$, $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, given by
+where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood density}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior density}, defined before the latest measurement, $\rho(x_{k+1}|x_k)$ is the \textit{transition density} that models the evolution of $x_k$ and $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, given by
 
 \begin{equation}
 \rho(y_k|(y_1,...,y_{k-1}) = \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k,
 \end{equation}
 
-The algorithm is initiated by $\rho(x_0|(y_1,...,y_{k-1}) = \rho(x_0)$ and recursion is achieved by introducing (\ref{eq:prop_xk}) in (\ref{eq:prop_xk1})
+The algorithm is initialized by a known prior $\rho(x_0)$ and recursion is achieved by introducing (\ref{eq:prop_xk}) in (\ref{eq:prop_xk1})
 \end{propo}
 
 \begin{proof}
@@ -100,7 +100,7 @@ it is possible to rewrite (\ref{eq:post_pdf}) as
 \rho(x_k|(y_1,...,y_k)) = \frac{\rho(y_k|(y_1,...,y_{k-1},x_k))\rho(y_1,...,y_{k-1}|x_k)\rho(x_k)}{\rho(y_k|(y_1,...,y_{k-1}))  \rho(y_1,...,y_{k-1})}. \\
 \end{equation}
 
-From Lemma~\ref{lemma:markov}, given current state $x_k$, $y_k$ is independent of past states, thus the first term of the dividend becomes $\rho(y_k|x_k)$. Additionally, Bayes' rule in the second term yields
+From Lemma~\ref{lemma:markov}, given the current state $x_k$, the present $y_k$ is independent of past observations, thus the first term of the dividend becomes $\rho(y_k|x_k)$. Additionally, Bayes' rule in the second term yields
 
 \begin{equation}\label{eq:post_pdf3}
 \rho((y_1,...,y_{k-1})|x_k)) = \frac{\rho(x_k|(y_1,...,y_{k-1})) \rho((y_1,...,y_{k-1}))}{\rho(x_k)}.\\
@@ -112,13 +112,14 @@ Finally, by combining all together, we have
 \rho(x_k|(y_1,...,y_k)) = \frac{\rho(y_k|x_k) \rho(x_k|(y_1,...,y_{k-1})) {\color{gray}\rho((y_1,...,y_{k-1})) \rho(x_k)}} {\rho(y_k|(y_1,...,y_{k-1}))  {\color{gray}\rho(y_1,...,y_{k-1}) \rho(x_k)}},\\
 \end{equation}
 
+\noindent
 which, after canceling the equal terms (in gray), proves (\ref{eq:prop_xk}).
 
-To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the posterior PDF, that is $\rho(x_{k+1},x_k|(y_1,...,y_k))$ ~\citep{Bergman1999}. Rewriting the new conditional density, with the aid of (\ref{eq:cond_prob}), (\ref{eq:chain_rule}) and Lemma~\ref{lemma:markov}, we have
+To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the posterior PDF, that is $\rho(x_{k+1},x_k|(y_1,...,y_k))$ ~\citep{Bergman1999}. Rewriting the new conditional density with the aid of (\ref{eq:cond_prob}), (\ref{eq:chain_rule}) and Lemma~\ref{lemma:markov}, we have
 
 \begin{align}
 \rho(x_{k+1}, x_k | (y_1,...,y_k)) &= \rho(x_{k+1}|(x_k,y_1,...,y_k))\rho(x_k|(y_1,...,y_k)) \notag \\
-&=\rho(x_{k+1}|(x_k)\rho(x_k|(y_1,...,y_k)) \label{eq:forecast_condPDF}
+&=\rho(x_{k+1}|(x_k)\rho(x_k|(y_1,...,y_k)) \label{eq:forecast_condPDF}.
 \end{align}
 
 The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_k$ yelds (\ref{eq:prop_xk1}), which is also known as Chapman-Kolmogorov equation~\citep{Papoulis1984}.
