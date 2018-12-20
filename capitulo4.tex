@@ -210,15 +210,7 @@ From the Gauss-Markov assumptions, we can rewrite (\ref{eq:gm_process}) and (\re
 \noindent
 where (\ref{eq:rho_process}) is the \textit{transition} density representing the system dynamics and (\ref{eq:rho_obs}) is the \textit{likelihood} density, given by the observation model. 
 
-
-Now consider that the \textit{posterior} density function from a previous step is given by
-
-\begin{equation}
-\rho(x_{k-1}|(y_1,...,y_{k-1}) = \mathcal{N}(\hat{x}_{k-1|k-1},P^{xx}_{k-1|k-1}), \label{eq:previous}
-\end{equation}
-
-\noindent
-the Bayesian recursive solution to such a system is defined by forecasting and updating the conditional PDF, by
+The Bayesian recursive solution to such system is defined by \textit{forecast} and \textit{data assimilation} steps according to
 
 \begin{align}
 \rho(x_{k}|(y_1,...,y_{k-1}) &= \mathcal{N}(\hat{x}_{k|k-1},P^{xx}_{k|k-1}), \label{eq:sol_xk}\\
@@ -226,9 +218,16 @@ the Bayesian recursive solution to such a system is defined by forecasting and u
 \end{align}
 
 \noindent
+with the \textit{posterior} density function from a previous step given by
+
+\begin{equation}
+\rho(x_{k-1}|(y_1,...,y_{k-1}) = \mathcal{N}(\hat{x}_{k-1|k-1},P^{xx}_{k-1|k-1}), \label{eq:previous}
+\end{equation}
+
+\noindent
 where $\hat{x}_{k|k-1}$ and $P^{xx}_{k|k-1}$ are the \textit{forecast} state and covariance estimates, whereas $\hat{x}_{k|k}$ and $P^{xx}_{k|k}$ are the \textit{data assimilation} state and covariance estimates.
 
-Now we combine the \textit{forecast steps} from (\ref{eq:prop_xk1}) and from (\ref{eq:sol_xk}), using the process model from (\ref{eq:rho_process}), the previous estimate from (\ref{eq:previous}) and the identities from properties~\ref{prop:marginal}, yielding
+Now we combine the \textit{forecast steps} from (\ref{eq:prop_xk1}) and from (\ref{eq:sol_xk}), using the process model from (\ref{eq:rho_process}), the previous estimate from (\ref{eq:previous}) and the identities from property~\ref{prop:marginal}, yielding
 
 \begin{align}
 \rho(x_k|(y_1,...,y_{k-1})) &= \int_{\mathbb{R}^n}\rho(x_k|x_{k-1}) \rho(x_{k-1}|y_1,...,y_{k-1})dx_{k-1}, \notag\\
@@ -268,10 +267,10 @@ P^{xx}_{k|k}	&= P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T).
 \end{align}
 
 \noindent
-where $K_k \in \mathbb{R}^{n\times m}$ is defined as the Kalman gain, and is given by
+where $K_k \in \mathbb{R}^{n\times m}$ is defined as the Kalman gain and is given by
 
 \begin{equation}
-K_k = P^{xx}_{k|k-1}C_k^T(C_kP^{xx}_{k|k-1}C_k^T + R_k)^{-1}
+K_k = P^{xx}_{k|k-1}C_k^T(C_kP^{xx}_{k|k-1}C_k^T + R_k)^{-1}.
 \end{equation}
 
 \subsection{Unscented Kalman Filter}	
