@@ -130,6 +130,20 @@ The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_
 
 \subsection{Kalman Filter}
 
+Describe linear system.
+
+First we have a forecast step, where we estimate X as : blablabla
+The respective covariance is Pxx = blablabla
+
+Then we assimilate y and we now have a new estimate of x, considering a linear combination of estimate x and measurement y, by a factor of K. The bigger the K, the higher cofidence we have in measurement.
+The equation is given by: blablabla, with new updated covariance 
+Pxx+1  = blablabla
+
+The best estimator, under a minimum variance approach, is the one that minimzes Pxx+1. It turns out, that it is given by
+blablabla.
+
+
+
 \subsection{Unscented Kalman Filter}	
 
 
