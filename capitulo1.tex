@@ -45,7 +45,9 @@ y(t_k) &= g(x(t_k- \delta_{k}) ,v(t_k), t_k, \label{eq:prob_obs}
 \end{align}
 
 \noindent
-where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, considered as known. We assume that for all $k \geq 1$, the observations $y(t_k) \in \mathbb{R}^m$ and the first two moments of the random variables $x_0$, $v(t_k)$ and $w(t)$ are known, where $x_0 \in \mathbb{R}^n$ is the initial state vector, $v(t_k) \in \mathbb{R}^r$ is the observation noise and $w(t_k) \in \mathbb{R}^q$ is the process noise. Observations are taken at random time instants $t_k$ and are considered to be sorted ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. That is, the time intervals $h_k$ are independent and identically distributed (i.i.d.) exponential random variables with a known parameter $\lambda_{h}$, that is $h_k \sim \mathcal{E} (\lambda_{h})$,  where $\mathcal{E} (\lambda)$ defines an exponential PDF, with parameter $\lambda$, which is also its expected value. An example of time intervals produced by such a random process is illustrated in Figure \ref{fig:amost}.
+where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, considered as known. We assume that for all $k \geq 1$, the observations $y(t_k) \in \mathbb{R}^m$ are available. Process and observation noises, $w(t)$ and $v(t_k)$ respectively, are white, Gaussian, zero-mean and mutually independent, with known covariance matrices. The first two moments of the initial random state vector $x(0)$ are also known. Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT) \in \mathbb{R}^p$, $\forall i \geq 1$ are known.
+
+Observations are taken at random time instants $t_k$ and are considered to be sorted ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. That is, the time intervals $h_k$ are independent and identically distributed (i.i.d.) exponential random variables with a known parameter $\lambda_{h}$, that is $h_k \sim \mathcal{E} (\lambda_{h})$,  where $\mathcal{E} (\lambda)$ defines an exponential PDF, with parameter $\lambda$, which is also its expected value. An example of time intervals produced by such a random process is illustrated in Figure \ref{fig:amost}. This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002}, for instance, considers a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They prove that, if the sensors are independent and unsynchronized and $N$ is big enough, the waiting time between the realization of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
 
 
 \begin{figure}[h]
@@ -56,7 +58,7 @@ where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \math
 	\label{fig:amost}
 \end{figure}
 
-This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002}, for instance, considers a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They prove that, if the sensors are independent and unsynchronized and $N$ is big enough, the waiting time between the realization of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
+
 
 Arrival times to the estimator may be delayed during transmission by a random time amount $\delta_{k}$, also given by exponential random variables, with parameter $\lambda_{\delta_{k}}$, according to Figure~\ref{fig:delay}. Out-of-sequence measurements (OOSM) are not considered in this work. We assume that, in case a delayed measurement is to arrive later than future measurements, it gets lost in transmission.
 
@@ -68,9 +70,6 @@ Arrival times to the estimator may be delayed during transmission by a random ti
 	\caption[Randomly delayed measurements, modeled as exponential random variables]{Randomly delayed measurements, modeled as exponential random variables. Random measurement times $t_k$ are received by the estimator after a random delay $\delta_{k}$}
 	\label{fig:delay}
 \end{figure}
-
-
-Input data $u(t)$ are available at regularly spaced intervals $T$, that is $u(iT) \in \mathbb{R}^p$, $\forall i \geq 1$ are known.  $w(t) \in \mathbb{R}^q$ is process noise.
 
 %\duvida{Como tratar a questão do filtro contínuo para as entradas u(t)}/
 

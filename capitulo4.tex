@@ -36,22 +36,29 @@ The goal of the estimator is to statistically and recursively infer the values o
 \noindent
 where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior density of $x_k$ given the observation sequence and $\operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k))$ means the argument $x_k \in \mathbb{R}^n$ that maximizes the function $\hat{\rho}(x_k|(y_1,...,y_k))$. Finding $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimate $\hat{x_k} \in \mathbb{R}^n$ that maximizes the conditional PDF is the optimal state estimate, under the \textit{maximum a posteriori} approach~\citep{Teixeira2008}.
 
-A recursive Bayesian solution to the state estimation problem, considering that the systems evolve according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. For that, we need to define one lemma.
+A recursive Bayesian solution to the state estimation problem, considering that the system evolves according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we need to define two lemmas.
 
 \begin{lema}\label{lemma:markov} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition density of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
 
 \begin{equation}\label{eq:lemma_transition}
-\rho(x_{k+1} | (x_0,...,x_k)) = \rho(x_{k+1}|x_k)
+\rho(x_{k+1} | (x_0,...,x_k)) = \rho(x_{k+1}|x_k),
 \end{equation}
 
 \noindent
 and observation vector $y_k$ is independent of past observations and past states, if present state $x_k$ is given, that is
 
 \begin{equation}\label{eq:lemma_likelihood}
-\rho(y_k|(x_0,...,x_k,y_0,...,y_{k-1}) = \rho(y_k|x_k)
+\rho(y_k|(x_0,...,x_k,y_0,...,y_{k-1}) = \rho(y_k|x_k).
 \end{equation}
-
 \end{lema}
+
+\begin{lema} \label{lemma:chapman}For a Markov system, we can find the transition density from step $n$ to step $s$ as a function of the transition densities between them and an intermediate step $s$ $r$, as long as $n>r>s$, by the Chapman-Kolmogorov equation~\citep{Papoulis1984}
+
+\begin{equation}
+\rho(x_n|x_s) = \int_{-\infty}^{\infty}\rho(x_n|x_r)\rho(x_r|x_s)dx_r.
+\end{equation}
+\end{lema}
+\vspace{0.2cm}
 
 Note that the system described in Section~\ref{sec:problem_form} is Markovian, since the transition or process model given by (\ref{eq:prob_process}) and the observation model given by (\ref{eq:prob_obs}) follow the definitions (\ref{eq:lemma_transition}) and (\ref{eq:lemma_likelihood}), respectively.
 
@@ -59,18 +66,19 @@ Note that the system described in Section~\ref{sec:problem_form} is Markovian, s
 
 \begin{align}
 \rho(x_k|(y_1,...,y_k)) &= \frac{\rho(y_k|x_k) \rho(x_k | (y_1,...,y_{k-1}))}{\rho(y_k|(y_1,...,y_{k-1}))}   \label{eq:prop_xk} \\ \notag \\
-\rho(x_{k+1}|(y_1,...,y_k)) &= \int_{\mathbb{R}^n}\rho(x_{k+1}|x_k) \rho(x_k|y_1,...,y_k) \label{eq:prop_xk1}dx_k,
+\rho(x_{k+1}|(y_1,...,y_k)) &= \int_{\mathbb{R}^n}\rho(x_{k+1}|x_k) \rho(x_k|y_1,...,y_k)dx_k \label{eq:prop_xk1},
 \end{align}
 	
 
 \noindent
-where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood density}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior density}, defined before the latest measurement, $\rho(x_{k+1}|x_k)$ is the \textit{transition density} that models the evolution of $x_k$ and $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, given by
+where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood density}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior density}, defined before the latest measurement, $\rho(x_{k+1}|x_k)$ is the \textit{transition density} that models the evolution of $x_k$ and $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, or marginalization. The evidence term is commonly presented as a constant~\citep{Sarkka2013} and can be computed by the Chapman-Kolmogorov equation from Lemma~\ref{lemma:chapman}
 
-\begin{equation}
-\rho(y_k|(y_1,...,y_{k-1}) = \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k,
-\end{equation}
-
-The algorithm is initialized by a known prior $\rho(x_0)$ and recursion is achieved by introducing (\ref{eq:prop_xk}) in (\ref{eq:prop_xk1})
+\begin{align}
+\rho(y_k|(y_1,...,y_{k-1}) 	&= \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k, \\
+							&= z_k. \notag
+\end{align}
+	
+The algorithm is initialized by a known prior $\rho(x_0)$ and recursion is achieved by introducing the PDF calculated in the \textit{forecast} step, given by (\ref{eq:prop_xk1}), in the \textit{data assimilation} step, given by (\ref{eq:prop_xk}).
 \end{propo}
 
 \begin{proof}
@@ -84,14 +92,14 @@ The posterior PDF can be computed by the \textit{Bayes' rule}~\citep{Stone2013}
 Using the definition of the conditional probability, given by ~\citep{Papoulis1984}
 
 \begin{equation}\label{eq:cond_prob}
-\rho((x_1,...,x_k)|(x_{k+1},...,x_n)) = \frac{ \rho(x_1,...,x_k,...,x_n)}{\rho(x_{k+1},...,x_n)} \\
+\rho((a_1,...,a_k)|(a_{k+1},...,a_n)) = \frac{ \rho(a_1,...,a_k,...,a_n)}{\rho(a_{k+1},...,a_n)}, \\
 \end{equation}
 
 \noindent
 and the chain rule of probability, that is ~\citep{Papoulis1984}
 
 \begin{equation}\label{eq:chain_rule}
-\rho(x_1,...,x_n) = \rho(x_n|x_1,...x_{n-1})\rho(x_1,...x_{n-1})\\
+\rho(a_1,...,a_n) = \rho(a_n|a_1,...a_{n-1})\rho(a_1,...a_{n-1}), \\
 \end{equation}
 \noindent
 it is possible to rewrite (\ref{eq:post_pdf}) as
@@ -122,27 +130,149 @@ To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the po
 &=\rho(x_{k+1}|(x_k)\rho(x_k|(y_1,...,y_k)) \label{eq:forecast_condPDF}.
 \end{align}
 
-The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_k$ yelds (\ref{eq:prop_xk1}), which is also known as Chapman-Kolmogorov equation~\citep{Papoulis1984}.
+The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_k$ yelds (\ref{eq:prop_xk1}), which is also a Chapman-Kolmogorov equation. This last piece of proof is also an application of Lemma~\ref{lemma:chapman}.
 
 \end{proof}
 
-
+In the next subsection we derive the optimal linear estimator for the case where the system, apart from satisfying Markov properties defined by Lemma~\ref{lemma:markov}, has also Gaussian uncertainties.
 
 \subsection{Kalman Filter}
 
-Describe linear system.
+Consider the Gauss-Markov discrete-time linear system
 
-First we have a forecast step, where we estimate X as : blablabla
-The respective covariance is Pxx = blablabla
+\begin{align}
+x_k &= A_{k-1}x_{k-1} + B_{k-1}u_{k-1} + G_{k-1}w_{k-1}, \label{eq:gm_process}\\
+y_k &= C_kx_k+ v_k, \label{eq:gm_obs}
+\end{align}
 
-Then we assimilate y and we now have a new estimate of x, considering a linear combination of estimate x and measurement y, by a factor of K. The bigger the K, the higher cofidence we have in measurement.
-The equation is given by: blablabla, with new updated covariance 
-Pxx+1  = blablabla
+\noindent
+where, $\forall k \geq1$, time varying matrices $A_{k-1} \in \mathbb{R}^{n\times n}$,  $B_{k-1} \in \mathbb{R}^{n\times p}$,  $G_{k-1} \in \mathbb{R}^{n\times q}$ and  $C_{k-1} \in \mathbb{R}^{m\times n}$ are known, as well as the input $u_{k-1} \in \mathbb{R}^P$ and output $y_k \in \mathbb{R}^m$ vectors. Process and observation noise vectors, $w_{k-1} \in \mathbb{R}^q$ and $v_{k-1} \in \mathbb{R}^m$ are white, zero-mean and mutually independent, apart from being Gaussian, with known covariance matrices $Q_{k-1}$ and $R_k$, respectively.
 
-The best estimator, under a minimum variance approach, is the one that minimzes Pxx+1. It turns out, that it is given by
-blablabla.
+Define $\mathcal{N}(x|\mu,\Sigma)$ as a multivariate Gaussian probability density function on $x$, with mean $\mu$ and covariance $\Sigma$, defined by
+
+\begin{equation}
+\mathcal{N}(x|\mu,\Sigma) = \frac{1}{(2\pi)^{n/2} \left| \Sigma \right|^{1/2}}exp\left( -\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)\right)
+\end{equation}
+
+Some identities of multivariate Gaussian probability densities are needed for the next steps and are described in properties ~\ref{prop:joint} and~\ref{prop:marginal}.
+
+\begin{prop} \label{prop:joint}
+	If the random variables $x$ and $y$ have the joint Gaussian probability density
+	
+	\begin{align}
+	x,y \sim \mathcal{N} 
+	\left(
+	\begin{pmatrix} a \\ b \end{pmatrix},
+	\begin{pmatrix} A & C\\ C^T & B \end{pmatrix}
+	\right) 
+	\end{align}
+	
+	\noindent
+	then, the marginal and conditional densities of $x$ and $y$ are given by
+	
+	\begin{align}
+	x 		&\sim \mathcal{N}(a,A) \\
+	y 		&\sim \mathcal{N}(b,B) \\
+	x|y  	&\sim \mathcal{N}(a + CB^{-1}(y-b), A - C B^{-1} C^T ) \\
+	y|x  	&\sim \mathcal{N}(b + C^T A^{-1}(x-a), B - C^T A^{-1} C)
+	\end{align}
+	
+\end{prop}
+
+\begin{prop} \label{prop:marginal}
+	
+	If the random variables $x$ and $y$ have the Gaussian densities
+	\begin{align}
+	\rho(x) 	&= \mathcal{N}(x|a,A), \\
+	\rho(y|x) 	&= \mathcal{N}(y|Hx, B),
+	\end{align}
+	
+	Then, the joint and marginal densities are given by
+	
+	\begin{align}
+	x,y &\sim \mathcal{N} 
+	\left(
+	\begin{pmatrix} a \\ Ha \end{pmatrix},
+	\begin{pmatrix} A & AH^T\\ HA & HAH^T + B \end{pmatrix}
+	\right), \\
+	y &\sim \mathcal{N} (Ha, HAH^T + B)
+	\end{align}
+\end{prop}
 
 
+From the Gauss-Markov assumptions, we can rewrite (\ref{eq:gm_process}) and (\ref{eq:gm_obs}) from a probabilistic perspective, as
+
+\begin{align}
+\rho(x_k|x_{k-1}) &= \mathcal{N}(x_k | A_{k-1}x_{k-1} + B_{k-1}u_{k-1}, Q_k), \label{eq:rho_process}\\
+\rho(y_k|x_k) &= \mathcal{N}(y_k|C_kx_k,R_k), \label{eq:rho_obs}
+\end{align}
+
+\noindent
+where (\ref{eq:rho_process}) is the \textit{transition} density representing the system dynamics and (\ref{eq:rho_obs}) is the \textit{likelihood} density, given by the observation model. 
+
+
+Now consider that the \textit{posterior} density function from a previous step is given by
+
+\begin{equation}
+\rho(x_{k-1}|(y_1,...,y_{k-1}) = \mathcal{N}(\hat{x}_{k-1|k-1},P^{xx}_{k-1|k-1}), \label{eq:previous}
+\end{equation}
+
+\noindent
+the Bayesian recursive solution to such a system is defined by forecasting and updating the conditional PDF, by
+
+\begin{align}
+\rho(x_{k}|(y_1,...,y_{k-1}) &= \mathcal{N}(\hat{x}_{k|k-1},P^{xx}_{k|k-1}), \label{eq:sol_xk}\\
+\rho(x_{k}|(y_1,...,y_{k}) &= \mathcal{N}(\hat{x}_{k|k},P^{xx}_{k|k}) \label{eq:sol_xk1},
+\end{align}
+
+\noindent
+where $\hat{x}_{k|k-1}$ and $P^{xx}_{k|k-1}$ are the \textit{forecast} state and covariance estimates, whereas $\hat{x}_{k|k}$ and $P^{xx}_{k|k}$ are the \textit{data assimilation} state and covariance estimates.
+
+Now we combine the \textit{forecast steps} from (\ref{eq:prop_xk1}) and from (\ref{eq:sol_xk}), using the process model from (\ref{eq:rho_process}), the previous estimate from (\ref{eq:previous}) and the identities from properties~\ref{prop:marginal}, yielding
+
+\begin{align}
+\rho(x_k|(y_1,...,y_{k-1})) &= \int_{\mathbb{R}^n}\rho(x_k|x_{k-1}) \rho(x_{k-1}|y_1,...,y_{k-1})dx_{k-1}, \notag\\
+							&= \mathcal{N}(x_k|A_{k-1}\hat{x}_{k-1|k-1} + B_{k-1}u_{k-1},A_{k-1}P^{xx}_{k-1|k-1}A{k-1}^T + G_{k-1}QG_{k-1}^T, \label{eq:forecast}
+\end{align}
+
+\noindent
+that is, the \textit{forecast} state and covariance estimates are computed by
+
+\begin{align}
+\hat{x}_{k|k-1} &= A_{k-1}\hat{x}_{k-1|k-1} + B_{k-1}u_{k-1}, \\
+P^{xx}_{k|k-1}	&= A_{k-1}P^{xx}_{k-1|k-1}A{k-1}^T + G_{k-1}QG_{k-1}^T.
+\end{align}
+
+And for the \textit{data assimilation step}, we find the joint density of $y_k$ with the \textit{forecast} estimate from (\ref{eq:forecast}), using property~\ref{prop:joint}
+
+\begin{equation}
+\rho(x_k,y_k|(y_1,...,y_{k-1})) = \mathcal{N} 
+\left(
+\begin{pmatrix} \hat{x}_{k|k-1} \\ C_k\hat{x}_{k|k-1} \end{pmatrix},
+\begin{pmatrix} P^{xx}_{k|k-1} & P^{xx}_{k|k-1}C_k^T\\ C_kP^{xx}_{k|k-1} & C_k P^{xx}_{k|k-1} C_k^T + R_k \end{pmatrix}
+\right),	
+\end{equation}
+
+\noindent
+and the marginal density for $x_k$ is
+
+\begin{equation}
+\rho(x_{k}|(y_1,...,y_{k}) = \mathcal{N}(\hat{x}_{k|k-1}+K_k(y_k-C_k\hat{x}_{k|k-1}),P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T),
+\end{equation}
+
+that is, the \textit{data assimilation} sate and covariance estimates are calculated by
+
+\begin{align}
+\hat{x}_{k|k} &= \hat{x}_{k|k-1}+K_k(y_k-C_k\hat{x}_{k|k-1}), \\
+P^{xx}_{k|k}	&= P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T).
+\end{align}
+
+\noindent
+where $K_k \in \mathbb{R}^{n\times m}$ is defined as the Kalman gain, and is given by
+
+\begin{equation}
+K_k = P^{xx}_{k|k-1}C_k^T(C_kP^{xx}_{k|k-1}C_k^T + R_k)^{-1}
+\end{equation}
 
 \subsection{Unscented Kalman Filter}	
 
