@@ -25,18 +25,19 @@ In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
-The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated continuously as new information arrives. For that, both the desired knowledge of the states and the continuous information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
+The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated continuously as new information arrives, using not just the new data, but also the prior information. For that, both the desired knowledge of the states and the continuous information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
 
-The goal of the estimator is to statistically and recursively infer the values of the system's states, the random vector $x_k \in \mathbb{R}^n$, from noisy data, the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$. The respective conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} density function, describing the statistics of the random vector $x_k \in \mathbb{R}^n$, after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been taken. Thus we can find the \textit{maximum a posteriori} (MAP) estimation of $x_k, \in \mathbb{R}^n$, defined by the mode of the conditional density, that is~\citep{Candy2008}
+The goal of the estimator is to statistically and recursively infer the values of the system's states, the random vector $x_k \in \mathbb{R}^n$, from noisy data, the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$. The respective conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} density function, describing the statistics of the random vector $x_k \in \mathbb{R}^n$, after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been taken. Thus we can find the estimation of $x_k \in \mathbb{R}^n$ using methods such as the \textit{maximum a posteriori} (MAP) or \textit{minimum mean square error} (MMSE), given by \citep{Bar-Shalom2001}
 
-\begin{equation}\label{eq:posterior_pdf}
-\hat{x}_k \triangleq \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k))
-\end{equation}
+\begin{align}
+\hat{x}_k^{MAP} &\triangleq \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k)), \label{eq:map} \\
+\hat{x}_k^{MMSE} &\triangleq \operatorname{arg}  \underset{x_k}{\operatorname{min}} \ E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)], \label{eq:mmse}
+\end{align}
 
 \noindent
-where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior density of $x_k$ given the observation sequence and $\operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k))$ means the argument $x_k \in \mathbb{R}^n$ that maximizes the function $\hat{\rho}(x_k|(y_1,...,y_k))$. Finding $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimate $\hat{x_k} \in \mathbb{R}^n$ that maximizes the conditional PDF is the optimal state estimate, under the \textit{maximum a posteriori} approach~\citep{Teixeira2008}.
+where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior density of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ it the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator. 
 
-A recursive Bayesian solution to the state estimation problem, considering that the system evolves according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we need to define two lemmas.
+Finding the \textit{posterior} $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimates $\hat{x_k}^{MAP} \in \mathbb{R}^n$ and $\hat{x_k}^{MMSE} \in \mathbb{R}^n$ are the optimal state estimates, under their optimality criteria. A recursive Bayesian solution to the state estimation problem, that is finding the \textit{posterior} PDF, considering that the system evolves according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we need to define two lemmas.
 
 \begin{lema}\label{lemma:markov} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition density of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
 
@@ -65,13 +66,14 @@ Note that the system described in Section~\ref{sec:problem_form} is Markovian, s
 \begin{propo}\label{prop:bayes_solution} The posterior density of system states $x_k \in \mathbb{R}^n$ conditioned on the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ is recursively given by
 
 \begin{align}
-\rho(x_k|(y_1,...,y_k)) &= \frac{\rho(y_k|x_k) \rho(x_k | (y_1,...,y_{k-1}))}{\rho(y_k|(y_1,...,y_{k-1}))}   \label{eq:prop_xk} \\ \notag \\
-\rho(x_{k+1}|(y_1,...,y_k)) &= \int_{\mathbb{R}^n}\rho(x_{k+1}|x_k) \rho(x_k|y_1,...,y_k)dx_k \label{eq:prop_xk1},
+\rho(x_{k}|(y_1,...,y_{k-1})) &= \int_{\mathbb{R}^n}\rho(x_k|x_{k-1}) \rho(x_{k-1}|y_1,...,y_{k-1})dx_{k-1} \label{eq:prop_xk1}, 
+\\ \notag \\
+\rho(x_k|(y_1,...,y_k)) &= \frac{\rho(y_k|x_k) \rho(x_k | (y_1,...,y_{k-1}))}{\rho(y_k|(y_1,...,y_{k-1}))}   \label{eq:prop_xk}
 \end{align}
 	
 
 \noindent
-where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood density}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior density}, defined before the latest measurement, $\rho(x_{k+1}|x_k)$ is the \textit{transition density} that models the evolution of $x_k$ and $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, or marginalization. The evidence term is commonly presented as a constant~\citep{Sarkka2013} and can be computed by the Chapman-Kolmogorov equation from Lemma~\ref{lemma:chapman}
+where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood density}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior density}, defined before the latest measurement, $\rho(x_{k}|x_{k-1})$ is the \textit{transition density} that models the evolution of $x_k$ and $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, or marginalization. The evidence term is commonly presented as a constant~\citep{Sarkka2013}, since it does not depend on the state vector $x_k$, and it can be computed by the Chapman-Kolmogorov equation from Lemma~\ref{lemma:chapman}
 
 \begin{align}
 \rho(y_k|(y_1,...,y_{k-1}) 	&= \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k, \\
@@ -134,9 +136,51 @@ The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_
 
 \end{proof}
 
-In the next subsection we derive the optimal linear estimator for the case where the system, apart from satisfying Markov properties defined by Lemma~\ref{lemma:markov}, has also Gaussian uncertainties.
+Thus, (\ref{eq:prop_xk}) can be interpreted as the fusion of the \textit{prior} density or knowledge of the state with the \textit{likelihood} density or evidence. For a better understanding, we can illustrate this process for a one-dimensional Gaussian case, for which the densities are given by
+
+\begin{align}
+\rho(x_k|(y_1,...,y_{k-1})) &= \mathcal{N}(x_k|\hat{x}_{prior},\hat{\sigma}_{prior}) \notag \\&= \frac{1}{\sqrt{2\pi\hat{\sigma}_{prior}}} \exp \left( - \frac{(x_k - \hat{x}_{prior})^2}{2\hat{\sigma}_{prior}^2}\right), \label{eq:prior}
+\\ \notag \\
+\rho(y_k|x_k) &= \mathcal{N}(y_k|x_k,\hat{\sigma}_{evidence}) \notag \\&= \frac{1}{\sqrt{2\pi \hat{\sigma}_{evidence}}} \exp \left( - \frac{(y_k - x_k)^2}{2\hat{\sigma}_{evidence}^2}\right), \label{eq:likelihood}
+\end{align}
+
+\noindent
+where the \textit{prior} defined in (\ref{eq:prior}) is obtained by forecasting and the \textit{likelihood} given y (\ref{eq:likelihood}) is obtained by a linear observation model, say $y_k = x_k + w_k$, with $w_k \sim \mathcal{N}(0,\sigma_{evidence})$. Under the MAP estimation method, we can combine (\ref{eq:map}), (\ref{eq:prop_xk}) (\ref{eq:prior}) and (\ref{eq:likelihood}), discarding the normalization factor, which is independent of $x_k$, yielding
+
+\begin{align}
+\hat{x}_k^{MAP} &= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \rho(y_k|x_k) \rho(x_k | (y_1,...,y_{k-1})) \notag  \\
+&= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \mathcal{N}(y_k|x_k,\hat{\sigma}_{evidence}) \mathcal{N}(x_k|\hat{x}_{prior},\hat{\sigma}_{prior})\notag \\
+&= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \mathcal{N}(x_k|\hat{x}_{posterior}(y_k), \hat{\sigma}_{posterior}) \\
+& = \hat{x}_{posterior}(y_k),  \label{eq:posterior} 
+\end{align}
+
+\noindent where 
+
+\begin{align}
+\hat{x}_{posterior}(y_k)	 &= 
+\frac{\hat{\sigma}_{evidence}^2}{\hat{\sigma}_{prior}^2 + \hat{\sigma}_{evidence}^2} \hat{x}_{prior} + 
+\frac{\hat{\sigma}_{prior}^2}{\hat{\sigma}_{evidence}^2 + \hat{\sigma}_{prior}^2} y_k \notag \\
+						& = \hat{x}_{prior} + \frac{\hat{\sigma}_{prior}^2}{\hat{\sigma}_{evidence}^2 + \hat{\sigma}_{prior}^2} (y_k -  \hat{x}_{prior}), \label{eq:product_mean}\\ \notag \\
+\hat{\sigma}_{posterior} &= \frac{\hat{\sigma}_{prior}^2 \hat{\sigma}_{evidence}^2}{\hat{\sigma}_{prior}^2+ \hat{\sigma}_{evidence}^2} \notag \\
+						&= \hat{\sigma}_{prior}^2 - \frac{\hat{\sigma}_{prior}^2}{\hat{\sigma}_{evidence}^2 + \hat{\sigma}_{prior}^2}\hat{\sigma}_{prior}^2. \label{eq:product_std} 
+\end{align}
+
+The derivation from (\ref{eq:product_mean}) and (\ref{eq:product_std}) comes from thes multiplication of two Gaussian functions. Hence the \textit{posterior} density will have a Gaussian distribution, with its new parameters determined by a weighted combination of the variances of both \textit{prior} and \textit{likelihood} densities. The information that holds the lowest uncertainty will be favored. Figure~\ref{fig:gauss_fusion} presents the result of two fusions, each with a different density being the most certain one.
+
+
+\begin{figure}[!htb]
+	\centering
+	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/gauss_fusion.pdf}}
+	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/gauss_fusion2.pdf}}
+	\caption[\textit{Posterior} density obtained by the fusion \textit{prior} and \textit{likelihood}]{\textit{Posterior} density obtained by the fusion \textit{prior} and \textit{likelihood}. In (a) the variance of the \textit{likelihood} is smaller than the variance of the \textit{prior}, hence the \textit{posterior} is closer to the \textit{likelihood}. In (b) is the other way around.}
+	\label{fig:gauss_fusion}
+\end{figure}
 
 \subsection{Kalman Filter}
+
+The Bayesian recursive solution described by proposition~\ref{prop:bayes_solution} enables the computation of the optimal estimation of state vector $x_k$. However, its implementation is impossible, since it relies on mathematical integrations and as time evolves, the observation sequence grow indefinitely. The sequential algorithm proposed by \citep{Kalman1960} solved that problem under a restriction in the system assumptions, that is linearity and Gaussianity.
+
+
 
 Consider the Gauss-Markov discrete-time linear system
 
@@ -256,14 +300,14 @@ And for the \textit{data assimilation step}, we find the joint density of $y_k$ 
 and the marginal density for $x_k$ is
 
 \begin{equation}
-\rho(x_{k}|(y_1,...,y_{k}) = \mathcal{N}(\hat{x}_{k|k-1}+K_k(y_k-C_k\hat{x}_{k|k-1}),P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T),
+\rho(x_{k}|(y_1,...,y_{k})) = \mathcal{N}(\hat{x}_{k|k-1}+K_k(y_k-C_k\hat{x}_{k|k-1}),P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T),
 \end{equation}
 
 that is, the \textit{data assimilation} sate and covariance estimates are calculated by
 
 \begin{align}
 \hat{x}_{k|k} &= \hat{x}_{k|k-1}+K_k(y_k-C_k\hat{x}_{k|k-1}), \\
-P^{xx}_{k|k}	&= P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T).
+P^{xx}_{k|k}	&= P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T.
 \end{align}
 
 \noindent
