@@ -22,6 +22,7 @@
 This chapter narrows the field of sensor fusion under irregular sampling down to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a review of the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
 In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for results assessment, designed to quantify estimation accuracy and consistency.
 
+\todo[inline]{Falta traduzir seção 4.2 e incluir revisão das métricas de performance (teste chi quadrado e rmse)}
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
@@ -176,7 +177,7 @@ The derivation from (\ref{eq:product_mean}) and (\ref{eq:product_std}) comes fro
 	\label{fig:gauss_fusion}
 \end{figure}
 
-\subsection{Kalman Filter}
+\subsection{Kalman Filter}\label{sec:kalman-filter}
 
 The Bayesian recursive solution described by proposition~\ref{prop:bayes_solution} enables the computation of the optimal estimation of state vector $x_k$. However, its implementation is impossible, since it relies on mathematical integrations and as time evolves, the observation sequence grow indefinitely. The sequential algorithm proposed by \citep{Kalman1960} solves that problem adding a restriction in the system assumptions, that is linearity and Gaussianity. 
 
@@ -190,10 +191,10 @@ y_k &= C_kx_k+ v_k, \label{eq:gm_obs}
 \noindent
 where, $\forall k \geq1$, time varying matrices $A_{k-1} \in \mathbb{R}^{n\times n}$,  $B_{k-1} \in \mathbb{R}^{n\times p}$,  $G_{k-1} \in \mathbb{R}^{n\times q}$ and  $C_{k-1} \in \mathbb{R}^{m\times n}$ are known, as well as the input $u_{k-1} \in \mathbb{R}^P$ and output $y_k \in \mathbb{R}^m$ vectors. Process and observation noise vectors, $w_{k-1} \in \mathbb{R}^q$ and $v_{k-1} \in \mathbb{R}^m$ are white, zero-mean and mutually independent, apart from being Gaussian, with known covariance matrices $Q_{k-1}$ and $R_k$, respectively.
 
-Define $\mathcal{N}(x|\mu,\Sigma)$ as a multivariate Gaussian probability density function on $x$, with mean $\mu$ and covariance $\Sigma$, defined by
+Define $\mathcal{N}(x;\mu,\Sigma)$ as a multivariate Gaussian probability density function on $x$, with mean $\mu$ and covariance $\Sigma$, defined by
 
 \begin{equation}
-\mathcal{N}(x|\mu,\Sigma) = \frac{1}{(2\pi)^{n/2} \left| \Sigma \right|^{1/2}}exp\left( -\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)\right)
+\mathcal{N}(x;\mu,\Sigma) = \frac{1}{(2\pi)^{n/2} \left| \Sigma \right|^{1/2}}exp\left( -\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)\right)
 \end{equation}
 
 Some identities of multivariate Gaussian probability densities are needed for the next steps and are described in properties ~\ref{prop:joint} and~\ref{prop:marginal}.
@@ -225,8 +226,8 @@ Some identities of multivariate Gaussian probability densities are needed for th
 	
 	If the random variables $x$ and $y$ have the Gaussian densities
 	\begin{align}
-	\rho(x) 	&= \mathcal{N}(x|a,A), \\
-	\rho(y|x) 	&= \mathcal{N}(y|Hx, B),
+	\rho(x) 	&= \mathcal{N}(x;a,A), \\
+	\rho(y|x) 	&= \mathcal{N}(y;Hx, B),
 	\end{align}
 	
 	Then, the joint and marginal densities are given by
@@ -245,8 +246,8 @@ Some identities of multivariate Gaussian probability densities are needed for th
 From the Gauss-Markov assumptions, we can rewrite (\ref{eq:gm_process}) and (\ref{eq:gm_obs}) from a probabilistic perspective, as
 
 \begin{align}
-\rho(x_k|x_{k-1}) &= \mathcal{N}(x_k | A_{k-1}x_{k-1} + B_{k-1}u_{k-1}, Q_k), \label{eq:rho_process}\\
-\rho(y_k|x_k) &= \mathcal{N}(y_k|C_kx_k,R_k), \label{eq:rho_obs}
+\rho(x_k|x_{k-1}) &= \mathcal{N}(x_k ; \ A_{k-1}x_{k-1} + B_{k-1}u_{k-1}, \ Q_k), \label{eq:rho_process}\\
+\rho(y_k|x_k) &= \mathcal{N}(y_k; \ C_kx_k, \ R_k), \label{eq:rho_obs}
 \end{align}
 
 \noindent
@@ -255,15 +256,15 @@ where (\ref{eq:rho_process}) is the \textit{transition} density representing the
 The Bayesian recursive solution to such system is defined by \textit{forecast} and \textit{data assimilation} steps according to
 
 \begin{align}
-\rho(x_{k}|(y_1,...,y_{k-1}) &= \mathcal{N}(\hat{x}_{k|k-1},P^{xx}_{k|k-1}), \label{eq:sol_xk}\\
-\rho(x_{k}|(y_1,...,y_{k}) &= \mathcal{N}(\hat{x}_{k|k},P^{xx}_{k|k}) \label{eq:sol_xk1},
+\rho(x_{k}|(y_1,...,y_{k-1}) &= \mathcal{N}(x_k; \ \hat{x}_{k|k-1},P^{xx}_{k|k-1}), \label{eq:sol_xk}\\
+\rho(x_{k}|(y_1,...,y_{k}) &= \mathcal{N}(x_k; \ \hat{x}_{k|k},P^{xx}_{k|k}) \label{eq:sol_xk1},
 \end{align}
 
 \noindent
 with the \textit{posterior} density function from a previous step given by
 
 \begin{equation}
-\rho(x_{k-1}|(y_1,...,y_{k-1}) = \mathcal{N}(\hat{x}_{k-1|k-1},P^{xx}_{k-1|k-1}), \label{eq:previous}
+\rho(x_{k-1}|(y_1,...,y_{k-1}) = \mathcal{N}(x_{k-1}; \ \hat{x}_{k-1|k-1},P^{xx}_{k-1|k-1}), \label{eq:previous}
 \end{equation}
 
 \noindent
@@ -273,7 +274,7 @@ Now we combine the \textit{forecast steps} from (\ref{eq:prop_xk1}) and from (\r
 
 \begin{align}
 \rho(x_k|(y_1,...,y_{k-1})) &= \int_{\mathbb{R}^n}\rho(x_k|x_{k-1}) \rho(x_{k-1}|y_1,...,y_{k-1})dx_{k-1}, \notag\\
-							&= \mathcal{N}(x_k|A_{k-1}\hat{x}_{k-1|k-1} + B_{k-1}u_{k-1},A_{k-1}P^{xx}_{k-1|k-1}A{k-1}^T + G_{k-1}QG_{k-1}^T, \label{eq:forecast}
+							&= \mathcal{N}(x_k;, \ A_{k-1}\hat{x}_{k-1|k-1} + B_{k-1}u_{k-1},A_{k-1}P^{xx}_{k-1|k-1}A{k-1}^T + G_{k-1}QG_{k-1}^T, \label{eq:forecast}
 \end{align}
 
 \noindent
@@ -289,6 +290,7 @@ And for the \textit{data assimilation step}, we find the joint density of $y_k$ 
 \begin{equation}
 \rho(x_k,y_k|(y_1,...,y_{k-1})) = \mathcal{N} 
 \left(
+\begin{pmatrix} x_k \\ y_k \end{pmatrix}; \
 \begin{pmatrix} \hat{x}_{k|k-1} \\ C_k\hat{x}_{k|k-1} \end{pmatrix},
 \begin{pmatrix} P^{xx}_{k|k-1} & P^{xx}_{k|k-1}C_k^T\\ C_kP^{xx}_{k|k-1} & C_k P^{xx}_{k|k-1} C_k^T + R_k \end{pmatrix}
 \right),	
@@ -298,7 +300,7 @@ And for the \textit{data assimilation step}, we find the joint density of $y_k$ 
 and the marginal density for $x_k$ is
 
 \begin{equation}
-\rho(x_{k}|(y_1,...,y_{k})) = \mathcal{N}(\hat{x}_{k|k-1}+K_k(y_k-C_k\hat{x}_{k|k-1}),P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T),
+\rho(x_{k}|(y_1,...,y_{k})) = \mathcal{N}(x_k; \ \hat{x}_{k|k-1}+K_k(y_k-C_k\hat{x}_{k|k-1}),P^{xx}_{k|k-1}-P^{xx}_{k|k-1}C_k^T K_k^{-1}P^{xx}_{k|k-1}C_k^T),
 \end{equation}
 \noindent
 that is, the \textit{data assimilation} sate and covariance estimates are calculated by
@@ -332,7 +334,7 @@ For more details on this derivation, refer to \citep{Sarkka2013}. We summarize t
 The linear KF is the optimal estimator under both MAP and MMSE criteria, it is unbiased and its cross-covariance will asymptotically achieve the lower bound of the Cramér-Rao inequality \citep{Teixeira2008}.
 
 
-\subsection{Unscented Kalman Filter}	
+\subsection{Unscented Kalman Filter}\label{sec:unscented-kalman-filter}	
 
 For non-linear systems, the Gaussianity requirement does not hold, even if the uncertainty and initial conditions are Gaussian. Therefore, we can not characterize the posterior PDF only by its first two moments, mean and covariance, and the solution given by proposition~\ref{prop:bayes_solution} are not suited for the estimation problem. In fact, optimal solutions are generally not possible to be obtained by a recursive algorithm.
 
@@ -400,26 +402,21 @@ P^{xx}_{k|k}		&= P^{xx}_{k|k-1} - K_k (P^{yy}_{k|k-1}) K_k^T.
 	
 \section{State Estimation with Aperiodic Sampling} \label{sec:estimation_aperiodic}
 
+In general, state estimation in sampled-data systems are designed considering regular sampling time intervals. However, we are interested in the effects of aperiodic sampling and data assimilation executed at incorrect time instants, as formulated in Section~\ref{sec:problem_form}. 
 
+First, we note that the measurement instants $t_k$, $\forall k \in \mathbb{N}$ do not match the estimation instants $iT$, $\forall i \in \mathbb{N}$. Additionally, the process model given by (\ref{eq:prob_process})  is discretized at a rate $1/T$ that is $\alpha > 1$ times faster than the expected sampling rate $\lambda_h$ of the observations. Therefore, there are time intervals $iT - (i-1)T$ without any observations, hence only the \textit{forecast} step of state estimation can be performed. One example of such application is in target tracking, where inertial sensors that measure process input data such as linear acceleration and angular velocity operate at higher frequencies compared to GPS sensors, that are responsible for the observation model data.
 
-%\todo[caption = {Atualizar Seção de Métodos}, inline]{Falta traduzir e atualizar para o cenário com irregularidade na entrada. Além do texto do artigo, foi introduzido esquemático da nova irregularidade com pequeno texto.}
-%
-%Para avaliar o efeito de se considerar ou não o carimbo de tempo das medições no desempenho de sistemas de estimação via fusão sensorial, filtros de Kalman \textit{unscented} (UKF) são utilizados. O algoritmo UKF é descrito de forma detalhada no trabalho de \citep{Julier2004} e uma revisão recente e bastante completa pode ser encontrada em \citep{Menegaz2015}. Assim como o filtro de Kalman original \citep{Kalman1960}, o UKF é composto pelas etapas de predição e de assimilação de dados. As informações dos modelos em  são utilizadas durante a predição, enquanto as observações medidas são introduzidas nas estimativas de estado na fase de assimilação de dados.
-%
-%
-%Devido à amostragem irregular descrita na Seção 1, os instantes de medição $t_k$ das observações não coincidem com os de estimação $iT$. Além disso, o modelo de processo é discretizado a uma taxa $1/T$ mais rápida que a frequência média das observações $1/\lambda$. Como consequência, há intervalos de tempo $T$ em que apenas a etapa de predição pode ser realizada e outros em que há dados a serem assimilados. Um exemplo de aplicação em que essa característica acontece é o problema de rastreamento de alvos. Sensores inerciais que fornecem as informações de entrada para o modelo, e.g. aceleração linear e velocidade angular, operam em uma frequência mais alta que os sensores GPS, mas, geralmente, apresentam níveis de ruído superiores. 
-%
-Um esquemático ilustrativo é apresentado na Fig., onde $\alpha=5$, i.e. a taxa média de amostragem das observações $1/\lambda$ é cinco vezes mais lenta que a frequência de amostragem $1/T$ dos sensores que disponibilizam informações de entrada. A cada $T$ segundos, ou seja no intervalo de tempo entre dois instantes de amostragem das entradas pode haver ou não informações de observação. No cenário ilustrado pela letra \textbf{A} na Fig.~\ref{fig:esquema}, não há medições disponíveis. Durante o intervalo \textbf{B} há apenas uma medição, ao passo que em \textbf{C} há mais de uma observação disponível.
+A illustrative example is presented in Figure~\ref{fig:cap4-sampling_example}, where $\alpha=5$, that is the expected time interval for observations $1/\lambda_h$ is five times higher than regular sampling time interval $T$. Between two consecutive estimation time instants, there can be no observation data, illustrated by the red letter \textit{A}, there can be one measurement, red letter \textit{B}, or multiple measurements, shown in the red letter \textit{C}.
 
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[scale=0.65]{Imagens/esquema2}
-	\caption[Exemplos de instantes de amostragem da entrada e das estimações]{Exemplos de instantes de amostragem da entrada e das estimações (1) e das observações (2). Os instantes múltiplos de $\lambda$, igual ao intervalo médio de amostragem das observações são apresentados em cinza escuro, para referência.}
-	\label{fig:esquema}
+	\includegraphics[width=\textwidth]{Imagens/cap4-sampling_example.pdf}
+	\caption[Input and observation time instants realization]{Input and estimation time instants labeled as $iT$ and a realization of observation time instants, labeled as $t_k$. Expected time instants for observation is presented in gray, considering that $E[d_k] = \frac{1}{\lambda_h}$, and $\frac{1}{\lambda_h} = 5 T$, that is $\alpha=5$.}
+	\label{fig:cap4-sampling_example}
 \end{figure} 
 
-
+On the next subsections, we discuss how the algorithm is executed for the scenarios when reliable time-stamp information is available, and when it is not present in the information package.
 
 %\subsection{Input Irregular Sampling}
 %
@@ -446,76 +443,126 @@ Um esquemático ilustrativo é apresentado na Fig., onde $\alpha=5$, i.e. a taxa m
 
 \subsection{With Timestamp}\label{sec:carimbo}
 
-Sabendo o momento exato $t_k$ em que as observações são medidas, é possível assimilá-las no instante correto, considerando intervalos de tempo variáveis para o algoritmo de filtragem. Para isso, o modelo matemático em () é discretizado a uma taxa $\delta t^*_j$ variável. Para a simulação deste artigo, os valores de $\delta t^*_j$ são calculados a partir da união de todos os instantes de tempo correspondentes às chegadas de sinais de entrada ou de medição em um único vetor, de forma ordenada. Por meio da subtração de dois instantes consecutivos, é possível obter os intervalos de tempo de integração $\delta t^*_j$ correspondente. No caso de uma versão \textit{online}, a integração das equações diferenciais é executada a medida que um sinal de entrada ou um sinal de medição de saída é recebido. Nesses momentos, são utilizados o intervalo de tempo entre o último sinal recebido e o instante atual. Além disso, quando o sinal recebido é um sinal de entrada, é executada apenas a etapa de predição. E, quando o sinal for de medição, acontecem as duas etapas de predição e assimilação de dados, considerado um segurador de ordem zero para a entrada. O fluxograma da Fig.~\ref{fig:diagrama} representa o passo a passo desse algoritmo, apresentando as etapas executadas quando o sinal é de entrada ou de observação.
-
-Dessa forma, no cenário \textbf{B} da Fig.~\ref{fig:esquema}, o algoritmo executa uma etapa completa de predição e assimilação de dados dos instantes $3T$ até $t_1$, considerando o intervalo $\delta t^*_4 =t_1-3T$ (note que há 3 intervalos de tempo $\delta t^*_j$, antes o instante $t_1$). Em seguida é feita uma etapa de predição entre $t_1$ e $4T$. Durante o intervalo de tempo de integração entre $t_1$ e $4T$, considerou-se que a entrada permaneceu constante desde a sua última atualização em 3T. Ou seja, assume-se que não houve variação na entrada para essa etapa de predição. Caso mais de uma observação seja medida entre duas entradas (cenário \textbf{C}), são executadas etapas completas de filtragem para cada observação disponível e, ao final, uma etapa de predição entre a última observação e a próxima entrada.
-
-\subsection{Without Timestamp}
-
-Quando o carimbo de tempo está disponível, a assimilação de dados do algoritmo pode ser feita nos momentos exatos da medição. Para isso, a integração das equações diferenciais via discretização deve acontecer com intervalos de tempo variáveis, no caso deste trabalho utilizando o método de Runge-Kutta de 4ª ordem. Dessa forma, (\ref{eq:processo}) pode ser reescrita como
+If the estimator knows the exact time $t_k$ that measurements were taken in a global timescale, \textit{data assimilation} steps can be performed at the correct time instants. For that, the process model defined by (\ref{eq:prob_process}) is discretized at variable time intervals $\delta t_j^*$, yielding
 
 \begin{equation}\label{eq:disc_carimbo}
 x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 \end{equation}
 
 \noindent
-em que $t^*_j= t^*_{j-1} + \delta t^*_j$ e $t^*_0=0$. Cada valor $\delta t^*_j$ corresponde ao intervalo de tempo entre o último instante $t^*_{j-1}$ em que se registrou a chegada de um sinal, seja ele de entrada ou de observação, e o próximo instante de tempo $t^*_{j}$ em que um valor de entrada ou de observação é obtido, conforme será detalhado no Capítulo \ref{cap3}. Entre instantes de observação e de entrada é utilizado um segurador de ordem zero, considerando a ultima informação disponível. 
+where $t^*_j= t^*_{j-1} + \delta t^*_j$ and $t^*_0=0$. Each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used between observation and input signals, considering last available information. For the simulation carried out in Section~\ref{cap5}, time intervals $\delta t^*_j$ are calculated by uniting all arrival times for input and observation in a single vector, in an orderly fashion. By subtracting consecutive time instants, we calculate the sequence $\delta t^*_j$, $\forall j \geq 1$. 
 
-Por outro lado, se o carimbo de tempo não é levado em conta, (\ref{eq:processo}) pode ser reescrito como
+For the \textit{online} estimator, the differential equations are numerically integrated as input or measurement signals arrive. In these instants, the corresponding time interval $\delta t^*_j$ is calculated. If the current signal transmits input data, only the \textit{forecast} step is executed. If it is observation data being received, both \textit{forecast} and \textit{data assimilation} steps are performed, considering a ZOH for the input data. This process is illustrated in Figure~\ref{fig:cap4-online_estimator}.
+
+
+\vspace{0.5cm}
+\begin{figure}[!htb]
+	\centering
+	\begin{adjustbox}{width=0.65\textwidth,height=\textheight,keepaspectratio}
+		
+		\begin{tikzpicture}[node distance=2cm, font = \scriptsize]
+		
+		\node(start)[startstop][text width=2.8cm,align=center]{\textbf{Start} \\ $t^*_0=0$; \\ $i=j=k=1$; \\};
+		
+		\node (dec1) [decision, below of=start,yshift=-0.5cm] {Signal Received};
+		
+		\node (pro1) [process, below right of=dec1, yshift=-0.9cm, xshift=0.25cm][text width=2.8cm,align=center]{Calculate \\ $\delta t^*_{j} = iT - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
+		
+		\node (pro12) [process, below of=pro1][text width=2.8cm,align=center, yshift=0.5cm]{Forecast Step};
+		
+		\node (pro2) [process, below left of=dec1,  yshift=-0.9cm, xshift=-0.25cm][text width=2.8cm,align=center]{Calculate \\ $\delta t^*_{j} = t_k - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
+		
+		\node (pro22) [process, below of=pro2][text width=2.8cm,align=center, yshift=0.5cm]{Forecast Step, using ZOH};
+		
+		\node (pro23) [process, below of=pro22][text width=2.8cm,align=center, yshift=0.7cm]{Data Assimilation \\ Step};
+		
+		\node (pro3) [startstop, below of = pro23][text width=2.8cm,align=center, xshift=1.8cm]{Estimate in $t^*_{j}$};
+		
+		\draw [arrow] (start) -- node[pos=0.5](h){} (dec1);
+		\draw [arrow] (dec1) -| node[text width=2.8cm,align=center,anchor=west,xshift=-1cm] {Iput \\ Signal} (pro1);
+		\draw [arrow] (dec1) -| node[text width=2.8cm,align=center,anchor=east,xshift=0.8cm] {Observation\\ Signal} (pro2);
+		\draw [arrow] (pro1) -- (pro12);
+		\draw [arrow] (pro2) -- (pro22);
+		\draw [arrow] (pro22) -- (pro23);
+		\draw [arrow] (pro12) -- node[text width=2.8cm,align=center,anchor=south,xshift=0.8cm, yshift=-1cm] {$i=i+1$} (pro3);
+		\draw [arrow] (pro23) -- node[text width=2.8cm,align=center,anchor=east,xshift=0.6cm] {$k=k+1$}(pro3);
+		\draw [arrow] (pro3) --+(-4cm,0) |- node[text width=2.8cm,align=center,anchor=south,xshift=1cm] {$j=j+1$}(h);
+		\end{tikzpicture}
+	\end{adjustbox}
+	
+	\caption[Illustrative schematic of the \textit{online} estimator, with time-stamp]{Illustrative schematic of the \textit{online} estimator, with time-stamp. Indexes $i$, $j$ e $k$ represent the input, estimation and observation signal counters, respectively.}
+	\label{fig:cap4-online_estimator}
+\end{figure}	
+
+
+
+
+Since there are two signal types, input and observation, there are four possible cases for the estimator: input followed by another input; input followed by an observation; observation followed by an input; and observation followed by another observation. In Figure~\ref{fig:cap4-sampling_example}, all of them are represented. During the interval \textit{A}, there are only input signals, so time interval is $T$ and only \textit{forecast} is performed. In the interval represented by \textit{B}, we have to first execute complete \textit{forecast} and \textit{data assimilation} steps between input and observation, from $3T$ until $t_1$, using $\delta t^*_4 =t_1-3T$. Next, between an observation and an input signal, a ZOH is used for a \textit{forecast} step between $t_1$ and $4T$. In other words, it is considered that the input remained constant between $3T$ and $4T$. When more than one observation arrive between two input signals, as in \textit{C}, full \textit{forecast} and \textit{data assimilation} are performed as many times needed before one last \textit{forecast} between the last observation and the next input signal.
+
+\subsection{Without Timestamp}
+
+On the other hand, in case there is no information about time-stamp, process model (\ref{eq:prob_process}) is discretized according to
+
 
 \begin{equation}\label{eq:disc_semcarimbo}
 x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
 \end{equation}
 
 \noindent
-em que $t=nT$.
+where $t=nT$.
+
+Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In such cases, there are only two possible scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the red letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is observation, full \textit{forecast} and \textit{data assimilation} steps are performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_k$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded.
 
 
-Quando não há carimbo de tempo nas medições, o algoritmo de filtragem não sabe o momento exato da medição $t_k$. Assim, o instante de tempo considerado para a etapa de assimilação de dados é sempre o próximo instante múltiplo de \textit{T}, i.e. quando a próxima informação de entrada está disponível.
-%
-Existem apenas dois cenários de estimação nesse caso. Primeiro, quando não há medições disponíveis entre duas entradas, o estimador executa apenas a etapa de predição entre os intervalos de tempo $iT$ e $(i+1)T$, conforme cenário \textbf{A} da Fig.~\ref{fig:esquema}. Segundo, nos casos representados pela letra \textbf{B}, o estimador considera que a observação foi feita no próximo instante multiplo de $T$ em que há informações de entrada. No exemplo da Fig.~\ref{fig:esquema}, a medição feita no instante $t_1$ é assimilada no instante $4T$. Caso haja mais de uma observação entre duas entradas (cenário \textbf{C}), a mais antiga é descartada. Os passos de discretização do modelo utilizados pelo UKF são sempre $\delta t=T$, havendo ou não observações disponíveis. 
+\section{State Estimation Performance Metrics} \label{sec:metrics}
 
-\vspace{0.5cm}
-\begin{figure}
-	\centering
-	\begin{adjustbox}{width=\textwidth/2,height=\textheight,keepaspectratio}
-		
-		\begin{tikzpicture}[node distance=2cm, font = \scriptsize]
-		
-		\node(start)[startstop][text width=3cm,align=center]{\textbf{Início} \\ $t^*_0=0$; \\ $i=j=k=1$; \\};
-		
-		\node (dec1) [decision, below of=start,yshift=-0.5cm] {Sinal Recebido};
-		
-		\node (pro1) [process, below right of=dec1, yshift=-0.7cm, xshift=0.25cm][text width=3cm,align=center]{Calcula \\ $\delta t^*_{j} = iT - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
-		
-		\node (pro12) [process, below of=pro1][text width=3cm,align=center, yshift=0.5cm]{Etapa de Predição};
-		
-		\node (pro2) [process, below left of=dec1,  yshift=-0.7cm, xshift=-0.25cm][text width=3cm,align=center]{Calcula \\ $\delta t^*_{j} = t_k - t^*_{j-1}$ \\ $t^*_{j} = t^*_{j-1} + \delta t^*_{j}$};
-		
-		\node (pro22) [process, below of=pro2][text width=3cm,align=center, yshift=0.5cm]{Etapa de Predição, utilizando ZOH};
-		
-		\node (pro23) [process, below of=pro22][text width=3cm,align=center, yshift=0.5cm]{Etapa de Assimilação de Dados};
-		
-		\node (pro3) [startstop, below of = pro23][text width=3cm,align=center, xshift=1.8cm]{Estimativa em $t^*_{j}$};
-		
-		\draw [arrow] (start) -- node[pos=0.5](h){} (dec1);
-		\draw [arrow] (dec1) -| node[text width=3cm,align=center,anchor=west,xshift=-1cm] {Sinal de \\ Entrada} (pro1);
-		\draw [arrow] (dec1) -| node[text width=3cm,align=center,anchor=east,xshift=0.8cm] {Sinal de \\ Observação} (pro2);
-		\draw [arrow] (pro1) -- (pro12);
-		\draw [arrow] (pro2) -- (pro22);
-		\draw [arrow] (pro22) -- (pro23);
-		\draw [arrow] (pro12) -- node[text width=3cm,align=center,anchor=south,xshift=1cm] {$i=i+1$} (pro3);
-		\draw [arrow] (pro23) -- node[text width=3cm,align=center,anchor=east,xshift=0.6cm] {$k=k+1$}(pro3);
-		\draw [arrow] (pro3) --+(-4cm,0) |- node[text width=3cm,align=center,anchor=south,xshift=1cm] {$j=j+1$}(h);
-		\end{tikzpicture}
-	\end{adjustbox}
-	
-	\caption[Diagrama ilustrativo da versão \textit{online} do estimador]{Diagrama ilustrativo da versão \textit{online} do estimador que considera o carimbo de tempo. Os índices $i$, $j$ e $k$ representam, respectivamente os contadores dos sinais de entrada, estimação e da saída.}
-	\label{fig:diagrama}
-\end{figure}	
+In order to assess the performance degradation introduced by assimilating data at incorrect time instants, we need to define certain performance metrics for comparison. The algorithms described in Sections~\ref{sec:unscented-kalman-filter} and~\ref{sec:kalman-filter} estimate both the current state, $\hat{x}_{k|k}$ and its covariance matrix $\hat{P}^{xx}_{k|k}$. For the linear case, the \textit{posterior} conditional PDF 
+$\rho(x_{k}|(y_1,...,y_{k})$ is Gaussian, according to (\ref{eq:sol_xk1}), so it is fully characterized by its two first moments. Thus, if the filter is consistent, the following conditions shall be met \citep{Bar-Shalom2001}
+
+\begin{align}
+E\left[x_k - \hat{x}_{k|k}\right] &\triangleq E[\tilde{x}_{k|k}] = 0, \label{eq:consistency1} \\
+E\left[(x_k - \hat{x}_{k|k})(x_k - \hat{x}_{k|k})^T\right] &\triangleq E[\tilde{x}_{k|k}\tilde{x}_{k|k}^t] = P^{xx}_{k|k}, \label{eq:consistency2}
+\end{align}
+
+\noindent
+where $\tilde{x}_{k|k}$ is the estimation error at time instant $k$. Condition (\ref{eq:consistency1}) is called \textit{unbiasedness} requirement, whereas (\ref{eq:consistency1}) refers to \textit{covariance matching}. For the non-linear case, these conditions cannot be fully met, since the \textit{posterior} PDF is approximated to a Gaussian. Thus, the closer they get to them, the more consistent are the filter results.
+
+In this study we will use metrics that measure both consistency conditions. According to Bar-Shalom, in order to test both aforementioned conditions, the consistency criteria metrics for state estimation must certify: that state estimate errors are zero mean and compatible with the estimated state covariance; that innovations are also zero mean and compatible with their respective covariances; and that innovations are white. We will adopt two tests proposed by him that attests all conditions simultaneously, that is the normalized (state) estimation error squared (NEES) and normalized innovation squared (NIS) tests. We first defined NEES and NIS as
 
 
-\section{Performance Metrics} \label{sec:metrics}
+\begin{align}
+NEES_k &\triangleq  \tilde{x}_{k|k}^T(P^{xx}_{k|k})^{-1}\tilde{x}_{k|k}, \label{eq:nees} \\
+NIS_k &\triangleq  \eta_{k|k-1}^T(P^{yy}_{k|k-1})^{-1}\eta_{k|k-1}, \label{eq:nis}.
+\end{align}
 
+Under the linear and Gaussian assumption, we formulate a hypothesis test, under which the null hypthesis $H_0$ that the filter is consistent, both NEES and NIS are chi-squared distribution, with $n_x$ and $n_y$ degrees of freedom, respectively, that is $n_x$ is the dimension of the state vector and $n_y$ is the dimension of the observation vector. The expected value of a RV that is chi-squared distributed is equal to its degree of freedom, that is $E[NEES_k] = n_x, \ \forall k > 1$ and  $E[NIS_k] = n_y, \ \forall k > 1$. 
+
+We adopt single-run tests, thus for every estimation, we test if $H_0$ is accepted if both NEES and NIS at time instants $k$ are within a certain interval, considering the accepted region as 
+
+\begin{align}
+P \left\{ NEES_k \in [r_1,r_2] | H_0 \right\} &= 1 - \alpha, \label{eq:nees_h0} \\
+P \left\{ NIS_k \in [r_1,r_2] | H_0 \right\} &= 1 - \alpha, \label{eq:nis_h0}
+\end{align}
+
+\noindent
+where $\alpha$ is the significance level and interval $[r_1,r_2]$ is given by the chi-square distribution degrees of freedom and $\alpha$. For instance, considering a system with a state vector of size 4 and observation vector of size 1, and a significance level of $\alpha=5\%$, the acceptance intervals for NEES and NIS are respectively given by
+
+\begin{align}
+\left[\chi^2_1(0.025),\ \chi^2_1(0.975)\right] &= [0.001, \ 5.02], \label{eq:nees_interval} \\
+\left[\chi^2_4(0.025),\ \chi^2_4(0.975)\right] &= [0.484, \ 11.1], \label{eq:nis_interval}
+\end{align}
+
+\noindent
+which means that, if the filter is consistent, in $95\%$ of the estimates, NEES and NIS value should fall under their correspondent intervals.
+
+Additionally, since we are using simulated systems, the root mean square error (RMSE) of the system states will also be assessed, as an accuracy performance index, given by
+
+
+\begin{equation}\label{eq:rmse}
+J = \frac{ \sum_{i=1}^N \sqrt{(\hat{x}_{k|k}-x_{k})^2}}{N}
+\end{equation}
+
+\noindent
+where $x_k$ is the true state vector and $N$ is the amount of estimates.
 
 \clearpage

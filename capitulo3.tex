@@ -223,7 +223,7 @@ For the stochastic process generalization, sampling time instants $t_k$ can be d
 
 \noindent
 where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(\kappa,\theta)$. If the shape parameter $k$ is a positive integer, it becomes an Erlang distribution, as used in \citep{Kanchanaharuthai2002}. For the most common case, where $\kappa$ is held constant, the random time interval $\delta_k$ follows an exponential PDF and the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}. In fact, Micheli and Jordan provided mathematical proof that for a network with $N$ unsynchronized sensors with sampling period $T$, the waiting time between two arrivals tends, in distribution, to the exponential random variable, that is 
-$\delta_k \sim \mathcal{E} (\lambda)$, where $\lambda = N/T$, as $N$ tends to infinity.
+$\delta_k \sim \mathcal{E} (\lambda)$, where $\lambda = N/T$, as $N$ tends to infinity. In such cases, the expected value of the RV $d_k$ is $E[d_k] = 1/\lambda$ and its variance is $Var[d_k] = 1/\lambda^2$.
 
 A summary of causes and types of aperodic sampling is presented Figure \ref{fig:aperiodic}.
 
