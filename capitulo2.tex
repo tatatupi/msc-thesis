@@ -20,7 +20,7 @@
 %\section{Introdução}\label{sec int_cap_2}
 
 
-In this chapter, we review sensor fusion techniques, advantages and terminologies. We start with a brief explanation on the motivations of this field of science, grouping them in two main categories: data authenticity and data availability. We continue with a definition of sensor fusion and an exploration of the available fusion methods classification models. The categorization based on data challenges, that is uncertainty, imperfection, inconsistency and disparateness, is further discussed, especially the data fusion methods that handle imperfect data, the most fundamental challenge present in data. We end the chapter focusing on probabilistic fusion methods for sampled-data systems.
+In this chapter, we review sensor fusion techniques, advantages and terminologies. We start with a brief explanation on the motivations of this field of science, grouping them in two main categories: data authenticity and data availability. We continue with a definition of sensor fusion and an exploration of the available fusion methods classification models. The categorization based on data challenges, that is uncertainty, imperfection, inconsistency and disparateness, is further discussed. We also present data fusion methods that handle imperfect data, which is the most fundamental problem present in information. We end the chapter focusing on probabilistic fusion methods for sampled-data systems.
 
 
 \section{Introduction}
@@ -46,21 +46,21 @@ The reasons why one chooses to fuse information from different sources are vario
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.7\textwidth]{Imagens/fusion_accuracy.pdf}
+	\includegraphics[width=0.8\textwidth]{Imagens/fusion_accuracy.pdf}
 	\caption[Probability density functions for different amount of fused measurements]{Probability distribution functions for different amount of fused measurements, obtained by 1 (blue), 3 (green) and 10 (red) redundant sensors, considering i.i.d additive Gaussian noise. The higher the value of $n$, the lower is the standard deviation, thus the lower is the expected measurement error.}
 	\label{fig:accuracy}
 \end{figure}
 
-There are many other reasons to fuse information from multiple sensors, however. \citep{Elmenreich2002} provides an interesting example to illustrate some of them. Imagine a car parking assist system with only one distance sensor mounted at its rear, with limited precision and considerable update time (sampling interval). Now picture how would be the system's performance, considering that the sensor may suffer from: deprivation or occlusion, in the sense that it could be blocked by some physical barrier; coverage, both in spatial and temporal contexts, since it can only sense objects in front of him (spatial) and can only provide information periodically (temporal); precision, with measurement errors being liable to be the cause of unexpected bumps; and uncertainty, when an object, such as a small bicycle, might be missed by the sensor even in the presence of valid signal. The system would definitely perform at insufficient levels. All these issues could be solved by adding multiple sensors to the architecture.
+There are many other reasons to fuse information from multiple sensors. \citep{Elmenreich2002} provides an interesting example to illustrate some of them. Imagine a car parking assist system with only one distance sensor mounted at its rear, with limited precision and considerable update time (sampling interval). Now picture how would be the system's performance, considering that the sensor may suffer from: deprivation or occlusion, in the sense that it could be blocked by some physical barrier; coverage, both in spatial and temporal contexts, since it can only sense objects in front of him (spatial) and can only provide information periodically (temporal); precision, with measurement errors being liable to be the cause of unexpected bumps; and uncertainty, when an object, such as a small bicycle, might be missed by the sensor even in the presence of valid signal. The system would definitely perform at insufficient levels. All these issues could be solved by adding multiple sensors to the architecture.
 
 %%%% CORRIGIR EM CASO DE TROCA DE ORDEM
 
-Based on the studies from Hall, Elmenreich and Andler, we can group most of the advantages in two categories: authenticity and availability improvements. The first group refers to those benefits that improve the quality of the measurement, whereas the second one encompasses those benefits regarding ranges or data dimensions. The addition of sensors can also be of different types (heterogeneous) or of the same type (homogeneous), with redundant measurements. There may be benefits that are exclusive to the addition of different sensors, others exclusive to the addition of redundant sensors and those that can happen both ways. Figure \ref{fig:advantages} presents a schematic with the different advantages expected in sensor fusion.
+Based on the studies from Hall, Elmenreich and Andler, we can group most of the advantages in two categories: \emph{authenticity} and \emph{availability} improvements. The first group refers to those benefits that improve the quality of the measurement, whereas the second one encompasses those benefits regarding ranges or data dimensions. The set of multiple sensors can also be of different types (\emph{heterogeneous}), or of the same type (\emph{homogeneous}), with redundant measurements. There may be benefits that are exclusive to the addition of different sensors, others exclusive to the addition of redundant sensors and those that can happen both ways. Figure \ref{fig:advantages} presents a schematic with the different advantages expected in sensor fusion.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/fusion_advantages.pdf}
-	\caption[Expected advantages in sensor fusion]{Sensor fusion categorization hierarchy based on expected advantages. The lowest white boxes represent the advantages grouped two ways: autenthicity or availability; and sensor architecture, that is heterogeneous, homogeneous or both.}
+	\caption[Expected advantages in sensor fusion]{Sensor fusion categorization hierarchy based on expected advantages. The white boxes represent the advantages grouped two ways: between autenthicity or availability improvements; and between heterogeneous, homogeneous or both sensor architectures}
 	\label{fig:advantages}
 \end{figure}
 
@@ -82,13 +82,13 @@ Researchers in the field made additional efforts to categorize the fusion techni
 	\label{fig:cat_input}
 \end{figure}
 
-Another common way to categorize sensor fusion is by the \emph{three-level hierarchy} based on input and output characteristics, which depends on the processing stage at which information is fused. The lower-level is related to raw-data fusion, where signals from sensors are combined. The mid-level is usually related to feature fusion, where information about characteristics of the object are used in the process. The higher level involves decision-fusion, that can be understood as a reasoning process, like the methods of evidential belief or fuzzy logic. \citep{Dasarathy1997} extended this terminology, proposing five fusion modes, according to Figure~\ref{fig:cat_io}. \textit{Data in - data out fusion} (DAI-DAO), the lowest level fusion, processes raw data and outputs raw data, but with some improvements, such as increased accuracy. \textit{Data in - feature out fusion} (DAI-FEO) extracts features from raw data to describe characteristics of the measured environment. \textit{Feature in - feature out} (FEI-FEO) aims at the refinement of the features entering the process, similarly to what DAI - DAO does to raw data. \textit{Feature in - decison out} (FEI-DEO) usually performs classification based on a set of features received as inputs. \textit{Decision in - decision out} (DEI-DEO) outputs a better global decision based on local, restricted decisions. Using our human brain data fusion analogy, many examples can be framed into Dasarathy's terminology. The processing of raw signals, such as letters symbols, into features such as words and texts can be interpreted as DAI-FEO fusion. On the other hand, the process of assimilating features of objects from our eyes and ears, and fusing them into a decision about what they are, for instance, can be perceived as an example of FEI-DEO fusion.
+Another common way to categorize sensor fusion is by the \emph{three-level hierarchy} based on input and output characteristics, which depends on the processing stage at which information is fused. The lower-level is related to \emph{raw-data fusion}, where signals from sensors are combined. The mid-level is usually related to \emph{feature fusion}, where information about characteristics of the object are used in the process. The higher level involves \emph{decision fusion}, that can be understood as a reasoning process, like the methods of evidential belief or fuzzy logic. \citep{Dasarathy1997} extended this terminology, proposing five fusion modes, according to Figure~\ref{fig:cat_io}. \textit{Data in - data out fusion} (DAI-DAO), the lowest level fusion, processes raw data and outputs raw data, but with some improvements, such as increased accuracy. \textit{Data in - feature out fusion} (DAI-FEO) extracts features from raw data to describe characteristics of the measured environment. \textit{Feature in - feature out} (FEI-FEO) aims at the refinement of the features entering the process, similarly to what DAI - DAO does to raw data. \textit{Feature in - decison out} (FEI-DEO) usually performs classification based on a set of features received as inputs. \textit{Decision in - decision out} (DEI-DEO) outputs a better global decision based on local, restricted decisions. Using our human brain data fusion analogy, many examples can be framed into Dasarathy's terminology. The processing of raw signals, such as letters symbols, into features such as words and texts can be interpreted as DAI-FEO fusion. On the other hand, the process of assimilating features of objects from our eyes and ears, and fusing them into a decision about what they are, for instance, can be perceived as an example of FEI-DEO fusion.
 
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{Imagens/fusion_cat_io.pdf}
-	\caption[Input and output model and the three fusion levels.]{{Input and output model categorization, represented type of input in green, the method in yellow and the output in red. The three fusion levels are shown in the right of the figure.}}
+	\caption[Input and output model and the three fusion levels.]{{Input and output model categorization, representing type of input in green, the method in yellow and the output in red. The fusion levels are shown in the curly brackets.}}
 	\label{fig:cat_io}
 \end{figure}
 
@@ -110,12 +110,13 @@ A final note on the taxonomy of data fusion methodologies will be given to the w
 	\label{fig:fusion_challenge}
 \end{figure}
 
+
 \section{Fusion of Imperfect Data}
 
 Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. Based on Khaleghi's classification, imperfection on data can be manifested as uncertainty, imprecision and granularity. We can distinguish uncertainty and imprecision with two information examples: \textit{I believe Maria is one point eight meter tall}; \textit{I am sure that Maria is tall}. In the first sentence, the information is precise, but uncertain. In the second, the information about Maria's height is certain, but imprecise, with some vagueness (fuzziness) attached to it. Usually the amount of precision in data is inversely proportional to the level of certainty. urce of imprecision can also be ambiguity, as in the phrase: \textit{Maria gave birth to her daughter yesterday at 5}. We don't know if it was 5 PM or 5 AM, though the information was certain. The last type of imprecision would be for incomplete data, when we have missing information. The sentence "\textit{Maria's height is above one point five meter}", is incomplete, for example, meaning that only one bound was given. Any height above one hundred and fifty centimeters is possible and any height less than or equal to it is impossible, defining the so-called possibility measures. Finally, granularity is an imprecision related to the internal structure of data, referring to the capacity of distinction among states. Different attributes on the data or a different set of possible states will generate different levels of imprecise information.
 
-Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of these issues and \citep{Khaleghi2013} explore methods for all the challenges in their categorization model. In this study we will limit ourselves to imperfect data, for which, in most cases, the mathematical background of the algorithms relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them. Table~\ref{tab:methods} presents a sumMaria of all methods with their main advantages and limitations, adapted from the study of Khaleghi and his coauthors.
-
+Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of these issues and \citep{Khaleghi2013} explore methods for all the challenges in their categorization model. In this study we will limit ourselves to imperfect data, for which, in most cases, the mathematical background of the algorithms relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them. Table~\ref{tab:methods} presents a summary of all methods with their main advantages and limitations, adapted from the study of Khaleghi and his coauthors.
+\vspace{-3pt}
 \subsection{Probabilistic}
 
 Uncertainty is the most natural source of data imperfection and it is usually modeled by probability density functions (PDFs). Thus, probabilistic fusion methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes' theorem. The idea is to update the probabilities of an hypothesis $H$ given some evidence $E$ by using his famous equation~\citep{Stone2013}
@@ -127,7 +128,7 @@ Uncertainty is the most natural source of data imperfection and it is usually mo
 \noindent
 where $\rho(H|E)$ represents a conditional probability, that is the probability of $H$ being true, given $E$. We can interpret (\ref{eq:bayes}) as a fusion of \textit{a-priori} belief of an hypothesis ($\rho(H)$) and some current evidence ($\rho(E|H)/\rho(E)$) to come up with a better current estimate of the hypothesis ($\rho(H|E)$). 
 
-In addition to Bayes' contribution, Gauss' least squares methods and Fisher's maximum likelihood estimation are the foundations of all probabilistic approaches to data fusion, recursive filtering and state estimation. \citep{Kolmogorov1962} in 1941 and \citep{Wiener1949} in 1942\footnote{Their discoveries went public a few years later due to secrecy during war times.} \duvida{Dúvida: Pensei em usar rodapé, para explicar as datas discrepantes. Se preferir, incluo a explicação ao longo do texto} independently designed a linear minimum mean-square estimation technique, that is considered to be the first probabilistic designed filter, the so called Wiener-Kolmogorov filter. A few years later, perfecting the work of its predecessors, \citep{Kalman1960} developed the recursive mean-square filter, a groundbreaking method known as Kalman Filter (KF). Its impact was so big, that only one year after its publication, Kalman's algorithm was used in the Apollo Project \citep{Mohinder2010}, to solve its guidance and navigation problem. A review on the evolution of least-squares estimation theory is provided by \citep{Sorenson1970}.
+In addition to Bayes' contribution, Gauss' least squares methods and Fisher's maximum likelihood estimation are the foundations of all probabilistic approaches to data fusion, recursive filtering and state estimation. \citep{Kolmogorov1962} in 1941 and \citep{Wiener1949} in 1942\footnote{Their discoveries went public a few years later due to secrecy during war times.} independently designed a linear minimum mean-square estimation technique, that is considered to be the first probabilistic designed filter, the so called Wiener-Kolmogorov filter. A few years later, perfecting the work of its predecessors, \citep{Kalman1960} developed the recursive mean-square filter, a groundbreaking method known as Kalman Filter (KF). Its impact was so big, that only one year after its publication, Kalman's algorithm was used in the Apollo Project \citep{Mohinder2010}, to solve its guidance and navigation problem. A review on the evolution of least-squares estimation theory is provided by \citep{Sorenson1970}.
 
 When it comes to a multi-sensor system, \citep{Willner1976} introduced three approaches for the discrete Kalman Filter: parallel, sequential and data compression filters. In the parallel filter, all measurements are processed by a KF in parallel, producing a multi-output estimation. For the sequential filter design, multiple KFs are used, where the estimates of a predecessor KF are used as input for the successor KF. Data compression or output fusion filter design compresses similar data using their noise covariance matrix beforehand and the fused output is used as the measurement for a single KF. A fourth method was proposed by \citep{Singer1971}, referred to as track-to-track fusion (TTF), that employs single-output KFs and fuses their outputs considering the correlation between them.
 
@@ -138,33 +139,28 @@ Therefore, DSET can be more adequate when fusion takes place at a higher-level e
 
 \subsection{Fuzzy Logic}\label{sec:fuzzy}
 
-Fuzzy logic, first proposed by \citep{Zadeh1965} is ideal to handle vagueness in information. Unlike classical crisp definitions, where an element $x$ belongs or not to some definition $A$, fuzzy sets are characterized by a \textit{membership function} $\mu_A(x)$ which associates a degree of pertinence of $x$ in the interval [0, 1] in $A$. That is, the closer $\mu_A (x)$ is to the unity, the higher is the grade of membership of $x$ in $A$. Instead of defining tall people as those with height above certain crisp lower bound, we can define a membership function that assigns continuous degrees of "tallness" to different people. Vague data can be then fused using fuzzy rules to produce outputs. An example of fusion method would be the Mamdani-type fuzzy inference \citep{Mamdani1975}, that classifies an output $y$ from a set of inputs $x$ based on rules $R$, as below:
+Fuzzy logic, first proposed by \citep{Zadeh1965} is ideal to handle vagueness in information. Unlike classical crisp definitions, where an element $x$ belongs or not to some definition $A$, fuzzy sets are characterized by a \textit{membership function} $\mu_A(x)$ which associates a degree of pertinence of $x$ in the interval [0, 1] in $A$. That is, the closer $\mu_A (x)$ is to the unity, the higher is the grade of membership of $x$ in $A$. Instead of defining tall people as those with height above certain crisp lower bound, we can define a membership function that assigns continuous degrees of "tallness" to different people. Zadeh also generalized the crisp set notion of operations to the fuzzy set theory: fuzzy complements (NOT), fuzzy intersections (AND) and fuzzy unions (OR).
 
-\vspace*{0.2cm}
+Vague data can be then fused using fuzzy inference systems (FIS), mapping input variables into an output space using fuzzy logic operators through a set of If-Then fuzzy rules. wo of the most widely used FIS are the Mamdani-type \citep{Mamdani1975} and Sugeno-type \citep{Sugeno1985}. The main difference between both is that the outputs of the former rules are also a fuzzy set, while the outputs of the latter rules are polynomials with respect to the input variables. Mamdani and Sugeno-type rules are given, respectively, by
+\begin{align}
+R_i^{Mamdani} &: \textrm{If } x_{1} \textrm{ is } A_{i,1} \textrm{ and } x_2 \textrm{ is } A_{i,2}\textrm{ ... and } x_{n} \textrm{ is } A_{i,n} \textrm{, Then } y_i \textrm{ is } C_i, \\
+R_i^{Sugeno} &: \textrm{If } x_{1} \textrm{ is } A_{i,1} \textrm{ and } x_2 \textrm{ is } A_{i,2}\textrm{ ... and } x_{n} \textrm{ is } A_{i,n} \textrm{, Then } y_i \textrm{ is } f_i(X),
+\end{align} 
 
-\begin{tabular}{l l}
-	\centering
-	Rule $R_r$: & If $x_{k}$ is $A_{j}$ and ... $x_{n}$ is $A_{m}$, Then $y$ is $C_l$
-\end{tabular}
-
-\vspace*{0.2cm}
 \noindent
-where
-\vspace*{0.2cm}
+where $x_j \in \mathbb{R}$, $\forall j = 1\textrm{,...,}n$ is the $j$th input variable, $A_{i,j}$ is the $j$th antecedent fuzzy set for the $i$th rule, $C_i$ is the consequent fuzzy set for the $i$th rule, $f_i(X)$ is the output polynomial with respect the the input vector $X$. 
 
-\begin{tabular}{l l}
+Therefore, we can understand the inference process as a series of steps, according to Figure~\ref{fig:fuzzy}]. First, we fuzzify the inputs via membership functions. Then we apply the logic operators defined by each rule and find the result implication on the consequent. Finally we aggregate the consequents accross all rules and defuzzify its result. 
+
+\begin{figure}[!htb]
 	\centering
-	$R_r$: 	 	& fuzzy rules, with $r=1,...,r$ \\
-	$x_{k}$:  	& input fuzzy variables, with $k=1,...,n$ \\
-	$A_{i}$: 	& antecedent linguistic value, with $i=1,...,m$ \\
-	$y$: 	 	& output variable \\
-	$C_j:$   	& consequent class, with $j=1,...,c$ \\
-\end{tabular}
-
-\vspace*{0.4cm}
+	\includegraphics[width=\textwidth]{Imagens/fusion_fuzzy.pdf}
+	\caption[Fuzzy inference system example]{Fuzzy inference system example for grading thesis. There are two inputs: methodology and result. They are fuzzified according to the antecedent membership fuzzy sets: poor and average for methodology; and inconsistent, consistent and highly innovative for result. After evaluation of the rules, the implication on the consequents are calculated, producing output fuzzy sets, that are finally aggregated. The final output is then defuzzified to produce a crisp number for the grade, between 0 and 100.}
+	\label{fig:fuzzy}
+\end{figure}
 
 
-Fuzzy set theory differences itself from probabilistic and evidential reasoning theories by modeling the fuzzy membership of a state whose class is ill-defined, whereas the other methods model uncertainties in well-defined state classes.
+Fuzzy set theory differentiates itself from probabilistic and evidential reasoning theories by modeling the fuzzy membership of a state whose class is ill-defined, whereas the other methods model uncertainties in well-defined state classes.
 
 It is possible to combine fuzzy theory with DSET to handle the imperfections that both approaches can deal with, that is uncertainty, ambiguity and vagueness all together, using the fuzzy evidential belief framework.
 
@@ -249,7 +245,7 @@ Efficient applications of random set theory have been studied in tasks such as s
 
 Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be definable considering one set, but undefinable in another set. Data can be collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and thus some objects in the data might be indiscernible. 
 
-Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined rough set objects in a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target $X$ that is undefined in $B$, its definition can be approximated by two sets \citep{Pawlak2007}
+Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined rough set objects in a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target set $X$ that is undefined in $B$, its definition can be approximated by two sets \citep{Pawlak2007}
 
 \begin{equation}\label{eq:rough}
 \begin{split}
@@ -266,7 +262,7 @@ BN_B(X) = B^{*}(X) - B_*(X),
 \end{equation}
 
 \noindent
-where $B_{*}(X)$ and $B^{*}(X)$ are the \textit{B-lower} and \textit{B-upper} approximation of $X$, respectively and $BN_B(X)$ is the approximated $X$, also called as \textit{B-boundary} region. If the boundary region is empty, set $X$ is crisp or exact with respect to $B$, whereas if it is not empty, set $X$ is rough with respect to $B$. Figure~\ref{fig:rough} illustrates an approximate space in which the universe is partitioned into elementary squares for which subset $X$ is undefined, but can be approximated is by upper and lower bounds.
+where $x$ represents elements or objects in the universe of $A$, $B_{*}(X)$ and $B^{*}(X)$ are the \textit{B-lower} and \textit{B-upper} approximation of $X$, respectively and $BN_B(X)$ is the approximated $X$, also called as \textit{B-boundary} region. If the boundary region is empty, then the set $X$ is crisp or exact with respect to $B$, whereas if it is not empty, then the set $X$ is rough with respect to $B$. Figure~\ref{fig:rough} illustrates an approximate space in which the universe is partitioned into elementary squares for which subset $X$ is undefined, but can be approximated is by upper and lower bounds.
 
 \begin{figure}[!htb]
 	\centering
@@ -275,14 +271,15 @@ where $B_{*}(X)$ and $B^{*}(X)$ are the \textit{B-lower} and \textit{B-upper} ap
 	\label{fig:rough}
 \end{figure}
 
-In Pawlak's book and in the references therein, many real life applications of rough set theory are explored, such as civil engineering, medical data analysis, aircraft pilot performance evaluation, vibration analysis and image processing.
+In \citep{Pawlak1991} and in the references therein, many real life applications of rough set theory are explored, such as civil engineering, medical data analysis, aircraft pilot performance evaluation, vibration analysis and image processing.
+
 
 \begin{table}[!htb]
 	% increase table row spacing, adjust to taste
 	\renewcommand{\arraystretch}{1.3}
 	% if using array.sty, it might be a good idea to tweak the value of
 	% \extrarowheight as needed to properly center the text within the cells
-	\caption[Data fusion methods for imperfect data]{Data fusion methods for imperfect data. Adapted from \citep{Khaleghi2013}, Table 1, page 35.}
+	\caption[Data fusion methods for imperfect data]{Data fusion methods for imperfect data, adapted from \citep{Khaleghi2013}}
 	\label{tab:methods}
 	\centering
 	% Some packages, such as MDW tools, offer better commands for making tables
@@ -309,11 +306,11 @@ In Pawlak's book and in the references therein, many real life applications of r
 	}
 	\end{flushleft}
 \end{table}
-%
-%
+
+
 \section{Chapter Summary and Final Remarks}
 
-In this chapter, sensor fusion literature is reviewed. We explore the discussion about performance improvement from the combination of information from multiple sources, that have been drawing attention for many decades. The main reasons for the evolution of sensor fusion as a field of science are presented in a comprehensive way, divided by the expected advantages in data authenticity and data availability. We continue with the definition and classification of sensor fusion approaches. Four main taxonomies are reviewed: classification based on sensor interaction; the input/output model based on the three fusion levels approach; sensor network architecture designs; and the categorization based on data challenge hierarchy. The last approach is especially interesting, since it relates to the core of this study: sensor fusion in the presence of challenges presented by data. Algorithms that deal with the many aspects of data imperfection are summarized in Table~\ref{tab:methods}, such as: probabilistic; evidential belief; fuzzy logic; possibilistic; random set; and rough set theory. Hybrid methods have also being studied in the field, with interesting results.
+In this chapter, sensor fusion literature is reviewed. We explore the discussion about performance improvement from the combination of information from multiple sources, that has been drawing attention for many decades. The main reasons for the evolution of sensor fusion as a field of science are presented in a comprehensive way, divided by the expected advantages in data authenticity and data availability. We continue with the definition and classification of sensor fusion approaches. Four main taxonomies are reviewed: classification based on sensor interaction; the input/output model based on the three fusion levels approach; sensor network architecture designs; and the categorization based on data challenge hierarchy. The last approach is especially interesting, since it relates to the core of this study: sensor fusion in the presence of challenges presented by data. Algorithms that deal with the many aspects of data imperfection are summarized in Table~\ref{tab:methods}, such as: probabilistic; evidential belief; fuzzy logic; possibilistic; random set; and rough set theory. Hybrid methods have also being studied in the field, with interesting results.
 
 Being the most popular method in the fusion community, the remaining of our study will focus on probabilistic methods for data fusion and its application on state estimation for sampled-data systems. A new data challenge is often present when complex sensor architectures are used to observe system states, which is sampling irregularities.
 
