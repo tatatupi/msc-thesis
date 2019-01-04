@@ -23,7 +23,7 @@
 In this chapter, we review sensor fusion techniques, advantages and terminologies. We start with a brief explanation on the motivations of this field of science, grouping them in two main categories: data authenticity and data availability. We continue with a definition of sensor fusion and an exploration of the available fusion methods classification models. The categorization based on data challenges, that is uncertainty, imperfection, inconsistency and disparateness, is further discussed. We also present data fusion methods that handle imperfect data, which is the most fundamental problem present in information. We end the chapter focusing on probabilistic fusion methods for sampled-data systems.
 
 
-\section{Introduction}
+\section{Contextualization}
 
 The idea that combining information from multiple sensors to improve overall system performance has been in discussion for several decades. In the early days, there were those who argued against the synergism hype that was being spread in military systems, using the multi-sensor concept \citep{Fowler1979}. In his work, Fowler created what he called his seventh law: 
 
@@ -101,7 +101,7 @@ The work of \citep{Castanedo2013} provides a comprehensive review of these and o
 	\label{fig:cat_arch}
 \end{figure}
 
-A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, due to its connections to sensor fusion in the presence of irregularities, like the ones that will be discussed in Chapter \ref{cap3}. The idea was to study the methods based on data-related challenges they address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: \emph{imperfect}, \emph{correlated}, \emph{inconsistent} and \emph{disparate}. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the other three categories are basically methods that try to neutralize, avoid or minimize their aspects, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typical fusion algorithms, such as the Kalman Filter, are broken, so there are methods to eliminate correlation or to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there are out-of-sequence measurements (OOSM) in data, a type of inconsistency, then the usual frameworks would be: to ignore; to reprocess or use backward/forward prediction; and to augment the state matrices in order to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
+A final note on the taxonomy of data fusion methodologies will be given to the work of \citep{Khaleghi2013}, due to its connections to sensor fusion in the presence of irregularities, like the ones that will be discussed in Chapter \ref{cap3}. The idea was to study the methods based on data characteristics that make data fusion a challenging task. The authors referred to these aspects of data as data-related challenges and categorized the methods by which challenges the methods address. An overview of the challenge hierarchy proposed by the authors is presented in Figure~\ref{fig:fusion_challenge}, with four main categories of how challenging input data can be: \emph{imperfect}, \emph{correlated}, \emph{inconsistent} a0nd \emph{disparate}. The most fundamental problem present in data is imperfection. Indeed, most of the algorithms framed in the other three categories are basically methods that try to neutralize, avoid or minimize their aspects, so that imperfection is the only thing left on data. When correlation is present on data, for instance, the requirements for typical fusion algorithms, such as the Kalman Filter, are broken, so there are methods to eliminate correlation or to minimize its effects, given certain assumptions. In case of data inconsistency, due to outliers, one can act on the sensor outputs directly, to validate information or to detect and remove them automatically. If there are out-of-sequence measurements (OOSM) in data, a type of inconsistency, then the usual frameworks would be: to ignore; to reprocess or use backward/forward prediction; and to augment the state matrices in order to incorporate delayed measurements. Conflicted and disparate data are more specific and are beyond the scope of this study.
 
 \begin{figure}[!htb]
 	\centering
@@ -212,12 +212,14 @@ So far, the presented methods are able to cover all aspects of uncertainty and i
 		observation, $z$ 							& global observation-set, $Z$ \\
 		parameter, $\theta$ 						& global parameter-set, $\Theta$ \\ \\ 
 		
-		derivative, $\frac{d p_z}{d z}$ 			& set derivative, $\frac{\delta \beta_\Sigma}{\delta Z}$ \\
-		integral, $\int_{S} f_Z(z|x)d\lambda(z)$	& set integral, $\int_{S} f_{\Sigma}(Z|X)\delta Z$ \\ \\ 
+		derivative									& set derivative,  \\
+		integral									& set integral, \\ 
+		\\ 
 		
-		probability measure, $p_Z(S|x)$				& belief measure, $\beta_{\Sigma}(S|X)$ \\
-		pior PDF, $f_X(X)$						 	& global PDF, $f_\Gamma (X)$ \\
-		likelihood, $L_z(X)$						& global likelihood, $L_Z(X)$ \\ \\
+		probability measure							& belief measure,  \\
+		pior PDF		 					 		& global PDF, \\
+		likelihood									& global likelihood,  \\ 
+		\\
 		
 		information theory							& multi-target information theory \\
 		filtering theory							& multi-target filtering theory \\
@@ -243,9 +245,9 @@ Efficient applications of random set theory have been studied in tasks such as s
 
 \subsection{Rough Set}
 
-Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be definable considering one set, but undefinable in another set. Data can be collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and thus some objects in the data might be indiscernible. 
+Granularity is the only type of imperfection left from the categorization presented in Figure~\ref{fig:fusion_challenge}. It refers to the extent to which objects can be distinguished by data, considering the features or attributes that define them. Additionally, the way a set of features is designed will depend on a given knowledge base. Some objects might be discernible considering one set, but indiscernible in another set. If we choose to characterize a group of people by their age and height, a woman and a man might be indiscernible. If we add sex to the set of features, they become discernible. For the sensor fusion field, we can think of data being collected in a very refined universe of discourse, while the universe of concepts in which we transform data into knowledge is coarser, and thus some objects in the data might be indiscernible. These indiscernible objects in rought set theory are referred to as \textit{elementary sets} or \textit{elementary granules} for a specific set of features. The union of these \textit{elementary sets} form what is called \textit{definable sets}.
 
-Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined rough set objects in a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target set $X$ that is undefined in $B$, its definition can be approximated by two sets \citep{Pawlak2007}
+Based on these concepts, \citep{Pawlak1991} developed the rough set theory, which enables dealing with different data granularities by means of \textit{approximation spaces}. The idea is to provide crisp lower and upper bounds to undefined sets of objects in a given knowledge base. Let $B$ be a subset of features chosen to describe objects in the universe of $A$, that is $B \subseteq A$. If there is a target set $X$ that is undefined in $B$, that is there are objects $x$ in $X$ that are indiscernible by $A$, its definition can be approximated by two sets \citep{Pawlak2007}
 
 \begin{equation}\label{eq:rough}
 \begin{split}
@@ -267,7 +269,7 @@ where $x$ represents elements or objects in the universe of $A$, $B_{*}(X)$ and 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.75\textwidth]{Imagens/rought_set.pdf}
-	\caption{Best approximation of the rough set $X$ by lower and upper crisp sets.}
+	\caption[Rought set approximation by lower and upper crisp sets]{Best approximation of the rough set $X$ by lower $B_{*}(X)$ and upper $B^{*}(X)$ crisp sets. The elementary granules are squares and the union of these granules form the universe of objects.}
 	\label{fig:rough}
 \end{figure}
 
@@ -279,7 +281,7 @@ In \citep{Pawlak1991} and in the references therein, many real life applications
 	\renewcommand{\arraystretch}{1.3}
 	% if using array.sty, it might be a good idea to tweak the value of
 	% \extrarowheight as needed to properly center the text within the cells
-	\caption[Data fusion methods for imperfect data]{Data fusion methods for imperfect data, adapted from \citep{Khaleghi2013}}
+	\caption[Data fusion methods for imperfect data]{Data fusion methods for imperfect data, adapted from \citep[page 35, Table 1]{Khaleghi2013}}
 	\label{tab:methods}
 	\centering
 	% Some packages, such as MDW tools, offer better commands for making tables
@@ -311,9 +313,9 @@ In \citep{Pawlak1991} and in the references therein, many real life applications
 
 \section{Chapter Summary and Final Remarks}
 
-In this chapter, sensor fusion literature is reviewed. We explore the discussion about performance improvement from the combination of information from multiple sources, that has been drawing attention for many decades. The main reasons for the evolution of sensor fusion as a field of science are presented in a comprehensive way, divided by the expected advantages in data authenticity and data availability. We continue with the definition and classification of sensor fusion approaches. Four main taxonomies are reviewed: classification based on sensor interaction; the input/output model based on the three fusion levels approach; sensor network architecture designs; and the categorization based on data challenge hierarchy. The last approach is especially interesting, since it relates to the core of this study: sensor fusion in the presence of challenges presented by data. Algorithms that deal with the many aspects of data imperfection are summarized in Table~\ref{tab:methods}, such as: probabilistic; evidential belief; fuzzy logic; possibilistic; random set; and rough set theory. Hybrid methods have also being studied in the field, with interesting results.
+In this chapter, sensor fusion literature is reviewed. We explore the discussion about performance improvement from the combination of information from multiple sources, that has been drawing attention for many decades. The main reasons for the evolution of sensor fusion as a field of science are presented in a comprehensive way, divided by the expected advantages in data authenticity and data availability. We continue with the definition and classification of sensor fusion approaches. Four main taxonomies are reviewed: classification based on sensor interaction; the input/output model based on the three fusion levels approach; sensor network architecture designs; and the categorization based on data challenge hierarchy. The last approach is especially interesting, since it relates to the core of this study: sensor fusion in the presence of irregularities in data. Algorithms that deal with the many aspects of data imperfection are summarized in Table~\ref{tab:methods}, such as: probabilistic; evidential belief; fuzzy logic; possibilistic; random set; and rough set theory. Hybrid methods have also being studied in the field, with interesting results.
 
-Being the most popular method in the fusion community, the remaining of our study will focus on probabilistic methods for data fusion and its application on state estimation for sampled-data systems. A new data challenge is often present when complex sensor architectures are used to observe system states, which is sampling irregularities.
+Being the most popular method in the fusion community, the remaining of our study will focus on probabilistic methods for data fusion and its application on state estimation for sampled-data systems. A new data challenge is often present when complex sensor architectures are used to observe system states: sampling irregularity.
 
 
 \clearpage

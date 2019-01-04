@@ -1,6 +1,6 @@
 
 %-------------------------------------------------------------------------------
-\chapter{Methodology}\label{sec:methods}
+\chapter{State Estimation for Sampled-Data Systems}\label{sec:methods}
 \vspace{-1cm} \label{cap4}
 %
 %\begin{flushright}
@@ -19,15 +19,16 @@
 %
 %
 
-This chapter narrows the field of sensor fusion under irregular sampling down to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a review of the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
-In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for results assessment, designed to quantify estimation accuracy and consistency.
+In this chapter, the field of sensor fusion under irregular sampling is resumed to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a review of the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
+In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for assessment of the results, designed to quantify estimation accuracy and consistency.
 
+\section{Problem Formulation}
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
-The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated continuously as new information arrives, using not just the new data, but also the prior information. For that, both the desired knowledge of the states and the continuous information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
+The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated as new information arrives, using not just the new data, but also the prior information. For that, both the states and the arrived information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
 
-The goal of the estimator is to statistically and recursively infer the values of the system's states, the random vector $x_k \in \mathbb{R}^n$, from noisy data, the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$. The respective conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} density function, describing the statistics of the random vector $x_k \in \mathbb{R}^n$, after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been taken. Thus we can find the estimation of $x_k \in \mathbb{R}^n$ using methods such as the \textit{maximum a posteriori} (MAP) or \textit{minimum mean square error} (MMSE), given by \citep{Bar-Shalom2001}
+The goal of the estimator is to statistically and recursively infer the values of the system's states, that is the random vector $x_k \in \mathbb{R}^n$, from noisy data, that is the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ and input vector sequence $u_1,...,u_k \in \mathbb{R}^p$. The corresponding conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} PDF, describing the statistics of the random vector $x_k \in \mathbb{R}^n$, after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been assimilated and the process model has been taken into account. Thus we can find the estimation of $x_k$ using methods such as the \textit{maximum a posteriori} (MAP) or \textit{minimum mean square error} (MMSE), given by \citep{Bar-Shalom2001}
 
 \begin{align}
 \hat{x}_k^{MAP} &\triangleq \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \hat{\rho}(x_k|(y_1,...,y_k)), \label{eq:map} \\
@@ -35,25 +36,25 @@ The goal of the estimator is to statistically and recursively infer the values o
 \end{align}
 
 \noindent
-where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior density of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
+where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior PDF of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
 
 Finding the \textit{posterior} $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimates $\hat{x_k}^{MAP} \in \mathbb{R}^n$ and $\hat{x_k}^{MMSE} \in \mathbb{R}^n$ are the optimal state estimates, under their optimality criteria. A recursive Bayesian solution to the state estimation problem, that is finding the \textit{posterior} PDF, considering that the system evolves according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we need to define two lemmas.
 
-\begin{lema}\label{lemma:markov} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition density of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
+\begin{lema}\label{lemma:markov} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition PDF of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
 
 \begin{equation}\label{eq:lemma_transition}
 \rho(x_{k+1} | (x_0,...,x_k)) = \rho(x_{k+1}|x_k),
 \end{equation}
 
 \noindent
-and observation vector $y_k$ is independent of past observations and past states, if present state $x_k$ is given, that is
+and observation vector $y_k$ is independent of past observations and past states, given the present state $x_k$, that is
 
 \begin{equation}\label{eq:lemma_likelihood}
 \rho(y_k|(x_0,...,x_k,y_0,...,y_{k-1}) = \rho(y_k|x_k).
 \end{equation}
 \end{lema}
 
-\begin{lema} \label{lemma:chapman}For a Markov system, we can find the transition density from step $n$ to step $s$ as a function of the transition densities between them and an intermediate step $r$, as long as $n>r>s$, by the Chapman-Kolmogorov equation~\citep{Papoulis1984}
+\begin{lema} \label{lemma:chapman}For a Markov system, we can find the transition PDF from step $n$ to step $s$ as a function of the transition densities between them and an intermediate step $r$, as long as $n>r>s$, by the Chapman-Kolmogorov equation~\citep{Papoulis1984}
 
 \begin{equation}
 \rho(x_n|x_s) = \int_{-\infty}^{\infty}\rho(x_n|x_r)\rho(x_r|x_s)dx_r.
@@ -63,7 +64,7 @@ and observation vector $y_k$ is independent of past observations and past states
 
 Note that the system described in Section~\ref{sec:problem_form} is Markovian, since the transition or process model given by (\ref{eq:prob_process}) and the observation model given by (\ref{eq:prob_obs}) follow the conditions (\ref{eq:lemma_transition}) and (\ref{eq:lemma_likelihood}), respectively.
 
-\begin{propo}\label{prop:bayes_solution} The posterior density of system states $x_k \in \mathbb{R}^n$ conditioned on the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ is recursively given by
+\begin{propo}\label{prop:bayes_solution} The posterior PDF of system states $x_k \in \mathbb{R}^n$ conditioned on the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ is recursively given by
 
 \begin{align}
 \rho(x_{k}|(y_1,...,y_{k-1})) &= \int_{\mathbb{R}^n}\rho(x_k|x_{k-1}) \rho(x_{k-1}|y_1,...,y_{k-1})dx_{k-1} \label{eq:prop_xk1}, 
@@ -73,14 +74,8 @@ Note that the system described in Section~\ref{sec:problem_form} is Markovian, s
 	
 
 \noindent
-where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood density}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior density}, defined before the latest measurement, $\rho(x_{k}|x_{k-1})$ is the \textit{transition density} that models the evolution of $x_k$ and $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, or marginalization. The evidence term is commonly presented as a constant~\citep{Sarkka2013}, since it does not depend on the state vector $x_k$, and it can be computed by the Chapman-Kolmogorov equation from Lemma~\ref{lemma:chapman}
+where $k \in \mathbb{N}$, $\rho(y_k|x_k)$ is the \textit{likelihood PDF}, $\rho(x_k|(y_1,...,y_{k-1})$ is the \textit{prior PDF}, defined before the latest measurement, $\rho(x_{k}|x_{k-1})$ is the \textit{transition PDF} that models the evolution of $x_k$ and $\rho(y_k|(y_1,...,y_{k-1}))$ is the \textit{evidence}, also referred to as normalizing factor, or marginalization.
 
-\begin{align}
-\rho(y_k|(y_1,...,y_{k-1}) 	&= \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k, \\
-							&= z_k. \notag
-\end{align}
-	
-The algorithm is initialized by a known prior $\rho(x_0)$ and recursion is achieved by introducing the PDF calculated in the \textit{forecast} step, given by (\ref{eq:prop_xk1}), in the \textit{data assimilation} step, given by (\ref{eq:prop_xk}).
 \end{propo}
 
 \begin{proof}
@@ -125,7 +120,7 @@ Finally, by combining all together, we have
 \noindent
 which, after canceling the equal terms (in gray), proves (\ref{eq:prop_xk}).
 
-To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the posterior PDF, that is $\rho(x_{k+1},x_k|(y_1,...,y_k))$ ~\citep{Bergman1999}. Rewriting the new conditional density with the aid of (\ref{eq:cond_prob}), (\ref{eq:chain_rule}) and Lemma~\ref{lemma:markov}, we have
+To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the posterior PDF, that is $\rho(x_{k+1},x_k|(y_1,...,y_k))$ ~\citep{Bergman1999}. Rewriting the new conditional PDF with the aid of (\ref{eq:cond_prob}), (\ref{eq:chain_rule}) and Lemma~\ref{lemma:markov}, we have
 
 \begin{align}
 \rho(x_{k+1}, x_k | (y_1,...,y_k)) &= \rho(x_{k+1}|(x_k,y_1,...,y_k))\rho(x_k|(y_1,...,y_k)) \notag \\
@@ -136,49 +131,83 @@ The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_
 
 \end{proof}
 
-Thus, (\ref{eq:prop_xk}) can be interpreted as the fusion of the \textit{prior} density or knowledge of the state with the \textit{likelihood} density or evidence. For a better understanding, we can illustrate this process for a one-dimensional Gaussian case \citep{Faragher2012}, for which the densities are given by
-\clearpage
+The evidence term in the denominator of (\ref{eq:prop_xk}) is commonly presented as a constant~\citep{Sarkka2013}, since it does not depend on the state vector $x_k$, and it can be computed by the Chapman-Kolmogorov equation from Lemma~\ref{lemma:chapman}
+
 \begin{align}
-\rho(x_k|(y_1,...,y_{k-1})) &= \mathcal{N}(x_k|\hat{x}_{prior},\hat{\sigma}_{prior}) \notag \\&= \frac{1}{\sqrt{2\pi}\hat{\sigma}_{prior}} \exp \left( - \frac{(x_k - \hat{x}_{prior})^2}{2\hat{\sigma}_{prior}^2}\right), \label{eq:prior}
+\rho(y_k|(y_1,...,y_{k-1}) 	&= \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k, \\
+&= z_k. \notag
+\end{align}
+
+The algorithm is initialized by a known prior $\rho(x_0)$ and recursion is achieved by introducing the PDF calculated in the \textit{forecast} step, given by (\ref{eq:prop_xk1}), in the \textit{data assimilation} step, given by (\ref{eq:prop_xk}). Thus, (\ref{eq:prop_xk}) can be interpreted as the fusion of the \textit{prior} PDF or knowledge of the state with the \textit{likelihood} PDF or evidence. For a better understanding, we can illustrate this process for a one-dimensional Gaussian case \citep{Faragher2012}, for which the PDFs are given by
+
+\begin{align}
+\rho(x_k|(y_1,...,y_{k-1})) &= \mathcal{N}(x_k|\hat{x}_{\textrm{p}},\hat{\sigma}_{\textrm{p}}) \notag \\&= \frac{1}{\sqrt{2\pi}\hat{\sigma}_{\textrm{p}}} \exp \left( - \frac{(x_k - \hat{x}_{\textrm{p}})^2}{2\hat{\sigma}_{\textrm{p}}^2}\right), \label{eq:prior}
 \\ \notag \\
-\rho(y_k|x_k) &= \mathcal{N}(y_k|x_k,\hat{\sigma}_{evidence}) \notag \\&= \frac{1}{\sqrt{2\pi} \hat{\sigma}_{evidence}} \exp \left( - \frac{(y_k - x_k)^2}{2\hat{\sigma}_{evidence}^2}\right), \label{eq:likelihood}
+\rho(y_k|x_k) &= \mathcal{N}(y_k|x_k,\hat{\sigma}_{\textrm{e}}) \notag \\&= \frac{1}{\sqrt{2\pi} \hat{\sigma}_{\textrm{e}}} \exp \left( - \frac{(y_k - x_k)^2}{2\hat{\sigma}_{\textrm{e}}^2}\right), \label{eq:likelihood}
 \end{align}
 
 \noindent
-where the \textit{prior} defined in (\ref{eq:prior}) is obtained by forecasting and the \textit{likelihood} given y (\ref{eq:likelihood}) is obtained by a linear observation model, say $y_k = x_k + w_k$, with $w_k \sim \mathcal{N}(0,\sigma_{evidence})$. Under the MAP estimation method, we can combine (\ref{eq:map}), (\ref{eq:prop_xk}) (\ref{eq:prior}) and (\ref{eq:likelihood}), discarding the normalization factor, which is independent of $x_k$, yielding
+where the subscript $\textrm{p}$ stands for \textit{prior} and the subscript $\textrm{e}$ stands for \textit{evidence}. The \textit{prior} PDF defined in (\ref{eq:prior}) is obtained by forecasting with the aid of a process model, and the \textit{likelihood} PDF given by (\ref{eq:likelihood}) is obtained by a linear observation model, say $y_k = x_k + w_k$, with $w_k \sim \mathcal{N}(0,\sigma_{\textrm{e}})$. Under the MAP estimation method, we can combine (\ref{eq:map}) and (\ref{eq:prop_xk}), discarding the normalization factor, which is independent of $x_k$, yielding
 
 \begin{align}
 \hat{x}_k^{MAP} &= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \rho(y_k|x_k) \rho(x_k | (y_1,...,y_{k-1})) \notag  \\
-&= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \mathcal{N}(y_k|x_k,\hat{\sigma}_{evidence}) \mathcal{N}(x_k|\hat{x}_{prior},\hat{\sigma}_{prior})\notag \\
-&= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \mathcal{N}(x_k|\hat{x}_{posterior}(y_k), \hat{\sigma}_{posterior}) \\
-& = \hat{x}_{posterior}(y_k),  \label{eq:posterior} 
+&= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \mathcal{N}(y_k|x_k,\hat{\sigma}_{\textrm{e}}) \mathcal{N}(x_k|\hat{x}_{\textrm{p}},\hat{\sigma}_{\textrm{p}}), \label{eq:map_estimation}
 \end{align}
 
-\noindent where 
+\noindent
+and from the multiplication of (\ref{eq:prior}) and (\ref{eq:likelihood}) we have that
 
 \begin{align}
-\hat{x}_{posterior}(y_k)	 &= 
-\frac{\hat{\sigma}_{evidence}^2}{\hat{\sigma}_{prior}^2 + \hat{\sigma}_{evidence}^2} \hat{x}_{prior} + 
-\frac{\hat{\sigma}_{prior}^2}{\hat{\sigma}_{evidence}^2 + \hat{\sigma}_{prior}^2} y_k \notag \\
-						& = \hat{x}_{prior} + \frac{\hat{\sigma}_{prior}^2}{\hat{\sigma}_{evidence}^2 + \hat{\sigma}_{prior}^2} (y_k -  \hat{x}_{prior}), \label{eq:product_mean}\\ \notag \\
-\hat{\sigma}_{posterior} &= \frac{\hat{\sigma}_{prior}^2 \hat{\sigma}_{evidence}^2}{\hat{\sigma}_{prior}^2+ \hat{\sigma}_{evidence}^2} \notag \\
-						&= \hat{\sigma}_{prior}^2 - \frac{\hat{\sigma}_{prior}^2}{\hat{\sigma}_{evidence}^2 + \hat{\sigma}_{prior}^2}\hat{\sigma}_{prior}^2. \label{eq:product_std} 
+\mathcal{N}(y_k|x_k,\hat{\sigma}_{\textrm{e}}) \mathcal{N}(x_k|\hat{x}_{\textrm{p}},\hat{\sigma}_{\textrm{p}}) &= \frac{1}{\sqrt{2\pi}\hat{\sigma}_{\textrm{p}}} \exp \left( - \frac{(x_k - \hat{x}_{\textrm{p}})^2}{2\hat{\sigma}_{\textrm{p}}^2}\right) \times
+ \frac{1}{\sqrt{2\pi} \hat{\sigma}_{\textrm{e}}} \exp \left( - \frac{(y_k - x_k)^2}{2\hat{\sigma}_{\textrm{e}}^2}\right) \notag \\
+ &= \frac{1}{2\pi \hat{\sigma}_{\textrm{p}} \hat{\sigma}_{\textrm{e}}} \exp \left[ - \left( \frac{(y_k - x_k)^2}{2\hat{\sigma}_{\textrm{e}}^2} + \frac{(x_k - \hat{x}_{\textrm{p}})^2}{2\hat{\sigma}_{\textrm{p}}^2}\right) \right], 
 \end{align}
 
-The derivation from (\ref{eq:product_mean}) and (\ref{eq:product_std}) comes from thes multiplication of two Gaussian functions. Hence the \textit{posterior} density will have a Gaussian distribution, with its new parameters determined by a weighted combination of the variances of both \textit{prior} and \textit{likelihood} densities. The information that holds the lowest uncertainty will be favored. Figure~\ref{fig:gauss_fusion} presents the result of two fusions, each with a different Gaussian density being the most certain one. 
+\noindent
+whose quadratic terms can be expanded and, apart from a constant term that will be handled by the normalization factor discarded in \ref{eq:map_estimation}, is rearranged into
+
+\begin{align}
+\mathcal{N}(y_k|x_k,\hat{\sigma}_{\textrm{e}}) \mathcal{N}(x_k|\hat{x}_{\textrm{p}},\hat{\sigma}_{\textrm{p}}) &=  
+\mathcal{N}(x_k|\mu_{\textrm{fused}}(y_k),\hat{\sigma}_{\textrm{fused}})  \notag\\
+&= \frac{1}{\sqrt{2\pi} \hat{\sigma}_{\textrm{fused}}} \exp \left( - \frac{(x_k - \mu_{\textrm{fused}}(y_k))^2}{2\hat{\sigma}_{\textrm{fused}}^2}\right), 
+\end{align}
+
+\noindent
+where
+
+\begin{align}
+\mu_{\textrm{fused}}(y_k) \triangleq \hat{x}_{\textrm{posterior}}(y_k)	 &= 
+\frac{\hat{\sigma}_{\textrm{e}}^2}{\hat{\sigma}_{\textrm{p}}^2 + \hat{\sigma}_{\textrm{e}}^2} \hat{x}_{\textrm{p}} + 
+\frac{\hat{\sigma}_{\textrm{p}}^2}{\hat{\sigma}_{\textrm{e}}^2 + \hat{\sigma}_{\textrm{p}}^2} y_k \notag \\
+& = \hat{x}_{\textrm{p}} + \frac{\hat{\sigma}_{\textrm{p}}^2}{\hat{\sigma}_{\textrm{e}}^2 + \hat{\sigma}_{\textrm{p}}^2} (y_k -  \hat{x}_{\textrm{p}}), \label{eq:product_mean}\\ \notag \\
+\hat{\sigma}_{\textrm{fused}} \triangleq \hat{\sigma}_{\textrm{posterior}} &= \frac{\hat{\sigma}_{\textrm{p}}^2 \hat{\sigma}_{\textrm{e}}^2}{\hat{\sigma}_{\textrm{p}}^2+ \hat{\sigma}_{\textrm{e}}^2} \notag \\
+&= \hat{\sigma}_{\textrm{p}}^2 - \frac{\hat{\sigma}_{\textrm{p}}^2}{\hat{\sigma}_{\textrm{e}}^2 + \hat{\sigma}_{\textrm{p}}^2}\hat{\sigma}_{\textrm{p}}^2. \label{eq:product_std} 
+\end{align}
+
+
+The derivation from (\ref{eq:product_mean}) and (\ref{eq:product_std}) comes from the multiplication of two Gaussian PDFs. Combining the results of (\ref{eq:product_mean}) and (\ref{eq:product_std}) with (\ref{eq:map_estimation}), we have that
+
+
+\begin{align}
+\hat{x}_k^{MAP} &= \operatorname{arg}  \underset{x_k}{\operatorname{max}} \ \mathcal{N}(x_k|\hat{x}_{\textrm{posterior}}(y_k),\hat{\sigma}_{\textrm{posterior}}) \notag  \\
+&= \hat{x}_{\textrm{posterior}}(y_k). \label{eq:aasdadsasdasd}
+\end{align}
+
+
+In other words, the MAP estimate will be the mean of the \textit{posterior} Gaussian, with its new parameters determined by a weighted combination of the variances of both \textit{prior} and \textit{likelihood} PDFs. The information that holds the lowest uncertainty will be favored. Figure~\ref{fig:gauss_fusion} presents the result of two fusions, each with a different Gaussian density being the most certain one. 
 
 
 \begin{figure}[!htb]
 	\centering
 	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/gauss_fusion.pdf}}
 	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/gauss_fusion2.pdf}}
-	\caption[\textit{Posterior} density obtained by the fusion \textit{prior} and \textit{likelihood}]{\textit{Posterior} density obtained by the fusion of \textit{prior} and \textit{likelihood} densities. In (a) the variance of the \textit{likelihood} is smaller than the variance of the \textit{prior}, hence the \textit{posterior} is closer to the \textit{likelihood}. In (b) is the other way around.}
+	\caption[\textit{Posterior} PDF obtained by the fusion \textit{prior} and \textit{likelihood}]{\textit{Posterior} PDF obtained by the fusion of \textit{prior} and \textit{likelihood} densities. In (a) the variance of the \textit{likelihood} is smaller than the variance of the \textit{prior}, hence the \textit{posterior} is closer to the \textit{likelihood}. In (b) is the other way around.}
 	\label{fig:gauss_fusion}
 \end{figure}
 
 \subsection{Kalman Filter}\label{sec:kalman-filter}
 
-The Bayesian recursive solution described by proposition~\ref{prop:bayes_solution} enables the computation of the optimal estimation of state vector $x_k$. However, its implementation is impossible for practical applications, since it relies on mathematical integrations and as time evolves, the observation sequence grows indefinitely. The sequential algorithm proposed by \citep{Kalman1960} solves that problem adding a restriction in the system assumptions, that is linearity and Gaussianity. 
+The Bayesian recursive solution described by Proposition~\ref{prop:bayes_solution} enables the computation of the optimal estimation of state vector $x_k$. However, its implementation is impossible for practical applications, since it relies on mathematical integrations and as time evolves, the observation sequence grows indefinitely. The sequential algorithm proposed by \citep{Kalman1960} solves that problem adding a restriction in the system assumptions, that is linearity and Gaussianity. 
 
 Consider the Gauss-Markov discrete-time linear system
 
@@ -190,19 +219,19 @@ y_k &= C_kx_k+ v_k, \label{eq:gm_obs}
 \noindent
 where, $\forall k \geq1$, time varying matrices $A_{k-1} \in \mathbb{R}^{n\times n}$,  $B_{k-1} \in \mathbb{R}^{n\times p}$,  $G_{k-1} \in \mathbb{R}^{n\times q}$ and  $C_{k-1} \in \mathbb{R}^{m\times n}$ are known, as well as the input $u_{k-1} \in \mathbb{R}^P$ and output $y_k \in \mathbb{R}^m$ vectors. Process and observation noise vectors, $w_{k-1} \in \mathbb{R}^q$ and $v_{k-1} \in \mathbb{R}^m$ are white, zero-mean and mutually independent, apart from being Gaussian, with known covariance matrices $Q_{k-1}$ and $R_k$, respectively.
 
-Define $\mathcal{N}(x;\mu,\Sigma)$ as a multivariate Gaussian probability density function on $x$, with mean $\mu$ and covariance $\Sigma$, given by
+Define $\mathcal{N}(x;\bar{x},P^{xx})$ as a multivariate Gaussian PDF on $x$, with mean $\bar{x}$ and covariance $P^{xx}$, given by
 
 \begin{equation}
-\mathcal{N}(x;\mu,\Sigma) = \frac{1}{(2\pi)^{n/2} \left| \Sigma \right|^{1/2}}exp\left( -\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)\right)
+\mathcal{N}(x;\mu,P^{xx}) \triangleq \frac{1}{(2\pi)^{n/2} \left| P^{xx} \right|^{1/2}}exp\left( -\frac{1}{2}(x-\mu)^T (P^{xx})^{-1}(x-\mu)\right)
 \end{equation}
 
 Some identities of multivariate Gaussian probability densities are needed for the next steps and are described in properties ~\ref{prop:joint} and~\ref{prop:marginal}.
 
 \begin{prop} \label{prop:joint}
-	If the random variables $x$ and $y$ have the joint Gaussian probability density
+	If the random variables $x$ and $y$ are Gaussian RVs,
 	
 	\begin{align}
-	x,y \sim \mathcal{N} 
+	\rho(x,y) = \mathcal{N} 
 	\left(
 	\begin{pmatrix} x \\ y \end{pmatrix};
 	\begin{pmatrix} a \\ b \end{pmatrix},
@@ -211,35 +240,36 @@ Some identities of multivariate Gaussian probability densities are needed for th
 	\end{align}
 	
 	\noindent
-	then, the marginal and conditional densities of $x$ and $y$ are given by
+	then, the marginal and conditional PDFs of $x$ and $y$ are given by
 	
 	\begin{align}
-	x 		&\sim \mathcal{N}(x;\ a,A) \\
-	y 		&\sim \mathcal{N}(y;\ b,B) \\
-	x|y  	&\sim \mathcal{N}(x; \ a + CB^{-1}(y-b),\ A - C B^{-1} C^T ) \\
-	y|x  	&\sim \mathcal{N}(y; \ b + C^T A^{-1}(x-a),\  B - C^T A^{-1} C)
+	\rho(x)	&= \mathcal{N}(x;\ a,A) \\
+	\rho(y) 		&= \mathcal{N}(y;\ b,B) \\
+	\rho(x|y)  	&= \mathcal{N}(x; \ a + CB^{-1}(y-b),\ A - C B^{-1} C^T ) \\
+	\rho(y|x)  	&= \mathcal{N}(y; \ b + C^T A^{-1}(x-a),\  B - C^T A^{-1} C)
 	\end{align}
 	
 \end{prop}
 
 \begin{prop} \label{prop:marginal}
 	
-	If the random variables $x$ and $y$ have the Gaussian densities
+	If $x$ and $y$ are Gaussian RVs, with PDFs given by
 	\begin{align}
 	\rho(x) 	&= \mathcal{N}(x;\ a, \ A), \\
 	\rho(y|x) 	&= \mathcal{N}(y;\ Hx, \ B),
 	\end{align}
 	
-	Then, the joint and marginal densities are given by
+\noindent
+then, the joint and marginal PDFs are defined by
 	
 	\begin{align}
-	x,y &\sim \mathcal{N} 
+	\rho(x,y) &= \mathcal{N} 
 	\left(
 	\begin{pmatrix} x \\ y \end{pmatrix};
 	\begin{pmatrix} a \\ Ha \end{pmatrix},
 	\begin{pmatrix} A & AH^T\\ HA & HAH^T + B \end{pmatrix}
 	\right), \\
-	y &\sim \mathcal{N} (y; \ Ha, \ HAH^T + B)
+	\rho(y) &= \mathcal{N} (y; \ Ha, \ HAH^T + B)
 	\end{align}
 \end{prop}
 
@@ -247,8 +277,8 @@ Some identities of multivariate Gaussian probability densities are needed for th
 From the Gauss-Markov assumptions, we can rewrite (\ref{eq:gm_process}) and (\ref{eq:gm_obs}) from a probabilistic perspective, as
 
 \begin{align}
-\rho(x_k|x_{k-1}) &= \mathcal{N}(x_k ; \ A_{k-1}x_{k-1} + B_{k-1}u_{k-1}, \ Q_k), \label{eq:rho_process}\\
-\rho(y_k|x_k) &= \mathcal{N}(y_k; \ C_kx_k, \ R_k), \label{eq:rho_obs}
+\rho(x_k|x_{k-1}) &= \mathcal{N}(x_k ; \ A_{k-1}\bar{x}_{k-1} + B_{k-1}u_{k-1}, \ Q_k), \label{eq:rho_process}\\
+\rho(y_k|x_k) &= \mathcal{N}(y_k; \ C_k\bar{x}_k, \ R_k), \label{eq:rho_obs}
 \end{align}
 
 \noindent
@@ -283,7 +313,7 @@ that is, the \textit{forecast} state and covariance estimates are computed by
 
 \begin{align}
 \hat{x}_{k|k-1} &= A_{k-1}\hat{x}_{k-1|k-1} + B_{k-1}u_{k-1}, \label{eq:forecast_state} \\
-P^{xx}_{k|k-1}	&= A_{k-1}P^{xx}_{k-1|k-1}A{k-1}^T + G_{k-1}QG_{k-1}^T. \label{eq:forecast_cov}
+P^{xx}_{k|k-1}	&= A_{k-1}P^{xx}_{k-1|k-1}A_{k-1}^T + G_{k-1}QG_{k-1}^T. \label{eq:forecast_cov}
 \end{align}
 
 And for the \textit{data assimilation step}, we find the joint density of $y_k$ with the \textit{forecast} estimate from (\ref{eq:forecast}), using property~\ref{prop:joint}
@@ -351,86 +381,98 @@ The linear KF is the optimal estimator under both MAP and MMSE criteria, it is u
 
 \subsection{Unscented Kalman Filter}\label{sec:unscented-kalman-filter}	
 
-For non-linear systems, the Gaussianity requirement does not hold, even if the uncertainty and initial conditions are Gaussian. Therefore, we can not characterize the posterior PDF only by its first two moments, mean and covariance, and the solution given by proposition~\ref{prop:bayes_solution} are not suited for the estimation problem. In fact, optimal solutions are generally not possible to be obtained by a recursive algorithm.
+For nonlinear systems, the Gaussianity requirement does not hold, even if the uncertainty and initial conditions are Gaussian. Therefore, we can not characterize the posterior PDF only by its first two moments, mean and covariance, and the solution given by proposition~\ref{prop:bayes_solution} are not suited for the estimation problem. In fact, optimal solutions are generally not possible to be obtained by a recursive algorithm.
 
-Adaptations to the Kalman filter have been proposed in the literature. The extended Kalman filter (EKF), for example, linearizes the system around the state estimates, to achieve approximations through algorithm~\ref{alg:KF}. A different approach is to approximate the statistics of the posterior PDF, instead of the model. The unscented Kalman filter (UKF) \citep{Julier2004} performs statistical approximations via the unscented transformation (UT), addressing many of the drawbacks that appear in the EKF implementation, such as the necessity of differentiability, the performance loss due to systems that are poorly approximated by linearization and computational efficiency. Therefore the UKF is the chosen method for the non-linear system state estimation simulated in Chapter~\ref{cap5} and will be further discussed in this section.
+Adaptations to the Kalman filter have been proposed in the literature. The extended Kalman filter (EKF), for example, linearizes the system around the current state estimates, to achieve approximations using Algorithm~\ref{alg:KF}. A different approach is to approximate the statistics of the posterior PDF, instead of the model. The unscented Kalman filter (UKF) \citep{Julier2004} performs statistical approximations via the unscented transform (UT), based on the Monte Carlo approach.
 
-Based on the Monte Carlo approach to statistical approximation, we define a set of samples $\chi \triangleq [\chi_0,...,\chi_{2n+1}] \in \mathbb{R}^{n\times (2n+1)}$, also referred to as sigma points, to approximate the mean $\bar{x}$ and covariance $\bar{P}^{xx}$ of the random variable being estimated, such that
+First, we define a set of samples $\chi \triangleq [\chi_1,...,\chi_{2n}] \in \mathbb{R}^{n\times 2n}$, also referred to as sigma points, to estimate the mean $\bar{x}$ and covariance $\bar{P}^{xx}$ of the random variable being approximated, such that
 
 \begin{align}
-\sum_{j=0}^{2n+1} \gamma_j\chi_j &= \bar{x}, \\
-\sum_{j=0}^{2n+1} \gamma_j\left[ (\chi_j-\bar{x})(\chi_j-\bar{x})^T \right] &= \bar{P}^{xx}, \\
-\sum_{j=0}^{2n+1} \gamma_j &= 1.
+\sum_{i=0}^{2n} \gamma_i \chi_i &= \bar{x}, \\
+\sum_{i=0}^{2n} \gamma_i \left[ (\chi_i-\bar{x})(\chi_i-\bar{x})^T \right] &= \bar{P}^{xx}, \\
+\sum_{i=0}^{2n} \gamma_i &= 1.
 \end{align}
 
 \noindent
-where $\gamma_{j}$, $\forall j > 1$ are called weights. Then, the original UT proposed by \citep{Julier1997} determines the choice of sigma points by
+where $\gamma_{i}$, $\forall i > 1$ are called weights. There are various ways of determining the sigma points, but we choose a simplified version of the original UT proposed by \citep{Julier1997}, which each $\chi_i$ is given by a column of the matrix $\chi = \left[ \chi_1 \ \chi_2 \ \textrm{...} \ \chi_{2n} \right]$ given by
+
 
 \begin{align}
-\chi_0 		&= \bar{x}, \\
-\chi_i 		&= \bar{x} + \left(\sqrt{(n+\kappa)\bar{P}^{xx}} \right)_i \ , \\
-\chi_{i+n} 	&= \bar{x} - \left(\sqrt{(n+\kappa)\bar{P}^{xx}} \right)_i \ ,
+\chi \triangleq \left[\bar{x} 1_{1\times2n}+\sqrt{n} (\bar{P}^{xx})^{1/2} \quad \ \ \bar{x} 1_{1\times 	2n}-\sqrt{n}(\bar{P}^{xx})^{1/2}\right], \label{eq:sigma_points}
 \end{align}
 
 \noindent
-and weights by
+with weights
 
 \begin{align}
-\gamma_0 		&= \frac{\kappa}{n+\kappa} \  , \\
-\gamma_i 		&= \frac{1}{2(n+\kappa)} \ , \\
-\gamma_{i+n} 	&= \frac{1}{2(n+\kappa)} \ .
+\gamma = \frac{1}{2n}. \label{eq:weights}
 \end{align}
 
+Such simplification has one less tunning degree of freedom to approximate higher order moments of the RV, called scaling factor. We now define the UT algorithm as follows
+
+\begin{algo} \label{alg:UT} Unscented Transform (UT) algorithm
+	
 \noindent
-where $n$ is the dimension of the random state vector and the scaling factor $\kappa$ provides a tunning degree of freedom to approximate higher order moments of the random variable given by the state vector $x_k$.
+Consider a nonlinear transformation of two random variables $y$ and $x$
 
-For this study we will adopt a simplified version of the UKF, with $\kappa = 0$. In other words, sigma points are defined as
+\begin{equation} \label{eq:ut_nonlinear}
+	y = f(x,d),
+\end{equation}
 
+\noindent where $x$ has mean $\bar{x} \in \mathbb{R}^n$ and covariance matrix $P^{xx} \in R^{n\times n}$ and $d$ is a deterministic vector. First, compute sigma points matrix $\chi$ and its correspondent weights $\gamma$ according to (\ref{eq:sigma_points}) and (\ref{eq:weights}) respectively. Propagate each sigma point $\chi_i$ through the nonlinear transformation given by (\ref{eq:ut_nonlinear}) to find estimated mean $\hat{y}$ and covariance matrix $P^{yy}$ of the RV $y$ and the cross-covariance matrix $P^{xy}$, by
+\vspace{-1pt}
 \begin{align}
-\chi \triangleq \left[\bar{x} 1_{1\times(2n+1)}+\sqrt{n} (\bar{P}^{xx})^{1/2} \quad \bar{x} 1_{1\times(2n+1)}-\sqrt{n}(\bar{P}^{xx})^{1/2}\right],
+	\Upsilon_i 	&= f(\chi_i,d), \quad \forall i =1,\ ...\ , 2n \label{eq:ut1}\\
+	\hat{y} 	&= \sum_{i=0}^{2n} \gamma_i \Upsilon_i, \\
+	P^{yy} 	&= \sum_{i=0}^{2n} \gamma_i \left[ (\Upsilon_i-\hat{y})(\Upsilon_i-\hat{y} )^T \right], \\
+	P^{xy} 	&= \sum_{i=0}^{2n} \gamma_i \left[ (\Upsilon_i-\hat{y})(\chi_i-\bar{x} )^T \right] \label{eq:ut2}.
 \end{align}
 
-\noindent
-with weights given by
+For simplicity, we will refer to (\ref{eq:ut1}-\ref{eq:ut2}) as the function $\psi_{UT}$, given by
 
-\begin{align}
-\gamma = \frac{1}{2n},
-\end{align}
+\begin{equation}
+\left[ \hat{y} \ \ P^{yy} \ \ P^{xy}  \right] = \psi_{UT} \left( \bar{x},\ P^{xx}, \ n, \ d, f\right)
+\end{equation}
 
-Based on this approximations, and considering the process and observation models given by (\ref{eq:prob_process}) and (\ref{eq:prob_obs}), the UKF algorithm is defined by
+\end{algo}
+
+
+Based on Algorithm~\ref{alg:UT}, and considering the process and observation models given by (\ref{eq:prob_process}) and (\ref{eq:prob_obs}), the UKF algorithm is as follows
 
 \begin{algo} \label{alg:UKF} Unscented Kalman filter (UKF) algorithm.
 	
 \noindent
-\textit{Forecast step}: Calculate sigma points $\chi_{j,k|k-1}$ based on last estimation and use them to forecast state estimate $\hat{x}_{k|k-1}$ and the respective covariance $P^{xx}_{k|k-1}$ via the UT.
-\begin{align}
-\chi_{k-1|k-1} 	&= \left[\hat{x}_{k-1|k-1}1_{1\times(2n+1)}+\sqrt{n} (P^{xx}_{k-1|k-1})^{1/2} \quad\hat{x}_{k-1|k-1}1_{1\times(2n+1)} -\sqrt{n}(P^{xx}_{k-1|k-1})^{1/2}\right], \\
-\chi_{j,k|k-1} 	&= f(\chi_{j,k-1|k-1},u_{k-1},k-1), \quad j=1,...,2n+1, \\
-\hat{x}_{k|k-1}	&= \sum_{j=1}^{2n+1}\gamma\chi_{j,k|k-1}, \\
-P^{xx}_{k|k-1}	&= \sum_{j=1}^{2n+1}\gamma \left[ (\chi_{j,k|k-1}-\hat{x}_{k|k-1})(\chi_{j,k|k-1}-\hat{x}_{k|k-1})^T\right]+ G_{k-1}QG_{k-1}^T.
-\end{align}
-Calculate new forecast state sigma points $\chi_{k|k-1}$ based on forecast state estimate $\hat{x}_{k|k-1}$ and find forecast observation sigma points $\Upsilon_{j,k|k-1}$. Propagate them to an estimated observation vector $\hat{y}_{k|k-1}$, using the observation model. Calculate observation vectors covariance $P^{yy}_{k|k-1}$ and the cross-covariance between observation and state $P^{xy}_{k|k-1}$.
- 
-\begin{align}
-\chi_{k|k-1} 	&= \left[\hat{x}_{k|k-1}1_{1\times(2n+1)}+\sqrt{n} (P^{xx}_{k|k-1})^{1/2} \quad\hat{x}_{k|k-1}1_{1\times(2n+1)} -\sqrt{n}(P^{xx}_{k|k-1})^{1/2}\right], \\
-\Upsilon_{j,k|k-1} 	&= g(\chi_{j,k|k-1},k), \quad j=1,...,2n+1, \\
-\hat{y}_{k|k-1}	&= \sum_{j=1}^{2n+1}\gamma\Upsilon_{j,k|k-1}, \\
-P^{yy}_{k|k-1}	&= \sum_{j=1}^{2n+1}\gamma \left[ (\Upsilon_{j,k|k-1}-\hat{y}_{k|k-1})(\Upsilon_{j,k|k-1}-\hat{y}_{k|k-1})^T\right]+ R_k. \\
-P^{xy}_{k|k-1}	&= \sum_{j=1}^{2n+1}\gamma \left[ (\chi_{j,k|k-1}-\hat{x}_{k|k-1})(\Upsilon_{j,k|k-1}-\hat{y}_{k|k-1})^T\right].
-\end{align}
+\textit{Forecast step}: Use the UT to calculate the forecast state estimate $\hat{x}_{k|k-1}$ and the respective covariance $P^{xx}_{k|k-1}$ based on last estimation
 
+\begin{equation}
+\left[ \hat{x}_{k|k-1} \ \ P^{xx}_{k|k-1} \right] = \psi_{UT} \left( \hat{x}_{k-1|k-1},\ P^{xx}_{k-1|k-1}, \ n, \ d, \ f \right), \label{eq:ukf1}
+\end{equation}
+
+\noindent 
+where $f$ is given by (\ref{eq:prob_process}) and $d$ by current input data and time instant.
 
 \noindent
-\textit{Data assimilation step}: Calculate Kalman gain and finish the estimation of state estimate and covariance at time $k$.
-	
- 
+Based on forecast state estimate and covariance found in (\ref{eq:ukf1}), compute the forecast observation estimate $\hat{y}_{k|k-1}$, observation vector covariance $P^{yy}_{k|k-1}$ and the cross-covariance between observation and state $P^{xy}_{k|k-1}$, via the UT
+
+\begin{equation}
+\left[ \hat{y}_{k|k-1} \ \ P^{yy}_{k|k-1} \ \ P^{xy}_{k|k-1} \right] = \psi_{UT} \left( \hat{x}_{k|k-1},\ P^{xx}_{k|k-1}, \ n, \ d, \ g \right), \label{eq:ukf2}
+\end{equation}
+
+\noindent
+where $g$ is given by (\ref{eq:prob_obs}) and $d$ by current time instant.
+
+\noindent
+\textit{Data assimilation step}: Calculate Kalman gain and current state estimate and covariance at time $k$, same way as in (\ref{eq:assim_state2}-\ref{eq:kalman_gain2}), reproduced for convenience
 \begin{align}
 K_k					&= P^{xy}_{k|k-1} (P^{yy}_{k|k-1})^{-1}, \\
-\hat{x}_{k|k} 	&= \hat{x}_{k|k-1} + K_k(y_k - \hat{y}_{k|k-1}),	 \\
+\hat{x}_{k|k} 		&= \hat{x}_{k|k-1} + K_k(y_k - \hat{y}_{k|k-1}),	 \\
 P^{xx}_{k|k}		&= P^{xx}_{k|k-1} - P^{yy}_{k|k-1} K_k^{-1} (P^{yy}_{k|k-1})^T.
 \end{align}
 
 \end{algo}
+
+
+UKF algorithm addresses many of the drawbacks that appear in the EKF implementation, such as the necessity of differentiability, the performance loss due to systems that are poorly approximated by linearization and computational efficiency. Therefore the UKF is the chosen method for the nonlinear system simulated in Chapter~\ref{cap5} and will be further discussed in this section.
 
 
 
@@ -485,11 +527,7 @@ x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 \end{equation}
 
 \noindent
-where $t^*_j= t^*_{j-1} + \delta t^*_j$ and $t^*_0=0$. Each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used between observation and input signals, considering last available information. Note that in such configuration, the discrete-time system becomes time-varying, since discretization is performed using variable time intervals. For the simulation carried out in Section~\ref{cap5}, time intervals $\delta t^*_j$ are calculated by uniting all arrival times for input and observation in a single vector, in an orderly fashion. The subtraction of consecutive time instants yields the time intervals sequence $\delta t^*_j$, $\forall j \geq 1$. 
-
-Since there are two signal types, input and observation, there are four possible cases for the estimator: input followed by another input; input followed by an observation; observation followed by an input; and observation followed by another observation. In Figure~\ref{fig:cap4-sampling_example}, all of them are represented. During the interval \textit{A}, there are only input signals, so time interval is $T$ and only \textit{forecast} is performed. In the interval represented by \textit{B}, we have to first execute complete \textit{forecast} and \textit{data assimilation} steps between input and observation, from $3T$ until $t_1$, using $\delta t^*_4 =t_1-3T$. Next, between an observation and an input signal, a ZOH is used for a \textit{forecast} step between $t_1$ and $4T$. In other words, it is considered that the input remained constant between $3T$ and $4T$. When more than one observation arrive between two input signals, as in \textit{C}, full \textit{forecast} and \textit{data assimilation} are performed as many times needed before one last \textit{forecast} between the last observation and the next input signal.
-
-For the \textit{online} estimator, the differential equations are numerically integrated as input or measurement signals arrive. In these instants, the corresponding time interval $\delta t^*_j$ is calculated. If the current signal transmits input data, only the \textit{forecast} step is executed. If it is observation data being received, both \textit{forecast} and \textit{data assimilation} steps are performed, considering a ZOH for the input data. This process is illustrated in Figure~\ref{fig:cap4-online_estimator}.
+where $t^*_j= t^*_{j-1} + \delta t^*_j$ and $t^*_0=0$. The variable time interval $\delta t^*_j$ is calculated by the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
 
 \begin{figure}[!htb]
 	\centering
@@ -529,6 +567,14 @@ For the \textit{online} estimator, the differential equations are numerically in
 	\label{fig:cap4-online_estimator}
 \end{figure}	
 
+
+Each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used between observation and input signals, considering last available information. Note that in such configuration, the discrete-time system becomes time-varying, since discretization is performed using variable time intervals. For the simulation carried out in Section~\ref{cap5}, time intervals $\delta t^*_j$ are calculated by uniting all arrival times for input and observation in a single vector, in an orderly fashion. The subtraction of consecutive time instants yields the time intervals sequence $\delta t^*_j$, $\forall j \geq 1$. 
+
+Since there are two signal types, input and observation, there are four possible cases for the estimator: input followed by another input; input followed by an observation; observation followed by an input; and observation followed by another observation. In Figure~\ref{fig:cap4-sampling_example}, all of them are represented. During the interval \textit{A}, there are only input signals, so time interval is $T$ and only \textit{forecast} is performed. In the interval represented by \textit{B}, we have to first execute complete \textit{forecast} and \textit{data assimilation} steps between input and observation, from $3T$ until $t_1$, using $\delta t^*_4 =t_1-3T$. Next, between an observation and an input signal, a ZOH is used for a \textit{forecast} step between $t_1$ and $4T$. In other words, it is considered that the input remained constant between $3T$ and $4T$. When more than one observation arrive between two input signals, as in \textit{C}, full \textit{forecast} and \textit{data assimilation} are performed as many times needed before one last \textit{forecast} between the last observation and the next input signal.
+
+For the \textit{online} estimator, the differential equations are numerically integrated as input or measurement signals arrive. In these instants, the corresponding time interval $\delta t^*_j$ is calculated. If the current signal transmits input data, only the \textit{forecast} step is executed. If it is observation data being received, both \textit{forecast} and \textit{data assimilation} steps are performed, considering a ZOH for the input data. 
+
+
 \subsection{Without Timestamp}
 
 On the other hand, in case there is no information about time-stamp, process model (\ref{eq:prob_process}) is discretized according to
@@ -544,7 +590,7 @@ where $t=nT$.
 Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In such cases, there are only two possible scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is observation, full \textit{forecast} and \textit{data assimilation} steps are performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
 
 \clearpage
-\section{State Estimation Performance Metrics} \label{sec:metrics}
+\section{Performance Metrics} \label{sec:metrics}
 
 In order to assess the performance degradation introduced by assimilating data at incorrect time instants, we need to define certain performance metrics for comparison. The algorithms described in Sections~\ref{sec:unscented-kalman-filter} and~\ref{sec:kalman-filter} estimate both the current state, $\hat{x}_{k|k}$ and its covariance matrix $\hat{P}^{xx}_{k|k}$. For the linear case, the \textit{posterior} conditional PDF 
 $\rho(x_{k}|(y_1,...,y_{k})$ is Gaussian, according to (\ref{eq:sol_xk1}), so it is fully characterized by its two first moments. Thus, if the filter is consistent, the following conditions shall be met \citep{Bar-Shalom2001}
