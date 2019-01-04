@@ -38,12 +38,13 @@ Networked system monitoring and control appears to be the main cause of irregula
 
 However, the communication networks shall not always be held responsible. Some applications are designed to be measured in an irregular way. In event-based schemes, for example, the measurements are transmitted only when certain conditions are met \citep{Liu2014,Zou2017}. Such approach can reduce communication resource consumption substantially \citep{Hu2017}, but it will cause aperiodic sampling. Non-Uniform Sampling (NUS) is also intentionally used as an alias detection method \citep{Kunoh2015} or to enhance the spectral resolution of signals, largely used in Nuclear Magnetic Resonance (NMR) spectroscopy analysis \citep{Hyberts2013}, for instance. In other situations, due to the nature of the process being observed, the measurement strategy relies on different procedures. For a lot of chemical processes, for instance, the variables can be measured in an online, fast rate and delay free fashion, but providing inaccurate data. Therefore, lab analyses are used to improve estimation quality, but  usually at slower rates, sometimes irregularly and with possible time delays \citep{Fatehi2017}. Other industrial applications suffer from the same dilemma, and the sampling scheme ends up with a multi-rate data transmission, with random time delays and possibly measurement scarcity \citep{Penarrocha2012}. 
 
+
 Finally, sampling irregularities might also appear due to a specific nature of a system. In some high maneuverable target-tracking applications, for example, there is a chance that the sensor misses the target, transmitting only noise, leading to the so called uncertain observation issue \citep{Wang2009, Chen2013}.
 
 Whatever the reason for the irregularities, data need to be associated in order to be fused into knowledge. A crucial part of association is temporal synchronization of observations, so that the exact time at which measurements are taken are available \citep{Ping2003}. Most sensor fusion methods for irregularly sampled systems rely on the correct time-stamps to develop modifications in classical algorithms. If observations are imprecisely time stamped, some alternatives have been proposed \citep{Julier2005, Huck2011} that incorporate some aspects of that imprecision in the estimation method. Still, some knowledge about the irregularity is assumed to be known. Alternatively, many techniques for time synchronization can be performed, to ensure a common timescale for all the sensors. 
 
 On the next sections, we review the main irregular sampling types and the main approaches to deal with time synchronization in sensor networks.
-
+\clearpage
 \section{Sampling Irregularity Types}\label{sec:irreg_types}
 
 \subsection{Time Delay}
@@ -82,7 +83,7 @@ Multiple of a known lag or not, delayed measurements from a multisensor system a
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.85\textwidth]{Imagens/oosm.pdf}
+	\includegraphics[width=0.95\textwidth]{Imagens/oosm.pdf}
 	\caption{Different classes of out-of-sequence measurements irregularities}
 	\label{fig:oosm}
 \end{figure} 
@@ -104,6 +105,7 @@ When data are being transmitted by a large network of sensors, there is a probab
 	
 Mathematical description of packet dropouts can be carried out recursively, as described in~\citep{Sun2011}, by
 
+\vspace{-2pt}
 \begin{equation}
 \centering
 \begin{split}
@@ -116,7 +118,7 @@ y(t) & = \xi(t)z(t)+(1-\xi(t))y(t-1),
 where $z(t) \in \mathbb{R}^m$ is the measured output transmitted to the estimator, $v(t) \in \mathbf(R)^m$ is white noise, $y(t) \in \mathbb{R}^m$ is the measurement received by the estimator and $\xi(t) \sim Ber(p)$ is a Bernoulli random variable that takes the value 1 with probability $p$ and 0 with probability $1-p$. That is, when $\xi(t)$ is 1, there is no packet dropout. If $\xi(t)$ is 0, however, the latest output is used at current time, in a recursive fashion.
 
 Another way of describing multiple packet dropouts is by limiting the amount of consecutive dropouts ~\citep{ShuliSun2008}, where the received measurements are defined by
-\vspace{-2pt}
+
 \begin{equation}
 \begin{split}
 y(t) = 	& \xi(t)z(t) + (1-\xi(t))\xi(t-1)z(t-1)+...\\
@@ -125,10 +127,12 @@ y(t) = 	& \xi(t)z(t) + (1-\xi(t))\xi(t-1)z(t-1)+...\\
 \end{equation}
 
 Such a model dictates that the measurement used by the estimator will be only the most recent available, and the amount of missing observations is limited to $N$. This conclusion can be drawn by the fact that
-\vspace{-2pt}
+
 \begin{equation}
 \xi(t)+(1-\xi(t))\xi(t-1) + ... + (1-\xi(t))(1-\xi(t-1))...(1-\xi(t-N+1)) = 1.
 \end{equation}
+
+\clearpage
 
 \subsection{Uncertain Observation}\label{sec:uncertain}
 
@@ -214,7 +218,7 @@ Generalizations of aperiodic sampling can be divided in two categories, based on
 \end{figure}
 
 For the first case, random time instants $t_k$ and the random time intervals $\delta_k$ can be defined as:
-
+\vspace{-1pt}
 \begin{equation}
 \begin{split}
 t_k & \triangleq kT + \epsilon_k, \\
@@ -235,7 +239,7 @@ For the stochastic process generalization, sampling time instants $t_k$ can be d
 \end{equation}
 
 \noindent
-where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(\kappa,\theta)$. If the shape parameter $k$ is a positive integer, then it becomes an Erlang distribution, as set in \citep{Kanchanaharuthai2002}. For the most common case, where $\kappa$ is held constant, the random time interval $\delta_k$ follows an exponential PDF and the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}. In fact, Micheli and Jordan provided mathematical proof that for a network with $N$ unsynchronized sensors with sampling period $T$, the waiting time between two arrivals tends, in distribution, to the exponential random variable, that is 
+where random time intervals $\delta_k$ can be modeled, in the most flexible way, as a gamma probability density function, that is $\delta_k \sim \Gamma(\kappa,\theta)$. If the shape parameter $\kappa$ is a positive integer, then it becomes an Erlang distribution, as set in \citep{Kanchanaharuthai2002}. For the most common case, where $\kappa$ is held constant, the random time interval $\delta_k$ follows an exponential PDF and the time sequence $t_k$ is represented by a Poisson stochastic process \citep{Micheli2002}. In fact, Micheli and Jordan provided mathematical proof that for a network with $N$ unsynchronized sensors with sampling period $T$, the waiting time between two arrivals tends, in distribution, to the exponential random variable, that is 
 $\delta_k \sim \mathcal{E} (\lambda)$, where $\lambda = N/T$, as $N$ tends to infinity. In such cases, the expected value of the RV $d_k$ is $E[d_k] = 1/\lambda$ and its variance is $Var[d_k] = 1/\lambda^2$.
 
 
@@ -350,7 +354,7 @@ Therefore, many alternative methods have been proposed, and the work of \citep{K
 
 \section{Chapter Summary and Final Remarks}
 
-In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic and multi-rate sampling. Diagrams describing their causes, types and effects are shown for each of them. We also describe the necessary modifications to the observation models of state estimation algorithms. Most of the methods proposed in the literature to handle sampling irregularities rely on the correct time stamping of observations. Thus, time synchronization in sensor networks becomes crucial and its further explored. The most recent protocols developed to ensure a global time scale from sensing devices in large sensor networks are shown and compared.
+In this chapter, the main sampling irregularities are reviewed: time delay, packet loss, uncertain observation, aperiodic and multi-rate. Diagrams describing their causes, types and effects are shown for each of them. We also describe the necessary modifications to the observation models of state estimation algorithms. Most of the methods proposed in the literature to handle sampling irregularities rely on the correct time stamping of observations. Thus, time synchronization in sensor networks becomes crucial and its further explored. The most recent protocols developed to ensure a global time scale from sensing devices in large sensor networks are shown and compared.
 
 However, the use of any time synchronization method will require computational, energy and resource consumption to some extent, apart from complex algorithms implementations. For sensor fusion performance applications in state estimation of sampled-data systems with irregular sampling, the investment might not be worth it. Thus, the next chapters try to shed some light in the evaluation of performance degradation in state estimation in the presence of irregular sampling, if time-stamps are not available.
 

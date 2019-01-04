@@ -22,8 +22,9 @@
 	$\approx$				& approximately equal to; \\
 	$\sim$					& is distributed as; \\
 	
-	$\mathcal{N}$			& Gaussian distribution; \\
-	$\mathcal{E}$			& Exponential distribution; \\
+
+	$\mathcal{E}(\lambda)$	& exponential distribution with rate parameter $\lambda$; \\
+	$E[\mathord{\cdot}]$	& mathematical expectation; \\
 	$x_i$					& $i$th entry of x; \\	
 	
 	$f$						& process model; \\
@@ -34,11 +35,12 @@
 	$t_k$					& continuous-time sampled instants; \\
 	$T$						& input sampling interval; \\
 	$x(t)$					& state vector; \\
+	$\dot{x}(t)$			& derivative of the state vector with respect to $t$; \\
 	$x(t_k)$				& state vector at continuous-time sampled instants; \\
 	$u(t)$					& input vector; \\
 	$u(iT)$					& input vector at continuous-time sampled at time $t = iT$; \\						
 	$w(t)$					& process noise vector; \\
-	$y_{t_k}$            	& output vector at continuous-time sampled instants;\\
+	$y(t_k)$            	& output vector at continuous-time sampled instants;\\
 	$\delta_{k}$			& measurements time-delay; \\
 	$v(t_k)$				& measurement noise vector; \\
 	$h_k$					& time intervals between two continuous-time sampled instants; \\
@@ -54,7 +56,7 @@
 \subsection*{Chapter 2}
 
 \begin{longtable}{ll}
-	$\mathcal{N}$			& Gaussian distribution; \\
+	$\mathcal{N}(\mu,\sigma)$	& Gaussian distribution with mean $\mu$ and standard deviation $\sigma$; \\
 	$\mathbb{P}$			& power set; \\
 	
 	$\mu$ 					& mean of a random variable; \\
@@ -63,11 +65,12 @@
 	$n$						& number of homogeneous sensors; \\
 	$E$						& evidence; \\ 
 	$H$						& hypothesis; \\
-	$R_r$					& $r^{th}$ fuzzy rule; \\
-	$x_k$					& $k^{th}$ input fuzzy variable; \\
-	$A_i$					& $i^{th}$ antecedent linguistic value; \\
-	$y$						& output variable; \\
-	$C_j$					& $j^{th}$ consequent class; \\
+	$R_i$					& $i^{\textrm{th}}$ fuzzy rule; \\
+	$x_k$					& $k^{\textrm{th}}$ input fuzzy variable; \\
+	$A_{i,j}$				& $j^{\textrm{th}}$ antecedent fuzzy set for the$i^{\textrm{th}}$ rule; \\
+	$y_i$					& $i^{\textrm{th}}$ consequent output variable for the $i^{\textrm{th}}$ rule; \\
+	$C_i$					& consequent class for the $i^{\textrm{th}}$ rule; \\
+	$X$						& input vector; \\
 	$A$						& fuzzy set; \\
 	$U$						& universe of discourse; \\
 	$B$						& subset of features; \\
@@ -75,8 +78,8 @@
 	$B^*(X)$				& \textit{B-upper} approximation of $X$; \\
 	$BN_B(X)$				& \textit{B-boundary} region of $X$; \\
 	
-	$\rho(x)$				& probability distribution of $x$; \\
-	$\rho(A|B)$				& conditional probability distribution of $A$ given $B$; \\
+	$\rho(x)$				& probability density function of $x$; \\
+	$\rho(H|E)$				& conditional probability density function of $H$ given $E$; \\
 	$\pi_x(u)$				& possibility distribution of $x$ associated with $u$; \\
 	$\mu_A(x)$				& membership function of $x$ of a fuzzy se $A$; \\
 	
@@ -95,9 +98,11 @@
 	$\mathbb{R}$			& real numbers; \\
 	$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
 	
-	$Ber(p)$				& Bernoulli distribution; \\
-	$\mathcal{N}$			& Gaussian distribution; \\
-	$\Gamma$				& gamma distribution; \\
+	$Ber(p)$				& Bernoulli distribution with parameter $p$; \\
+	$\mathcal{N}(\mu,\sigma)$ & Gaussian distribution with mean $\mu$ and standard deviation $\sigma$; \\
+	$\Gamma(\kappa,\theta)$	& gamma distribution with shape parameter $\kappa$ and scale parameter $\theta$; \\
+	$E[\mathord{\cdot}]$	& mathematical expectation; \\
+	$Var[\mathord{\cdot}]$	& variance; \\
 	
 	$\forall$				& for all; \\
 	$>$						& greater than; \\
@@ -105,17 +110,16 @@
 	$\sim$					& is distributed as; \\
 	$\pm$					& plus or minus; \\
 	
-	$y_{t}$, $y{k}$           	& output vector at continuous-time sampled instants;\\
-	$z(t)$						& measurement output; \\
-	$H(k)$, $L(k)$, $C$, $D$ 	& matrices of the observation model; \\
-	$v(t)$, $v(k)$				& measurement noise vector; \\
-	$t_i$ 					& continuous-time sampled index; \\
+	$y_{t}$, $y{k}$, $y{kT}$& output vector at continuous-time sampled instants;\\
+	$z(t)$					& measurement output; \\
+	$H(k)$, $L(k)$, $C$, $D$& matrices of the observation model; \\
+	$v(t)$, $v(k)$			& measurement noise vector; \\
+	$t_i$, $t_k$			& continuous-time sampled index; \\
 	$k$						& discrete-time index of measurements;  \\
-	$T$						& expected time interval; \\
+	$T$						& expected sampling time interval; \\
 	$d(k)$					& observation sampling time delays; \\
 	$l$						& amount of different known delays; \\
-	$\xi(t)$				& random variable that models packet dropout; \\
-	$\gamma(t)$				& random variable that models uncertain observation; \\
+	$\xi(t)$				& Bernoulli random variable that models packet dropout and uncertain observation; \\
 	$C_i(t)$				& real time approximation from the $i^{th}$ computer clock; \\
 	$a_i$					& $i^{th}$ clock drift; \\
 	$b_i$					& $i^{th}$ clock offset; \\
@@ -143,10 +147,10 @@
 \begin{longtable}{ll}
 %	$\mathbb{N}$			& natural numbers; \\
 %	$\mathbb{R}$			& real numbers; \\
-%	$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
+	$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
 	
-%	$\mathcal{N}$			& Gaussian distribution; \\
-	
+	$\mathcal{N}(\mu,\sigma)$ & Gaussian distribution with mean $\mu$ and standard deviation $\sigma$; \\
+	$E[\mathord{\cdot}]$	& mathematical expectation; \\
 	$\triangleq$			& equals by definition; \\	
 %	$>$						& greater than; \\
 %	$\geq$					& greater than or equal to; \\
@@ -158,12 +162,13 @@
 					f(x)$	& argument $x$ that maximizes function $f(x)$; \\ 
 					
 	$\rho(x|y)$				& conditional probability density function of $X$ given $Y$; \\
-	$x_k$						& state vector; \\
+	$x_k$					& state vector; \\
 	$\hat{x_k}$				& estimated state vector; \\
-	$y$						& observation vector; \\
+	$y_k$					& observation vector; \\
 	
 %
-%	$\sigma$				& standard deviation; \\
+	$\sigma$				& standard deviation; \\
+	$\Sigma$				& covariance matrix; \\
 %	$\kappa$				& shape parameter; \\
 %	$\theta$				& scale parameter; \\
 	

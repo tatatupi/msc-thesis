@@ -49,22 +49,19 @@ where 	$f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \math
 
 Observations are taken at random time instants $t_k$ and are considered to be sorted ($t_{k+1}>t_k,\forall k \in \mathbb{N^+}$) and defined by the time intervals $h_0 \triangleq t_1$, $h_k \triangleq t_k-t_{k-1}, \ \forall k \geq 1$. In this work, we assume that the observation time instants $t_k$ are given by a Poisson random process. In other words, the time intervals $h_k$ are independent and identically distributed (i.i.d.) exponential random variables (RVs) with a known rate parameter $\lambda_{h}$, that is $h_k \sim \mathcal{E} (\lambda_{h})$. Since the expected value of an exponential RV is the inverse of its rate parameter, $\lambda_h$ will sometimes be referred to as expected or average sampling rate of the irregular sampled quantity. An example of time intervals produced by such a random process is illustrated in Figure \ref{fig:amost}. This sampling model characterizes a common application for an event-based sampling scheme or for a networked control system with unsynchronized sensors. \citep{Micheli2002} consider a set of $N$ identical sensors measuring the state variables of a physical process every $L$ seconds. They prove that, if the sensors are independent and unsynchronized and $N$ is large enough, then the waiting time between the realization of two consecutive measurements can be approximated by an exponential random variable $\mathcal{E} (\lambda)$, where the parameter is given by $\lambda = N/L$.
 
-
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/processo_amost.pdf}
 	%\setlength{\belowcaptionskip}{-12pt}
-	\caption[Irregular sampling process modeled by a Poisson random process]{Irregular sampling process modeled by a Poisson random process. Regularly spaced time intervals $1/\lambda$ are shown in red. An example of time instants $t_k$ realization is also shown, with the respective random time intervals $h_k$. The expected value of time interval is given by $E(h_k)=\frac{1}{\lambda}$.}
+	\caption[Irregular sampling process modeled by a Poisson random process]{Irregular sampling process modeled by a Poisson random process. Regularly spaced time intervals $1/\lambda$ are shown in red. An example of time instants $t_k$ realization is also shown, with the respective random time intervals $h_k$. The expected value of time interval is given by $E[h_k]=\frac{1}{\lambda}$.}
 	\label{fig:amost}
 \end{figure}
-
-
 
 Arrival times to the estimator may be delayed during transmission by a random time amount $\delta_{k}$, also given by exponential random variables, with parameter $\lambda_{\delta_{k}}$, according to Figure~\ref{fig:delay}. Out-of-sequence measurements (OOSM) are not considered in this work. We assume that, in case a measurement delay is so big that its packet arrive later than a future measurement, it gets lost in transmission.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1\textwidth]{Imagens/scheme-timedelay.pdf}
+	\includegraphics[width=0.8\textwidth]{Imagens/scheme-timedelay.pdf}
 	%\setlength{\belowcaptionskip}{-12pt}
 	\caption[Randomly delayed measurements, modeled as exponential random variables]{Randomly delayed measurements, modeled as exponential random variables. 	Random measurement times $t_k$ are received by the estimator after a random delay $\delta_{k}$}
 	\label{fig:delay}

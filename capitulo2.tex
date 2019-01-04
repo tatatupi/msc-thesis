@@ -110,13 +110,13 @@ A final note on the taxonomy of data fusion methodologies will be given to the w
 	\label{fig:fusion_challenge}
 \end{figure}
 
-
+\clearpage
 \section{Fusion of Imperfect Data}
 
 Being the most fundamental and common challenge present on data, imperfection is also the main focus for research in the area. Based on Khaleghi's classification, imperfection on data can be manifested as uncertainty, imprecision and granularity. We can distinguish uncertainty and imprecision with two information examples: \textit{I believe Maria is one point eight meter tall}; \textit{I am sure that Maria is tall}. In the first sentence, the information is precise, but uncertain. In the second, the information about Maria's height is certain, but imprecise, with some vagueness (fuzziness) attached to it. Usually the amount of precision in data is inversely proportional to the level of certainty. urce of imprecision can also be ambiguity, as in the phrase: \textit{Maria gave birth to her daughter yesterday at 5}. We don't know if it was 5 PM or 5 AM, though the information was certain. The last type of imprecision would be for incomplete data, when we have missing information. The sentence "\textit{Maria's height is above one point five meter}", is incomplete, for example, meaning that only one bound was given. Any height above one hundred and fifty centimeters is possible and any height less than or equal to it is impossible, defining the so-called possibility measures. Finally, granularity is an imprecision related to the internal structure of data, referring to the capacity of distinction among states. Different attributes on the data or a different set of possible states will generate different levels of imprecise information.
 
 Given the amount of potential problems in data and their particularities, it is only natural that no data fusion approach alone could tackle all of them. Researchers have proposed various approaches that focus on one or a few of these issues and \citep{Khaleghi2013} explore methods for all the challenges in their categorization model. In this study we will limit ourselves to imperfect data, for which, in most cases, the mathematical background of the algorithms relies on the representation of imperfection. These methods are highlighted in Figure~\ref{fig:fusion_challenge} in different colors and covering one or multiple aspects. In the next subsections we will explore them. Table~\ref{tab:methods} presents a summary of all methods with their main advantages and limitations, adapted from the study of Khaleghi and his coauthors.
-\vspace{-3pt}
+\vfill
 \subsection{Probabilistic}
 
 Uncertainty is the most natural source of data imperfection and it is usually modeled by probability density functions (PDFs). Thus, probabilistic fusion methods are the most adequate to handle it. The most classical approach to fuse data based on uncertain measurements is using Bayes' theorem. The idea is to update the probabilities of an hypothesis $H$ given some evidence $E$ by using his famous equation~\citep{Stone2013}
@@ -148,9 +148,9 @@ R_i^{Sugeno} &: \textrm{If } x_{1} \textrm{ is } A_{i,1} \textrm{ and } x_2 \tex
 \end{align} 
 
 \noindent
-where $x_j \in \mathbb{R}$, $\forall j = 1\textrm{,...,}n$ is the $j$th input variable, $A_{i,j}$ is the $j$th antecedent fuzzy set for the $i$th rule, $C_i$ is the consequent fuzzy set for the $i$th rule, $f_i(X)$ is the output polynomial with respect the the input vector $X$. 
+where $x_j \in \mathbb{R}$, $\forall j = 1\textrm{,...,}n$ is the $j^{\textrm{th}}$ input variable, $A_{i,j}$ is the $j^{\textrm{th}}$ antecedent fuzzy set for the $i^{\textrm{th}}$ rule, $C_i$ is the consequent fuzzy set for the $i^{\textrm{th}}$ rule, $f_i(X)$ is the output polynomial with respect the the input vector $X$. 
 
-Therefore, we can understand the inference process as a series of steps, according to Figure~\ref{fig:fuzzy}]. First, we fuzzify the inputs via membership functions. Then we apply the logic operators defined by each rule and find the result implication on the consequent. Finally we aggregate the consequents accross all rules and defuzzify its result. 
+Therefore, we can understand the inference process as a series of steps, according to Figure~\ref{fig:fuzzy}. First, we fuzzify the inputs via membership functions. Then we apply the logic operators defined by each rule and find the result implication on the consequent. Finally we aggregate the consequents accross all rules and defuzzify its result. 
 
 \begin{figure}[!htb]
 	\centering
@@ -305,6 +305,7 @@ In \citep{Pawlak1991} and in the references therein, many real life applications
 		\end{tabularx}
 	}
 	\end{flushleft}
+
 \end{table}
 
 

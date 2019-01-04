@@ -137,7 +137,7 @@ The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_
 \end{proof}
 
 Thus, (\ref{eq:prop_xk}) can be interpreted as the fusion of the \textit{prior} density or knowledge of the state with the \textit{likelihood} density or evidence. For a better understanding, we can illustrate this process for a one-dimensional Gaussian case \citep{Faragher2012}, for which the densities are given by
-
+\clearpage
 \begin{align}
 \rho(x_k|(y_1,...,y_{k-1})) &= \mathcal{N}(x_k|\hat{x}_{prior},\hat{\sigma}_{prior}) \notag \\&= \frac{1}{\sqrt{2\pi}\hat{\sigma}_{prior}} \exp \left( - \frac{(x_k - \hat{x}_{prior})^2}{2\hat{\sigma}_{prior}^2}\right), \label{eq:prior}
 \\ \notag \\
@@ -543,7 +543,7 @@ where $t=nT$.
 
 Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In such cases, there are only two possible scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is observation, full \textit{forecast} and \textit{data assimilation} steps are performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
 
-
+\clearpage
 \section{State Estimation Performance Metrics} \label{sec:metrics}
 
 In order to assess the performance degradation introduced by assimilating data at incorrect time instants, we need to define certain performance metrics for comparison. The algorithms described in Sections~\ref{sec:unscented-kalman-filter} and~\ref{sec:kalman-filter} estimate both the current state, $\hat{x}_{k|k}$ and its covariance matrix $\hat{P}^{xx}_{k|k}$. For the linear case, the \textit{posterior} conditional PDF 
