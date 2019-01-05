@@ -589,7 +589,7 @@ where $t=nT$.
 
 Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In such cases, there are only two possible scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is observation, full \textit{forecast} and \textit{data assimilation} steps are performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
 
-\clearpage
+
 \section{Performance Metrics} \label{sec:metrics}
 
 In order to assess the performance degradation introduced by assimilating data at incorrect time instants, we need to define certain performance metrics for comparison. The algorithms described in Sections~\ref{sec:unscented-kalman-filter} and~\ref{sec:kalman-filter} estimate both the current state, $\hat{x}_{k|k}$ and its covariance matrix $\hat{P}^{xx}_{k|k}$. For the linear case, the \textit{posterior} conditional PDF 
@@ -621,15 +621,24 @@ P \left\{ NIS_k \in [r_1,r_2] | H_0 \right\} &= 1 - \alpha, \label{eq:nis_h0}
 \end{align}
 
 \noindent
-where $\alpha$ is the significance level and interval $[r_1,r_2]$ is given by the chi-square distribution degrees of freedom and $\alpha$. For instance, considering a system with a state vector of size 4 and observation vector of size 1, and a significance level of $\alpha=5\%$, the acceptance intervals for NEES and NIS are respectively given by
+where $\alpha$ is the significance level and interval $[r_1,r_2]$ is given by the chi-square distribution degrees of freedom and $\alpha$. For instance, considering a system with a state vector of size 4 and observation vector of size 2, and a significance level of $\alpha=5\%$, the acceptance intervals for NEES and NIS are respectively given by
 
 \begin{align}
-\left[\chi^2_1(0.025),\ \chi^2_1(0.975)\right] &= [0.001, \ 5.02], \label{eq:nees_interval} \\
+\left[\chi^2_2(0.025),\ \chi^2_2(0.975)\right] &= [0.051, \ 7.38], \label{eq:nees_interval} \\
 \left[\chi^2_4(0.025),\ \chi^2_4(0.975)\right] &= [0.484, \ 11.1], \label{eq:nis_interval}
 \end{align}
 
 \noindent
-which means that, if the filter is consistent, in $95\%$ of the estimates, NEES and NIS value should fall under their correspondent intervals.
+which means that, if the filter is consistent, in $95\%$ of the estimates, NEES and NIS value should fall under their correspondent intervals. Figure~\ref{fig:chi2plots} shows both $\chi^2_2$ and $\chi^2_4$ PDFs, with the $95\%$ acceptance region.
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/Esquemas/chi2.pdf}
+	\caption[$\chi^2$ PDFs and acceptance regions]{$\chi^2$ PDFs for 2 (red) and 4 (blue) degrees of freedom. The vertical dashed lines represent the acceptance interval limits, for $\alpha=5 \% $, and the shaded area is the corresponding acceptance regions.}
+	\label{fig:chi2plots}
+\end{figure} 
+
 
 Additionally, since we are using simulated systems, the root mean square error (RMSE) of the system states will also be calculated as an accuracy performance index, given by
 
