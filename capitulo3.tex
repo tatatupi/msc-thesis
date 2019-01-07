@@ -25,6 +25,42 @@ In this chapter, we review the irregular sampling problem. First, in Section \re
 
 \section{Definition of Irregular Sampling}
 
+Most of the systems studied in estimation and control theories take place in an analog environment with dynamics evolving according to continous-time differential equations. However, due to the many benefits of digital technology implementations, their signal must be sampled in order to be processed, giving rise to the so-called \textit{sampled-data systems}. 
+
+In practice, the sampling process is modeled by a sampler and a data hold device, that enables signal reconstruction. The most common data hold configuration is the zero-order holder (ZOH), that locks the signal value at the sampling instant until the next sample is available. Therefore, the output of a sampler that transmits data every $T$ seconds and a ZOH is given by~\citep{Phillips1995}
+
+\begin{equation}\label{eq:sampled}
+\bar{f}(t)=f(0)[u(t)-u(t-T)]+f(T)[u(t)-u(t-2T	)]+f(2T)[u(t-2T)-u(t-3T)]+ \ ...,
+\end{equation}
+
+\noindent
+where $\bar{f}(t)$ represents the reconstructed sampled signal, $f(t)$ is the original continuous-time signal and $u(t)$ is the unit-step function. Taking the Laplace transform of (\ref{eq:sampled}) we have
+
+\begin{align}\label{eq:sampled_laplace}
+\bar{F}(s)=\mathcal{L}[f(t)]&=f(0)\left[\frac{1}{s}-\frac{e^{-Ts}}{s}\right]+f(T)\left[\frac{e^{-Ts}}{s}-\frac{e^{-2Ts}}{s}\right] + f(2T)\left[\frac{e^{-2Ts}}{s}-\frac{e^{-3		Ts}}{s}\right] + \ ... \notag \\
+&= \left[\sum_{n=0}^\infty f(nT) e^{-nTs}\right] \left[\frac{1-e^{-Ts}}{s}\right].
+\end{align}
+
+Only the first term of (\ref{eq:sampled_laplace}) is dependent on $f(t)$ and thus can be interpreted as the sampler, whereas the second term represents the ZOH. Note that neither exist alone, since the real physical signal is composed by both terms. Taking the inverse Laplace transform of the sampler yields
+
+\begin{equation}\label{eq:sampled_invlaplace}
+\mathcal{L}^{-1}\left[\sum_{n=0}^\infty f(nT) e^{-nTs}\right] = f(0)\delta(t)+f(T)\delta(t-T)+f(2T)\delta(t-2T)+ \ ... \ ,
+\end{equation}
+
+\noindent
+where $\delta(t)$ is the unit impulse function, also known as Dirac delta function. Although it does not represent a real signal, (\ref{eq:sampled_invlaplace}) is referred to as the \textit{ideal sampler}~\citep{Phillips1995}.
+
+Thus if the state observations of a sampled-data system are transmitted through an ideal sampler, it can be modeled as
+
+\begin{equation}\label{eq:reg_sampled_obs}
+y(t) = g(x(kT),v(kT),kT), \quad \textrm{for } kT\leq t<(k+1)T,
+\end{equation}
+
+\noindent
+where $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ represents the observation model, $x(kT) \in \mathbb{R}^n$ is the state vector, $v(kT) \in \mathbb{N}^m$ is the measurement error, $k \in \mathbb{N}$ is the discrete-time index and $T \in \mathbb{N^+}$ is the sampling interval. 
+
+Therefore, a sampled-data system is regularly sampled if it's observation model can be modeled by (\ref{eq:reg_sampled_obs}), as a consequence of an \textit{ideal sampler}. In other words, in this study we refer to \textit{regular sampling} as measurements being taken periodically, with single-rate and transmitted without time-delay and any loss of information. Anything else will be considered framed as \textit{irregular sampling}.
+
 
 
 \section{Contextualization}\label{sec:intro}
@@ -138,8 +174,6 @@ Such a model dictates that the measurement used by the estimator will be only th
 
 \noindent
 which means that if the Bernoulli RV realization for the most recent measurement available is $1$, all past measurement terms will be multiplied by $0$.
-
-\clearpage
 
 \subsection{Uncertain Observation}\label{sec:uncertain}
 
