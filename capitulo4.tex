@@ -19,10 +19,10 @@
 %
 %
 
-In this chapter, the field of sensor fusion under irregular sampling is resumed to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a review of the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
+In this chapter, the field of sensor fusion under irregular sampling is resumed to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a discrete-time representation for the nonlinear and linear sampled-data systems. Then we review the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
 In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for assessment of the results, designed to quantify estimation accuracy and consistency.
 
-\section{Discrete-Time Representation of Sampled-Data Systems}
+\section{Discrete-Time Representation of Sampled-Data Systems}\label{sec:discretization}
 
 State estimation methods introduced in this chapter are implementation for the discrete-time case. Therefore, the system described in Section \ref{sec:problem_form} needs to be formulated as a discrete-time model. First, we reproduce the stochastic nonlinear sampled system models as follows
 
@@ -35,7 +35,7 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs2}
 \noindent
 where $f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, $k \in \mathbb{N}$ is the discrete-time index, $t_k$ represents the irregular time instants, $x(t) \in \mathbb{R}^n$ the state vector,  $u(t) \in \mathbb{R}^p$ is the input vector and $w(t)$ is the process noise vector, all at continuous-time $t$, $y(t_k) \in \mathbb{R}^m$ represents the irregularly sampled measurement sequence and $v(t_k) \in \mathbb{N}^m$ the corresponding measurement noise vector. Initial condition $x_0$ is assumed to be known.
 
-A system dynamics defined by (\ref{eq:prob_process2}) can be discretized, by replacing the differentiation by differencing, via numerical methods. For this study we use the fourth order Runge-Kutta method~\citep{Suli2003}, where
+A continuous-time system dynamics defined by (\ref{eq:prob_process2}) can be discretized, by replacing the differentiation by differencing, via numerical methods. For this study we use the fourth order Runge-Kutta method~\citep{Suli2003}, where
 
 \begin{align}
 x(t_{k+1})&= x({t_k}) + \frac{1}{6} \left( k_1 + 2k_2 +  3k_3 + k_4\right), \label{eq:runge_kutta} \\
@@ -63,17 +63,36 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs3}
 \noindent
 where $f_d(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics is time-invariant, that is $f(\cdot)$ does not depend directly on $t_k$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$.
 
-For the linear time-invariant case (LTI), which state space representation is given by	
+For the linear time-invariant case (LTI), the continuous state space representation is given by	
 
 \begin{align}
-\dot{x}(t) &= Ax(t) + Bu(t) + Gw(t),   \label{eq:prob_LTI} \\ 
-y(t_k) &= Cx(t_k)+Du(t_k) + Qv(t_k), \label{eq:prob_LTIobs}
+\dot{x}(t) &= Ax(t) + Bu(t) + w(t),   \label{eq:prob_LTI} \\ 
+y(t_k) &= Cx(t_k)+Du(t_k) + v(t_k), \label{eq:prob_LTIobs}
 \end{align}
 
-if u t is piecewise constant there is an exact solution to the discretization problem given by
- \citep{Chen1999}
+\noindent
+where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$, $C \in \mathbb{R}^{m\times n}$ and $D \in \mathbb{R}^{m\times p}$ are known matrices, $w(t) \sim \mathcal{N}(0,Q)$ and $v(t_k) \sim \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{n\times q}$ and $R \in \mathbb{R}^{m \times r}$. If input $u(t)$ is digitally generated, followed by a digital-to-analog converter, then it is piecewise constant. That is, $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
 
+\begin{align}
+x(t_{k+1}) &= A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + w(t_k), \label{eq:prob_process_d}\\
+y(t_k) &= C_\textrm{d} x(t_k) + D_\textrm{d} u(t_k) + v(t_k), \label{eq:prob_obs_d}
+\end{align}
 
+\noindent	
+where $w(t_k) \sim \mathcal{N}(0,Q_\textrm{d})$, subscript $\textrm{d}$ stands for discretized and 
+
+\begin{align}
+A_\textrm{d} &= e^{A h_k}, \\
+B_\textrm{d} &= \left( \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}\delta \tau \right)B, \\
+C_\textrm{d} &= C, \\
+D_\textrm{d} &= D, \\
+Q_\textrm{d} &= \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}Qe^{A^T \tau}\delta \tau,
+\end{align}
+
+\noindent
+where $h_k$ is the variable step size, defined by the random time intervals. Note that, once again, even for the invariant-time case, the discretized version is time-variant if time intervals vary through time.
+
+ 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
 The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated as new information arrives, using not just the new data, but also the prior information. For that, both the states and the arrived information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
@@ -112,7 +131,7 @@ and observation vector $y_k$ is independent of past observations and past states
 \end{lema}
 \vspace{0.2cm}
 
-Note that the system described in Section~\ref{sec:problem_form} is Markovian, since the transition or process model given by (\ref{eq:prob_process}) and the observation model given by (\ref{eq:prob_obs}) follow the conditions (\ref{eq:lemma_transition}) and (\ref{eq:lemma_likelihood}), respectively.
+Note that the systems described in Section~\ref{sec:discretization} are Markovian, since the transition or process models given by (\ref{eq:prob_process3}) and (\ref{eq:prob_process_d}) and the observation models given by (\ref{eq:prob_obs3}) and (\ref{eq:prob_obs_d}) follow the conditions (\ref{eq:lemma_transition}) and (\ref{eq:lemma_likelihood}), respectively.
 
 \begin{propo}\label{prop:bayes_solution} The posterior PDF of system states $x_k \in \mathbb{R}^n$ conditioned on the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ is recursively given by
 
