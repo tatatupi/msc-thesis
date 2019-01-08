@@ -41,7 +41,7 @@ where $\bar{f}(t)$ represents the reconstructed sampled signal, $f(t)$ is the or
 &= \left[\sum_{n=0}^\infty f(nT) e^{-nTs}\right] \left[\frac{1-e^{-Ts}}{s}\right].
 \end{align}
 
-Only the first term of (\ref{eq:sampled_laplace}) is dependent on $f(t)$ and thus can be interpreted as the sampler, whereas the second term represents the ZOH. Note that neither exist alone, since the real physical signal is composed by both terms. Taking the inverse Laplace transform of the sampler yields
+Only the first term of (\ref{eq:sampled_laplace}) is dependent on $f(t)$ and thus can be interpreted as the sampler, whereas the second term represents the ZOH. Note that neither exists alone, since the real physical signal is composed by both terms. Taking the inverse Laplace transform of the sampler term yields
 
 \begin{equation}\label{eq:sampled_invlaplace}
 \mathcal{L}^{-1}\left[\sum_{n=0}^\infty f(nT) e^{-nTs}\right] = f(0)\delta(t)+f(T)\delta(t-T)+f(2T)\delta(t-2T)+ \ ... \ ,
@@ -59,9 +59,7 @@ y(t) = g(x(kT),v(kT),kT), \quad \textrm{for } kT\leq t<(k+1)T,
 \noindent
 where $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ represents the observation model, $x(kT) \in \mathbb{R}^n$ is the state vector, $v(kT) \in \mathbb{N}^m$ is the measurement error, $k \in \mathbb{N}$ is the discrete-time index and $T \in \mathbb{N^+}$ is the sampling interval. 
 
-Therefore, a sampled-data system is regularly sampled if it's observation model can be modeled by (\ref{eq:reg_sampled_obs}), as a consequence of an \textit{ideal sampler}. In other words, in this study we refer to \textit{regular sampling} as measurements being taken periodically, with single-rate and transmitted without time-delay and any loss of information. Anything else will be considered framed as \textit{irregular sampling}.
-
-
+Therefore, a sampled-data system is regularly sampled if its observation model can be modeled by (\ref{eq:reg_sampled_obs}), as a consequence of an \textit{ideal sampler}. In other words, in this study we refer to \textit{regular sampling} as measurements being taken periodically, with single-rate and transmitted without time-delay and any loss of information. Anything else will be framed as \textit{irregular sampling}.
 
 \section{Contextualization}\label{sec:intro}
 

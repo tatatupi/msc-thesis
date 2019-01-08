@@ -16,40 +16,31 @@
 
 %\section{Introdução}
 
-In this chapter, we present simulation results for two different systems: a linear system with two under damped modes and a nonholomonic unicycle position system.
+In this chapter, we present state estimation simulation results for two different sampled-data systems: a linear system with two under damped modes and a nonholomonic unicycle position system. We begin by describing them as state-space representations. Then, we discuss their characteristics and present realization examples to illustrate simulation runs.
 
-REVISAR
-
-\textit{We begin by describing the simulated systems as a state-space representation. First system is discretized and a discrete Kalman filter is used for the estimation of the unicycle position. The second one is represented as a continuous-time process model with digital measurements of one stby aate. We wish to estimated a all states  sampled-data Kalman filter.}
-
-For both cases, we start evaluating the effect of time-stamp information in the estimation algorithm for three different irregular sampling scenarios, without time-delay in the observations: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between estimation regular sampling rate and output irregular average sampling rate. 
-
-Then we add random time-delay to the observation model and evaluate the effect for the same three scenarios plus a fourth one, where we vary the average time-delay.
-
-\todo[inline]{Falta completar texto, melhorar figuras e traduzir parte em portugues}
-\todo[inline]{Falta incluir time-delay}
-\todo[inline]{Falta incluir simulação com filtro de partículas}
+For both cases, we start evaluating the effect of time-stamp information in the estimation algorithm for three different irregular sampling scenarios: variation of the observation signal-to-noise ratio, variation of the observation average sampling rate, and variation of the relation between estimation regular sampling rate and output irregular average sampling rate. Performance metrics defined in Section \ref{sec:metrics} are used for comparison.
 
 \section{Linear System}
 
-\textit{Descrever as motivações por trás do estudo do sistema linear: variáveis controladas, resultado esperado conhecido, comparação mais clara.}
+Our first choice of system is a fourth-order LTI system, since its results are predictable and difference equations calculations have an exact solution, thus comparison and results assessment are expected to be more clear and comprehensive.
 
+Additionally, we choose the combination of two independent modes, each of second order and with distinct dynamics, so the effects can be evaluated separately.
 
 \subsection{System Description}
 
-The linear system designed for simulation is the serial combination of two under damped modes, with distinct band pass behaviors.
+The linear system designed for simulation is the serial combination of two second order under damped modes, with different band pass behaviors.
 
-One of the modes, henceforth termed as low-pass (lp) system, has time constant $\tau_{lp} = 1$ s, natural frequency $\omega_{n,lp} = 10$ Hz and a damping constant of $\zeta_{lp}=0.1$. The frequency response is given by:
+One of the modes, henceforth termed as low-pass ($\textrm{lp}$) system, has time constant $\tau_{\textrm{lp}} = 1$ s, natural frequency $\omega_{n,\textrm{lp}} = 10$ Hz and a damping constant of $\zeta_{\textrm{lp}}=0.1$. The frequency response is given by:
 
 \begin{equation}\label{eq:linear}
-G_{lp}(s) = \frac{100}{s^2 + 2s + 100}
+G_{\textrm{lp}}(s) = \frac{100}{s^2 + 2s + 100}
 \end{equation}
 
 
-The second mode is a high-pass (hp) system, with a much lower time constant $\tau_{hp} = 0.01$ s, natural frequency $\omega_{n,hp} = 1000$ Hz, same damping constant of $\zeta_{hp}=0.1$ and two zeros, one at the origin and another one at $0.001$. The high-pass frequency response is given by:
+The second mode is a high-pass ($\textrm{hp}$) system, with a much lower time constant $\tau_{\textrm{hp}} = 0.01$ s, natural frequency $\omega_{n,\textrm{hp}} = 1000$ Hz, same damping constant of $\zeta_{\textrm{hp}}=0.1$ and two zeros, one at the origin and another one at $0.001$. The high-pass frequency response is given by:
 
 \begin{equation}\label{eq:aircraft}
-G_{hp}(s) = \frac{s^2-0.001s}{s^2 + 200s + 10^6}\\
+G_{\textrm{hp}}(s) = \frac{s^2-0.001s}{s^2 + 200s + 10^6}\\
 \end{equation}
 
 Figure~\ref{fig:bode} shows the bode diagrams of both systems separately.
@@ -64,7 +55,7 @@ Figure~\ref{fig:bode} shows the bode diagrams of both systems separately.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Imagens/bode.eps}
-	\caption[Bode diagram of both modes]{Bode diagram of both modes.}
+	\caption[Bode diagram of both modes]{Bode diagram of both modes. Blue represent the low-pass system and red the high-pass system.}
 	\label{fig:bode}
 \end{figure}
 
@@ -78,40 +69,33 @@ Figure~\ref{fig:bode} shows the bode diagrams of both systems separately.
 
 The resulting fourth order system is described as a state space representation, in a modal canonical form given by:
 
-\begin{equation}
-\begin{split}
-\dot{x}(t) & = Ax(t) + Bu(t) \\
+\begin{align}
+\dot{x}(t) & = Ax(t) + Bu(t) \label{eq:sys_beg}\\
 y(t) & = Cx(t) + Du(t)
-\end{split}
-\end{equation}
+\end{align}
 
 
 \noindent
 where $x(t) \in \mathbf{R}^4$ is the state vector, $u(t) \in \mathbf{R}^1$ is the single input vector and $y(t) \in \mathbf{R}^1$ is the single output vector, and
 
-\begin{equation}
-\begin{split}
+\begin{align}
 A & =\begin{bmatrix}
 -100 & 994.99 & 0 & 0\\
 -994.99 & -100 & 0 & 0\\
 0 & 0 & -1 & 9.949\\
 0 & 0 & -9.949 & -1
-\end{bmatrix} \\
-\\
+\end{bmatrix}, \\
 B & =\begin{bmatrix}
 -24.6435 \\
 -18.8943 \\
 -4.1746 \\
 -0.2675
-\end{bmatrix} \\
-\\
+\end{bmatrix}, \\
 C & =\begin{bmatrix}
 24.41 & -21.2522 & -0.1537 & 2.3977 \\
-\end{bmatrix} \\
-\\
-D & =1
-\end{split}
-\end{equation}
+\end{bmatrix}, \\
+D & =1. \label{eq:sys_end}
+\end{align}
 
 %
 %\begin{equation}\label{eq:sistemaLinear}
@@ -127,51 +111,47 @@ D & =1
 %\end{split}
 %\end{equation}
 
-We simulate a pseudo-random binary sequence (PRBS) as input, with 200 samples and simulate the high-pass and low-pass systems separately according to Figure~\ref{fig:PRBS_and_systems}. As expected, the low-pass response is much slower. Just for comparison, if the same 200 samples of PRBS was generated over 20 seconds, the low-pass system response would account for more variations in the input. Figure~\ref{fig:outputS} show the response of the final fourth order system.
+We simulate a pseudo-random binary sequence (PRBS) as input, with 200 samples, as shown in Figure~\ref{fig:prbs}.
+
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/PRBS_and_Systems.eps}
-	\caption[PRBS input and system outputs]{PRBS samples used as input; output of high-pass system, considering 2 seconds of simulation and low-pass system results for 2 and 20 seconds simulation}
-	\label{fig:PRBS_and_systems}
+	\includegraphics[width=0.8\textwidth]{Imagens/prbs.eps}
+	\caption[PRBS samples used as input]{200 PRBS samples used as input}
+	\label{fig:prbs}
 \end{figure}
 
-%\begin{figure}[!htb]
-%	\centering
-%%	\includegraphics[width=0.6\textwidth]{Imagens/outputS2.eps}
-%	\caption[entrada]{Output of high-pass system to the PRBS input signal}
-%	\label{fig:outputS2}
-%\end{figure}
-%
-%As expected, the low-pass response is much slower. Just for comparison, if the same 200 samples of PRBS was generated over 20 seconds, the low-pass system response would account for more variations in the input, as shown in Figure~\ref{fig:outputS1_2}
-%
-%\begin{figure}[!htb]
-%	\centering
-%	\includegraphics[width=0.6\textwidth]{Imagens/outputS1_2.eps}
-%	\caption[entrada]{Output of low-pass system to the PRBS input signal extended over 20 seconds}
-%	\label{fig:outputS1_2}
-%\end{figure}
-%
-%The response of the final fourth order system, considering both modes is presented in Figure~\ref{fig:outputS}, where both modes dynamics can be observed.
-%
+The PRBS signal is used as input to the low-pass and high-pass systems separately, considering two different time frames, of 2 and 20 seconds. The results of the four linear simulations are shown in Figure~\ref{fig:sys_results}. We can see a much faster response from the high-pass filter in both cases, as expected.
+
+ \begin{figure}[!htb]
+ 	\centering
+ 	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/lp2s.eps}} 
+ 	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/lp20s.eps}}  \\
+ 	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/hp2s.eps}}
+ 	\subfigure[]{\includegraphics[width=0.45\textwidth]{Imagens/hp20s.eps}}
+ 	\caption[Linear simulation results for PRBS input in different time frames]{Linear simulation results of the low-pass and high-pass systems separately. Grey lines represent the PRBS input and colored lines the output. Graphs (a) and (b) with blue outputs represent the results of the low-pass system; and (c) and (d) with red outputs, the results of the high-pass system. Graphs on the left show a time frame of 2 seconds of simulations, whereas the ones on the right are the result of a 20 seconds time frame; considering the same 200 samples of PRBS for all four simulations.} 
+ 	\label{fig:sys_results}
+ \end{figure}
+
+The 20 seconds simulation for the high-pass system generates outputs that stabilize very quickly, with a dynamics hard to be observed. Thus, we choose the 2 seconds time frame to simulate the fourth order serialized systems, given by (\ref{eq:sys_beg})-(\ref{eq:sys_end}). The result of the linear simulation is presented in Figure~\ref{fig:4ordersys2s}.
+
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.5\textwidth]{Imagens/outputS.eps}
-	\caption[Output of the fourth order system to the PRBS input signal]{Output of the fourth order system to the PRBS input signal.}
-	\label{fig:outputS}
+	\includegraphics[width=0.8\textwidth]{Imagens/4ordersys2s.eps}
+	\caption[Output of the fourth order system to the PRBS input signal]{Output of the fourth order system to the PRBS input signal over a 2 seconds time frame.}
+	\label{fig:4ordersys2s}
 \end{figure}
 
-The linear system is discretized using MATLAB's `c2d`fic
+System discretization is performed using MATLAB's builtin function \texttt{c2d} to produce a discrete-time state space representations according to
 
-The sampled-data observations are available according to:
-
-\begin{equation}
-y(t_k) = \textbf{B}_dx(t)+\textbf{D}_du(t) + v(t_k)
-\end{equation}
+\begin{align}
+x(t_{k+1}) &= A_{\textrm{d}}(t_k) x(t_k) + B_{\textrm{d}} u(t_k) + w(t_k), \\
+y(t_k) &= B_{\textrm{d}}x(t)+D_{\textrm{d}}u(t) + v(t_k)
+\end{align}
 
 \noindent
-where $v(t_k) \sim \mathcal{N} (0,R_{t_k})$ is the observation noise, with zero mean and covariance $R_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
+where $\rho(v(t_k)) = \mathcal{N} (0,R_{t_k})$ and $\rho(w(t_k)) = \mathcal{N} (0,Q_{t_k})$ are, respectively, the process and observation noise, with zero mean and covariance $R_{t_k}$ and $Q_{t_k}$. When time-stamp is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
-Discrete-time Kalman filter is used for estimation. Realizations of the estimated states and true values for both scenarios, with and without time-stamp, for a signal-to-noise ration in the observations of $40$ dB are shown in Figures~\ref{fig:StatesWithAndWithoutTimeStamp} 
+Discrete-time Kalman filter is used for estimation and one realization of the estimated states and true values for both scenarios, with and without time-stamp, for a signal-to-noise ratio in the observations of $40$ dB are shown in Figures~\ref{fig:StatesWithAndWithoutTimeStamp} 
 
 \begin{figure}[!htb]
 	\centering

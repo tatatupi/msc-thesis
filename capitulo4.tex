@@ -19,7 +19,7 @@
 %
 %
 
-In this chapter, the field of sensor fusion under irregular sampling is resumed to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin with a discrete-time representation for the nonlinear and linear sampled-data systems. Then we review the adopted algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
+In this chapter, the field of sensor fusion under irregular sampling is resumed to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin by describing the discrete-time representation for sampled-data systems. Then we review the adopted state estimation algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
 In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for assessment of the results, designed to quantify estimation accuracy and consistency.
 
 \section{Discrete-Time Representation of Sampled-Data Systems}\label{sec:discretization}
@@ -39,11 +39,11 @@ A continuous-time system dynamics defined by (\ref{eq:prob_process2}) can be dis
 
 \begin{align}
 x(t_{k+1})&= x({t_k}) + \frac{1}{6} \left( k_1 + 2k_2 +  3k_3 + k_4\right), \label{eq:runge_kutta} \\
-t_{k+1} &= t_k + h_k,
+t_{k+1} &= t_k + h_k, \label{eq:time_interval}
 \end{align}
 
 \noindent
-where $h_k$ is the variable step size, defined by the random time intervals, and
+where $h_k \in \mathbb{R}$ is the variable step size, defined by random time intervals, and
 
 \begin{align}
 k_1 &= h_k f(t_k, \ x({t_k})), \\
@@ -53,7 +53,7 @@ k_4 &= h_k f(t_k + h_k, \ x({t_k}) + k_3), \label{eq:runge_kutta2}
 \end{align}
 
 \noindent
-where $f(x(t), u(t), w(t), t)$ was reduce to $f(x(t), t)$ for simplicity, since the numerical approximation depends only on the vector state itself and the time intervals. The other variables are considered to be constants for the entire process. Therefore, the discrete-time representation for the nonlinear sampled system becomes
+where $f(x(t), u(t), w(t), t)$ was reduce to $f(x(t), t)$ for simplicity, since the numerical approximation depends only on the vector state itself and the time intervals. Input $u(t)$ is considered to be constant during the time step and $w(t)$ represents unknown noise. Therefore, the discrete-time representation for the nonlinear sampled system becomes
 
 \begin{align}
 x(t_{k+1}) &= f_d(x(t_k), u(t_k), w(t_k), t_k),   \label{eq:prob_process3} \\ 
@@ -67,32 +67,32 @@ For the linear time-invariant case (LTI), the continuous state space representat
 
 \begin{align}
 \dot{x}(t) &= Ax(t) + Bu(t) + w(t),   \label{eq:prob_LTI} \\ 
-y(t_k) &= Cx(t_k)+Du(t_k) + v(t_k), \label{eq:prob_LTIobs}
+y(t_k) &= Cx(t_k) + v(t_k), \label{eq:prob_LTIobs}
 \end{align}
 
 \noindent
-where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$, $C \in \mathbb{R}^{m\times n}$ and $D \in \mathbb{R}^{m\times p}$ are known matrices, $w(t) \sim \mathcal{N}(0,Q)$ and $v(t_k) \sim \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{n\times q}$ and $R \in \mathbb{R}^{m \times r}$. If input $u(t)$ is digitally generated, followed by a digital-to-analog converter, then it is piecewise constant. That is, $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
+where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$ and $C \in \mathbb{R}^{m\times n}$ are known matrices, $\rho(w(t)) = \mathcal{N}(0,Q)$ and $\rho(v(t_k)) = \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{n\times q}$ and $R \in \mathbb{R}^{m \times r}$. If input $u(t)$ is digitally generated at the same rate than observations are taken, and followed by a digital-to-analog converter, then it is piecewise constant. That is, $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
 
 \begin{align}
 x(t_{k+1}) &= A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + w(t_k), \label{eq:prob_process_d}\\
-y(t_k) &= C_\textrm{d} x(t_k) + D_\textrm{d} u(t_k) + v(t_k), \label{eq:prob_obs_d}
+y(t_k) &= C_\textrm{d} x(t_k) + v(t_k), \label{eq:prob_obs_d}
 \end{align}
 
 \noindent	
-where $w(t_k) \sim \mathcal{N}(0,Q_\textrm{d})$, subscript $\textrm{d}$ stands for discretized and 
+where $\rho(w(t_k)) = \mathcal{N}(0,Q_\textrm{d})$ and subscript $\textrm{d}$ is short for \textit{discretized}. The matrices from the discrete-time representation are given by
 
 \begin{align}
 A_\textrm{d} &= e^{A h_k}, \\
 B_\textrm{d} &= \left( \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}\delta \tau \right)B, \\
 C_\textrm{d} &= C, \\
-D_\textrm{d} &= D, \\
 Q_\textrm{d} &= \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}Qe^{A^T \tau}\delta \tau,
 \end{align}
 
 \noindent
-where $h_k$ is the variable step size, defined by the random time intervals. Note that, once again, even for the invariant-time case, the discretized version is time-variant if time intervals vary through time.
+where $h_k = t_{k+1}-t_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}), is the variable step size, defined by the random time intervals. Note that, once again, even for the time-invariant case, the matrices from the discrete-time system depend on time intervals, thus will be time-variant if they vary throughout time.
 
- 
+In the next section we introduce the estimation problem and the Bayesian solution, considering the discrete-time models of state space representations. For simplicity, we replace $(t_k)$ argument for a subscript $k$, to represent discrete instants of time. 
+
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
 The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated as new information arrives, using not just the new data, but also the prior information. For that, both the states and the arrived information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
@@ -548,12 +548,9 @@ UKF algorithm addresses many of the drawbacks that appear in the EKF implementat
 	
 \section{State Estimation with Aperiodic Sampling} \label{sec:estimation_aperiodic}
 
-In general, state estimation in sampled-data systems are designed considering regular sampling time intervals. However, we are interested in the effects of aperiodic sampling and data assimilation executed at incorrect time instants, as formulated in Section~\ref{sec:problem_form}. 
+The exact solution to the linear discretization problem, defined by (\ref{eq:prob_process_d}) and (\ref{eq:prob_obs_d}) considered digital inputs sampled at the same rate as the observations were taken, producing a sequence of data at time instants $t_k$, $\forall k \in \mathbb{N}$. The nonlinear solution is agnostic to this assumption, since it relies on numerical approximations. Nevertheless, the representation given by (\ref{eq:prob_process3}) and (\ref{eq:prob_obs3}) is constructed using a common time sequence $t_k$, $\forall k \in \mathbb{N}$ for both process and observation models.
 
-First, we note that the measurement instants $t_k$, $\forall k \in \mathbb{N}$ do not match the estimation instants $iT$, $\forall i \in \mathbb{N}$. Additionally, input data $u(iT)$ is available a rate $1/T$ that is $\alpha > 1$ times faster than the expected sampling rate $\lambda_h$ of the observations. Therefore, there are time intervals $iT - (i-1)T$ without any observations, hence only the \textit{forecast} step of state estimation can be performed. One example of such application is in target tracking, where inertial sensors that measure process input data such as linear acceleration and angular velocity operate at higher frequencies compared to GPS sensors, that are responsible for the observation model data.
-
-An illustrative example is presented in Figure~\ref{fig:cap4-sampling_example}, where $\alpha=5$, that is the expected time interval for observations $1/\lambda_h$ is five times higher than regular sampling time interval $T$. Between two consecutive estimation time instants, there can be no observation data, illustrated by the red letter \textit{A}, there can be one measurement, red letter \textit{B}, or multiple measurements, shown in the red letter \textit{C}.
-
+However, we are interested in the effects of aperiodic sampling of the observations and data assimilation executed at incorrect time instants, as formulated in Section~\ref{sec:problem_form}. For that, we consider that input signal $u(t)$ is generated by a digital device using an \textit{ideal sampler}, with a regular time interval $T$, that is $u(t)=u(iT)$, for $iT\leq t < (i+1)T$, $\forall i \in \mathbb{N}$. Estimation time instants needs to coincide with the regularly spaced time intervals $T$. Measurement instants $t_k$, $\forall k \in \mathbb{N}$ do not match the estimation instants $iT$, $\forall i \in \mathbb{N}$. Additionally, input data $u(iT)$ is available a rate $1/T$ that is $\alpha > 1$ times faster than the expected sampling rate $\lambda_h$ of the observations. An illustrative example is presented in Figure~\ref{fig:cap4-sampling_example}, where $\alpha=5$, that is the expected time interval for observations $1/\lambda_h$ is five times higher than regular sampling time interval $T$.
 
 \begin{figure}[!htb]
 	\centering
@@ -561,6 +558,8 @@ An illustrative example is presented in Figure~\ref{fig:cap4-sampling_example}, 
 	\caption[Input and observation time instants realization]{Input and estimation time instants labeled as $iT$ and a realization of observation time instants, labeled as $t_k$. Expected time instants for observation is presented in gray, considering that $E[d_k] = \frac{1}{\lambda_h}$, and $\frac{1}{\lambda_h} = 5 T$, that is $\alpha=5$.}
 	\label{fig:cap4-sampling_example}
 \end{figure} 
+
+Between two consecutive estimation time instants, there can be no observation data, illustrated by the red letter \textit{A}, there can be one measurement, red letter \textit{B}, or multiple measurements, shown in the red letter \textit{C}. One example of such application is in target tracking, where inertial sensors that measure process input data such as linear acceleration and angular velocity operate at higher and regular frequencies compared to a network of GPS sensors, that are responsible for the observation model data.
 
 On the next subsections, we discuss how the algorithm is executed for the scenarios when reliable time-stamp information is available, and when it is not present in the information package.
 
@@ -589,14 +588,14 @@ On the next subsections, we discuss how the algorithm is executed for the scenar
 
 \subsection{With Timestamp}\label{sec:carimbo}
 
-If the estimator knows the exact time $t_k$ that measurements were taken in a global timescale, \textit{data assimilation} steps can be performed at the correct time instants. For that, the process model defined by (\ref{eq:prob_process}) needs to discretized at variable time intervals $\delta t_j^*$, yielding
+If the estimator knows the exact time $t_k$ that measurements were taken in a global timescale, \textit{data assimilation} steps can be performed at the correct time instants. For that, the process model discretization given by (\ref{eq:prob_process3}) is performed considering variable time intervals $\delta t_j^*$, yielding
 
 \begin{equation}\label{eq:disc_carimbo}
 x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 \end{equation}
 
 \noindent
-where $t^*_j= t^*_{j-1} + \delta t^*_j$ and $t^*_0=0$. The variable time interval $\delta t^*_j$ is calculated by the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
+where $t^*_j$, $\forall j \in \mathbb{N}$ represents the estimation time sequence and is given by $t^*_j= t^*_{j-1} + \delta t^*_j$, with $t^*_0=0$. The variable time interval $\delta t^*_j$ is calculated according the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
 
 \begin{figure}[!htb]
 	\centering
@@ -637,7 +636,9 @@ where $t^*_j= t^*_{j-1} + \delta t^*_j$ and $t^*_0=0$. The variable time interva
 \end{figure}	
 
 
-Each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used between observation and input signals, considering last available information. Note that in such configuration, the discrete-time system becomes time-varying, since discretization is performed using variable time intervals. For the simulation carried out in Section~\ref{cap5}, time intervals $\delta t^*_j$ are calculated by uniting all arrival times for input and observation in a single vector, in an orderly fashion. The subtraction of consecutive time instants yields the time intervals sequence $\delta t^*_j$, $\forall j \geq 1$. 
+Each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used for input signals, considering last available information. 
+
+For the simulation carried out in Section~\ref{cap5}, time intervals $\delta t^*_j$ are calculated by uniting all arrival times for input and observation in a single vector, in an orderly fashion. The subtraction of consecutive time instants yields the time intervals sequence $\delta t^*_j$, $\forall j \geq 1$. 
 
 Since there are two signal types, input and observation, there are four possible cases for the estimator: input followed by another input; input followed by an observation; observation followed by an input; and observation followed by another observation. In Figure~\ref{fig:cap4-sampling_example}, all of them are represented. During the interval \textit{A}, there are only input signals, so time interval is $T$ and only \textit{forecast} is performed. In the interval represented by \textit{B}, we have to first execute complete \textit{forecast} and \textit{data assimilation} steps between input and observation, from $3T$ until $t_1$, using $\delta t^*_4 =t_1-3T$. Next, between an observation and an input signal, a ZOH is used for a \textit{forecast} step between $t_1$ and $4T$. In other words, it is considered that the input remained constant between $3T$ and $4T$. When more than one observation arrive between two input signals, as in \textit{C}, full \textit{forecast} and \textit{data assimilation} are performed as many times needed before one last \textit{forecast} between the last observation and the next input signal.
 
@@ -654,7 +655,7 @@ x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
 \end{equation}
 
 \noindent
-where $t=nT$.
+where $f^*_\textrm{d}(\cdot)$ represents the time-invariant discrete-tmie mode and $n=nT$, $\forall n \in \mathbb{N}$.
 
 Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In such cases, there are only two possible scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is observation, full \textit{forecast} and \textit{data assimilation} steps are performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
 
@@ -699,7 +700,6 @@ where $\alpha$ is the significance level and interval $[r_1,r_2]$ is given by th
 
 \noindent
 which means that, if the filter is consistent, in $95\%$ of the estimates, NEES and NIS value should fall under their correspondent intervals. Figure~\ref{fig:chi2plots} shows both $\chi^2_2$ and $\chi^2_4$ PDFs, with the $95\%$ acceptance region.
-
 
 \begin{figure}[!htb]
 	\centering

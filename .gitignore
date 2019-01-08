@@ -3,7 +3,6 @@
 *.idx
 *.log
 *.out
-*.eps
 *.synctex
 *.tdo
 *.toc
