@@ -91,6 +91,25 @@ Q_\textrm{d} &= \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}Qe^{A^T \tau}\delta \tau,
 \noindent
 where $h_k = t_{k+1}-t_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}), is the variable step size, defined by the random time intervals. Note that, once again, even for the time-invariant case, the matrices from the discrete-time system depend on time intervals, thus will be time-variant if they vary throughout time.
 
+Usually, the covariance matrices $Q$ and $R$ of the noise vectors, that represent the noise level, are better expressed  by a signal-to-noise ratio (SNR) quantity, which is a more directly related measure to how contaminated is a signal. It is basically a relation between the power level of the signal and of the noise, that is
+
+\begin{equation}
+SNR = \frac{P_{\textrm{signal}}}{P_{\textrm{noise}}},
+\end{equation}
+
+\noindent
+where $P$ is the average power of a signal, which is directly proportional to its variance. Therefore it can also be expressed by
+
+\begin{equation}
+SNR = \frac{\sigma^2_{\textrm{signal}}}{\sigma^2_{\textrm{noise}}}.
+\end{equation}
+
+In Chapter~\ref{cap5} we use SNR definition to express the noise level present in signals, using the logarithmic decibel (dB) scale, given by
+
+\begin{equation}
+SNR_{\textrm{dB}} = 10 \log_{10}\frac{P_{\textrm{signal}}}{P_{\textrm{noise}}},
+\end{equation}
+
 In the next section we introduce the estimation problem and the Bayesian solution, considering the discrete-time models of state space representations. For simplicity, we replace $(t_k)$ argument for a subscript $k$, to represent discrete instants of time. 
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
@@ -718,5 +737,12 @@ RMSE = \frac{ \sum_{i=1}^N \sqrt{(\hat{x}_{k|k}-x_{k})^2}}{N}
 
 \noindent
 where $x_k$ is the true state vector and $N$ is the amount of estimates.
+
+\section{Simulation Scenarios Design}\label{sec:scenarios}
+
+To evaluate performance and consistency effects of the aperiodic sampling in state estimation, we study three scenarios: variation of measurement SNR; variation of $\lambda$; and variation of $T$. First scenario intends to study how the effects vary for higher noise levels in the observation model. The second scenario assess how the average sampling rate of measurements affect the degradation in performance when time-stamp is and is not considered in state estimation. In the last simulation scenario we study the behavior of the effects when the regular estimation time interval distances itself from the average sampling rate of the observations.
+
+Since estimation is performed in the presence of random quantities, simulations need to be performed throughout several runs, so that confidence intervals can be constructed towards more consistent conclusions. Average values for accuracy $J$ and consistency $NEES$ and $NIS$ performance indexes are calculated with corresponding $95\%$ confidence intervals.
+
 
 \clearpage

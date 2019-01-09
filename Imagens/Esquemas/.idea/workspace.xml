@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e065d9d-fe9f-4a89-933f-1723977d28c1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../capitulo3.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo3.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../library.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../library.bib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../0_Dissertacao.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../0_Dissertacao.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/plots.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PRBS-eps-converted-to.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../PRBS-eps-converted-to.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PRBS.eps" beforeDir="false" afterPath="$PROJECT_DIR$/../PRBS.eps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../capitulo4.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo4.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../capitulo5.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo5.tex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +21,9 @@
         <counts>
           <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
