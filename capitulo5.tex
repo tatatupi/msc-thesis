@@ -183,7 +183,7 @@ Figure~\ref{fig:LinearJevolution} presents a window data from 0 to 0.013 seconds
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/LinearJEvolution.eps}
+	\includegraphics[width=0.8\textwidth]{Imagens/LinearJEvolution.eps}
 	\caption[Performance index temporal cut for one realization]{Temporal cut from 0 to 0.013 seconds, for a realization of state $x_2$ RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the estimation instants.}
 	\label{fig:LinearJevolution}
 \end{figure}
@@ -202,18 +202,20 @@ Finally, for this realization, we also present in Figure~\ref{fig:linearConsiste
 
 In the next sections we study the scenarios described in Section~\ref{sec:scenarios}. Only one state per mode is evaluated, namely $x_1$ and $x_4$, for simplicity.
 
-\todo[inline]{Falta melhorar os gráficos de resultado e alterar o rótulo de $\lambda$ para $\frac{1}{\lambda}$}
-
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
 
-For the first simulation scenario, we consider SNR variation of $60$, $50$, $40$, $20$, and $10$, $\textrm{dB}$ both for the process and observation models. Regular estimation time interval $T$ is maintained fixed at $T=0.002 \textrm{s}$  and $\alpha=1$, thus $\lambda=500 \textrm{Hz}$. For a 100-run simulation, obtained results for accuracy and consistency are presented in Figure~\ref{fig:ulinearSamp3} with the corresponding $95\%$ confidence intervals.
+For the first simulation scenario, we consider SNR variation of $60$, $50$, $40$, $20$, and $10$, $\textrm{dB}$ both for the process and observation models. Regular estimation time interval $T$ is maintained fixed at $T=0.002 \textrm{s}$  and $\alpha=1$, thus $\lambda=500 \textrm{Hz}$. For a 100-run simulation, obtained results for accuracy and consistency are presented in Figure~\ref{fig:linearNoise} with the corresponding $95\%$ confidence intervals.
 
-\begin{figure}[!htb]
+
+ \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=\textwidth]{Imagens/noise_results_all-uy.eps}
-	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indexes and $95\%$ confidence interval, as a function of input and observation SNR, for algorithms with with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values are shown in (a) and (b), whereas consistency results are in (c) and (d).}
-	\label{fig:ulinearSamp3}
-\end{figure} 
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearNoise_x1_rmse.eps}} 
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearNoise_x4_rmse.eps}}  \\
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearNoise_NEES.eps}}
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearNoise_NIS.eps}}
+	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indexes with $95\%$ confidence intervals, as a function of input and observation SNR, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+	\label{fig:linearNoise}
+\end{figure}
 
 Results suggest that for higher SNR levels, that is less noise present in data, taking into account time-stamp information plays an important role, both for accuracy and consistency. When noise levels increase, indexes approximate for both algorithms. Consistency tests for the algorithm with time-stamp remains almost constant for all SNR values, whereas for the algorithm without time-stamp they decrease to values that do not differ statistically from both methods.
 
@@ -242,26 +244,34 @@ Results suggest that for higher SNR levels, that is less noise present in data, 
 
 In the second simulation scenario for the linear system, we consider an average sampling rates of observation variation of $\lambda \ =\ 0.001,\ 0.002,\ 0.05,\ \textrm{and } 0.1 \textrm{ Hz}$. Relation between $\lambda$ and $T$ is kept constant $\alpha=1$. SNR levels for process and observation models are chosen to be $SNR_{\textrm{obs}} = SNR_{\textrm{pro}} = 30 \ \textrm{dB}$. Simulation was carried out 100 times and performance indexes for accuracy and consistency are shown in Figure~\ref{fig:linearSamp} with corresponding $95\%$ confidence intervals. 
 
-\begin{figure}[!htb]
+ \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=1\textwidth]{Imagens/samp_results_all.eps}
-	\caption[Linear system estimation performance, as a function of ]{Linear system estimation performance indexes and $95\%$ confidence interval, as a function of $\lambda$, for algorithms with with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values are shown in (a) and (b), whereas consistency results are in (c) and (d).}
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearSamp_x1_rmse.eps}} 
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearSamp_x4_rmse.eps}}  \\
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearSamp_NEES.eps}}
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearSamp_NIS.eps}}
+	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indexes with $95\%$ confidence intervals, as a function of average time interval $\lambda^{-1}$, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
 	\label{fig:linearSamp}
-\end{figure} 
+\end{figure}
 
 In this case, the smaller the $\lambda$ the higher is the difference in algorithm performances, in favor of the one that considers time-stamp information. The high values used for simulation caused both algorithms to perform with no statistically significant difference. It suggests that, the more spaced time intervals of observations, the bigger is the importance of incorporating time instant information in the estimation process. That can be explained by the fact that in such cases, the approximation error of $t_k$ is higher and so is the additional noise introduced by data assimilation performed at incorrect time instants.
 
 
 \subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-AC}
 
-The last linear system case study is simulated considering a variation of $\alpha = \ 5,\ 3,\ 2,\ \textrm{and } 1$. Other parameters are kept constant, namely $\lambda=500 \textrm{ Hz}$, and $SNR_{\textrm{obs}} = SNR_{\textrm{pro}} = 30 \ \textrm{dB}$. Once again, a 100-run simulation is performed and results are shown in Figure~\ref{fig:ulinearSamp}.
+The last linear system case study is simulated considering a variation of $\alpha = \ 5,\ 3,\ 2,\ \textrm{and } 1$. Other parameters are kept constant, namely $\lambda=500 \textrm{ Hz}$, and $SNR_{\textrm{obs}} = SNR_{\textrm{pro}} = 30 \ \textrm{dB}$. Once again, a 100-run simulation is performed and results are shown in Figure~\ref{fig:linearAlpha}.
 
-\begin{figure}[!htb]
+
+ \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=1\textwidth]{Imagens/usamp_results_all.eps}
-	\caption[Linear system estimation performance, as a function of $\alpha$]{Linear system estimation performance indexes and $95\%$ confidence interval, as a function of $\alpha$, for algorithms with with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values are shown in (a) and (b), whereas consistency results are in (c) and (d).}
-	\label{fig:ulinearSamp}
-\end{figure} 
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearAlpha_x1_rmse.eps}} 
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearAlpha_x4_rmse.eps}}  \\
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearAlpha_NEES.eps}}
+	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearAlpha_NIS.eps}}
+	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indexes with $95\%$ confidence intervals, as a function of $\alpha$, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+	\label{fig:linearAlpha}
+\end{figure}
+
 
 In this case, performance remained almost constant both for accuracy and consistency, when time-stamp information was available, suggesting that it does not depend on $\alpha$ values. On the other hand, results for the algorithm that does not consider time-stamp are better when regular estimation sampling rate is higher. That is, when input information is available at faster rates than the average sampling rate of observations, knowing the exact time instant $t_k$ becomes less important.
 
@@ -274,7 +284,6 @@ In this case, performance remained almost constant both for accuracy and consist
 \section{Unicycle Position Estimation}
 
 \todo[inline]{Falta incluir os resultados dos testes NEES e NIS}
-\todo[inline]{Falta traduzir e melhorar gráficos, para manter o padrão do sistema linear}
 
 We now consider a non-linear system given by a nonholomonic moving robot, which position in the $xy$-plane we want to estimate. In many real target tracking problems such as this, measurements are available by unsynchronized cameras through an internet network, for instance. Or multiple GPS sensors might be used in a centralized architecture without data alignment and association. These configurations are keen to sampling irregularities, which motivates our choice.
 
@@ -332,21 +341,13 @@ We simulate 60 seconds of robot movement, considering a step size of $\delta t_{
 
 \begin{figure}[!htb]
 	\centering
-	\begin{subfigure}
-		\centering
-		\includegraphics[width=0.9\textwidth]{Imagens/entradas1.eps}	
-		%		\caption{}
-		\label{fig:sfig1}
-	\end{subfigure}
-	\begin{subfigure}
-		\centering
-		\includegraphics[width=0.9\textwidth]{Imagens/entradas2.eps}
-		%		\caption{}
-		\label{fig:sfig2}
-	\end{subfigure}
+	\subfigure{\includegraphics[width=0.8\textwidth]{Imagens/entradas1.eps}} \\
+	\subfigure{\includegraphics[width=0.8\textwidth]{Imagens/entradas2.eps}}  
 	\caption[Simulation input signals]{Simulation input signals. (a) shows temporal sequence of angular velocity $\omega$ and (b) shows linear acceleration $a$.}
 	\label{fig:entrada}
 \end{figure}
+
+
 
 \begin{figure}[!htb]
 	\centering
