@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e065d9d-fe9f-4a89-933f-1723977d28c1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../0_Dissertacao.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../0_Dissertacao.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/plots.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PRBS-eps-converted-to.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../PRBS-eps-converted-to.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PRBS.eps" beforeDir="false" afterPath="$PROJECT_DIR$/../PRBS.eps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../capitulo4.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo4.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../capitulo5.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo5.tex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,7 +14,7 @@
     <session id="1812013450">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
@@ -117,6 +112,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24980299" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

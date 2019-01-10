@@ -61,7 +61,7 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs3}
 \end{align}
 
 \noindent
-where $f_d(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics is time-invariant, that is $f(\cdot)$ does not depend directly on $t_k$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$.
+where $f_d(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics is time-invariant, that is $f(\cdot)$ does not depend directly on $t_k$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$. Discrete time instants $t_k$ are determined by random time intervals $h_k$, $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
 
 For the linear time-invariant case (LTI), the continuous state space representation is given by	
 
@@ -79,17 +79,17 @@ y(t_k) &= C_\textrm{d} x(t_k) + v(t_k), \label{eq:prob_obs_d}
 \end{align}
 
 \noindent	
-where $\rho(w(t_k)) = \mathcal{N}(0,Q_\textrm{d})$ and subscript $\textrm{d}$ is short for \textit{discretized}. The matrices from the discrete-time representation are given by
+where $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ are discrete time instants as in (\ref{eq:time_interval}), separated by random time intervals $h_k \in \mathbb{R}$ and $k \in \mathbb{N}$ is the discrete-time index. Process noise PDF is given by $\rho(w(t_k)) = \mathcal{N}(0,Q_\textrm{d})$ and subscript $\textrm{d}$ is short for \textit{discretized}. The matrices from the discrete-time representation are given by
 
 \begin{align}
 A_\textrm{d} &= e^{A h_k}, \\
 B_\textrm{d} &= \left( \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}\delta \tau \right)B, \\
 C_\textrm{d} &= C, \\
-Q_\textrm{d} &= \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}Qe^{A^T \tau}\delta \tau,
+Q_\textrm{d} &= \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}Qe^{A^T \tau}\delta \tau.
 \end{align}
 
-\noindent
-where $h_k = t_{k+1}-t_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}), is the variable step size, defined by the random time intervals. Note that, once again, even for the time-invariant case, the matrices from the discrete-time system depend on time intervals, thus will be time-variant if they vary throughout time.
+
+Note that, once again, even for the time-invariant case, the matrices from the discrete-time system depend on time intervals, thus will be time-variant if sampling is aperiodic.
 
 Usually, the covariance matrices $Q$ and $R$ of the noise vectors, that represent the noise level, are better expressed  by a signal-to-noise ratio (SNR) quantity, which is a more directly related measure to how contaminated is a signal. It is basically a relation between the power level of the signal and of the noise, that is
 
@@ -124,7 +124,7 @@ The goal of the estimator is to statistically and recursively infer the values o
 \end{align}
 
 \noindent
-where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior PDF of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
+where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\rho(x_k|(y_1,...,y_k))$ is the estimated posterior PDF of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
 
 Finding the \textit{posterior} $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimates $\hat{x_k}^{MAP} \in \mathbb{R}^n$ and $\hat{x_k}^{MMSE} \in \mathbb{R}^n$ are the optimal state estimates, under their optimality criteria. A recursive Bayesian solution to the state estimation problem, that is finding the \textit{posterior} PDF, considering that the system evolves according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we need to define two lemmas.
 
@@ -322,8 +322,8 @@ Some identities of multivariate Gaussian probability densities are needed for th
 	\rho(x,y) = \mathcal{N} 
 	\left(
 	\begin{pmatrix} x \\ y \end{pmatrix};
-	\begin{pmatrix} a \\ b \end{pmatrix},
-	\begin{pmatrix} A & C\\ C^T & B \end{pmatrix}
+	\begin{pmatrix} \bar{x} \\ \bar{y} \end{pmatrix},
+	\begin{pmatrix} P^{xx} & P^{xy}\\ (P^{xy})^T & P^{yy} \end{pmatrix}
 	\right) 
 	\end{align}
 	
@@ -331,10 +331,10 @@ Some identities of multivariate Gaussian probability densities are needed for th
 	then, the marginal and conditional PDFs of $x$ and $y$ are given by
 	
 	\begin{align}
-	\rho(x)	&= \mathcal{N}(x;\ a,A) \\
-	\rho(y) 		&= \mathcal{N}(y;\ b,B) \\
-	\rho(x|y)  	&= \mathcal{N}(x; \ a + CB^{-1}(y-b),\ A - C B^{-1} C^T ) \\
-	\rho(y|x)  	&= \mathcal{N}(y; \ b + C^T A^{-1}(x-a),\  B - C^T A^{-1} C)
+	\rho(x)		&= \mathcal{N}(x; \ \bar{x},\ P^{xx}) \\
+	\rho(y) 	&= \mathcal{N}(y; \ \bar{y},\ P^{xy}) \\
+	\rho(x|y)  	&= \mathcal{N}(x; \ \bar{x} + P^{xy} (P^{yy})^{-1}(y-\bar{y}),\ P^{xx} - P^{xy} (P^{yy})^{-1} (P^{xy})^T ) \\
+	\rho(y|x)  	&= \mathcal{N}(y; \ \bar{y} + (P^{xy})^T (P^{xx})^{-1}(x-\bar{x}),\  P^{yy} - (P^{xy})^T (P^{xx})^{-1} P^{xy})
 	\end{align}
 	
 \end{prop}
@@ -343,8 +343,8 @@ Some identities of multivariate Gaussian probability densities are needed for th
 	
 	If $x$ and $y$ are Gaussian RVs, with PDFs given by
 	\begin{align}
-	\rho(x) 	&= \mathcal{N}(x;\ a, \ A), \\
-	\rho(y|x) 	&= \mathcal{N}(y;\ Hx, \ B),
+	\rho(x) 	&= \mathcal{N}(x;\ \bar{x}, \ P^{xx}), \\
+	\rho(y|x) 	&= \mathcal{N}(y;\ Ax, \ P^{yy}),
 	\end{align}
 	
 \noindent
@@ -354,10 +354,10 @@ then, the joint and marginal PDFs are defined by
 	\rho(x,y) &= \mathcal{N} 
 	\left(
 	\begin{pmatrix} x \\ y \end{pmatrix};
-	\begin{pmatrix} a \\ Ha \end{pmatrix},
-	\begin{pmatrix} A & AH^T\\ HA & HAH^T + B \end{pmatrix}
+	\begin{pmatrix} \bar{x} \\ A\bar{x} \end{pmatrix},
+	\begin{pmatrix} P^{xx} & P^{xx}A^T\\ AP^{xx} & AP^{xx}A^T + P^{yy} \end{pmatrix}
 	\right), \\
-	\rho(y) &= \mathcal{N} (y; \ Ha, \ HAH^T + B)
+	\rho(y) &= \mathcal{N} (y; \ A\bar{x}, \ AP^{xx}A^T + P^{yy})
 	\end{align}
 \end{prop}
 
@@ -737,12 +737,6 @@ RMSE = \frac{ \sum_{i=1}^N \sqrt{(\hat{x}_{k|k}-x_{k})^2}}{N}
 
 \noindent
 where $x_k$ is the true state vector and $N$ is the amount of estimates.
-
-\section{Simulation Scenarios Design}\label{sec:scenarios}
-
-To evaluate performance and consistency effects of the aperiodic sampling in state estimation, we study three scenarios: variation of measurement SNR; variation of $\lambda$; and variation of $T$. First scenario intends to study how the effects vary for higher noise levels in the observation model. The second scenario assess how the average sampling rate of measurements affect the degradation in performance when time-stamp is and is not considered in state estimation. In the last simulation scenario we study the behavior of the effects when the regular estimation time interval distances itself from the average sampling rate of the observations.
-
-Since estimation is performed in the presence of random quantities, simulations need to be performed throughout several runs, so that confidence intervals can be constructed towards more consistent conclusions. Average values for accuracy $J$ and consistency $NEES$ and $NIS$ performance indexes are calculated with corresponding $95\%$ confidence intervals.
 
 
 \clearpage
