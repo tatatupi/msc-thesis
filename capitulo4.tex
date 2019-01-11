@@ -46,7 +46,7 @@ t_{k+1} &= t_k + h_k, \label{eq:time_interval}
 where $h_k \in \mathbb{R}$ is the variable step size, defined by random time intervals, and
 
 \begin{align}
-k_1 &= h_k f(t_k, \ x({t_k})), \\
+k_1 &= h_k f(t_k, \ x({t_k})), \label{eq:runge_kutta22}\\
 k_2 &= h_k f(t_k + \frac{h_k}{2}, \ x({t_k}) + \frac{k_1}{2}), \\
 k_3 &= h_k f(t_k + \frac{h_k}{2}, \ x({t_k}) + \frac{k_2}{2}), \\
 k_4 &= h_k f(t_k + h_k, \ x({t_k}) + k_3), \label{eq:runge_kutta2}
@@ -61,7 +61,7 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs3}
 \end{align}
 
 \noindent
-where $f_d(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics is time-invariant, that is $f(\cdot)$ does not depend directly on $t_k$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$. Discrete time instants $t_k$ are determined by random time intervals $h_k$, $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
+where $f_d(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics is time-invariant, that is $f(\cdot)$ does not depend directly on $t_k$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor $h_k$ outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$, in (\ref{eq:runge_kutta22})-(\ref{eq:runge_kutta2}). Discrete time instants $t_k$ are determined by random time intervals $h_k$, $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
 
 For the linear time-invariant case (LTI), the continuous state space representation is given by	
 
