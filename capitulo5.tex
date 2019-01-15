@@ -34,15 +34,16 @@ Since estimation is performed in the presence of random quantities, then several
 	\centering
 	\setlength{\tabcolsep}{12pt}
 	\caption[Review of concepts and symbols used in simulation]{Review of concepts and symbols used in simulation}
+	\renewcommand{\arraystretch}{2}
 	\begin{tabular}{S M L}	
 		\toprule
 		Concept / Symbol	& Definition  &  Description \\ 
 		\midrule
-		$\lambda$ (Section~\ref{sec:problem_form})		& $h_k \sim \mathcal{E} (\lambda)$ & Average sampling rate of observations, in Hertz, determining random time intervals $h_k$   \\ \\ 
-		$T$	(Section~\ref{sec:problem_form})				& $t_i \triangleq iT$ & Regular estimation time interval, given in seconds \\ \\ 
-		$\alpha$ (Section~\ref{sec:problem_form})			& $\frac{1}{\lambda} \triangleq \alpha T$ & Relation between regular estimation time interval $T$ and average irregular time interval of observations $1/\lambda$   \\ \\
-		SNR (\ref{eq:snr_db}) 				& $SNR_{\textrm{dB}} \triangleq 10 \log_{10}\frac{P_{\textrm{signal}}}{P_{\textrm{noise}}}$ & Ratio between signal power $P_{\textrm{signal}}$ and noise power $P_{\textrm{noise}}$ in decibel, related to the level of data uncertainty \\ \\
-		NEES (\ref{eq:nees})			& $NEES \triangleq  \tilde{x}^T(P^{xx})^{-1}\tilde{x}$ & Value tested to be chi-squared distributed, in case of estimate error consistency \\ \\
+		$\lambda$ (Section~\ref{sec:problem_form})		& $h_k \sim \mathcal{E} (\lambda)$ & Average sampling rate of observations, in Hertz, determining random time intervals $h_k$   \\ 
+		$T$	(Section~\ref{sec:problem_form})				& $t_i \triangleq iT$ & Regular estimation time interval, given in seconds \\ 
+		$\alpha$ (Section~\ref{sec:problem_form})			& $\frac{1}{\lambda} \triangleq \alpha T$ & Relation between regular estimation time interval $T$ and average irregular time interval of observations $1/\lambda$   \\
+		SNR (\ref{eq:snr_db}) 				& $SNR_{\textrm{dB}} \triangleq 10 \log_{10}\frac{P_{\textrm{signal}}}{P_{\textrm{noise}}}$ & Ratio between signal power $P_{\textrm{signal}}$ and noise power $P_{\textrm{noise}}$ in decibel, related to the level of data uncertainty \\
+		NEES (\ref{eq:nees})			& $NEES \triangleq  \tilde{x}^T(P^{xx})^{-1}\tilde{x}$ & Value tested to be chi-squared distributed, in case of estimate error consistency \\
 		NIS (\ref{eq:nis})					& $NIS \triangleq  \eta^T(P^{yy})^{-1}\eta$ & Value tested to be chi-squared distributed, in case of innovation consistency  \\ 
 		
 		\bottomrule		
@@ -195,16 +196,16 @@ Simulation parameters are set according to $\lambda = 500 \textrm{ Hz}$, $SNR_{\
 For the high-pass subsystem state $x_1$, it is hard to note a significant difference in the estimation performance. However, for the low-pass system state $x_4$, the degradation is visible for the algorithm that does not acknowledge time instants $t_k$ information in the estimation process, represented by the dashed blue lines.
 
 
-Figure~\ref{fig:LinearJevolution} presents a data window from 0 to 0.013 seconds of the accuracy index RMSE from state $x_2$the algorithms with and without time-stamp. As expected, we observe a distancing from the RMSE at the instant the first observation was taken $t_1$, favoring the algorithm that considers time-stamp. For the time period without observations, the algorithms' RMSEs evolve in a similar way. When measurements start to appear back again, we can notice further degradation in the performance when time-stamps are not considered.
+Figure~\ref{fig:LinearJevolution} presents a data window from 0 to 0.013 seconds of the accuracy index RMSE of state $x_2$, for the algorithms with and without time-stamp. As expected, when first observation arrives at $t_1$, RMSE results distance themselves, in favor of the algorithm that considers time-stamp. For the time period without observations, indexes of both algorithms evolve in a similar way. When measurements start to appear back again, we can notice further degradation in the performance when time-stamps are not considered, like in $t_3$ and $t_4$.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/LinearJEvolution.eps}
-	\caption[Performance index temporal cut for one realization]{Temporal cut from 0 to 0.013 seconds, for a realization of state $x_2$ RMSE of both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the estimation instants.}
+	\caption[Performance index temporal cut for one realization]{Temporal cut from 0 to 0.013 seconds, for a realization of state $x_2$ RMSE for	 both estimators, with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Vertical dashed lines match the measurement sampling instants $t_k$. Black dots represent the estimation instants.}
 	\label{fig:LinearJevolution}
 \end{figure}
 
-Finally, for this realization, we also present single-run consistency tests NEES and NIS as defined in Section~\ref{sec:metrics} in Figure~\ref{fig:linearConsistency}. In each graph, the acceptance intervals is marked by horizontal lines. The upper plots (a) and (b) represent the NEES and NIS values, respectively, for the algorithm that considers time-stamp in the estimation process. We can see that the estimates are quite consistent, with the values inside the acceptance region most of the time. In fact, the null hypothesis rejection rate, that is the proportion of times the values were out of their acceptance region, was $0.04$ for NEES, and $0.055$ for NIS, very close the the $0.05$ expected. When time-stamp information was not available, consistency was heavily degraded, with rejection rates escalating to $0.61$ and $0.43$, respectively. Moreover, NEES and NIS values were so high in some occasions, that the acceptance region is hardly visible in the graphs. In practice, such a consistency degradation means that estimation covariances are highly underestimated.
+Finally, for this realization, we also present single-run consistency tests, using the indices NEES and NIS as defined in Section~\ref{sec:metrics} in Figure~\ref{fig:linearConsistency}. In each graph, the acceptance intervals are marked by horizontal lines. The upper plots (a) and (b) represent the NEES and NIS values, respectively, for the algorithm that considers time-stamp in the estimation process. We can see that the estimates are quite consistent, with the values inside the acceptance region most of the time. In fact, the null hypothesis rejection rate, that is the proportion of times the values were out of their acceptance region, was $4\%$ for NEES, and $5,5\%$ for NIS, very close the the $5\%$ expected. When time-stamp information was not available, consistency was heavily degraded, with rejection rates escalating to $61\%$ and $43\%$, respectively. Moreover, NEES and NIS values were so high in some occasions, that the acceptance region is hardly visible in the graphs. In practice, such a consistency degradation means that estimation covariances are highly underestimated.
 
  \begin{figure}[!htb]
 	\centering
@@ -216,27 +217,44 @@ Finally, for this realization, we also present single-run consistency tests NEES
 	\label{fig:linearConsistency}
 \end{figure}
 
-In the next sections we study the scenarios described in Section~\ref{sec:scenarios} for multiple runs. Only the results of one state per mode are shown, namely $x_1$ and $x_4$, for simplicity sake. Figure~\ref{fig:linear_sim} encompasses results for all scenarios. Each column contains the performance metrics variation for each scenario. A 100-run Monte Carlo simulation was performed for each of them, and the mean and $95\%$ confidence intervals are presented for the algorithm with time-stamp in red and without time-stamp in blue.
-
-
-\subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
-
-For the first simulation scenario, we consider SNR variation for both the process and observation models jointly. Chosen parameters are presented in Table~\ref{tab:params_linear_snr} and results for the performance metrics are shown in column (a) of Figure~\ref{fig:linear_sim}.
-
+In the next sections we study the scenarios described in Section~\ref{sec:scenarios} for multiple runs. The simulation parameters are defined according to Table~\ref{tab:params_linear}
+Only the results of one state per mode are shown, namely $x_1$ and $x_4$, for simplicity sake.. Figure~\ref{fig:linear_sim} encompasses results for all scenarios. Each column contains the performance metrics variation for each scenario. A 100-run Monte Carlo simulation was performed for each of them, and the mean and $95\%$ confidence intervals are presented for the algorithm with time-stamp in red and without time-stamp in blue.
 
 \begin{table}[!ht]
 	\centering
 	\setlength{\tabcolsep}{12pt}
 	\caption[Linear system simulation parameters for SNR variation]{Linear system simulation parameters for SNR variation}
-	\begin{tabular}{c | c | c }
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{c | c | c | c }
 		\toprule
-		SNR (dB)	& $\lambda$ (Hz) & $\alpha$\\
+		Scenario & SNR (dB)	& $\lambda$ (Hz) & $\alpha$\\
 		\midrule
-		$[60,\ 50,\ 40,\ 20,\ 10]$	& $500$ & $1$ \\
+		SNR variation & $[60,\ 50,\ 40,\ 20,\ 10]$	& $500$ & $1$ \\ 
+		$\lambda$ variation & $30$		&  $[1000,\ 500,\ 200,\ 100]$ & $1$  \\ 
+		$\alpha$ variation & $30$		&  $500$ & $[5,\ 3,\ 2,\ 1]$  \\ 
 		\bottomrule
 	\end{tabular}
-	\label{tab:params_linear_snr}
+	\label{tab:params_linear}
 \end{table}
+
+\subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-AC}
+
+%For the first simulation scenario, we consider SNR variation for both the process and observation models jointly. Chosen parameters are presented in Table~\ref{tab:params_linear_snr} and results for the performance metrics are shown in column (a) of Figure~\ref{fig:linear_sim}.
+
+
+%\begin{table}[!ht]
+%	\centering
+%	\setlength{\tabcolsep}{12pt}
+%	\caption[Linear system simulation parameters for SNR variation]{Linear system simulation parameters for SNR variation}
+%	\begin{tabular}{c | c | c }
+%		\toprule
+%		SNR (dB)	& $\lambda$ (Hz) & $\alpha$\\
+%		\midrule
+%		$[60,\ 50,\ 40,\ 20,\ 10]$	& $500$ & $1$ \\
+%		\bottomrule
+%	\end{tabular}
+%	\label{tab:params_linear_snr}
+%\end{table}
 
 %Regular estimation time interval $T$ is maintained fixed at $T=0.002 \textrm{s}$  and $\alpha=1$, thus $\lambda=500 \textrm{Hz}$. For a 100-run simulation, the obtained results for accuracy and consistency are presented in Figure~\ref{fig:linearNoise} with the corresponding $95\%$ confidence intervals.
 
@@ -247,11 +265,11 @@ For the first simulation scenario, we consider SNR variation for both the proces
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearNoise_x4_rmse.eps}}  \\
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearNoise_NEES.eps}}
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearNoise_NIS.eps}}
-%	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indexes with $95\%$ confidence intervals, as a function of input and observation SNR, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+%	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indices with $95\%$ confidence intervals, as a function of input and observation SNR, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
 %	\label{fig:linearNoise}
 %\end{figure}
 
-Results suggest that for higher SNR levels, that is less noise present in data, taking into account time-stamp information plays a more important role. In terms of accuracy, algorithm with time-stamp performed better at all levels, except for the high-pass system state $x_4$, at SNR of $10$ dB, for which confidence levels overlap a little. Nevertheless, it is interesting to note the trend of accuracy performance approximate between both algorithms, as noise levels increase. Consistency tests for the algorithm with time-stamp remains almost constant for all SNR values, whereas for the algorithm without time-stamp they start at higher levels, but decrease to values that do not differ statistically from both methods. This behavior for the algorithm without time-stamp can be explained due to the fact that for lower noise levels, the covariance of observations are overestimated. It does not take into account the additional noise tuned by the incorrect time instant when data is assimilated. For higher SNR, the additional noise become less significant, so results are not so overestimated.
+Results from the first column of Figure~\ref{fig:linear_sim} suggest that for higher SNR levels, that is when less noise is present in data, taking into account time-stamp information plays a more effective role. In terms of accuracy, the algorithm with time-stamp performed better at all levels, except for the high-pass system state $x_4$, at SNR of $10$ dB, for which confidence levels overlap a little. Nevertheless, it is interesting to note the trend of accuracy performance approximate between both algorithms, as noise levels increase. Consistency tests for the algorithm with time-stamp remains almost constant for all SNR values, whereas for the algorithm without time-stamp they start at higher levels, but decrease to values that do not differ statistically from both methods. This behavior for the algorithm without time-stamp can be explained due to the fact that for lower noise levels, the covariance of observations are overestimated. It does not take into account the additional noise tuned by the incorrect time instant when data is assimilated. For higher SNR, the additional noise become less significant, so results are not so overestimated.
 
 %\subsubsection{Changing only measurement noise}
 %
@@ -275,25 +293,25 @@ Results suggest that for higher SNR levels, that is less noise present in data, 
 
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
 
-In the second simulation scenario for the linear system, we consider a variation of average sampling rate of observation $\lambda$, keeping other parameters fixed. Table~\ref{tab:params_linear_lambda} shows the used parameters and column (b) of Figure~\ref{fig:linear_sim}, the obtained results.
-
-
-\begin{table}[!ht]
-	\centering
-	\setlength{\tabcolsep}{12pt}
-	\caption[Linear system simulation parameters for $\lambda$ variation]{Linear system simulation parameters for $\lambda$ variation}
-	\begin{tabular}{c | c | c }
-		\toprule
-		SNR (dB)	& $\lambda$ (Hz) & $\alpha$ \\
-		\midrule
-		$30$		&  $[1000,\ 500,\ 200,\ 100]$ & $1$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:params_linear_lambda}
-\end{table}
+%In the second simulation scenario for the linear system, we consider a variation of average sampling rate of observation $\lambda$, keeping other parameters fixed. Table~\ref{tab:params_linear_lambda} shows the used parameters and column (b) of Figure~\ref{fig:linear_sim}, the obtained results.
 
 %
-%$\lambda \ =\ 1000,\ 500,\ 20,\ \textrm{and } 10 \textrm{ Hz}$. Relation between $\lambda^{-1}$ and $T$ is kept constant $\alpha=1$. SNR levels for process and observation models are chosen to be $SNR_{\textrm{obs}} = SNR_{\textrm{pro}} = 30 \ \textrm{dB}$. Simulation was carried out 100 times and performance indexes for accuracy and consistency are shown in Figure~\ref{fig:linearSamp} with corresponding $95\%$ confidence intervals. 
+%\begin{table}[!ht]
+%	\centering
+%	\setlength{\tabcolsep}{12pt}
+%	\caption[Linear system simulation parameters for $\lambda$ variation]{Linear system simulation parameters for $\lambda$ variation}
+%	\begin{tabular}{c | c | c }
+%		\toprule
+%		SNR (dB)	& $\lambda$ (Hz) & $\alpha$ \\
+%		\midrule
+%		$30$		&  $[1000,\ 500,\ 200,\ 100]$ & $1$  \\
+%		\bottomrule
+%	\end{tabular}
+%	\label{tab:params_linear_lambda}
+%\end{table}
+
+%
+%$\lambda \ =\ 1000,\ 500,\ 20,\ \textrm{and } 10 \textrm{ Hz}$. Relation between $\lambda^{-1}$ and $T$ is kept constant $\alpha=1$. SNR levels for process and observation models are chosen to be $SNR_{\textrm{obs}} = SNR_{\textrm{pro}} = 30 \ \textrm{dB}$. Simulation was carried out 100 times and performance indices for accuracy and consistency are shown in Figure~\ref{fig:linearSamp} with corresponding $95\%$ confidence intervals. 
 %
 % \begin{figure}[!htb]
 %	\centering
@@ -301,32 +319,32 @@ In the second simulation scenario for the linear system, we consider a variation
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearSamp_x4_rmse.eps}}  \\
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearSamp_NEES.eps}}
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearSamp_NIS.eps}}
-%	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indexes with $95\%$ confidence intervals, as a function of average time interval $\lambda^{-1}$, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+%	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indices with $95\%$ confidence intervals, as a function of average time interval $\lambda^{-1}$, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
 %	\label{fig:linearSamp}
 %\end{figure}
 
-In this case, the higher the $\lambda$, the higher is the difference in algorithm performances, in favor of the one that considers time-stamp information. Smaller observation sampling rates $\lambda$ used for simulation reduced the accuracy performance difference of both algorithms. It also decreased the RMSE variability of the algorithm without time-stamp. It suggests that, the more spaced are time intervals of observations, the bigger is the importance of correctly incorporating time instant information in the estimation process. That can be explained by the fact that in such cases, the approximation errors of $t_k$ are higher and so is the additional noise introduced by data assimilation performed at incorrect time instants. Consistency values, however, were not impacted by the different parameter combination of this scenario. Considering time-stamp always produced consistent estimates, whereas neglecting time-stamp information resulted in inconsistent estimates in all cases.
+Variation of performance indices for $\lambda$ variation are shown in the second column of Figure~\ref{fig:linear_sim}. In this case, the higher the $\lambda$, the higher is the difference in algorithm performance, in favor of the one that considers time-stamp information. Smaller observation sampling rates $\lambda$ used for simulation reduced the accuracy performance difference of both algorithms. It also decreased the RMSE variability of the algorithm without time-stamp. It suggests that, the more sparse are the time intervals of observations, the bigger is the importance of correctly incorporating time instant information in the estimation process. That can be explained by the fact that in such cases, the approximation errors of $t_k$ are higher and so is the additional noise introduced by data assimilation performed at incorrect time instants. Consistency values, however, were not impacted by the different parameter combination of this scenario. Considering time-stamp always produced consistent estimates, whereas neglecting time-stamp information resulted in inconsistent estimates in all cases.
 
 
 \subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-AC}
 
-The last linear system case study is simulated considering a variation of $\alpha$. Used parameters are shown in Table~\ref{tab:params_linear_alpha} and results are presented in column (c) of Figure~\ref{fig:linear_sim}.
+%The last linear system case study results, that is variation of $\alpha$, are shown in the third column of Figure~\ref{fig:linear_sim}. Used parameters are shown in Table~\ref{tab:params_linear_alpha} and results are presented in column (c) of Figure~\ref{fig:linear_sim}.
 
 
-\begin{table}[!ht]
-	\centering
-	\setlength{\tabcolsep}{12pt}
-	\caption[Linear system simulation parameters for $\alpha$ variation]{Linear system simulation parameters for $\alpha$ variation}
-	\begin{tabular}{c | c | c }
-		\toprule
-		SNR (dB)	& $\lambda$ (Hz) & $\alpha$ \\
-		\midrule
-		$30$		&  $500$ & $[5,\ 3,\ 2,\ 1]$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:params_linear_alpha}
-\end{table}
-
+%\begin{table}[!ht]
+%	\centering
+%	\setlength{\tabcolsep}{12pt}
+%	\caption[Linear system simulation parameters for $\alpha$ variation]{Linear system simulation parameters for $\alpha$ variation}
+%	\begin{tabular}{c | c | c }
+%		\toprule
+%		SNR (dB)	& $\lambda$ (Hz) & $\alpha$ \\
+%		\midrule
+%		$30$		&  $500$ & $[5,\ 3,\ 2,\ 1]$  \\
+%		\bottomrule
+%	\end{tabular}
+%	\label{tab:params_linear_alpha}
+%\end{table}
+%
 
 % \begin{figure}[!htb]
 %	\centering
@@ -334,12 +352,11 @@ The last linear system case study is simulated considering a variation of $\alph
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearAlpha_x4_rmse.eps}}  \\
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearAlpha_NEES.eps}}
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/linearAlpha_NIS.eps}}
-%	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indexes with $95\%$ confidence intervals, as a function of $\alpha$, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+%	\caption[Linear system estimation performance, as a function of input and observation SNR]{Linear system estimation performance indices with $95\%$ confidence intervals, as a function of $\alpha$, for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for states $x_1$ and $x_2$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
 %	\label{fig:linearAlpha}
 %\end{figure}
 
-
-For different values of $\alpha$, performance of the algorithm with time-stamp remained almost constant both for accuracy and consistency indexes, suggesting that it does not depend on the relation between estimation and observation rates. On the other hand, results for the algorithm that does not consider time-stamp are better when regular estimation sampling rate is higher. That is, when input information is available at faster rates in comparison to the average sampling rate of observations, knowing the exact time instant $t_k$ becomes less important. It can be explained due to the reduction in time instant approximation errors, given by $\tilde{y}_i \approx y(t_k)$.
+The last linear system case study results, that is variation of $\alpha$, are shown in the third column of Figure~\ref{fig:linear_sim}. For different values of $\alpha$, the performance of the algorithm with time-stamp remained almost constant for both for accuracy and consistency indices, suggesting that it does not depend on the relation between estimation and observation rates. On the other hand, results for the algorithm that does not consider time-stamp are better when regular estimation sampling rate is higher. That is, when input information is available at faster rates in comparison to the average sampling rate of observations, knowing the exact time instant $t_k$ becomes less important. It can be explained due to the reduction in time instant approximation errors, given by $\tilde{y}_i \approx y(t_k)$.
 
 
  \begin{figure}[!htb]
@@ -347,16 +364,16 @@ For different values of $\alpha$, performance of the algorithm with time-stamp r
 	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_x1_rmse.eps}} 
 	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_x1_rmse.eps}}  
 	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_x1_rmse.eps}} \\
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_x4_rmse.eps}} 
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_x4_rmse.eps}}  
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_x4_rmse.eps}} \\
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_NEES.eps}} 
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_NEES.eps}}  
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_NEES.eps}} \\
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_NIS.eps}} 
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_NIS.eps}}  
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_NIS.eps}} \\
-	\caption[Linear system estimation performance comparison]{Linear system estimation performance indexes with $95\%$ confidence intervals, as a function of SNR (a), $\lambda$ (b) and $\alpha$ (c), for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for RMSE are shown in the first and second rows, for states $x_1$ and $x_4$, respectively. Consistency results are in third and fourth rows, for NEES and NIS tests, respectively}
+	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_x4_rmse.eps}} 
+	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_x4_rmse.eps}}  
+	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_x4_rmse.eps}} \\
+	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_NEES.eps}} 
+	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_NEES.eps}}  
+	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_NEES.eps}} \\
+	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_NIS.eps}} 
+	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_NIS.eps}}  
+	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_NIS.eps}} \\
+	\caption[Linear system estimation performance comparison]{Linear system estimation performance indices with $95\%$ confidence intervals, as a function of SNR (a), $\lambda$ (b) and $\alpha$ (c), for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for RMSE are shown in the first and second rows, for states $x_1$ and $x_4$, respectively. Consistency results are in third and fourth rows, for NEES and NIS tests, respectively}
 	\label{fig:linear_sim}
 \end{figure}
 
@@ -367,9 +384,9 @@ For different values of $\alpha$, performance of the algorithm with time-stamp r
 %\todo[inline,caption={Falta variar o atraso nas medições}]{Ainda terá uma seção com a variação do time-delay e seu impacto no desempenho}
 
 
-\section{Unicycle Position Estimation}
+\section{Nonlinear System: Unicycle Position}
 
-We now consider a non-linear system given by a nonholomonic moving unicycle robot, which position in the $xy$-plane we want to estimate. In many real target tracking problems such as this, measurements are available by unsynchronized cameras through an internet network, for instance. In other applications multiple GPS sensors might be used in a centralized architecture without data alignment or association. These configurations are keen to sampling irregularities, which motivates our choice.
+We now consider a nonlinear system given by a nonholomonic moving unicycle robot, whose position in the $xy$-plane must be estimated. In many real target tracking problems such as this, measurements are available by unsynchronized cameras through an internet network, for instance. In other applications multiple GPS sensors might be used in a centralized architecture without data alignment or association. These configurations are susceptible to sampling irregularities, which motivates our choice.
 
 \subsection{System Description}
 
@@ -396,7 +413,7 @@ where $p_\textrm{x}$ and $p_\textrm{y}$ are the position coordinates, $\theta$ t
 	\label{fig:robot}
 \end{figure} 
 
-The system described by~\ref{eq:sistema} is discretized by a fourth order Runge-Kutta method as described in Section~\ref{sec:discretization} and the discrete state vector $x_i$ is given by $x_i \overset{\Delta}{=} [p_{\textrm{x},i}\ \  p_{\textrm{y},i}\ \  \theta_i\ \  v_i]^T$, where subscript $i$ indicate discrete instants $iT$.
+The system described by (~\ref{eq:sistema}) is discretized by a fourth order Runge-Kutta method as described in Section~\ref{sec:discretization} and the discrete state vector $x_i$ is given by $x_i \overset{\Delta}{=} [p_{\textrm{x},i}\ \  p_{\textrm{y},i}\ \  \theta_i\ \  v_i]^T$, where subscript $i$ indicate discrete instants $iT$.
 
 The observation model $y(t_k) \in \mathbb{R}^2$
 
@@ -409,7 +426,7 @@ p_\textrm{y}(t_k)
 \end{equation}
 
 \noindent
-is given by the position coordinates, and $\rho(v(t_k)) = \mathcal{N} (0,R_{t_k})$ is the observation noise PDF, with zero mean and covariance $R_{t_k}$. Discrete time instants with $t_k$ are determined by random time intervals $h_k$, that is $t_{k+1}=t_k-h_k$. When time-stamp information about $t_k$ is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
+is given by the position coordinates, and $\rho(v(t_k)) = \mathcal{N} (0,R_{t_k})$ is the observation noise PDF, with zero mean and covariance $R_{t_k}$. Discrete time instants with $t_k$ are determined by random time intervals $h_k$, that is $t_{k+1}=t_k+h_k$. When time-stamp information about $t_k$ is not available, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $i$ is the index of the next time instant, multiple of $T$.
 
 Input vector $u_i = [\omega_i\ \ a_i]^T$ is measured by a girometer and accelerometer, respectively. We assume that 
 
@@ -418,18 +435,18 @@ u_i = \tilde{u}_i - w_i,
 \end{equation}
 
 \noindent
-where $\tilde{u}$ represent the sensors' measured values and $\rho(w_i) = \mathcal{N} (0, Q_i)$ is the corresponding noise PDF, of zero mean and covariance $Q_i$. 
+where $\tilde{u}$ represent the sensors' measured values and $\rho(w_i) = \mathcal{N} (0, Q_i)$ is the corresponding noise PDF, with zero mean and covariance $Q_i$. 
 
 We simulate 60 seconds of robot movement, considering a step size of $\delta t_{\textrm{sim}} = 10^{-4}$. Input signals are generated arbitrarily according to Figure~\ref{fig:entrada}. 
 
 Accuracy metrics for the unicycle position system is a modification of the RMSE defined in (\ref{eq:rmse}), to reflect error in $xy$-plane position, given by:
 
 \begin{equation}\label{eq:pos_rmse}
-\textrm{Position } RMSE = \frac{ \sum_{i=1}^N \sqrt{(\hat{p}_{\textrm{x},i}-p_{\textrm{x},i})^2+(\hat{p}_{\textrm{y},i}-p_{\textrm{y},i})^2}}{N},
+RMSE_{\textrm{position}} = \frac{ \sum_{i=1}^N \sqrt{(\hat{p}_{\textrm{x},i}-p_{\textrm{x},i})^2+(\hat{p}_{\textrm{y},i}-p_{\textrm{y},i})^2}}{N},
 \end{equation}
 
 \noindent
-where$\hat{p}_{\textrm{x},i}$ and $\hat{p}_{\textrm{y},i}$ are position estimates at regularly spaced time intervals $T$, $p_{\textrm{x},i}$ and $p_{\textrm{y},i}$ are true position coordinates of the unicycle, at the same time instants and $N$ is the total amount of estimates.
+where $\hat{p}_{\textrm{x},i}$ and $\hat{p}_{\textrm{y},i}$ are position estimates at regularly spaced time intervals $T$, $p_{\textrm{x},i}$ and $p_{\textrm{y},i}$ are true position coordinates of the unicycle, at the same time instants and $N$ is the total amount of estimates.
 
 
 %sampling time intervals $h_k$ are simulated by the exponential probability distribution function from Matlab\texttrademark \ and approximated to the nearest discrete time instant, from the 600,000 available samples. 
@@ -465,8 +482,25 @@ Figure~\ref{fig:realizacaoJ} shows a timespan from $0$ to $1.5$ seconds of a rea
 	\label{fig:realizacaoJ}
 \end{figure} 
 
-In the next sections we perform Monte Carlo simulations, with 1000 runs per combination of parameters, for the scenarios from Section~\ref{sec:scenarios}. All results are comprised in Figure~\ref{fig:robot_sim}, with the evolution of mean values in solid lines and the corresponding $95\%$ confidence interval in dashed lines. First row of graphs shows accuracy results for position RMSE, as described in (\ref{eq:pos_rmse}). Second and third rows present the consistency results for NEES and NIS tests, respectively, as described in Section~\ref{sec:metrics}. The blue lines are for the algorithm that considers time-stamp and red lines are for the one without time-stamp.
+In the next sections we perform Monte Carlo simulations, with 1000 runs per combination of parameters, for the scenarios from Section~\ref{sec:scenarios}. Simulation parameters used for the nonlinear system are shown in Table~\ref{tab:params_robot}. For all cases, input SNR is constant at $20$ dB. All results are comprised in Figure~\ref{fig:robot_sim}, with the evolution of mean values in solid lines and the corresponding $95\%$ confidence interval in dashed lines. First row of graphs shows accuracy results for position RMSE, as described in (\ref{eq:pos_rmse}). Second and third rows present the consistency results for NEES and NIS tests, respectively, as described in Section~\ref{sec:metrics}. The blue lines are for the algorithm that considers time-stamp and red lines are for the one without time-stamp.
 
+\begin{table}[!ht]
+	\centering
+	\setlength{\tabcolsep}{12pt}
+	\caption[Nonlinear system simulation parameters for SNR variation]{Unicycle position estimation simulation parameters for observation SNR variation}
+	\renewcommand{\arraystretch}{1.5}
+
+	\begin{tabular}{c | c | c | c }
+		\toprule
+		Scenario 		& SNR observations (dB)	& $\lambda$ (Hz) & $\alpha$ \\
+		\midrule
+		SNR variation 	& $[100, \ 80,\ 60,\ 40,\ 20,\ 10]$ &  $10$ & $2$  \\
+		$\lambda$ variation			$40$ & 	 $[10, \ 5,\ 0.33,\ 2.5,\ 2,\ 1.67]$ & $2$  \\
+		$\alpha$ variation	&$40$ 				&  $10$ & $[10, \ 5,\ 2,\ 1]$  \\
+		\bottomrule
+	\end{tabular}
+	\label{tab:params_robot}
+\end{table}
 
 
 %\begin{figure}[!htb]
@@ -491,21 +525,21 @@ In the next sections we perform Monte Carlo simulations, with 1000 runs per comb
 
 \subsection{Measurement Signal-to-Noise Ratio Variation}\label{sec:ruido-robo}
 
-In this subsection we compare the estimation performance impact of considering time-stamp in the algorithm, by varying the measurement noise level. The signal-to-noise ratio for the input sensors, the measurement average time interval and $\alpha$ are held constant. Table~\ref{tab:params_robot_snr} shows the parameters used insimulation.
+%In this subsection we compare the estimation performance impact of considering time-stamp in the algorithm, by varying the measurement noise level. The signal-to-noise ratio for the input sensors, the measurement average time interval and $\alpha$ are held constant. Table~\ref{tab:params_robot_snr} shows the parameters used in simulation.
 
-\begin{table}[!ht]
-	\centering
-	\setlength{\tabcolsep}{12pt}
-	\caption[Nonlinear system simulation parameters for SNR variation]{Unicycle position estimation simulation parameters for observation SNR variation}
-	\begin{tabular}{c | c | c | c }
-		\toprule
-		SNR observations (dB)	& SNR input (dB) & $\lambda$ (Hz) & $\alpha$ \\
-		\midrule
-		$[100, \ 80,\ 60,\ 40,\ 20,\ 10]$ & $20$ & $10$ & $2$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:params_robot_snr}
-\end{table}
+%\begin{table}[!ht]
+%	\centering
+%	\setlength{\tabcolsep}{12pt}
+%	\caption[Nonlinear system simulation parameters for SNR variation]{Unicycle position estimation simulation parameters for observation SNR variation}
+%	\begin{tabular}{c | c | c | c }
+%		\toprule
+%		SNR observations (dB)	& SNR input (dB) & $\lambda$ (Hz) & $\alpha$ \\
+%		\midrule
+%		$[100, \ 80,\ 60,\ 40,\ 20,\ 10]$ & $20$ & $10$ & $2$  \\
+%		\bottomrule
+%	\end{tabular}
+%	\label{tab:params_robot_snr}
+%\end{table}
 
 
 
@@ -516,29 +550,29 @@ In this subsection we compare the estimation performance impact of considering t
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/noise.eps}} 
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/noise.eps}}     
 %
-%	\caption[Robot tracking performance, as a function of measurement noise]{Robot tracking performance indexes with $95\%$ confidence intervals, as a function of measurement noise, for both UKF algorithms considering (\textcolor{red}{---}) and not considering (\textcolor{blue}{---}) time-stamp. Accuracy values for states $P_{\textrm{x}}$ and  $P_{\textrm{y}}$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+%	\caption[Robot tracking performance, as a function of measurement noise]{Robot tracking performance indices with $95\%$ confidence intervals, as a function of measurement noise, for both UKF algorithms considering (\textcolor{red}{---}) and not considering (\textcolor{blue}{---}) time-stamp. Accuracy values for states $P_{\textrm{x}}$ and  $P_{\textrm{y}}$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
 %	\label{fig:robot_noise}
 %\end{figure}
 
-First thing to note is the difference in the size of the $95\%$ confidence interval for the results, indicating that the algorithm without time-stamp performs with a much higher variability in accuracy and consistency metrics. Such uncertainty in the performance metrics is by itself a drawback of neglecting time-stamp information. Additionally, results indicate that for lower noise levels, that is higher SNR, considering time-stamp results in significantly better performance, both for accuracy and consistency. When noise gets to higher levels, around $10$ dB, performance of both algorithms cannot be statistically distinguished. Similar to what happened in the linear system, it can be explained by the relation between signal noise and the additional noise tuned by the incorrect time instants. 
+Results from the first column of Figure~\ref{fig:robot_sim} show the variation in performance indices for the different measurement SNR levels simulated. There is a significant difference in the size of the $95\%$ confidence interval for the results, indicating that the algorithm without time-stamp performs with a much higher variability in accuracy and consistency metrics. Such uncertainty in the performance metrics is by itself a drawback of neglecting time-stamp information. Additionally, results indicate that for lower noise levels, that is higher SNR, considering time-stamp results in significantly better performance, in both aspects of accuracy and consistency. When noise achieves higher levels, around $10$ dB, performance of both algorithms cannot be statistically distinguished. Similar to what happened in the linear system, it can be explained by the relation between signal noise and the additional noise tuned by the incorrect time instants. 
 
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-robot}
 
-We now consider the variation of the average sampling rate that observations are taken, maintaining the other parameters constant, according to Table~\ref{tab:params_robot_lambda}. Results for accuracy and consistency are shown in column (b) of Figure~\ref{fig:robot_sim}.
-
-\begin{table}[!ht]
-	\centering
-	\setlength{\tabcolsep}{12pt}
-	\caption[Nonlinear system simulation parameters for $\lambda$ variation]{Unicycle position estimation simulation parameters for observation $\lambda$ variation}
-	\begin{tabular}{c | c | c | c }
-		\toprule
-		SNR observations (dB)	& SNR input (dB) & $\lambda$ (Hz) & $\alpha$ \\
-		\midrule
-		$40$ 				& $20$ 		& $[10, \ 5,\ 0.33,\ 2.5,\ 2,\ 1.67]$ & $2$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:params_robot_lambda}
-\end{table}
+%We now consider the variation of the average sampling rate that observations are taken, maintaining the other parameters constant, according to Table~\ref{tab:params_robot_lambda}. Results for accuracy and consistency are shown in column (b) of .
+%%
+%\begin{table}[!ht]
+%	\centering
+%	\setlength{\tabcolsep}{12pt}
+%	\caption[Nonlinear system simulation parameters for $\lambda$ variation]{Unicycle position estimation simulation parameters for observation $\lambda$ variation}
+%	\begin{tabular}{c | c | c | c }
+%		\toprule
+%		SNR observations (dB)	& SNR input (dB) & $\lambda$ (Hz) & $\alpha$ \\
+%		\midrule
+%		$40$ 				& $20$ 		& $[10, \ 5,\ 0.33,\ 2.5,\ 2,\ 1.67]$ & $2$  \\
+%		\bottomrule
+%	\end{tabular}
+%	\label{tab:params_robot_lambda}
+%\end{table}
 
 
 %\begin{figure}[!htb]
@@ -547,31 +581,31 @@ We now consider the variation of the average sampling rate that observations are
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/samp.eps}}  \\
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/samp.eps}} 
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/samp.eps}}   
-%	\caption[Robot tracking performance, as a function of measurement noise]{Robot tracking performance indexes with $95\%$ confidence intervals, as a function of $\lambda$, for both UKF algorithms considering (\textcolor{red}{---}) and not considering (\textcolor{blue}{---}) time-stamp. Accuracy values for states $P_{\textrm{x}}$ and  $P_{\textrm{y}}$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+%	\caption[Robot tracking performance, as a function of measurement noise]{Robot tracking performance indices with $95\%$ confidence intervals, as a function of $\lambda$, for both UKF algorithms considering (\textcolor{red}{---}) and not considering (\textcolor{blue}{---}) time-stamp. Accuracy values for states $P_{\textrm{x}}$ and  $P_{\textrm{y}}$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
 %
 %	\label{fig:samp}
 %\end{figure}
 
-Results show that performance degradation is more significant for more spaced time intervals, if dynamics and other parameters are kept fixed. For higher  $\lambda$ rates, there are no statistical differences in performance. As average time interval grows, degradation increases and it starts to be apparent, reaching mean differences of $3.1$ cm for a $\lambda = 1.667$ Hz. One possible explanation derives from the fact if average sampling rate is considerably higher than system dynamics speed, time instant $t_k$ approximations errors are reduced. In such cases, sensor noise might end up being much more relevant than the error tunned by assimilating data at incorrect instants.
+As for different $\lambda$ values, variation of indices is presented in the second column of Figure~\ref{fig:robot_sim}. Results show that performance degradation is more significant for more sparse time intervals, providing that dynamics and other parameters are kept constant. For higher  $\lambda$ rates, there are no statistical differences in performance. As average time interval grows, degradation increases and it starts to be apparent, reaching mean differences of $3.1$ cm for a $\lambda = 1.667$ Hz. One possible explanation derives from the fact if average sampling rate is considerably higher than system dynamics speed, then time instant $t_k$ approximations errors are reduced. In such cases, sensor noise might end up being much more relevant than the error tunned by assimilating data at incorrect instants.
 
 \subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-robot}
 
-We also analyze the performance impact of varying the parameter $\alpha$, which is the relation between regular input time interval $T$ and average measurements time interval $\lambda^{-1}$. Table~\ref{tab:params_robot_alpha} presets the used values for simulation and results are presented in column (c) of Table~\ref{tab:params_robot_alpha}. Results for accuracy and consistency are shown in column (b) of Figure~\ref{fig:robot_sim}.
+%We also analyze the performance impact of varying the parameter $\alpha$, which is the relation between regular input time interval $T$ and average measurements time interval $\lambda^{-1}$. Table~\ref{tab:params_robot_alpha} presets the used values for simulation and results are presented in column (c) of Table~\ref{tab:params_robot_alpha}. Results for accuracy and consistency are shown in column (b) of }.
 
-
-\begin{table}[!ht]
-	\centering
-	\setlength{\tabcolsep}{12pt}
-	\caption[Nonlinear system simulation parameters for $\alpha$ variation]{Unicycle position estimation simulation parameters for observation $\alpha$ variation}
-	\begin{tabular}{c | c | c | c }
-		\toprule
-		SNR observations (dB)	& SNR input (dB) & $\lambda$ (Hz) & $\alpha$ \\
-		\midrule
-		$40$ 				& $20$ 		& $10$ & $[10, \ 5,\ 2,\ 1]$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:params_robot_alpha}
-\end{table}
+%
+%\begin{table}[!ht]
+%	\centering
+%	\setlength{\tabcolsep}{12pt}
+%	\caption[Nonlinear system simulation parameters for $\alpha$ variation]{Unicycle position estimation simulation parameters for observation $\alpha$ variation}
+%	\begin{tabular}{c | c | c | c }
+%		\toprule
+%		SNR observations (dB)	& SNR input (dB) & $\lambda$ (Hz) & $\alpha$ \\
+%		\midrule
+%		$40$ 				& $20$ 		& $10$ & $[10, \ 5,\ 2,\ 1]$  \\
+%		\bottomrule
+%	\end{tabular}
+%	\label{tab:params_robot_alpha}
+%\end{table}
 
 
 %\begin{figure}[!htb]
@@ -581,12 +615,11 @@ We also analyze the performance impact of varying the parameter $\alpha$, which 
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/dtudty.eps}} 
 %	\subfigure[]{\includegraphics[width=0.49\textwidth]{Imagens/dtudty.eps}}   
 %
-%	\caption[Robot tracking performance, as a function of measurement noise]{Robot tracking performance indexes with $95\%$ confidence intervals, as a function of $\alpha$, for both UKF algorithms considering (\textcolor{red}{---}) and not considering (\textcolor{blue}{---}) time-stamp. Accuracy values for states $P_{\textrm{x}}$ and  $P_{\textrm{y}}$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
+%	\caption[Robot tracking performance, as a function of measurement noise]{Robot tracking performance indices with $95\%$ confidence intervals, as a function of $\alpha$, for both UKF algorithms considering (\textcolor{red}{---}) and not considering (\textcolor{blue}{---}) time-stamp. Accuracy values for states $P_{\textrm{x}}$ and  $P_{\textrm{y}}$ are shown in (a) and (b), respectively. Consistency results are in (c) and (d) for NEES and NIS tests, respectively.}
 %
 %	\label{fig:dtudty}
 %\end{figure}
-
-The same way as it happened for the linear system, results suggest that when exact time instants $t_k$ are available, variations of $\alpha$ do not impact estimation performance. On the other hand, when time-stamp is not considered in the estimation process, the relation between time intervals of regular estimation and irregular measurement plays an important role in estimates accuracy. The higher is the regular estimation rate in comparison to measurement rate, smaller is the degradation. In fact, for $\alpha$ values of 10 and 5, performances are statistically indistinguishable. When rates are the same, position estimate error doubled for the algorithm that does not consider time stamp. Such phenomenon can be explained by the fact that higher $\alpha$ values lead to smaller time steps used in the process model discretization in comparison to the measurement time intervals. Thus, approximation error originated from $\tilde{y}(i) \approx y(t_k)$ is reduced.
+Finally, the last scenario results are shown in the third column of Figure~\ref{fig:robot_sim}. The same way as it happened for the linear system, indices variation suggest that when exact time instants $t_k$ are available, variations of $\alpha$ do not impact estimation performance. On the other hand, when time-stamp is not considered in the estimation process, the relation between time intervals of regular estimation and irregular measurement plays an important role in estimates accuracy. The higher is the regular estimation rate in comparison to measurement rate, smaller is the degradation. In fact, for $\alpha$ values of 10 and 5, performance are statistically indistinguishable. When the rates are the same, the position estimate error doubled for the algorithm that does not consider time stamp. Such phenomenon can be explained by the fact that higher $\alpha$ values lead to smaller time steps used in the process model discretization in comparison to the measurement time intervals. Thus, approximation error originated from $\tilde{y}(i) \approx y(t_k)$ is reduced.
 
 
  \begin{figure}[!htb]
@@ -594,13 +627,13 @@ The same way as it happened for the linear system, results suggest that when exa
 	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotNoise_rmse.eps}} 
 	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotSamp_rmse.eps}}  
 	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotUsamp_rmse.eps}} \\
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/robotNoise_NEES.eps}} 
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/robotSamp_NEES.eps}}  
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/robotUsamp_NEES.eps}} \\
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/robotNoise_NIS.eps}} 
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/robotSamp_NIS.eps}}  
-	\subfigure{\includegraphics[width=0.32\textwidth]{Imagens/robotUsamp_NIS.eps}} \\
-	\caption[Nonlinear system estimation performance comparison]{Nonlinear system estimation performance indexes with $95\%$ confidence intervals, as a function of SNR (a), $\lambda$ (b) and $\alpha$ (c), for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for RMSE are shown in the first row. Consistency results are in second and third rows, for NEES and NIS tests, respectively.}
+	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotNoise_NEES.eps}} 
+	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotSamp_NEES.eps}}  
+	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotUsamp_NEES.eps}} \\
+	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotNoise_NIS.eps}} 
+	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotSamp_NIS.eps}}  
+	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/robotUsamp_NIS.eps}} \\
+	\caption[Nonlinear system estimation performance comparison]{Nonlinear system estimation performance indices with $95\%$ confidence intervals, as a function of SNR (a), $\lambda$ (b) and $\alpha$ (c), for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. Accuracy values for RMSE are shown in the first row. Consistency results are in second and third rows, for NEES and NIS tests, respectively.}
 	\label{fig:robot_sim}
 \end{figure}
 
@@ -609,9 +642,9 @@ The same way as it happened for the linear system, results suggest that when exa
 
 Two different system are simulated to address the effects of neglecting time-stamp in state estimation performance: a linear fourth order system, with two underdamped modes; and a nonlinear unicycle position system. We design three scenarios in which only one parameter of interest is varied, while the others are kept constant. That way, we can infer the contribution to performance variation to each of the parameter: SNR; $\lambda$; and $\alpha$.
 
-For both systems, performance metrics obtained by neglecting time-stamp had a higher variability in most of the simulations, indicating that estimate accuracy and consistency are less reliable if incorrect time instants are used in estimation. For the nonlinear system, such variability made results comparison more difficult, since statistically significant differences did not appear.
+For both systems, performance metrics obtained by neglecting time-stamp had a higher variability in most of the simulations, indicating that estimate accuracy and consistency are less reliable if incorrect time instants are used in estimation. For the nonlinear system, such variability made results comparison more difficult, since statistically significant differences are not apparent.
 
-The average performance metrics for the algorithm considering time-stamp were always higher or equal to the metrics from the algorithm without time-stamp, as expected. Accuracy performance for SNR variation showed that for lower noise levels, the difference of considering or neglecting time-stamp is much more significant. As noise levels increase, performance for both algorithms tend to approximate. In the nonlinear simulation, RMSE for the highest noise level simulated were statistically indistinguishable. When the average sampling rate of observations $\lambda$ and the relation between them and the regular sampling rate $\alpha$ were altered, the algorithm that considers time-stamp maintained its performance metrics almost constant, specially for consistency tests, as it was expected. Results for the algorithm neglecting time-stamp did not provide many insights, since average values varied little, specially considering their confidence interval.
+The average performance metrics for the algorithm considering time-stamp were always higher or equal to the metrics from the algorithm without time-stamp, as expected. Accuracy performance for SNR variation suggested that for lower noise levels, the difference of considering or neglecting time-stamp is much more significant. As noise levels increase, performance for both algorithms tend to approximate. In the nonlinear simulation, RMSE for the highest noise level simulated were statistically indistinguishable. When the average sampling rate of observations $\lambda$ and the relation between them and the regular sampling rate $\alpha$ were altered, the algorithm that considers time-stamp maintained its performance metrics almost constant, specially for consistency tests, as it was expected. Results for the algorithm neglecting time-stamp did not provide many insights, since average values varied little, specially considering their confidence interval.
  
 
 
