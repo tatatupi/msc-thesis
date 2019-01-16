@@ -33,9 +33,9 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs2}
 \end{align}
 
 \noindent
-where $f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, $k \in \mathbb{N}$ is the discrete-time index, $t_k$ represents the irregular time instants, $x(t) \in \mathbb{R}^n$ the state vector,  $u(t) \in \mathbb{R}^p$ is the input vector and $w(t)$ is the process noise vector, all at continuous-time $t$, $y(t_k) \in \mathbb{R}^m$ represents the irregularly sampled measurement sequence and $v(t_k) \in \mathbb{N}^m$ the corresponding measurement noise vector. Initial condition $x_0$ is assumed to be known.
+where $f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, $k \in \mathbb{N}$ is the discrete-time index, $t_k$ represents the irregular time instants, $x(t) \in \mathbb{R}^n$ the state vector,  $u(t) \in \mathbb{R}^p$ is the input vector and $w(t) \in \mathbb{R}^q$ is the process noise vector, all at continuous-time $t$, $y(t_k) \in \mathbb{R}^m$ represents the irregularly sampled measurement sequence and $v(t_k) \in \mathbb{R}^r$ the corresponding measurement noise vector. Initial condition $x_0$ is assumed to be known.
 
-A continuous-time system dynamics defined by (\ref{eq:prob_process2}) can be discretized, by replacing the differentiation by differencing, via numerical methods. For this study we use the fourth order Runge-Kutta method~\citep{Suli2003}, where
+A continuous-time system dynamics defined by (\ref{eq:prob_process2}) can be discretized, by replacing the differentiation by differencing, via numerical methods. For this study we use the fourth order Runge-Kutta method~\citep{Suli2003}, given by
 
 \begin{align}
 x(t_{k+1})&= x({t_k}) + \frac{1}{6} \left( k_1 + 2k_2 +  3k_3 + k_4\right), \label{eq:runge_kutta} \\
@@ -63,31 +63,46 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs3}
 \noindent
 where $f_d(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics is time-invariant, that is $f(\cdot)$ does not depend directly on $t_k$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor $h_k$ outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$, in (\ref{eq:runge_kutta22})-(\ref{eq:runge_kutta2}). Discrete time instants $t_k$ are determined by random time intervals $h_k$, $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
 
-For the linear time-invariant case (LTI), the continuous state space representation is given by	
+For the linear time-invariant case (LTI), dynamic model of the sampled system is given by
 
 \begin{align}
-\dot{x}(t) &= Ax(t) + Bu(t) + w(t),   \label{eq:prob_LTI} \\ 
+\dot{x}(t) &= Ax(t) + Bu(t) + Gw(t),   \label{eq:prob_LTI} \\ 
 y(t_k) &= Cx(t_k) + v(t_k), \label{eq:prob_LTIobs}
 \end{align}
 
 \noindent
-where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$ and $C \in \mathbb{R}^{m\times n}$ are known matrices, $\rho(w(t)) = \mathcal{N}(0,Q)$ and $\rho(v(t_k)) = \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{n\times q}$ and $R \in \mathbb{R}^{m \times r}$. If input $u(t)$ is digitally generated at the same rate than observations are taken, and followed by a digital-to-analog converter, then it is piecewise constant. That is, $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
+where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$,  $G \in \mathbb{R}^{n\times q}$ and $C \in \mathbb{R}^{m\times n}$ are known matrices, $\rho(w(t)) = \mathcal{N}(0,Q)$ and $\rho(v(t_k)) = \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{q\times q}$ and $R \in \mathbb{R}^{r \times r}$. If input $u(t)$ is digitally generated at the same rate as observations are taken, and followed by a digital-to-analog converter, then it is piecewise constant. That is, $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
 
-\begin{align}
-x(t_{k+1}) &= A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + w(t_k), \label{eq:prob_process_d}\\
-y(t_k) &= C_\textrm{d} x(t_k) + v(t_k), \label{eq:prob_obs_d}
-\end{align}
+\begin{equation}
+x(t_{k+1}) = A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + w_\textrm{d}(t_k), \label{eq:prob_process_d}\\
+\end{equation}
 
 \noindent	
-where $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ are discrete time instants as in (\ref{eq:time_interval}), separated by random time intervals $h_k \in \mathbb{R}$ and $k \in \mathbb{N}$ is the discrete-time index. Process noise PDF is given by $\rho(w(t_k)) = \mathcal{N}(0,Q_\textrm{d})$ and subscript $\textrm{d}$ is short for \textit{discretized}. The matrices from the discrete-time representation are given by
+where $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ are discrete time instants as in (\ref{eq:time_interval}), separated by random time intervals $h_k \in \mathbb{R}$ and $k \in \mathbb{N}$ is the discrete-time index. The matrices from the discrete-time representation and the input noise $w_d(t_k)$ are given by
 
 \begin{align}
-A_\textrm{d} &= e^{A h_k}, \\
-B_\textrm{d} &= \left( \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}\delta \tau \right)B, \\
-C_\textrm{d} &= C, \\
-Q_\textrm{d} &= \int_{\tau=t_k}^{t_{k+1}}e^{A \tau}Qe^{A^T \tau}\delta \tau.
+A_\textrm{d} &= e^{A h_k}, \label{eq:Ad}\\
+B_\textrm{d} &= \left( \int_{\tau=0}^{h_k}e^{A \tau}\delta \tau \right)B, \label{eq:Bd} \\	
+w_\textrm{d}(t_k) &= \int_{\tau=0}^{h_k} e^{A(t_{k+1}-\tau)}Gdw(\tau) d\tau,
 \end{align}
 
+
+\noindent	
+If input noise $w(t)$ is zero-mean white Gaussian, then $w_d(t_k)$ will also be zero-mean white Gaussian \citep{Jazwinski1970}, with covariance $Q_{k}$ given by 
+
+\begin{equation}
+Q_{k} = \int_{\tau=0}^{h_k} e^{A\tau}GQG^Te^{A^T\tau}d\tau, \label{eq:q_k-exact}
+\end{equation}
+
+\noindent
+For state estimation purpose, we are interested in the calculation of (\ref{eq:q_k-exact}) at every time instant $t_k$, $k\in \mathbb{N}$, given that exact information about timestamp is available. Usually, for regularly sampled systems, discrete noise covariance is either modeled or tuned directly \citep{Wahlstrom2014}. However, if the system is sampled aperiodically, the dependency between covariance $Q_{k}$ and time interval $h_k$ must be taken into account. The calculation of (\ref{eq:q_k-exact}) is nontrivial and there are numerical methods available for computing the matrix exponential integral, at the expense of high computational costs \citep{Micheli2002}. In this study we simplify the problem, adopting a common practice in state estimation applications, that employs approximate discretization \citep{Axelsson2015}. Continuous-time noise is assumed to be piecewise constant in the interval $h_k$, that is $w(t)=w(t_k)$, for $t_k \leq t < t_{k+1}$. Then, (\ref{eq:prob_LTI}) is discretized by
+
+\begin{equation}
+x(t_{k+1}) = A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + G_\textrm{d}w_\textrm{d}(t_k), \label{eq:prob_process_d2}\\
+\end{equation}
+
+\noindent
+where $A_\textrm{d}$ and $B_\textrm{d}$ are given by (\ref{eq:Ad}) and (\ref{eq:Bd}) respectively, $G_\textrm{d}$ is calculated the same way as $B_\textrm{d}$, that is $G_\textrm{d} = \left( \int_{\tau=0}^{h_k}e^{A \tau}\delta \tau \right)G$ and $Q_{k}=h_kQ$.
 
 Note that, once again, even for the time-invariant case, the matrices from the discrete-time system depend on time intervals, thus will be time-variant if sampling is aperiodic.
 

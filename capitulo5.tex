@@ -196,8 +196,8 @@ Simulation parameters are set according to $\lambda = 500 \textrm{ Hz}$, $SNR_{\
 For the high-pass subsystem state $x_1$, it is hard to note a significant difference in the estimation performance. However, for the low-pass system state $x_4$, the degradation is visible for the algorithm that does not acknowledge time instants $t_k$ information in the estimation process, represented by the dashed blue lines.
 
 
-Figure~\ref{fig:LinearJevolution} presents a data window from 0 to 0.013 seconds of the accuracy index RMSE of state $x_2$, for the algorithms with and without time-stamp. As expected, when first observation arrives at $t_1$, RMSE results distance themselves, in favor of the algorithm that considers time-stamp. For the time period without observations, indexes of both algorithms evolve in a similar way. When measurements start to appear back again, we can notice further degradation in the performance when time-stamps are not considered, like in $t_3$ and $t_4$.
-
+Figure~\ref{fig:LinearJevolution} presents a data window from 0 to 0.013 seconds of the accuracy index RMSE of state $x_2$, for the algorithms with and without time-stamp. As expected, when first observation arrives at $t_1$, RMSE results distance themselves, in favor of the algorithm that considers time-stamp. The RMSE difference increases the next measurement arrives at $t_2$. For the time period without observations, indexes of both algorithms evolve in a similar way. 
+ 	
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Imagens/LinearJEvolution.eps}
@@ -222,9 +222,10 @@ Only the results of one state per mode are shown, namely $x_1$ and $x_4$, for si
 
 \begin{table}[!ht]
 	\centering
-	\setlength{\tabcolsep}{12pt}
+	\setlength{\tabcolsep}{12pt}	
 	\caption[Linear system simulation parameters for SNR variation]{Linear system simulation parameters for SNR variation}
 	\renewcommand{\arraystretch}{1.5}
+	\small
 	\begin{tabular}{c | c | c | c }
 		\toprule
 		Scenario & SNR (dB)	& $\lambda$ (Hz) & $\alpha$\\
@@ -489,13 +490,13 @@ In the next sections we perform Monte Carlo simulations, with 1000 runs per comb
 	\setlength{\tabcolsep}{12pt}
 	\caption[Nonlinear system simulation parameters for SNR variation]{Unicycle position estimation simulation parameters for observation SNR variation}
 	\renewcommand{\arraystretch}{1.5}
-
-	\begin{tabular}{c | c | c | c }
+	\small
+	\begin{tabular}{c | c | c | c}
 		\toprule
 		Scenario 		& SNR observations (dB)	& $\lambda$ (Hz) & $\alpha$ \\
 		\midrule
 		SNR variation 	& $[100, \ 80,\ 60,\ 40,\ 20,\ 10]$ &  $10$ & $2$  \\
-		$\lambda$ variation			$40$ & 	 $[10, \ 5,\ 0.33,\ 2.5,\ 2,\ 1.67]$ & $2$  \\
+		$\lambda$ variation		&	$40$ & 	 $[10, \ 5,\ 0.33,\ 2.5,\ 2,\ 1.67]$ & $2$  \\
 		$\alpha$ variation	&$40$ 				&  $10$ & $[10, \ 5,\ 2,\ 1]$  \\
 		\bottomrule
 	\end{tabular}
