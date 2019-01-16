@@ -95,7 +95,7 @@ Q_{k} = \int_{\tau=0}^{h_k} e^{A\tau}GQG^Te^{A^T\tau}d\tau, \label{eq:q_k-exact}
 \end{equation}
 
 \noindent
-For state estimation purpose, we are interested in the calculation of (\ref{eq:q_k-exact}) at every time instant $t_k$, $k\in \mathbb{N}$, given that exact information about timestamp is available. Usually, for regularly sampled systems, discrete noise covariance is either modeled or tuned directly \citep{Wahlstrom2014}. However, if the system is sampled aperiodically, the dependency between covariance $Q_{k}$ and time interval $h_k$ must be taken into account. The calculation of (\ref{eq:q_k-exact}) is nontrivial and there are numerical methods available for computing the matrix exponential integral, at the expense of high computational costs \citep{Micheli2002}. In this study we simplify the problem, adopting a common practice in state estimation applications, that employs approximate discretization \citep{Axelsson2015}. Continuous-time noise is assumed to be piecewise constant in the interval $h_k$, that is $w(t)=w(t_k)$, for $t_k \leq t < t_{k+1}$. Then, (\ref{eq:prob_LTI}) is discretized by
+For state estimation purpose, we are interested in the calculation of (\ref{eq:q_k-exact}) at every time instant $t_k$, $k\in \mathbb{N}$, given that exact information about timestamp is available. Usually, for regularly sampled systems, discrete noise covariance is either modeled or tuned directly \citep{Wahlstrom2014}. However, if the system is sampled aperiodically, the dependency between covariance $Q_{k}$ and time interval $h_k$ must be taken into account. The calculation of (\ref{eq:q_k-exact}) is nontrivial and there are numerical methods available for computing the matrix exponential integral, at the expense of high computational costs \citep{Micheli2002}. In this study we simplify the problem, adopting a common practice in state estimation applications, that employs approximate discretization \citep{Axelsson2015}. Continuous-time noise is assumed to be piecewise constant in the interval $h_k$, that is $w(t)\approx w(t_k)$, for $t_k \leq t < t_{k+1}$. Then, (\ref{eq:prob_LTI}) is discretized by
 
 \begin{equation}
 x(t_{k+1}) = A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + G_\textrm{d}w_\textrm{d}(t_k), \label{eq:prob_process_d2}\\
@@ -106,7 +106,7 @@ where $A_\textrm{d}$ and $B_\textrm{d}$ are given by (\ref{eq:Ad}) and (\ref{eq:
 
 Note that, once again, even for the time-invariant case, the matrices from the discrete-time system depend on time intervals, thus will be time-variant if sampling is aperiodic.
 
-Usually, the covariance matrices $Q$ and $R$ of the noise vectors, that represent the noise level, are better expressed  by a signal-to-noise ratio (SNR) quantity, which is a more directly related measure to how contaminated is a signal. It is basically a relation between the power level of the signal and of the noise, that is
+Usually, the covariance matrices $Q$ and $R$ of the noise vectors, that represent the noise level, are better expressed  by a signal-to-noise ratio (SNR) quantity, which relates more directly to how contaminated is a signal. It is basically a relation between the power level of the signal and of the noise, that is
 
 \begin{equation}
 SNR = \frac{P_{\textrm{signal}}}{P_{\textrm{noise}}},
