@@ -46,7 +46,7 @@ t_{k+1} &= t_k + h_k, \label{eq:time_interval}
 where $h_k \in \mathbb{R}$ is the variable step size, defined by random time intervals, and
 
 \begin{align}
-k_1 &= h_k f(t_k, \ x({t_k})), \label{eq:runge_kutta22}\\
+k_1 &= h_k f(t_k, \ x({t_k})), \label{eq:runge_kutta22}\\ 
 k_2 &= h_k f(t_k + \frac{h_k}{2}, \ x({t_k}) + \frac{k_1}{2}), \\
 k_3 &= h_k f(t_k + \frac{h_k}{2}, \ x({t_k}) + \frac{k_2}{2}), \\
 k_4 &= h_k f(t_k + h_k, \ x({t_k}) + k_3), \label{eq:runge_kutta2}
@@ -408,7 +408,7 @@ Now we combine the \textit{forecast steps} from (\ref{eq:prop_xk1}) and from (\r
 
 \begin{align}
 \rho(x_k|(y_1,...,y_{k-1})) &= \int_{\mathbb{R}^n}\rho(x_k|x_{k-1}) \rho(x_{k-1}|y_1,...,y_{k-1})dx_{k-1}, \label{eq:forecast}\\
-							&= \mathcal{N}(x_k; \ A_{k-1}\hat{x}_{k-1|k-1} + B_{k-1}u_{k-1}, \ A_{k-1}P^{xx}_{k-1|k-1}A{k-1}^T + G_{k-1}QG_{k-1}^T, \notag
+							&= \mathcal{N}(x_k; \ A_{k-1}\hat{x}_{k-1|k-1} + B_{k-1}u_{k-1}, \ A_{k-1}P^{xx}_{k-1|k-1}A{k-1}^T + G_{k-1}QG_{k-1}^T), \notag
 \end{align}
 
 \noindent
