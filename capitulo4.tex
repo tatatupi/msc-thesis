@@ -705,8 +705,8 @@ E\left[(x_k - \hat{x}_{k|k})(x_k - \hat{x}_{k|k})^T\right] &\triangleq E[\tilde{
 \end{align}
 
 \noindent
-where $\tilde{x}_{k|k}$ is the estimation error at time instant $k$. Condition (\ref{eq:consistency1}) is called \textit{unbiasedness} requirement, whereas (\ref{eq:consistency1}) refers to \textit{covariance matching}. For the nonlinear case, these conditions cannot be fully met, since the \textit{posterior} PDF is an approximation of a Gaussian density. Thus, the closer they are met, the more consistent are the filter results.
-
+where $\tilde{x}_{k|k}$ is the estimation error at time instant $k$. Condition (\ref{eq:consistency1}) is called \textit{unbiasedness} requirement, whereas (\ref{eq:consistency1}) refers to \textit{covariance matching}. For the nonlinear case, these conditions cannot be fully met, since the \textit{posterior} PDF is an approximation of a Gaussian density. Thus, the closer they are met, the more consistent are the filter estimates.
+%
 In this study we will use metrics that measure both consistency conditions. According to Bar-Shalom, in order to test them, the consistency criteria metrics for state estimation must certify: that state estimate errors are zero mean and compatible with the estimated state covariance; that innovations are also zero mean and compatible with their respective covariances; and that innovations are white. We will adopt two tests proposed by him that attests all conditions simultaneously, that is the normalized (state) estimation error squared (NEES) and normalized innovation squared (NIS) tests. We first defined NEES and NIS as
 
 
