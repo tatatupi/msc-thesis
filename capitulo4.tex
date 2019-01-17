@@ -697,7 +697,7 @@ Since the estimator is not aware of the measurement time instant, \textit{data a
 \section{Performance Metrics} \label{sec:metrics}
 
 In order to assess the performance degradation introduced by assimilating data at incorrect time instants, we need to define certain performance metrics for comparison. The algorithms described in Sections~\ref{sec:unscented-kalman-filter} and~\ref{sec:kalman-filter} estimate both the current state, $\hat{x}_{k|k}$ and its covariance matrix $\hat{P}^{xx}_{k|k}$. For the linear case, the \textit{posterior} conditional PDF 
-$\rho(x_{k}|(y_1,...,y_{k})$ is Gaussian, according to (\ref{eq:sol_xk1}), so it is fully characterized by its two first moments. Thus, if the filter is consistent, the following conditions shall be met \citep{Bar-Shalom2001}
+$\rho(x_{k}|(y_1,...,y_{k})$ is Gaussian, according to (\ref{eq:sol_xk1}), so it is fully characterized by its first two moments. Thus, if the filter is consistent, the following conditions shall be met \citep{Bar-Shalom2001}
 
 \begin{align}
 E\left[x_k - \hat{x}_{k|k}\right] &\triangleq E[\tilde{x}_{k|k}] = 0, \label{eq:consistency1} \\
