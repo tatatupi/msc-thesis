@@ -270,27 +270,11 @@ Only the results of one state per mode are shown, namely $x_1$ and $x_4$, for si
 %	\label{fig:linearNoise}
 %\end{figure}
 
-Results from the first column of Figure~\ref{fig:linear_sim} suggest that for higher SNR levels, that is when less noise is present in data, taking into account time-stamp information plays a more effective role. In terms of accuracy, the algorithm with time-stamp performed better at all levels, except for the high-pass system state $x_4$, at SNR of $10$ dB, for which confidence levels overlap a little. Nevertheless, it is interesting to note the trend of accuracy performance approximate between both algorithms, as noise levels increase. Consistency tests for the algorithm with time-stamp remains almost constant for all SNR values, whereas for the algorithm without time-stamp they start at higher levels, but decrease to values that do not differ statistically from both methods. This behavior for the algorithm without time-stamp can be explained due to the fact that for lower noise levels, the covariance of observations are overestimated. It does not take into account the additional noise tuned by the incorrect time instant when data is assimilated. For higher SNR, the additional noise become less significant, so results are not so overestimated.
+Results from the first column of Figure~\ref{fig:linear_sim} suggest that both agorithms with and without timestamp perform similarly for lower SNR in measurement and input data. When there is lower noise levels, there are apparent differences in estimation performance in favor of considering timestamp. 
 
-%\subsubsection{Changing only measurement noise}
-%
-%\begin{figure}[!htb]
-%	\centering
-%	\includegraphics[width=1\textwidth]{Imagens/noise_results_all.eps}
-%	\caption[Performance, as a function of observation SNR]{Performance, as a function of observation SNR.}
-%	\label{fig:ulinearSamp2}
-%\end{figure} 
-%
-%
-%
-%%	
-%%\begin{figure}[H]
-%%	\centering
-%%	\includegraphics[width=0.8\textwidth]{Imagens/linearNoise.eps}
-%%	\caption[entrada]{Root mean square error variation, as a function of measurement noise for both KF algorithms, considering and not considering time-stamp}
-%%	\label{fig:linearNoise}
-%%\end{figure} 
+There is a clear increasing trend for RMSE values of the algorithm considering timestamp, as expected, since state estimation with less noise in data should result in estimates closer to true values. As for consistency, considering time-stamp produces consistent estimates for all cases, with mean rates for NEES and NIS near the $5\%$ significance level.
 
+The same behavior cannot be observed for the method without timestamp. In fact, RMSE results reduce for higher noise levels in data. Such behavior can be explained by the fact that for higher SNR, the additional noise tuned by assimilating data at incorrect time instants plays a more important role in the degradation of the estimates. When SNR decreases, the relevance of the additional noise caused by lack of timestamp is reduced. Estimates are more consistent and with less error in such scenarios.
 
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-AC}
 
@@ -324,8 +308,9 @@ Results from the first column of Figure~\ref{fig:linear_sim} suggest that for hi
 %	\label{fig:linearSamp}
 %\end{figure}
 
-Variation of performance indices for $\lambda$ variation are shown in the second column of Figure~\ref{fig:linear_sim}. In this case, the higher the $\lambda$, the higher is the difference in algorithm performance, in favor of the one that considers time-stamp information. Smaller observation sampling rates $\lambda$ used for simulation reduced the accuracy performance difference of both algorithms. It also decreased the RMSE variability of the algorithm without time-stamp. It suggests that, the more sparse are the time intervals of observations, the bigger is the importance of correctly incorporating time instant information in the estimation process. That can be explained by the fact that in such cases, the approximation errors of $t_k$ are higher and so is the additional noise introduced by data assimilation performed at incorrect time instants. Consistency values, however, were not impacted by the different parameter combination of this scenario. Considering time-stamp always produced consistent estimates, whereas neglecting time-stamp information resulted in inconsistent estimates in all cases.
+Variation of performance indices for $\lambda$ variation are shown in the second column of Figure~\ref{fig:linear_sim}. RMSE results for the high-pass system have such a high variability that it is hard to take any conclusions on the behavior. Mean RMSE for the algorithm with timestamp is systematically slower, however, and RMSE values are quite small, specially in comparison to results from the low-pass system. Graph (e), on the other hand, showing RMSE for low-pass system state $x_4$, suggest that for smaller average frequencies of the aperiodic sampled observations, not considering the exact time they were taken degrades accuracy greatly. That is expected, since the approximation errors of $\tilde{y}_i \approx y(t_k)$ are higher for more sparse average time intervals $1/\lambda$ and so is the additional noise introduced by data assimilation performed at incorrect time instants. We can also observe a small degradation for the algorithm with timestamp, which can be explained by discretization errors, increased for larger time steps.
 
+Consistency performance results show that, for the parameter combinations simulated, not considering timestamp always underestimated errors, while the algorithm with timestamp achieved rejection rates consistently closer to $5\%$.  
 
 \subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-AC}
 
@@ -357,10 +342,12 @@ Variation of performance indices for $\lambda$ variation are shown in the second
 %	\label{fig:linearAlpha}
 %\end{figure}
 
-The last linear system case study results, that is variation of $\alpha$, are shown in the third column of Figure~\ref{fig:linear_sim}. For different values of $\alpha$, the performance of the algorithm with time-stamp remained almost constant for both for accuracy and consistency indices, suggesting that it does not depend on the relation between estimation and observation rates. On the other hand, results for the algorithm that does not consider time-stamp are better when regular estimation sampling rate is higher. That is, when input information is available at faster rates in comparison to the average sampling rate of observations, knowing the exact time instant $t_k$ becomes less important. It can be explained due to the reduction in time instant approximation errors, given by $\tilde{y}_i \approx y(t_k)$.
+Similarly to the variation of $\lambda$, changing values of $\alpha$ resulted in high variability in RMSE values for state $x_1$ with very small means. It is possible to observe an increasing trend of RMSE for the algorithm without timestamp, for smaller $\alpha$ values. The same trend is much more apparent in RMSE for low-pass system state $x_1$. On the other hand, state estimate errors for the algorithm with timestamp are small and apparently constant in all cases. It suggests that, the more sparse are the observation time intervals in comparison to the regular estimation time interval, that is the higher the $\alpha$, the more important it is assimilate data at the correct time instants $t_k$.
+
+Again, consistency test results showed underestimated errors for the algorithm without timestamp systematically, whereas considering timestamp produced much more consistent estimates. 
 
 
- \begin{figure}[!htb]
+ \begin{figure}[H]
 	\centering
 	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_x1_rmse.eps}} 
 	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_x1_rmse.eps}}  
@@ -374,7 +361,7 @@ The last linear system case study results, that is variation of $\alpha$, are sh
 	\subfigure[SNR variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearNoise_NIS.eps}} 
 	\subfigure[$\lambda$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearSamp_NIS.eps}}  
 	\subfigure[$\alpha$ variation]{\includegraphics[width=0.32\textwidth]{Imagens/linearAlpha_NIS.eps}} \\
-	\caption[Linear system estimation performance comparison]{Linear system estimation performance indices with $95\%$ confidence intervals, as a function of SNR (a,d,g,j), $\lambda$ (b,e,h,k) and $\alpha$ (c,f,i,l), for algorithms with (\textcolor{red}{---}) and without (\textcolor{blue}{---}) time-stamp. RMSE results are shown in the first ($x_1$) and second ($x_4$) rows. Consistency results are in third (NEES)) and fourth (NIS) rows. Horizontal gray dashed lines represent the $5\%$ significance level for the consistency tests.}
+	\caption[Linear system estimation performance comparison]{Linear system estimation mean performance indices with $95\%$ confidence intervals, as a function of SNR (a,d,g,j), $\lambda$ (b,e,h,k) and $\alpha$ (c,f,i,l), considering (\textcolor{red}{---}) and not considering (\textcolor{blue}{---}) time-stamp. RMSE results are shown in the first ($x_1$) and second ($x_4$) rows. Consistency results are in third (NEES)) and fourth (NIS) rows. Horizontal gray dashed lines represent the $5\%$ significance level for the consistency tests.}
 	\label{fig:linear_sim}
 \end{figure}
 
@@ -555,7 +542,10 @@ In the next sections we perform Monte Carlo simulations, with 1000 runs per comb
 %	\label{fig:robot_noise}
 %\end{figure}
 
-Results from the first column of Figure~\ref{fig:robot_sim} show the variation in performance indices for the different measurement SNR levels simulated. There is a significant difference in the size of the $95\%$ confidence interval for the results, indicating that the algorithm without time-stamp performs with a much higher variability in accuracy and consistency metrics. Such uncertainty in the performance metrics is by itself a drawback of neglecting time-stamp information. Additionally, results indicate that for lower noise levels, that is higher SNR, considering time-stamp results in significantly better performance, in both aspects of accuracy and consistency. When noise achieves higher levels, around $10$ dB, performance of both algorithms cannot be statistically distinguished. Similar to what happened in the linear system, it can be explained by the relation between signal noise and the additional noise tuned by the incorrect time instants. 
+Results from the first column of Figure~\ref{fig:robot_sim} show the variation in performance indices for the different measurement SNR levels simulated. Both algorithms have their estimate error increased, when measurement data is contaminated with higher noise levels, as expected. It is interesting to observe, however, that the mean values are clearly different when there is less noise, in favor of considering timestamp in the estimation process. As SNR is decreased to $20$ and $10$ dB, however, both RMSE have no statistical difference. It can be explained similarly to what was observed in the linear system. The higher the noise, the more relevant are the approximation errors of $\tilde{y}_i \approx y(t_k)$. When measurements are highly contaminated with noise, these approximation errors get irrelevant for the estimation process, and both algorithms perform similarly.
+
+Same behavior can be observed in the consistency tests results. Estimates are inconsistent for the algorithm without timestamp only for higher SNR. When noise levels increase, both algorithms have similar consistency results. Graph (g) shows an inconsistency in the estimation of the algorithm with timestamp, for $100$ db SNR. It is probably due to numerical errors caused by very small numbers for measurement covariances, when there is virtually no noise in data.
+ 
 
 \subsection{Average Sampling Rate Variation}\label{sec:lambda-robot}
 
@@ -587,7 +577,9 @@ Results from the first column of Figure~\ref{fig:robot_sim} show the variation i
 %	\label{fig:samp}
 %\end{figure}
 
-As for different $\lambda$ values, variation of indices is presented in the second column of Figure~\ref{fig:robot_sim}. Results show that performance degradation is more significant for more sparse time intervals, providing that dynamics and other parameters are kept constant. For higher  $\lambda$ rates, there are no statistical differences in performance. As average time interval grows, degradation increases and it starts to be apparent, reaching mean differences of $3.1$ cm for a $\lambda = 1.667$ Hz. One possible explanation derives from the fact if average sampling rate is considerably higher than system dynamics speed, then time instant $t_k$ approximations errors are reduced. In such cases, sensor noise might end up being much more relevant than the error tunned by assimilating data at incorrect instants.
+As for different $\lambda$ values, variation of indices is presented in the second column of Figure~\ref{fig:robot_sim}. RMSE results suggest a slightly higher performance degradation for more sparse time intervals, providing that dynamics and other parameters are kept constant. Estimate errors seem to increase faster for the algorithm without timestamp, due to higher approximation errors of $\tilde{y}(i) \approx y(t_k)$. Another source of accuracy deterioration is the discretization error, higher for more sparse time intervals.
+
+NEES and NIS test results suggest that both algorithms produce estimates with similar consistency levels. The reason why higher differences are not observed may derived from the use of UKF, that does not propagate error covariances, but construct them at every estimation step. 
 
 \subsection{Regular and Average Irregular Time Interval Relation Variation}\label{sec:alpha-robot}
 
@@ -620,8 +612,11 @@ As for different $\lambda$ values, variation of indices is presented in the seco
 %
 %	\label{fig:dtudty}
 %\end{figure}
-Finally, the last scenario results are shown in the third column of Figure~\ref{fig:robot_sim}. The same way as it happened for the linear system, indices variation suggest that when exact time instants $t_k$ are available, variations of $\alpha$ do not impact estimation performance. On the other hand, when time-stamp is not considered in the estimation process, the relation between time intervals of regular estimation and irregular measurement plays an important role in estimates accuracy. The higher is the regular estimation rate in comparison to measurement rate, smaller is the degradation. In fact, for $\alpha$ values of 10 and 5, performance are statistically indistinguishable. When the rates are the same, the position estimate error doubled for the algorithm that does not consider time stamp. Such phenomenon can be explained by the fact that higher $\alpha$ values lead to smaller time steps used in the process model discretization in comparison to the measurement time intervals. Thus, approximation error originated from $\tilde{y}(i) \approx y(t_k)$ is reduced.
+Finally, the last scenario results are shown in the third column of Figure~\ref{fig:robot_sim}. They suggest that estimation performance difference is only significant for higher $\alpha$ values. Both consistency and accuracy results are similar, when estimation is performed considering and not considering timestamp. 
 
+We observe that the results from the algorithm with timestamp remained approximately constant throughout all cases. It indicates that when exact time instants $t_k$ are available to the estimator, the ratio given by $\alpha$ has no impact in performance. If they are not available, however, estimate errors can be multiplied by 4, if $\alpha$ varies from $1$ to $10$. 
+
+%Such phenomenon can be explained by the fact that higher $\alpha$ values lead to smaller time steps used in the process model discretization in comparison to the measurement time intervals. Thus, approximation error originated from $\tilde{y}(i) \approx y(t_k)$ is reduced.
 
  \begin{figure}[!htb]
 	\centering
@@ -641,14 +636,13 @@ Finally, the last scenario results are shown in the third column of Figure~\ref{
 
 \section{Simulated Results Discussion}
 
-Two different system are simulated to address the effects of neglecting time-stamp in state estimation performance: a linear fourth order system, with two underdamped modes; and a nonlinear unicycle position system. We design three scenarios in which only one parameter of interest is varied, while the others are kept constant. That way, we can infer the contribution to performance variation to each of the parameter: SNR; $\lambda$; and $\alpha$.
+Two different system are simulated to address the effects of neglecting timestamp in state estimation performance: a linear fourth order system, with two underdamped modes; and a nonlinear unicycle position system. We design three scenarios in which only one parameter of interest is changed per scenario, while the others are kept constant. That way, we can infer the contribution to performance variation to each of the parameter: SNR; $\lambda$; and $\alpha$.
 
-For both systems, performance metrics obtained by neglecting time-stamp had a higher variability in most of the simulations, indicating that estimate accuracy and consistency are less reliable if incorrect time instants are used in estimation. For the nonlinear system, such variability made results comparison more difficult, since statistically significant differences are not apparent.
+For both systems, performance metrics obtained by neglecting time-stamp had a higher variability in most of the simulations, which is by itself a drawback of not considering timestamp. It indicates that that estimate accuracy and consistency are less reliable in such cases. 
 
-The average performance metrics for the algorithm considering time-stamp were always higher or equal to the metrics from the algorithm without time-stamp, as expected. Accuracy performance for SNR variation suggested that for lower noise levels, the difference of considering or neglecting time-stamp is much more significant. As noise levels increase, performance for both algorithms tend to approximate. In the nonlinear simulation, RMSE for the highest noise level simulated were statistically indistinguishable. When the average sampling rate of observations $\lambda$ and the relation between them and the regular sampling rate $\alpha$ were altered, the algorithm that considers time-stamp maintained its performance metrics almost constant, specially for consistency tests, as it was expected. Results for the algorithm neglecting time-stamp did not provide many insights, since average values varied little, specially considering their confidence interval.
- 
+The average performance metrics for the algorithm considering time-stamp were always higher or equal to the metrics from the algorithm without time-stamp, as expected. Accuracy performance for SNR variation suggested that for lower noise levels or higher SNR, the relevancy of considering or neglecting time-stamp is much higher. As noise levels increase, performance for both algorithms tend to approximate. In both cases, the lowest SNR simulated produced RMSE results that are statistically indistinguishable. 
 
-
+For different $\lambda$ values, the algorithm that considers time-stamp maintained its performance metrics almost constant, specially for consistency tests, as it was expected. Results from the algorithm without timestamp indicates that more sparse observation time intervals deteriorate estimation performance, due to higher approximation errors. This deterioration is less significant for systems with faster dynamics, such is the case of the high-pass system, whose state estimate errors were similar for both algorithms, for different $\lambda$ values.
 
 
 %\subsection{Average Time Delay}\label{sec:dt-robot}
