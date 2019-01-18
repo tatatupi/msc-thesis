@@ -24,7 +24,9 @@ In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the
 
 \section{Discrete-Time Representation of Sampled-Data Systems}\label{sec:discretization}
 
-State estimation methods introduced in this chapter are implementation for the discrete-time case. Therefore, the system described in Section \ref{sec:problem_form} needs to be formulated as a discrete-time model. First, we reproduce the stochastic nonlinear sampled system models as follows
+State estimation for nonlinear sampled-data systems can be performed using the continuous-time process model and the discrete-time observation model. The state-estimate propagation is performed using numerical integration over the time interval defined by the arrivals of two consecutive measurements. The work of \citep{Teixeira20082} compares two of those methods, the sampled-data extended Kalman Filter (SDEKF) and the sampled-data unscented Kalman Filter (SDUKF) to estimate the trajectory of a satellite.
+
+To avoid computational complexity of the numerical integrations, discretization of the process model is widely used in state estimation applications \citep{Aguirre2005}, which motivates the use of discrete-time methods in this study. Thus the system described in Section \ref{sec:problem_form} needs to be formulated as a discrete-time model. First, we reproduce the stochastic nonlinear sampled system models as follows
 
 
 \begin{align}
@@ -35,7 +37,7 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs2}
 \noindent
 where $f\!\!: \mathbb{R}^n \times \mathbb{R}^p \times \mathbb{R}^q \times \mathbb{R^+} \rightarrow \mathbb{R}^n $ and $g\!\!: \mathbb{R}^n \times \mathbb{R}^r \times \mathbb{R^+} \rightarrow \mathbb{R}^m $ are, respectively, the process and observation models, $k \in \mathbb{N}$ is the discrete-time index, $t_k$ represents the irregular time instants, $x(t) \in \mathbb{R}^n$ the state vector,  $u(t) \in \mathbb{R}^p$ is the input vector and $w(t) \in \mathbb{R}^q$ is the process noise vector, all at continuous-time $t$, $y(t_k) \in \mathbb{R}^m$ represents the irregularly sampled measurement sequence and $v(t_k) \in \mathbb{R}^r$ the corresponding measurement noise vector. Initial condition $x_0$ is assumed to be known.
 
-A continuous-time system dynamics defined by (\ref{eq:prob_process2}) can be discretized, by replacing the differentiation by differencing, via numerical methods. For this study we use the fourth order Runge-Kutta method~\citep{Suli2003}, given by
+The continuous-time system dynamics defined by (\ref{eq:prob_process2}) is discretized replacing the differentiation by differencing, via numerical methods. For this study we use the fourth order Runge-Kutta method~\citep{Suli2003}, given by
 
 \begin{align}
 x(t_{k+1})&= x({t_k}) + \frac{1}{6} \left( k_1 + 2k_2 +  3k_3 + k_4\right), \label{eq:runge_kutta} \\
@@ -56,12 +58,12 @@ k_4 &= h_k f(t_k + h_k, \ x({t_k}) + k_3), \label{eq:runge_kutta2}
 where $f(x(t), u(t), w(t), t)$ was reduce to $f(x(t), t)$ for simplicity, since the numerical approximation depends only on the vector state itself and the time intervals. Input $u(t)$ is considered to be constant during the time step and $w(t)$ represents unknown noise. Therefore, the discrete-time representation for the nonlinear sampled system becomes
 
 \begin{align}
-x(t_{k+1}) &= f_d(x(t_k), u(t_k), w(t_k), t_k),   \label{eq:prob_process3} \\ 
+x(t_{k+1}) &= f_\textrm{d}(x(t_k), u(t_k), w(t_k), t_k),   \label{eq:prob_process3} \\ 
 y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs3}
 \end{align}
 
 \noindent
-where $f_d(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics is time-invariant, that is $f(\cdot)$ does not depend directly on $t_k$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor $h_k$ outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$, in (\ref{eq:runge_kutta22})-(\ref{eq:runge_kutta2}). Discrete time instants $t_k$ are determined by random time intervals $h_k$, $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
+where $f_\textrm{d}(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics given by (\ref{eq:prob_process2}) is time-invariant, that is if $f(\cdot)$ does not depend directly on $t$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor $h_k$ outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$, in (\ref{eq:runge_kutta22})-(\ref{eq:runge_kutta2}). Discrete time instants $t_k$ are determined by random time intervals $h_k$, that is $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
 
 For the linear time-invariant case (LTI), dynamic model of the sampled system is given by
 
@@ -71,7 +73,7 @@ y(t_k) &= Cx(t_k) + v(t_k), \label{eq:prob_LTIobs}
 \end{align}
 
 \noindent
-where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$,  $G \in \mathbb{R}^{n\times q}$ and $C \in \mathbb{R}^{m\times n}$ are known matrices, $\rho(w(t)) = \mathcal{N}(0,Q)$ and $\rho(v(t_k)) = \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{q\times q}$ and $R \in \mathbb{R}^{r \times r}$. If input $u(t)$ is digitally generated at the same rate as observations are taken, and followed by a digital-to-analog converter, then it is piecewise constant. That is, $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
+where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$,  $G \in \mathbb{R}^{n\times q}$ and $C \in \mathbb{R}^{m\times n}$ are known matrices, $\rho(w(t)) = \mathcal{N}(0,Q)$ and $\rho(v(t_k)) = \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{q\times q}$ and $R \in \mathbb{R}^{r \times r}$. If input $u(t)$ is digitally generated at the same rate as observations are taken, and followed by a digital-to-analog converter, then it is piecewise constant. In other words $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
 
 \begin{equation}
 x(t_{k+1}) = A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + w_\textrm{d}(t_k), \label{eq:prob_process_d}\\
@@ -83,12 +85,39 @@ where $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ are discrete time instants as in (
 \begin{align}
 A_\textrm{d} &= e^{A h_k}, \label{eq:Ad}\\
 B_\textrm{d} &= \left( \int_{\tau=0}^{h_k}e^{A \tau}\delta \tau \right)B, \label{eq:Bd} \\	
-w_\textrm{d}(t_k) &= \int_{\tau=0}^{h_k} e^{A(t_{k+1}-\tau)}Gdw(\tau) d\tau,
+w_\textrm{d}(t_k) &= \int_{\tau=0}^{h_k} e^{A(t_{k+1}-\tau)}Gdw(\tau) d\tau, \label{eq:wd}.
 \end{align}
 
+\noindent
+Computation of $A_d$, given by the matrix exponential (\ref{eq:Ad}), can be solved by expansion in Taylor series
 
-\noindent	
-If input noise $w(t)$ is zero-mean white Gaussian, then $w_d(t_k)$ will also be zero-mean white Gaussian \citep{Jazwinski1970}, with covariance $Q_{k}$ given by 
+\begin{equation}
+e^{A h_k} = I + h_kA+\frac{h_k^2A^2}{2!} + \ ... \ + \frac{h_k^nA^n}{n!} + \ ... \ = \sum_{i=0}^{\infty}\frac{h_k^iA^i}{i!}. \label{eq:disc_taylor}
+\end{equation}
+
+\noindent
+By truncating (\ref{eq:disc_taylor}) at some point, $A_d$ can be approximated by matrix multiplications and additions. Taylor series can also be used to compute $B_d$. The integral factor of (\ref{eq:Bd}) can be expanded as
+
+\begin{align}
+\int_{\tau=0}^{h_k}e^{A \tau}\delta \tau &= \int_{\tau=0}^{h_k} \left( I + \tau A+\frac{\tau^2A^2}{2!} + \ ... \right) d\tau, \notag \\
+&= h_kI + \frac{h_k^2A}{2!}+\frac{h_k^3A^2}{3!}+ \ ..., \label{eq:Bd_1}
+\end{align}
+
+\noindent
+If $A$ is nonsingular, the series can be written as
+
+\begin{align}
+\int_{\tau=0}^{h_k}e^{A \tau}\delta \tau &= A^{-1} \left(Ah_kI + \frac{h_k^2A^2}{2!}+\frac{h_k^3A^3}{3!}+ \ ... \ + I - I \right), \notag \\
+&=	A^{-1}\left( e^{A_k} - I\right). \label{eq:Bd_2}
+\end{align}
+
+\noindent Thus uniting (\ref{eq:Bd}) and (\ref{eq:Bd_2}), $B_d$ becomes
+
+\begin{equation}
+B_d = A^{-1} \left(A_d - I)B\right).
+\end{equation}
+
+If input noise $w(t)$ from (\ref{eq:prob_LTI}) is zero-mean white Gaussian, then $w_d(t_k)$ given by (\ref{eq:wd}) will also be zero-mean white Gaussian \citep{Jazwinski1970}, with covariance $Q_{k}$ given by 
 
 \begin{equation}
 Q_{k} = \int_{\tau=0}^{h_k} e^{A\tau}GQG^Te^{A^T\tau}d\tau, \label{eq:q_k-exact}
@@ -282,7 +311,11 @@ where
 \mu_{\textrm{fused}}(y_k) \triangleq \hat{x}_{\textrm{posterior}}(y_k)	 &= 
 \frac{\hat{\sigma}_{\textrm{e}}^2}{\hat{\sigma}_{\textrm{p}}^2 + \hat{\sigma}_{\textrm{e}}^2} \hat{x}_{\textrm{p}} + 
 \frac{\hat{\sigma}_{\textrm{p}}^2}{\hat{\sigma}_{\textrm{e}}^2 + \hat{\sigma}_{\textrm{p}}^2} y_k \notag \\
-& = \hat{x}_{\textrm{p}} + \frac{\hat{\sigma}_{\textrm{p}}^2}{\hat{\sigma}_{\textrm{e}}^2 + \hat{\sigma}_{\textrm{p}}^2} (y_k -  \hat{x}_{\textrm{p}}), \label{eq:product_mean}\\ \notag \\
+& = \hat{x}_{\textrm{p}} + \frac{\hat{\sigma}_{\textrm{p}}^2}{\hat{\sigma}_{\textrm{e}}^2 + \hat{\sigma}_{\textrm{p}}^2} (y_k -  \hat{x}_{\textrm{p}}), \label{eq:product_mean}
+\end{align}
+\noindent and
+
+\begin{align}
 \hat{\sigma}_{\textrm{fused}} \triangleq \hat{\sigma}_{\textrm{posterior}} &= \frac{\hat{\sigma}_{\textrm{p}}^2 \hat{\sigma}_{\textrm{e}}^2}{\hat{\sigma}_{\textrm{p}}^2+ \hat{\sigma}_{\textrm{e}}^2} \notag \\
 &= \hat{\sigma}_{\textrm{p}}^2 - \frac{\hat{\sigma}_{\textrm{p}}^2}{\hat{\sigma}_{\textrm{e}}^2 + \hat{\sigma}_{\textrm{p}}^2}\hat{\sigma}_{\textrm{p}}^2. \label{eq:product_std} 
 \end{align}
