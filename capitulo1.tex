@@ -41,7 +41,7 @@ Consider the stochastic nonlinear sampled system
 
 \begin{align}
 \dot{x}(t) &= f(x(t), u(t), w(t), t),   \label{eq:prob_process} \\ 
-y(t_k) &= g(x(t_k- \delta_{k}) ,v(t_k), t_k), \label{eq:prob_obs}
+y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs}
 \end{align}
 
 \noindent
@@ -71,7 +71,7 @@ Observations are taken at random time instants $t_k$ and are considered to be so
 
 When time-stamp information is available, data assimilation can be performed at the correct measurement instants $t_k$. When they are not, the assimilation moment is considered to be the random receipt time instant or the next estimation moment.
 
-We wish to estimate the state vector $x(t)$ and its covariance recursively, at regularly spaced time intervals $T$, given their initial values $x_0$ and $P_0$, the process (\ref{eq:prob_process})  and observation (\ref{eq:prob_obs}) models, the input or control signals, $u(iT): iT \leq kT$, and the set of past observations, $y(t_k): t_k - \delta_{k} \leq kT$. The knowledge of the time intervals $h_{k-1}: t_k - \delta_{k} \leq kT$ is also taken into consideration when time-stamp information is available. We assume that the average time interval of observations $1/\lambda$ is greater than or equal to $T$ by a factor $\alpha\geq1$, such that $1/\lambda=\alpha T$.
+We wish to estimate the state vector $x(t)$ and its covariance recursively, at regularly spaced time intervals $T$, given their initial values $x_0$ and $P_0$, the process (\ref{eq:prob_process})  and observation (\ref{eq:prob_obs}) models, the input or control signals, $u(iT): iT \leq kT$, and the set of past observations, $y(t_k): t_k  \leq kT$. The knowledge of the time intervals $h_{k-1}: t_k \leq kT$ is also taken into consideration when time-stamp information is available. We assume that the average time interval of observations $1/\lambda$ is greater than or equal to $T$ by a factor $\alpha\geq1$, such that $1/\lambda=\alpha T$.
 
 \section{Objectives}\label{objectives}
 
