@@ -834,7 +834,7 @@ where $f^*_\textrm{d}(\cdot)$ represents the time-invariant discrete-tmie mode a
 
 Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In other words, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $y_i$ is the measurement taken at the instant $t_k$, assimilated at time instant $iT$, for $(i-1)T < t_k \leq iT$ and $t_k$ being the instant of the most recent measurement in the interval $[(i-1)T, iT]$. Thus there are only two possible estimation scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is at least one observation, a complete estimation with \textit{forecast} and \textit{data assimilation} steps is performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
 
-As an example, consider the LTI system, represented by the following transfer function
+\begin{example} Consider the LTI system, represented by the following transfer function
 
 \begin{equation}
 G(s) = \frac{100}{s^2 + 2s + 100}, \label{eq:Gs_tf}
@@ -880,7 +880,7 @@ Now we simulate the aperiodic sampling of the output $y(t)$ as a Poisson process
 	\label{fig:Gs_sampling}
 \end{figure}
 
-For such an example, considering an input signal sampled at a frequency of $f=100$ Hz, the random measurement time instants of the algorithm without timestamp are approximated to the next instant multiple of $T=0.001$ s. An illustration of such process is presented in Figure~\ref{fig:Gs_sampling_diff}. This approximation process leads to two sources of degradation. First, some information will be lost, if there are more than one observations in the interval $[iT, (i+1)T]$ $\forall i \in \mathbb{N}$. The second one is related to the measurement error of shifting time instants. A more detailed analysis of the latter effect is discussed in the next section.
+For such an example, considering an input signal sampled at a frequency of $f=100$ Hz, the random measurement time instants of the algorithm without timestamp are approximated to the next instant multiple of $T=0.001$ s. An illustration of such process is presented in Figure~\ref{fig:Gs_sampling_diff}. 
 
 \begin{figure}[!htb]
 	\centering
@@ -889,34 +889,8 @@ For such an example, considering an input signal sampled at a frequency of $f=10
 	\label{fig:Gs_sampling_diff}
 \end{figure}
 
-
-\section{Error Effects of Shifting Measurements Time Instants}
-
-There are interesting aspects of the error that is added by neglecting timestamp information and approximating the measurement time instant to the next multiple of the regular time interval $T$. In Figure~\ref{fig:Gs_sampling} we observe how the error has always the same signal as the derivative of the output evaluated at the time measurement is taken. In Figure~\ref{fig:Gs_error} we present the time series of such error overlapping the output. Additionally, the magnitude of the error is proportional to the magnitude of the derivative. 
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/Gs_error.eps}
-	\caption[Added error of shifting measurements time instants]{Added error time series (orange) as an effect of shifting time instants of the measurements (red) and output (blue). A gray dotted horizontal line is placed at the origin, for reference.}
-	\label{fig:Gs_error}
-\end{figure}
-
-We simulate new data, considering a much faster rate parameter of the Poisson process that generates the aperiodic sampling time instants, $\lambda=2$ kHz. The derivative of the signal is calculated, by multiplying $G(s)$ (\ref{eq:Gs_tf}) by $s$ and simulating the output of the resulting system for the same input sequence. The original output, its derivative and the error time series are shown in Figure~\ref{fig:Gs_error_deriv}. We can see that the error values are directly proportional to the signal derivative. Therefore, one conclusion we can draw is that the error cannot be modeled as a white Gaussian noise, since it has strong correlation with consecutive points. In fact, from the quantile-quantile plot shown in  of the errors shows a strong deviation from the quantiles of the theoretical normal distribution.
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/Gs_error_deriv.eps}
-	\caption[Added error of shifting measurements time instants]{Added error time series (orange) as an effect of shifting time instants of the measurements (red) and output (blue). A gray dotted horizontal line is placed at the origin, for reference.}
-	\label{fig:Gs_error_deriv}
-\end{figure}
-
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.75\textwidth]{Imagens/Gs_qq.eps}
-	\caption[QQ-plot of the measurement error]{QQ-plot of the measurement error. Red line represents the expected quantiles of the standard normal distribution and the blue crosses, the error data quantiles.}
-	\label{fig:Gs_qq}
-\end{figure}
+\end{example}
+This approximation process leads to two sources of degradation. First, some information will be lost, if there are more than one observations in the interval $[iT, (i+1)T]$ $\forall i \in \mathbb{N}$. The second one is related to the measurement error of shifting time instants. A more detailed analysis of the latter effect is discussed in the Section~\ref{sec:error_shift}.
 
 \section{Performance Metrics} \label{sec:metrics}
 

@@ -22,12 +22,46 @@
 %\usepackage{dsfont}%barra escura para conjuntos
 \usepackage{amsthm}
 \theoremstyle{definition}
-\newtheorem{defi}{Definition}[section]
-\newtheorem{propo}{Proposition}[section]
-\newtheorem{coro}{Corollary}[section]
-\newtheorem{prop}{Property}[section]
-\newtheorem{lema}{Lemma}[section]
-\newtheorem{algo}{Algorithm}[section]
+
+\newtheorem{defi/}{Definition}[section]
+\newtheorem{propo/}{Proposition}[section]
+\newtheorem{coro/}{Corollary}[section]
+\newtheorem{prop/}{Property}[section]
+\newtheorem{lema/}{Lemma}[section]
+
+\newenvironment{lema}
+{\renewcommand{\qedsymbol}{$\square$}%
+	\pushQED{\qed}\begin{lema/}}
+	{\popQED\end{lema/}}
+
+
+\newenvironment{propo}
+{\renewcommand{\qedsymbol}{$\square$}%
+	\pushQED{\qed}\begin{propo/}}
+	{\popQED\end{propo/}}
+
+\newenvironment{prop}
+{\renewcommand{\qedsymbol}{$\square$}%
+	\pushQED{\qed}\begin{prop/}}
+	{\popQED\end{prop/}}
+
+\newtheorem{algo/}{Algorithm}[section]
+
+\newenvironment{algo}
+{\renewcommand{\qedsymbol}{$\square$}%
+	\pushQED{\qed}\begin{algo/}}
+	{\popQED\end{algo/}}
+
+
+\newtheorem{example/}{Example}[section]
+
+\newenvironment{example}
+{\renewcommand{\qedsymbol}{$\square$}%
+	\pushQED{\qed}\begin{example/}}
+	{\popQED\end{example/}}
+
+
+
 %\newtheorem{proof}{Proof}[sect/ion]
 %\usepackage[dvips]{graphicx}
 %\thispagestyle{empty}
