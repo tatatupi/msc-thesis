@@ -758,7 +758,7 @@ If we define $\lambda=N/T$, with a known time interval $T$ and a sufficiently bi
 %Nas próximas subseções é apresentado como os algoritmos de estimação tratam os cenários \textbf{A}, \textbf{B} e \textbf{C} para os casos em que o carimbo de tempo está e não está disponível.
 %
 
-\subsection{With Timestamp}\label{sec:carimbo}
+\subsection{State Estimation With Timestamp}\label{sec:carimbo}
 
 If the estimator knows the exact time $t_k$ that measurements were taken in a global timescale, \textit{data assimilation} steps can be performed at the correct time instants. For that, the process model discretization given by (\ref{eq:prob_process3}) is performed considering variable time intervals $\delta t_j^*$, yielding
 
@@ -768,6 +768,9 @@ x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 
 \noindent
 where $t^*_j$, $\forall j \in \mathbb{N}$ represents the estimation time sequence and is given by $t^*_j= t^*_{j-1} + \delta t^*_j$, with $t^*_0=0$. The variable time interval $\delta t^*_j$ is calculated according the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
+
+To analyze 
+
 
 \begin{figure}[!htb]
 	\centering
@@ -816,10 +819,10 @@ Since there are two signal types, input and observation, there are four possible
 
 For the \textit{online} estimator, the differential equations are numerically integrated as input or measurement signals arrive. In these instants, the corresponding time interval $\delta t^*_j$ is calculated. If the current signal transmits input data, only the \textit{forecast} step is executed. If it is observation data being received, both \textit{forecast} and \textit{data assimilation} steps are performed, considering a ZOH for the input data. 
 
+\subsection{State Estimation Without Timestamp}
 
-\subsection{Without Timestamp}
-
-On the other hand, in case there is no information about time-stamp, process model (\ref{eq:prob_process}) is discretized according to
+For some applications, discretization at variable time intervals may be difficult to accomplish. Or measurements may be transmitted in a centralized manner at regular time intervals, even though they were taken aperiodically.
+In such cases it is impossible to consider the time-stamp information in the estimation process. Thus process model (\ref{eq:prob_process}) is discretized according to
 
 
 \begin{equation}\label{eq:disc_semcarimbo}
@@ -829,8 +832,91 @@ x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
 \noindent
 where $f^*_\textrm{d}(\cdot)$ represents the time-invariant discrete-tmie mode and $n=nT$, $\forall n \in \mathbb{N}$.
 
-Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In such cases, there are only two possible scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is observation, full \textit{forecast} and \textit{data assimilation} steps are performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
+Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In other words, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $y_i$ is the measurement taken at the instant $t_k$, assimilated at time instant $iT$, for $(i-1)T < t_k \leq iT$ and $t_k$ being the instant of the most recent measurement in the interval $[(i-1)T, iT]$. Thus there are only two possible estimation scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is at least one observation, a complete estimation with \textit{forecast} and \textit{data assimilation} steps is performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
 
+As an example, consider the LTI system, represented by the following transfer function
+
+\begin{equation}
+G(s) = \frac{100}{s^2 + 2s + 100}, \label{eq:Gs_tf}
+\end{equation}
+
+\noindent
+whose continuous-time state space model can be represented by
+
+\begin{align}           %start alignment between state and observation equation 
+%State Equation
+%\begin{split}           %split the observation equation in two so it fits on the page
+\dot{x}(t)
+&=                    %This & is to align the state and observation equation
+\begin{bmatrix}
+-2&-12.5\\
+8&0
+\end{bmatrix}
+x(t) + 
+\begin{bmatrix}
+4\\
+0
+\end{bmatrix}u(t),  \\ %split here
+y(t) &= \left[0 \quad 3.125\right]x(t). \label{eq:Gs_obs}
+\end{align}
+
+\noindent
+A pseudo-random binary sequence (PRBS) with $200$ samples is generated and oversampled by a factor of $100$, resulting in $2\times 10^4$ samples over 2 seconds, and the simulations results are shown in Figure~\ref{fig:Gs}. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Imagens/Gs.eps}
+	\caption[Linear simulation results for G(s)]{Linear simulation results for G(s) in blue, considering the PRBS input in grey.}
+	\label{fig:Gs}
+\end{figure}
+
+Now we simulate the aperiodic sampling of the output $y(t)$ as a Poisson process with rate $\lambda=100$ Hz and compare it to the regular sampling with frequency $f=100$ Hz. Figure~\ref{fig:Gs_sampling} presents the comparison.
+
+\begin{figure}[!htb]
+	\centering
+	\subfigure[]{\includegraphics[width=0.75\textwidth]{Imagens/Gs_sampling.eps}} \\
+	\subfigure[]{\includegraphics[width=0.75\textwidth]{Imagens/Gs_sampling2.eps}}  
+	\caption[Periodic and aperiodic sampling of an LTI output]{Periodic (a) and aperiodic (b) sampling of the output variable of G(s). Aperiodic sampling instants sequence generated by a Poisson process with intensity $\lambda=100$ Hz.}
+	\label{fig:Gs_sampling}
+\end{figure}
+
+For such an example, considering an input signal sampled at a frequency of $f=100$ Hz, the random measurement time instants of the algorithm without timestamp are approximated to the next instant multiple of $T=0.001$ s. An illustration of such process is presented in Figure~\ref{fig:Gs_sampling_diff}. This approximation process leads to two sources of degradation. First, some information will be lost, if there are more than one observations in the interval $[iT, (i+1)T]$ $\forall i \in \mathbb{N}$. The second one is related to the measurement error of shifting time instants. A more detailed analysis of the latter effect is discussed in the next section.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/Gs_sampling_diff.eps}
+	\caption[Effect of approximating the random time instants of the aperiodic sampling.]{Effect of approximating the random time instants of the aperiodic sampling. Black dots are the true measurements and the red dots are the measurements shifted to the next multiple of $T=0.001$.}
+	\label{fig:Gs_sampling_diff}
+\end{figure}
+
+
+\section{Error Effects of Shifting Measurements Time Instants}
+
+There are interesting aspects of the error that is added by neglecting timestamp information and approximating the measurement time instant to the next multiple of the regular time interval $T$. In Figure~\ref{fig:Gs_sampling} we observe how the error has always the same signal as the derivative of the output evaluated at the time measurement is taken. In Figure~\ref{fig:Gs_error} we present the time series of such error overlapping the output. Additionally, the magnitude of the error is proportional to the magnitude of the derivative. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/Gs_error.eps}
+	\caption[Added error of shifting measurements time instants]{Added error time series (orange) as an effect of shifting time instants of the measurements (red) and output (blue). A gray dotted horizontal line is placed at the origin, for reference.}
+	\label{fig:Gs_error}
+\end{figure}
+
+We simulate new data, considering a much faster rate parameter of the Poisson process that generates the aperiodic sampling time instants, $\lambda=2$ kHz. The derivative of the signal is calculated, by multiplying $G(s)$ (\ref{eq:Gs_tf}) by $s$ and simulating the output of the resulting system for the same input sequence. The original output, its derivative and the error time series are shown in Figure~\ref{fig:Gs_error_deriv}. We can see that the error values are directly proportional to the signal derivative. Therefore, one conclusion we can draw is that the error cannot be modeled as a white Gaussian noise, since it has strong correlation with consecutive points. In fact, from the quantile-quantile plot shown in  of the errors shows a strong deviation from the quantiles of the theoretical normal distribution.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/Gs_error_deriv.eps}
+	\caption[Added error of shifting measurements time instants]{Added error time series (orange) as an effect of shifting time instants of the measurements (red) and output (blue). A gray dotted horizontal line is placed at the origin, for reference.}
+	\label{fig:Gs_error_deriv}
+\end{figure}
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Imagens/Gs_qq.eps}
+	\caption[QQ-plot of the measurement error]{QQ-plot of the measurement error. Red line represents the expected quantiles of the standard normal distribution and the blue crosses, the error data quantiles.}
+	\label{fig:Gs_qq}
+\end{figure}
 
 \section{Performance Metrics} \label{sec:metrics}
 
