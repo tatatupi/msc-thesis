@@ -19,14 +19,14 @@
 %
 %
 
-In this chapter, the field of sensor fusion under irregular sampling is resumed to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin by describing the discrete-time representation for sampled-data systems. Then we review the adopted state estimation algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
-In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct time-stamp is available to the estimator and when it is not. We end with a description of the performance criteria used for assessment of the results, designed to quantify estimation accuracy and consistency.
+In this chapter, the field of sensor fusion under irregular sampling is reduced to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin by describing the discrete-time representation for sampled-data systems. Then we review the adopted state estimation algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
+In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct timestamp is available to the estimator and when it is not. We end with a description of the performance criteria used for assessment of the results, designed to quantify estimation accuracy and consistency.
 
 \section{Discrete-Time Representation of Sampled-Data Systems}\label{sec:discretization}
 
 State estimation for nonlinear sampled-data systems can be performed using the continuous-time process model and the discrete-time observation model. The state-estimate propagation is performed using numerical integration over the time interval defined by the arrivals of two consecutive measurements. The work of \citep{Teixeira20082} compares two of those methods, the sampled-data extended Kalman Filter (SDEKF) and the sampled-data unscented Kalman Filter (SDUKF) to estimate the trajectory of a satellite.
 
-To avoid computational complexity of the numerical integrations, discretization of the process model is widely used in state estimation applications \citep{Aguirre2005}, which motivates the use of discrete-time methods in this study. Thus the system described in Section \ref{sec:problem_form} needs to be formulated as a discrete-time model. First, we reproduce the stochastic nonlinear sampled system models as follows
+To avoid computational complexity of the numerical integrations, discretization of the process model is widely used in state estimation applications \citep{Aguirre2005}, which motivates the use of discrete-time methods in this study. Thus the system described in Section \ref{sec:problem_form} is formulated as a discrete-time model. First, we reproduce the stochastic nonlinear sampled system models as follows
 
 
 \begin{align}
@@ -296,7 +296,7 @@ and from the multiplication of (\ref{eq:prior}) and (\ref{eq:likelihood}) we hav
 \end{align}
 
 \noindent
-whose quadratic terms can be expanded and, apart from a constant term that will be handled by the normalization factor discarded in \ref{eq:map_estimation}, is rearranged into
+whose quadratic terms can be expanded and, apart from a constant term that will be handled by the normalization factor discarded in (\ref{eq:map_estimation}), is rearranged into
 
 \begin{align}
 \mathcal{N}(y_k|x_k,\hat{\sigma}_{\textrm{e}}) \mathcal{N}(x_k|\hat{x}_{\textrm{p}},\hat{\sigma}_{\textrm{p}}) &=  
@@ -564,7 +564,7 @@ Consider a nonlinear transformation of two random variables $y$ and $x$
 	P^{xy} 	&= \sum_{i=0}^{2n} \gamma_i \left[ (\Upsilon_i-\hat{y})(\chi_i-\bar{x} )^T \right] \label{eq:ut2}.
 \end{align}
 
-For simplicity, we will refer to (\ref{eq:ut1}-\ref{eq:ut2}) as the function $\psi_{UT}$, given by
+For simplicity, we will refer to (\ref{eq:ut1})-(\ref{eq:ut2}) as the function $\psi_{UT}$, given by
 
 \begin{equation}
 \left[ \hat{y} \ \ P^{yy} \ \ P^{xy}  \right] = \psi_{UT} \left( \bar{x},\ P^{xx}, \ n, \ d, f\right)
@@ -598,7 +598,7 @@ Based on forecast state estimate and covariance found in (\ref{eq:ukf1}), comput
 where $g$ is given by (\ref{eq:prob_obs}) and $d$ by current time instant.
 
 \noindent
-\textit{Data assimilation step}: Calculate Kalman gain and current state estimate and covariance at time $k$, same way as in (\ref{eq:assim_state2}-\ref{eq:kalman_gain2}), reproduced for convenience
+\textit{Data assimilation step}: Calculate Kalman gain and current state estimate and covariance at time $k$, same way as in (\ref{eq:assim_state2})-(\ref{eq:kalman_gain2}), reproduced for convenience
 \begin{align}
 K_k					&= P^{xy}_{k|k-1} (P^{yy}_{k|k-1})^{-1}, \\
 \hat{x}_{k|k} 		&= \hat{x}_{k|k-1} + K_k(y_k - \hat{y}_{k|k-1}),	 \\
@@ -719,7 +719,7 @@ where $\xrightarrow[]{D}$ means \textit{converges in distribution}, as $N\righta
 \end{align}
 
 \noindent
-But since $\xi_i$ for $i={1,2,...N}$ are i.i.d. uniform random variables in the interval $[0,N/\lambda]$, we can rewrite \ref{eq:poisson_cdf} using Property \ref{prop:uniformCDF}, as
+But since $\xi_i$ for $i={1,2,...N}$ are i.i.d. uniform random variables in the interval $[0,N/\lambda]$, we can rewrite (\ref{eq:poisson_cdf}) using Property \ref{prop:uniformCDF}, as
 
 \begin{align}
 \rho_{h_N} \left( \textrm{min}_i(\xi_i) \leq t \right) &=  1 - \left( 1- \frac{\lambda t}{N} \right)^N, \notag \\
@@ -732,7 +732,7 @@ Thus, from Property \ref{prop:exponCDF}, we conclude that $h_N$ tends, in distri
 
 \end{proof}
 
-If we define $\lambda=N/T$, with a known time interval $T$ and a sufficiently big $N$ amount of sensors, then we can approximate all interarrival times as an exponential RV of rate parameter $\lambda$, since the exponential distribution has the memoryless property. Hence the arrival sequence can be approximated by a Poisson process.
+If we define $\lambda=N/T$, with a known time interval $T$ and a sufficiently big amount of sensors $N$, then we can approximate all interarrival times as an exponential RV of rate parameter $\lambda$, since the exponential distribution has the memoryless property. Hence the arrival sequence can be approximated by a Poisson process.
 
 
 %\subsection{Input Irregular Sampling}
@@ -767,10 +767,7 @@ x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 \end{equation}
 
 \noindent
-where $t^*_j$, $\forall j \in \mathbb{N}$ represents the estimation time sequence and is given by $t^*_j= t^*_{j-1} + \delta t^*_j$, with $t^*_0=0$. The variable time interval $\delta t^*_j$ is calculated according the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
-
-To analyze 
-
+where $t^*_j$, $\forall j \in \mathbb{N}$ represents the estimation time sequence and is given by $t^*_j= t^*_{j-1} + \delta t^*_j$, with $t^*_0=0$. In other words, each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used for input signals, considering the last available information. The variable time interval $\delta t^*_j$ is calculated according to the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
 
 \begin{figure}[!htb]
 	\centering
@@ -792,7 +789,7 @@ To analyze
 		
 		\node (pro23) [process, below of=pro22][text width=2.8cm,align=center, yshift=0.7cm]{Data Assimilation \\ Step};
 		
-		\node (pro3) [startstop, below of = pro23][text width=2.8cm,align=center, xshift=1.8cm]{Estimate in $t^*_{j}$};
+		\node (pro3) [startstop, below of = pro23][text width=2.8cm,align=center, xshift=1.8cm]{Estimate at $t^*_{j}$};
 		
 		\draw [arrow] (start) -- node[pos=0.5](h){} (dec1);
 		\draw [arrow] (dec1) -| node[text width=2.8cm,align=center,anchor=west,xshift=-1cm] {Iput \\ Signal} (pro1);
@@ -810,19 +807,16 @@ To analyze
 	\label{fig:cap4-online_estimator}
 \end{figure}	
 
-
-Each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used for input signals, considering last available information. 
-
-For the simulation carried out in Section~\ref{cap5}, time intervals $\delta t^*_j$ are calculated by uniting all arrival times for input and observation in a single vector, in an orderly fashion. The subtraction of consecutive time instants yields the time intervals sequence $\delta t^*_j$, $\forall j \geq 1$. 
+We start with all counters set to $1$. $i$ represents the input counter, $k$ the observation and $j$ the estimation. When a signal is received, the algorithm checks if it derives from input or observation. In case it is an observation signal, $\delta t^*_j$ is calculated by the difference of the measurement time instant $t_k$ and the last estimation time instant $t^*_{j-1}$. Then a forecast step is performed, using input information from last input signal and finally the data observation data is assimilated, generating an estimate at instant $t^*_{j}$. Counters $k$ and $j$ are incremented and a new cycle begins. When input signal is received, we calculate the difference of the regular time instant $iT$ from the last estimation time instant $t^*_{j-1}$. In this case, only forecast step is executed, using the received signal and the result is the estimate at instant $t^*_{j}$. $i$ and $j$ are incremented, and it starts all over again.
 
 Since there are two signal types, input and observation, there are four possible cases for the estimator: input followed by another input; input followed by an observation; observation followed by an input; and observation followed by another observation. In Figure~\ref{fig:cap4-sampling_example}, all of them are represented. During the interval \textit{A}, there are only input signals, so time interval is $T$ and only \textit{forecast} is performed. In the interval represented by \textit{B}, we have to first execute complete \textit{forecast} and \textit{data assimilation} steps between input and observation, from $3T$ until $t_1$, using $\delta t^*_4 =t_1-3T$. Next, between an observation and an input signal, a ZOH is used for a \textit{forecast} step between $t_1$ and $4T$. In other words, it is considered that the input remained constant between $3T$ and $4T$. When more than one observation arrive between two input signals, as in \textit{C}, full \textit{forecast} and \textit{data assimilation} are performed as many times needed before one last \textit{forecast} between the last observation and the next input signal.
 
-For the \textit{online} estimator, the differential equations are numerically integrated as input or measurement signals arrive. In these instants, the corresponding time interval $\delta t^*_j$ is calculated. If the current signal transmits input data, only the \textit{forecast} step is executed. If it is observation data being received, both \textit{forecast} and \textit{data assimilation} steps are performed, considering a ZOH for the input data. 
+For the \textit{online} estimator, the differential equations are numerically integrated as input or measurement signals arrive. In these instants, the corresponding time interval $\delta t^*_j$ is calculated. For the simulation carried out in Section~\ref{cap5}, time intervals $\delta t^*_j$ are calculated by uniting all arrival times for input and observation in a single vector, in an orderly fashion. The subtraction of consecutive time instants yields the time intervals sequence $\delta t^*_j$, $\forall j \geq 1$. 
 
-\subsection{State Estimation Without Timestamp}
+\subsection{State Estimation Without Timestamp}\label{sec:without_timestamp}
 
-For some applications, discretization at variable time intervals may be difficult to accomplish. Or measurements may be transmitted in a centralized manner at regular time intervals, even though they were taken aperiodically.
-In such cases it is impossible to consider the time-stamp information in the estimation process. Thus process model (\ref{eq:prob_process}) is discretized according to
+For some applications, discretization at variable time intervals may be difficult to accomplish. In other situations measurements may be transmitted in a centralized manner at regular time intervals, even though they were taken aperiodically.
+In such cases it is impossible to consider the time-stamp information in the estimation process. Thus process model (\ref{eq:prob_process}) is discretized at a constant time interval, according to
 
 
 \begin{equation}\label{eq:disc_semcarimbo}
@@ -830,11 +824,13 @@ x_n=f^*_\textrm{d}(x_{n-1},u_{n-1},w_{n-1},n),
 \end{equation}
 
 \noindent
-where $f^*_\textrm{d}(\cdot)$ represents the time-invariant discrete-tmie mode and $n=nT$, $\forall n \in \mathbb{N}$.
+where $f^*_\textrm{d}(\cdot)$ represents the time-invariant discrete-time model and $n=nT$, $\forall n \in \mathbb{N}$.
 
-Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In other words, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $y_i$ is the measurement taken at the instant $t_k$, assimilated at time instant $iT$, for $(i-1)T < t_k \leq iT$ and $t_k$ being the instant of the most recent measurement in the interval $[(i-1)T, iT]$. Thus there are only two possible estimation scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is at least one observation, a complete estimation with \textit{forecast} and \textit{data assimilation} steps is performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
+Since the estimator is not aware of the measurement time instant, \textit{data assimilation} is always performed as the next input signal arrives, in a time instant multiple of $T$. In other words, the observation vector is approximated by $\tilde{y}_i \approx y(t_k)$, where $y_i$ is the measurement taken at the instant $t_k$, assimilated at time instant $iT$, for $(i-1)T < t_k \leq iT$ and $t_k$ being the instant of the most recent measurement in the interval $[(i-1)T, \  iT]$. Thus there are only two possible estimation scenarios. One, in which there are no information between two consecutive input signal arrivals, represented by the letter \textit{A} in Figure~\ref{fig:cap4-sampling_example}, when only \textit{forecast} step is performed. If there is at least one observation, a complete estimation with \textit{forecast} and \textit{data assimilation} steps is performed, considering the time interval $T$. In case illustrated by the letter \textit{B}, measurement taken at time $t_1$ will be assimilated in time instant $4T$. When there are multiple measurements between two input signals, the oldest ones are discarded, as in letter \textit{C}, for which the measurement taken at $t_2$ is discarded and the one taken at $t_3$ is assimilated at the instant $9T$.
 
-\begin{example} Consider the LTI system, represented by the following transfer function
+In practice, such configuration will impact the estimation by adding an error to the observation process (\ref{eq:prob_obs}). We illustrate this effect by an example.
+
+\begin{example}\label{ex:samp_error} Consider the LTI system, represented by the following transfer function
 
 \begin{equation}
 G(s) = \frac{100}{s^2 + 2s + 100}, \label{eq:Gs_tf}
@@ -861,16 +857,14 @@ y(t) &= \left[0 \quad 3.125\right]x(t). \label{eq:Gs_obs}
 \end{align}
 
 \noindent
-A pseudo-random binary sequence (PRBS) with $200$ samples is generated and oversampled by a factor of $100$, resulting in $2\times 10^4$ samples over 2 seconds, and the simulations results are shown in Figure~\ref{fig:Gs}. 
+A pseudo-random binary sequence (PRBS) with $200$ samples is generated as input and oversampled by a factor of $100$, resulting in $2\times 10^4$ samples that we simulate over 2 seconds. The results are shown in Figure~\ref{fig:Gs}. We also simulate the aperiodic sampling of the output $y(t)$ as a Poisson process with rate $\lambda=100$ Hz and compare it to the regular sampling with frequency $f=100 \textrm{Hz}$ in Figure~\ref{fig:Gs_sampling}.
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Imagens/Gs.eps}
+	\includegraphics[width=0.75\textwidth]{Imagens/Gs.eps}
 	\caption[Linear simulation results for G(s)]{Linear simulation results for G(s) in blue, considering the PRBS input in grey.}
 	\label{fig:Gs}
 \end{figure}
-
-Now we simulate the aperiodic sampling of the output $y(t)$ as a Poisson process with rate $\lambda=100$ Hz and compare it to the regular sampling with frequency $f=100$ Hz. Figure~\ref{fig:Gs_sampling} presents the comparison.
 
 \begin{figure}[!htb]
 	\centering
@@ -880,7 +874,7 @@ Now we simulate the aperiodic sampling of the output $y(t)$ as a Poisson process
 	\label{fig:Gs_sampling}
 \end{figure}
 
-For such an example, considering an input signal sampled at a frequency of $f=100$ Hz, the random measurement time instants of the algorithm without timestamp are approximated to the next instant multiple of $T=0.001$ s. An illustration of such process is presented in Figure~\ref{fig:Gs_sampling_diff}. 
+For such an example, considering an input signal sampled at a frequency of $f=100$ Hz, the algorithm without timestamp approximates the random measurement time instants to the next instant multiple of $T=0.001$ s. An illustration of such process is presented in Figure~\ref{fig:Gs_sampling_diff}. 
 
 \begin{figure}[!htb]
 	\centering
@@ -890,7 +884,7 @@ For such an example, considering an input signal sampled at a frequency of $f=10
 \end{figure}
 
 \end{example}
-This approximation process leads to two sources of degradation. First, some information will be lost, if there are more than one observations in the interval $[iT, (i+1)T]$ $\forall i \in \mathbb{N}$. The second one is related to the measurement error of shifting time instants. A more detailed analysis of the latter effect is discussed in the Section~\ref{sec:error_shift}.
+This approximation process leads to two sources of degradation. First, some information might be lost, if there are more than one observation in the interval $[iT, (i+1)T]$ $\forall i \in \mathbb{N}$. The second one is related to the measurement error of shifting time instants. A more detailed analysis of the latter effect is discussed in the Section~\ref{sec:error_shift}.
 
 \section{Performance Metrics} \label{sec:metrics}
 
