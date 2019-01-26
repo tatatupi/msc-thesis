@@ -1,44 +1,7 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-\vspace{-2cm}Over the last two decades, subspace identification
-methods have attracted great attention due their potential for
-application in industry, especially for multivariable systems. The
-algorithms of subspace identification are as easy to implement as
-well-known algorithms such as least squares. However, the theory
-behind these methods requires concepts from linear systems,
-stochastic processes, system identification, linear algebra, and
-others, making their understanding more difficult. As a consequence
-such methods are less well-known than others. This work investigates
-the use of subspace identification techniques applied to
-discrete-time, linear, time-invariant and multivariable systems. Our
-efforts have focused on the following objectives: (I) to
-geometrically interpret the methods, (II) to investigate, by means
-of simulations, situations in which the algorithms are best
-indicated, (III) to compare with other classical methods and (IV) to
-apply them to simulated and experimental systems. At first, basic
-concepts are reviewed: data modeling in state space, block matrices
-and vectors, geometric and statistical tools. These concepts are
-critical to understanding the theory behind subspace identification.
-Later, in the case of deterministic subspace identification, a
-comprehensive study about how state matrices can be obtained from
-input-output data is provided. In this study, the algorithms N4SID
-and MOESP are presented. Subsequently, the stochastic case is
-treated similarly to the deterministic one. It is shown that the
-methods N4SID and MOESP are robust to white measurement noise.
-However, when the methods are exposed to colored noise, either
-measurement or process, these estimators are biased. One alternative
-is to use instrumental variable methods. Two such algorithms are
-presented: MOESP-PI and MOESP-PO. Demonstrations and simulated
-examples are presented, in order to facilitate the understanding of
-the characteristics of subspaces methods. Finally, the methods
-N4SID, MOESP, MOESP-PO, MOESP-PI are applied to three multivariable
-systems. The first system is a simulated model of a DC motor. The
-other two are experimental systems, namely water pumping system and
-a column flotation system. The results suggest that the subspace
-methods are a feasible alternative for linear systems of multiple
-inputs and multiple outputs.
-\\
+\vspace{-2cm} The use of multiple sensors to improve data quality has grown continuously over the last few decades. With the never-ending advances in technology of microprocessors and communication devices, sensor networks will continue to increase in both size and complexity. The most popular applications for fusing data from various sources are related to estimating the states of a dynamic system. For that, two noisy sources of information are needed: a process model, that describes how the states evolve in time; and an observation model, whose data are usually derived from sensors. Since most sensors are digital, signals must be sampled in order to be processed, leading to sampled-data systems. Classical state estimators for sampled-data systems, like the well-known Kalman filter, consider the sampling process as the output of an ideal sampler. In other words, the source of information transmits data at regularly spaced time intervals. Under such consideration, continuous systems can be discretized into time-invariant representations in most cases. However, because of the widespread use of complex sensor networks without time synchronization, many applications cannot rely on data being transmitted regularly. There are adaptations to state estimation techniques that handle most of the irregularities, providing that timestamps are part of the measurement packet and that the increase in computational costs are acceptable. If timestamps cannot be used in the estimation process, one can either invest in synchronization or assimilate the information at incorrect time instants. The effects in estimation performance of the latter approach has not yet been extensively studied. Thus our work investigates how performance is deteriorated by neglecting measurements timestamps in state estimation algorithms. We consider the Poisson process as a model to generate the irregular time instants sequence, and study the errors introduced by shifting the signal samples in time. Then we simulate state estimation results for a linear and a nonlinear system with aperiodic sampling, using Kalman filter for the former and its unscented variation for the latter. Algorithms are designed to use timestamps in the estimation process and to neglect them, and their results over multiple runs are compared for different simulation scenarios. We observe situations where performance of both algorithms differ substantially and others where there are no statistically significant difference. 
+\\ \\
+\textbf{Keywords:} Sensor Fusion; Irregular Sampling; State Estimation; Sampled-data Systems; Time Synchronization; Time-Stamp.
 
-\textbf{Keywords:} System identification; Subspace methods;
-State-space models; Multivariable systems; Linear systems.
