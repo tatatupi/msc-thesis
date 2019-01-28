@@ -75,9 +75,14 @@ We wish to estimate the state vector $x(t)$ and its covariance recursively, at r
 
 \section{Objectives}\label{objectives}
 
-\todo[inline]{Falta objetivos}
-%1 frase para o objetivo geral
-%Objetivos específicos
+In this study we are interested in the importance of the timestamp in sensor fusion applications under irregular sampling. More specifically, we define the following research objectives:
+
+\begin{enumerate}
+	\item Review sensor fusion methods and the irregular sampling problem;
+	\item Present state estimation algorithms that fuse data from multiple sources, subject to irregularly sampled measurements with no information about timestamp;
+	\item Develop a simulation setup where the effect of neglecting timestamps in state estimation can be assessed for multiple system parameters;
+	\item Apply the proposed setup with applications in linear and nonlinear systems, considering performance metrics that assess both accuracy and consistency.
+\end{enumerate}
 
 \section{Text Outline}\label{text-outline}
 %
@@ -85,15 +90,15 @@ This text is organized in six chapters, including this one. Chapter~\ref{cap1} p
 
 Chapter~\ref{cap2} presents a review of the sensor fusion field of science, addressing not only the definitions and taxonomy, but also the advantages of combining information from multiple sources. From the four categorization models of the data fusion problem, the one based on data challenges is further explored. We then introduce and discuss the methods proposed in literature to handle imperfect data. 
 
-Chapter~\ref{cap3} discusses the data-related challenges that arise for sampled-data systems, regarding sampling irregularities. Diagrams are built to organize the types, effects and causes of irregularities. We describe the necessary modifications to state estimation observation models, in order to handle such abnormalities in sampling schemes. To perform effective state estimation in the presence of sampling irregularities, methods depend on the knowledge of the exact time measurements were taken. Therefore, we explore time synchronization methods suited for sensor networks.
+Chapter~\ref{cap3} discusses the data-related challenges that arise for sampled-data systems, regarding sampling irregularities. First we define the irregular sampling problem. Then diagrams are built to organize the types, effects and causes of irregularities. We describe the necessary modifications to state estimation observation models, in order to handle such abnormalities in sampling schemes. To perform effective state estimation in the presence of sampling irregularities, methods depend on the knowledge of the exact time measurements were taken. Therefore, we explore time synchronization methods suited for sensor networks.
 
 After the literature review, we focus on the probabilistic sensor fusion approach to sampled-data systems with sampling irregularities. The study of the impact of neglecting time-stamp information is performed.
 
-Chapter~\ref{cap4} describes the methods used for simulation, considering the adaptations for the scenarios with and without time-stamp. We describe the filtering algorithm and the assumptions used for each scenario. Furthermore, we define the performance metrics used for the results assessment.
+In Chapter~\ref{cap4} we describe the discrete-time representation of the sampled-data systems. Then we present the methods used in the simulations, considering the adaptations for the scenarios with and without timestamp. We develop the filtering algorithm and the assumptions used for each scenario. Furthermore, we define the performance metrics used for the results assessment.
 
-In Chapter~\ref{cap5} we present simulated results from two systems: an arbitrary linear system and a unicycle position estimation system. Signal parameters are varied to assess the impact in performance of both considering and not considering time-stamp in estimation algorithms. Performance is evaluated using estimated state errors and estimation consistency. 
+We start Chapter~\ref{cap5} by studying the error effect introduced in the measurements by neglecting timestamp and shifting the time instants. Then we discuss the simulation setup and present the results from two systems: an arbitrary linear system and a unicycle position estimation system. Signal parameters are varied to assess the impact in performance of both considering and not considering time-stamp in estimation algorithms. Performance is evaluated using estimated state errors and estimation consistency. 
 
-Finally, we conclude the study in Chapter~\ref{cap6}, highlighting the study limitations and suggestions of future work, apart from evaluating if the proposed objectives were achieved.
+Finally, we conclude the study in Chapter~\ref{cap6}, proving an overview of the work, highlighting the study limitations and suggestions of future work, apart from evaluating if the proposed objectives were achieved.
 
 \clearpage
 

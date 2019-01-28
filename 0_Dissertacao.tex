@@ -2,10 +2,10 @@
 %PPGEE - UFMG
 %-------------------------------------------------------------------
 %Defini��es gerais do documento
-\documentclass[12pt,a4paper,titlepage,brazil,english]{book}
+\documentclass[12pt,a4paper,titlepage,brazil,portugues,english]{book}
 %--------------------------------------------------------------------
 %Pacotes usados
-\usepackage{babel}
+\usepackage[brazilian]{babel}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{times}
@@ -120,8 +120,17 @@
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
 
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+
 %Modifica��es em legenda
 \setlength{\belowcaptionskip}{5pt}
+
 
 %--------------------------------------------------------------------
 %Modifica��es em legenda (quando ocorre quebra das palavras indesejadas)
@@ -268,8 +277,6 @@
 \begin{spacing}{1.5}
 \tableofcontents
 \end{spacing}
-\listoftodos
-\clearpage
 \thispagestyle{empty}
 \cleardoublepage
 
