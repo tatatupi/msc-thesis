@@ -168,7 +168,7 @@ The goal of the estimator is to statistically and recursively infer the values o
 \end{align}
 
 \noindent
-where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\rho(x_k|(y_1,...,y_k))$ is the estimated posterior PDF of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
+where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior PDF of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
 
 Finding the \textit{posterior} $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimates $\hat{x_k}^{MAP} \in \mathbb{R}^n$ and $\hat{x_k}^{MMSE} \in \mathbb{R}^n$ are the optimal state estimates, under their optimality criteria. A recursive Bayesian solution to the state estimation problem, that is finding the \textit{posterior} PDF, considering that the system evolves according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we need to define two lemmas.
 
@@ -906,8 +906,7 @@ In this study we will use metrics that measure both consistency conditions. Acco
 NEES_k &\triangleq  \tilde{x}_{k|k}^T(P^{xx}_{k|k})^{-1}\tilde{x}_{k|k}, \label{eq:nees} \\
 NIS_k &\triangleq  \eta_{k|k-1}^T(P^{yy}_{k|k-1})^{-1}\eta_{k|k-1}, \label{eq:nis}.
 \end{align}
-
-Under the linear and Gaussian assumption, we formulate a hypothesis test, under which the null hypothesis $H_0$, that the filter is consistent, requires that both NEES and NIS follow chi-squared distributions, with $n_x$ and $n_y$ degrees of freedom, respectively, and $n_x$ is the dimension of the state vector, whereas $n_y$ is the dimension of the observation vector. The expected value of a RV that is chi-squared distributed is equal to its degrees of freedom quantity, that is $E[NEES_k] = n_x, \ \forall k > 1$ and  $E[NIS_k] = n_y, \ \forall k > 1$. 
+\noindent where $\eta_{k|k-1}$ is the innovation vector at time instant $k$ and $P^{yy}_{k|k-1}$ its covariance matrix. Under the linear and Gaussian assumption, we formulate a hypothesis test, under which the null hypothesis $H_0$, that the filter is consistent, requires that both NEES and NIS follow chi-squared distributions, with $n_x$ and $n_y$ degrees of freedom, respectively, and $n_x$ is the dimension of the state vector, whereas $n_y$ is the dimension of the observation vector. The expected value of a RV that is chi-squared distributed is equal to its degrees of freedom quantity, that is $E[NEES_k] = n_x, \ \forall k > 1$ and  $E[NIS_k] = n_y, \ \forall k > 1$. 
 
 We adopt single-run tests, thus for every estimation, we test the acceptance of the null hypothesis $H_0$, meaning that both NEES and NIS at time instant $kT$ is within a certain interval, considering the accepted region as 
 

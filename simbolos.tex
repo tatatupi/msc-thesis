@@ -5,8 +5,8 @@
 
 \setlength{\LTleft}{10pt}
 
+\footnotesize
 \subsection*{Chapter 1}
-
 \begin{longtable}{ll}
 	$\mathbb{N}^+$			& positive integers; \\
 	$\mathbb{R}$			& real numbers; \\
@@ -41,7 +41,6 @@
 	$u(iT)$					& input vector at continuous-time sampled at time $t = iT$; \\						
 	$w(t)$					& process noise vector; \\
 	$y(t_k)$            	& output vector at continuous-time sampled instants;\\
-	$\delta_{k}$			& measurements time-delay; \\
 	$v(t_k)$				& measurement noise vector; \\
 	$h_k$					& time intervals between two continuous-time sampled instants; \\
 	$\lambda$ 				& parameter of the exponential distribution; \\
@@ -50,7 +49,7 @@
 	$N$						& amount of identical sensors in the sampling model; \\
 	$L$						& sampling period of the identical sensors in the sampling model; \\
 	$P$						& covariance matrix; \\
-	$\alpha$				& relation between output (expected) and input sampling time intervals . \\
+	$\alpha$				& relation between output (expected) and input sampling time intervals. \\
 \end{longtable}
 
 \subsection*{Chapter 2}
@@ -86,7 +85,7 @@
 	
 	$\subseteq$				& is a subset of; \\
 	$\cap$					& set intersection; \\
-	$\emptyset$				& empty set; \\
+	$\emptyset$				& empty set. \\
 	
 \end{longtable}
 
@@ -119,7 +118,7 @@
 	$T$						& expected sampling time interval; \\
 	$d(k)$					& observation sampling time delays; \\
 	$l$						& amount of different known delays; \\
-	$\xi(t)$				& Bernoulli random variable that models packet dropout and uncertain observation; \\
+	$\xi(t)$				& Bernoulli random variable \\
 	$C_i(t)$				& real time approximation from the $i^{th}$ computer clock; \\
 	$a_i$					& $i^{th}$ clock drift; \\
 	$b_i$					& $i^{th}$ clock offset; \\
@@ -137,7 +136,7 @@
 	
 	$\mu s$					& micro seconds; \\
 	$E.E$					& energy efficiency; \\
-	$Comp.$					& complexity; \\
+	$Comp.$					& complexity. \\
 
 \end{longtable}
 
@@ -145,39 +144,193 @@
 \subsection*{Chapter 4}
 
 \begin{longtable}{ll}
-%	$\mathbb{N}$			& natural numbers; \\
-%	$\mathbb{R}$			& real numbers; \\
+	$\mathbb{N}$			& natural numbers; \\
+	$\mathbb{R}$ 			& real numbers; \\
 	$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
 	
 	$\mathcal{N}(\mu,\sigma)$ & Gaussian distribution with mean $\mu$ and standard deviation $\sigma$; \\
 	$E[\mathord{\cdot}]$	& mathematical expectation; \\
+	
 	$\triangleq$			& equals by definition; \\	
-%	$>$						& greater than; \\
-%	$\geq$					& greater than or equal to; \\
-%	$\sim$					& is distributed as; \\
-%	$\pm$					& plus or minus; \\
+	$\forall$				& for all; \\
+	$<$						& less than; \\
+	$\leq$					& less than or equal to; \\
 	$\operatorname{arg}  
 	\underset{x}
 	{\operatorname{max}} 
 					f(x)$	& argument $x$ that maximizes function $f(x)$; \\ 
-					
+	$\xrightarrow[]{D}$		& converges in distribution; \\
+	$F_X(x)$				& cumulative distribution of the random variable $X$; \\
+	$\bar{F}_X(x)$			& complementary cumulative distribution of the random variable $X$; \\
+	$\rho(x)$				& probability density function of $x$; \\
 	$\rho(x|y)$				& conditional probability density function of $X$ given $Y$; \\
-	$x_k$					& state vector; \\
-	$\hat{x_k}$				& estimated state vector; \\
-	$y_k$					& observation vector; \\
+	$\hat{\rho}(x|y)$		& estimated conditional probability density function of $X$ given $Y$; \\
 	
-%
+	$\operatorname{arg}  \underset{x_k}{\operatorname{max}}$ & the argument of the domain $x_k$ of the maxima \\
+	$\operatorname{arg}  \underset{x_k}{\operatorname{min}}$ & the argument of the domain $x_k$ of the minimum \\
+ 
+	$I$						& identity matrix; \\
+	$A^T$					& transpose of $A$; \\
+	$A^{-1}$				& inverse of $A$; \\
+	
+	$f$						& process model; \\
+	$f_{\textrm{d}}$		& discrete-time process model; \\
+	$f^*_\textrm{d}$		& time-invariant discrete-time process model; \\
+	$g$						& observation model; \\
+	$t$						& continuous-time index; \\
+	$k$						& discrete-time index of measurements; \\
+	$j$						& discrete-time index of estimation; \\
+	$i$						& discrete-time index of input; \\
+	$t_k$					& continuous-time sampled instants; \\
+	$t^*_j$					& state estimation time sequence; \\
+	$\delta t^*_j$			& variable time interval; \\
+	$T$						& input sampling interval; \\
+	
+	$A$, $B$, $C$, $G$		& matrices of continuous-time linear model in state-space;  \\
+	$A_{\textrm{d}}$,
+	$B_{\textrm{d}}$,
+	$C_{\textrm{d}}$,
+	$G_{\textrm{d}}$,		& matrices of discrete-time linear model in state-space;  \\
+	
+	$A_k$, $B_k$, $C_k$, $G_k$		& time-varying matrices of discrete-time linear model in state-space;  \\
+	
+	$x(t)$					& state vector; \\
+	$\dot{x}(t)$			& derivative of the state vector with respect to $t$; \\
+	$x(t_k)$				& state vector at continuous-time sampled instants; \\
+	$u(t)$					& input vector; \\
+	$u(t_k)$				& input vector at continuous-time sampled instants; \\
+	$u(iT)$					& input vector at continuous-time sampled at time $t = iT$; \\						
+	$w(t)$					& process noise vector; \\
+	$w(t_k)$				& process noise vector at continuous-time sampled instants; \\
+	$w_{\textrm{d}}(t_k)$				& process noise vector at continuous-time sampled instants; \\
+	$y(t_k)$            	& output vector at continuous-time sampled instants;\\
+	$v(t_k)$				& measurement noise vector; \\
+	$z_k$					& constant evidence term; \\
+	$Q$						& process noise covariance matrix; \\
+	$R$						& measurement noise covariance matrix; \\
+	
+	$h_k$					& time intervals between two continuous-time sampled instants; \\
+
+	$k_i$					& $i$-th slope approximation for Runge-Kutta method; \\
+	
+	$\tau$					& integration auxiliary variable; \\ 
 	$\sigma$				& standard deviation; \\
-	$\Sigma$				& covariance matrix; \\
-%	$\kappa$				& shape parameter; \\
-%	$\theta$				& scale parameter; \\
+	$\hat{\sigma}_{\textrm{p}}$	& estimated standard deviation of the prior; \\
+	$\hat{\sigma}_{\textrm{e}}$	& estimated standard deviation of the evidence; \\
+	$\hat{x}_{\textrm{p}}$	& estimated mean of the prior; \\
 	
+	$\mu_{\textrm{fused}}$	& estimated mean of the fused information; \\
+	$\sigma_{\textrm{fused}}$	& estimated standard deviation of the fused information; \\
+	$\Sigma$				& covariance matrix; \\
+
+
+	$P^{xx}$				& covariance matrix of $x$; \\
+	$P^{yy}$				& covariance matrix of $y$; \\
+	$P^{xy}$				& cross-covariance matrix of $x$ and $y$; \\
+	$\bar{x}$				& mean of $x$; \\
+	
+	$x_{k|k}$				& data-assimilation state estimate; \\
+	$x_{k|k-1}$			& forecast state estimate; \\
+	$P^{xx}_{k|k-1}$		& forecast error covariance matrix; \\
+	$P^{xx}_{k|k}$			& data-assimilation covariance matrix; \\
+	$P^{yy}_{k|k}$			& innovation covariance matrix; \\
+	$P^{xy}_{k|k}$			& cross-covariance matrix; \\
+	$K_k$					& Kalman gain; \\
+	$\chi_i$				& $i^{\textrm{th}}$  column of the sigma-point matrix; \\
+	$\gamma_i$				& $i^{\textrm{th}}$  weight related to the sigma-point matrix; \\
+	$\Upsilon_i$			& propagated sigma-point column; \\
+	$\psi_{UT}$				& unscented transform function; \\
+	$d$						& deterministic vector parameter of unscented transform; \\
+	
+	$\lambda$				& average sampling rate of observations; \\
+	$\alpha$				& relation between $T$ and $1/ \lambda$; \\
+	
+	$N(t)$					& amount of measurements arrived in the interval $t$; \\
+	$\xi_i$					& phase of each sensor in a network; \\
+	
+	$G(s)$					& LTI system transfer function; \\
+	$s$						& Laplace variable; \\
+	
+	$\eta$					& innovation vector; \\
+	$\mu_{\textrm{D}}$		& mean difference of the t-test; \\
+	$d$						& cohen's \textit{d} effect size for the mean difference; \\
+	$s_{\textrm{D}}$		& standard deviation of the paired-samples difference. \\
 	
 \end{longtable}
 
 
 
 \subsection*{Chapter 5}
+
+\begin{longtable}{ll}
+	
+	$\mathbb{N}$			& natural numbers; \\
+	$\mathbb{R}$ 			& real numbers; \\
+	$\mathbb{R}^n$			& $\mathbb{R}^{nx1}$ $n$-dimensional Euclidean space; \\
+	
+	$\forall$				& for all; \\
+	$\in$					& belongs to; \\
+	$\sim$					& is distributed as; \\
+	$\triangleq$			& equals by definition; \\	
+	$\approx$				& approximately equal to; \\
+	
+	$t$						& continuous-time index; \\
+	$k, i$					& discrete-time index;  \\
+	$n$						& discrete-time index of time-shifted measurements;  \\
+	$T$						& input sampling interval; \\
+	$t_k, t_i$				& continuous-time sampled instants; \\
+	$\delta t_{sim}$		& nominal system simulation time step; \\
+	$h_k$					& time intervals between two continuous-time sampled instants; \\
+	$A$, $B$, $C$, $D$,		& matrices of continuous-time linear model in state-space;  \\
+	$A_{\textrm{d}}$,
+	$B_{\textrm{d}}$,
+	$D_{\textrm{d}}$,
+	$D_{\textrm{d}}$		& matrices of discrete-time linear model in state-space;  \\
+	
+	$G(s)$					& LTI system transfer function; \\
+	$G_{\textrm{lp}}(s)$,
+	$G_{\textrm{hp}}(s)$	& low-pass and high-pass LTI system transfer function, respectively; \\
+
+	$s$						& Laplace variable; \\
+	$\tau_{\textrm{lp}}$,
+	$\tau_{\textrm{hp}}$	& low-pass and high-pass system time constant, respectively; \\
+	$\omega_{\textrm{lp}}$,
+	$\omega_{\textrm{hp}}$	& low-pass and high-pass system natural frequency, respectively; \\
+	$\zeta_{\textrm{lp}}$,
+	$\zeta_{\textrm{hp}}$	& low-pass and high-pass system damping frequency, respectively; \\
+	$x(t)$					& state vector; \\
+	$x_i$					& $i^{\textrm{th}}$ \ state of the state vector; \\
+	$x(t_k)$				& state-vector at continuous-time sampled instants; \\
+	$\dot{x}(t)$			& derivative of the state vector with respect to $t$; \\
+	$u(t)$					& input vector; \\
+	$\tilde{u}$				& measured input vector; \\
+	$y(t)$					& output vector; \\
+	$y(t_k)$				& output vector at continuous-time sampled instants;\\
+	$\tilde{y}$				& measured value of $y$ \\
+	$w(t_k)$				& process noise vector at continuous-time sampled instants; \\
+	$v(t_k)$				& measurement noise vector at continuous-time sampled instants; \\
+	$Q$						& process noise covariance matrix; \\
+	$R$						& measurement noise covariance matrix; \\
+	$e$						& error introduced by shifting sample time instants; \\
+	$\eta$					& innovation vector; \\
+	$\mu_{\textrm{D}}$		& mean difference of the t-test; \\
+	$d$						& cohen's \textit{d} effect size for the mean difference; \\
+	
+	$\lambda$				& average sampling rate of observations; \\
+	$\alpha$				& relation $T$ and $1/ \lambda$; \\
+	
+	$p_\textrm{x}$,
+	$p_\textrm{y}$			& position coordinates in the $xy$-plane; \\
+	$\dot{p}_\textrm{x}$,
+	$\dot{p}_\textrm{x}$ 	& derivative of the position coordinates; \\
+	$\theta$				& angular orientation; \\
+	$\dot{\theta}$			& derivative of angular orientation; \\
+	$v$						& linear velocity; \\
+	$\dot{v}$				& derivative of linear velocity, or linear acceleration; \\
+	$N$						& total amount of estimates. \\
+
+\end{longtable}
+
 
 \newpage
 \section*{Acronyms}
@@ -200,7 +353,6 @@
 	GPS			& Global Positioning System; \\
 	HMM			& Hidden Markov Model; \\
 	KF 			& Kalman Filter; \\
-	UKF			& Unscented Kalman Filter; \\
 	LEETS		& Lightweight and Energy Efficient Time Synchronization; \\
 	LTS			& Lightweight Tree-based Synchronization; \\
 	LTI			& Linear Time-Invariant; \\
@@ -231,7 +383,9 @@
 	TSST		& Time Synchronization based on Spanning Tree; \\
 	TTF 		& Track-to-Track Fusion; \\
 	UKF			& Unscented Kalman Filter; \\
+	UT			& Unscented Transform; \\
 	WSN			& Wireless Sensor Networks; \\
-	ZOH			& Zero-Order Holder; \\
+	ZOH			& Zero-Order Holder. \\
 \end{longtable}
 
+%\afterpage{\blankpage}

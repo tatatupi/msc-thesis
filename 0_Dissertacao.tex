@@ -103,7 +103,7 @@
 
 \newcolumntype{S}{>{\centering\arraybackslash}m{3cm}}
 \newcolumntype{L}{>{\centering\arraybackslash}m{6cm}}
-\newcolumntype{M}{>{\centering\arraybackslash}m{4cm}}
+\newcolumntype{M}{>{\centering\arraybackslash}m{4.5cm}}
 
 \newcolumntype{b}{X}
 \newcolumntype{s}{>{\hsize=.5\hsize}X}
@@ -119,7 +119,9 @@
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
-
+\usepackage{epigraph}
+\setlength\epigraphrule{0pt}
+\setlength\epigraphwidth{.4\textwidth}
 
 
 \usepackage{afterpage}
@@ -242,6 +244,11 @@
 \input{capa.tex}
 \clearpage
 \thispagestyle{empty}
+\cleardoublepage
+
+\input{capa_eng.tex}
+\clearpage
+\thispagestyle{empty}
 %%\cleardoublepage
 
 %%--------------------------------------------------------------------
@@ -256,20 +263,20 @@
 %
 %
 %%--------------------------------------------------------------------
-%%Agradecimentos
-%\input{agradecimentos.tex}
-%\clearpage
-%\thispagestyle{empty}
-%\cleardoublepage
+%Agradecimentos
+\input{agradecimentos.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
 %%--------------------------------------------------------------------
 %
 %
 %%--------------------------------------------------------------------
-%%Ep�grafe
-%\input{epigrafe.tex}
-%\clearpage
-%\thispagestyle{empty}
-%\cleardoublepage
+%Ep�grafe
+\input{epigrafe.tex}
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
 %%--------------------------------------------------------------------
 
 
@@ -415,7 +422,7 @@
 \addcontentsline{toc}{chapter}{References}
  \clearpage
 \thispagestyle{empty}
-\cleardoublepage
+%\cleardoublepage
 
 %Ap�ndices
 %\appendix

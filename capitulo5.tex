@@ -29,7 +29,7 @@ In Example~\ref{ex:samp_error} we illustrated how measurements are assimilated b
 \end{equation}
 
 \noindent
-where $\tilde{y}$ represents the time-shifted measurements, $t_k$ is the most recent time instant in the interval $[(n-1)T, \ nT]$ and error $e\left(x(nT),x(t_k))\right)$ is given by (\ref{eq:prob_obs3}) without the noise factor, that is $e(x(nT),x(t_k)) = C[x(nT)-x(t_k)])$.
+where $\tilde{y}$ represents the time-shifted measurements, $t_k$ is the most recent time instant in the interval $[(n-1)T, \ nT]$ and error $e\left(x(nT),x(t_k))\right)$ is given by (\ref{eq:prob_LTIobs}) without the noise factor, that is $e(x(nT),x(t_k)) = C[x(nT)-x(t_k)])$.
 
 Using the system from Example~\ref{ex:samp_error}, we can observe some interesting aspects of the error $e$ that is added. In Figure~\ref{fig:Gs_sampling} from Section~\ref{sec:without_timestamp} we observe that the error will always have negative values when the signal is increasing, and vice-versa. In Figure~\ref{fig:Gs_error} we present the time series of such error overlapping the output. 
 
@@ -94,9 +94,9 @@ Since estimation is performed in the presence of random quantities, then we carr
 		NEES (\ref{eq:nees})			& $NEES \triangleq  \tilde{x}^T(P^{xx})^{-1}\tilde{x}$ & Value tested to be chi-squared distributed, in case of estimate error consistency \\
 		NIS (\ref{eq:nis})					& $NIS \triangleq  \eta^T(P^{yy})^{-1}\eta$ & Value tested to be chi-squared distributed, in case of innovation consistency  \\ 
 		
-		$\mu_{\textrm{D}}$ (\ref{eq:ttest}) & $\mu_{\textrm{D}} = RMSE_\textrm{w/o} - RMSE_\textrm{w}$ & Mean difference of RMSE from algorithms considering and not considering timestamp \\
+		$\mu_{\textrm{D}}$ (\ref{eq:ttest}) & $\mu_{\textrm{D}} \triangleq RMSE_\textrm{w/o} - RMSE_\textrm{w}$ & Mean difference of RMSE from algorithms considering and not considering timestamp \\
 		
-		Cohen's \textit{d} (\ref{eq:cohen}) & $d = \frac{\overline{RMSE}_\textrm{w/o} - \overline{RMSE}_\textrm{w}}{s_\textrm{D}}$ & Effect size estimate for the mean difference \\
+		Cohen's \textit{d} (\ref{eq:cohen}) & $d \triangleq \frac{\overline{RMSE}_\textrm{w/o} - \overline{RMSE}_\textrm{w}}{s_\textrm{D}}$ & Effect size estimate for the mean difference \\
 		
 		\bottomrule		
 	\end{tabular}
