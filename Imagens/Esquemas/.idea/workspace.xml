@@ -3,7 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="7e065d9d-fe9f-4a89-933f-1723977d28c1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../0_Dissertacao.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../0_Dissertacao.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../0_Dissertacao.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../0_Dissertacao.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../4ordersys2s.eps" beforeDir="false" afterPath="$PROJECT_DIR$/../4ordersys2s.eps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PRBS-eps-converted-to.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../PRBS-eps-converted-to.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../PRBS.eps" beforeDir="false" afterPath="$PROJECT_DIR$/../PRBS.eps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Rlinear_alpha_x1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../Rlinear_alpha_x1.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../capitulo4.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo4.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../capitulo5.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo5.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../capitulo6.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../../capitulo6.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../library.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../../library.bib" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,12 +24,12 @@
     <session id="1812013450">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="13" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.3" value="6" />
-          <entry key="project.open.time.4" value="3" />
+          <entry key="project.open.time.3" value="7" />
+          <entry key="project.open.time.4" value="4" />
           <entry key="project.open.time.5" value="2" />
-          <entry key="project.opened" value="13" />
+          <entry key="project.opened" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">

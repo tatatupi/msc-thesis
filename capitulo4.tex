@@ -888,7 +888,7 @@ This approximation process leads to two sources of degradation. First, some info
 
 \section{Performance Metrics} \label{sec:metrics}
 
-In order to assess the performance degradation introduced by assimilating data at incorrect time instants, we need to define certain performance metrics for comparison. The algorithms described in Sections~\ref{sec:unscented-kalman-filter} and~\ref{sec:kalman-filter} estimate both the current state, $\hat{x}_{k|k}$ and its covariance matrix $\hat{P}^{xx}_{k|k}$. For the linear case, the \textit{posterior} conditional PDF 
+In order to assess the performance degradation introduced by assimilating data at incorrect time instants, we need to define certain metrics for comparison. The algorithms described in Sections~\ref{sec:unscented-kalman-filter} and~\ref{sec:kalman-filter} estimate both the current state, $\hat{x}_{k|k}$ and its covariance matrix $\hat{P}^{xx}_{k|k}$. For the linear case, the \textit{posterior} conditional PDF 
 $\rho(x_{k}|(y_1,...,y_{k})$ is Gaussian, according to (\ref{eq:sol_xk1}), so it is fully characterized by its first two moments. Thus, if the filter is consistent, the following conditions shall be met \citep{Bar-Shalom2001}
 
 \begin{align}
@@ -909,7 +909,7 @@ NIS_k &\triangleq  \eta_{k|k-1}^T(P^{yy}_{k|k-1})^{-1}\eta_{k|k-1}, \label{eq:ni
 
 Under the linear and Gaussian assumption, we formulate a hypothesis test, under which the null hypothesis $H_0$, that the filter is consistent, requires that both NEES and NIS follow chi-squared distributions, with $n_x$ and $n_y$ degrees of freedom, respectively, and $n_x$ is the dimension of the state vector, whereas $n_y$ is the dimension of the observation vector. The expected value of a RV that is chi-squared distributed is equal to its degrees of freedom quantity, that is $E[NEES_k] = n_x, \ \forall k > 1$ and  $E[NIS_k] = n_y, \ \forall k > 1$. 
 
-We adopt single-run tests, thus for every estimation, we test the acceptance of $H_0$, that is if both NEES and NIS at time instants $k$ are within a certain interval, considering the accepted region as 
+We adopt single-run tests, thus for every estimation, we test the acceptance of the null hypothesis $H_0$, meaning that both NEES and NIS at time instant $kT$ is within a certain interval, considering the accepted region as 
 
 \begin{align}
 P \left\{ NEES_k \in [r_1,r_2] | H_0 \right\} &= 1 - \alpha, \label{eq:nees_h0} \\
@@ -943,7 +943,25 @@ RMSE = \frac{ \sum_{i=1}^N \sqrt{(\hat{x}_{k|k}-x_{k})^2}}{N}
 \end{equation}
 
 \noindent
-where $x_k$ is the true state vector and $N$ is the amount of estimates.
+where $x_k$ is the true state vector and $N$ is the amount of estimates. 
+
+Multiple runs will be carried out and all accuracy and consistency data of all scenarios for both algorithms will be used in box and whisker plots, so we can compare the results distributions. In order to assess performance degradation, we also conduct paired-samples $t$-tests to compare accuracy metrics of both algorithms. For that, we maintain the same conditions for both cases. The null hypothesis $H_0$ assumes that the true mean differences between metrics is zero, whereas the alternative hypothesis $H_0$ assumes it is not zero, that is
+
+\begin{equation}\label{eq:ttest}
+\begin{cases}
+H_0: \mu_{\textrm{D}} &= 0, \\
+H_1: \mu_{\textrm{D}} &\neq 0,
+\end{cases}
+\end{equation}
+
+\noindent where $\mu_{\textrm{D}} = RMSE_\textrm{w/o} - RMSE_\textrm{w}$ and suffixes \textit{w/o} and \textit{w} mean without and with timestamp, respectively. Since we use relatively high sample sizes, we expect differences with statistical significance for most of the results, considering a confidence level of $95\%$. However, in some some scenarios results might not be practically significant, which has more meaning in the real world. Thus, we also calculate effect sizes to assess the difference between both algorithms, referred to as the \textit{d} family of effect sizes. For that we use Cohen's \textit{d} method for effect size estimation, given by
+
+\begin{equation}\label{eq:cohen}
+d = \frac{\overline{RMSE}_\textrm{w/o} - \overline{RMSE}_\textrm{w}}{s_\textrm{D}},
+\end{equation}
+
+\noindent
+where $\overline{RMSE}_\textrm{w/o}$ and $\overline{RMSE}_\textrm{w}$ are the RMSE sample means of the algorithms without and with timestamps, respectively, and $s_\textrm{D}$ the standard deviation of the paired-samples difference. This unitless measure provides a standardized statistic of the mean differences.
 
 
 \clearpage
