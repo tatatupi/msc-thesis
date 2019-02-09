@@ -28,6 +28,13 @@
 \newtheorem{coro/}{Corollary}[section]
 \newtheorem{prop/}{Property}[section]
 \newtheorem{lema/}{Lemma}[section]
+\newtheorem{fact/}{Fact}[section]
+
+
+\newenvironment{fact}
+{\renewcommand{\qedsymbol}{$\square$}%
+	\pushQED{\qed}\begin{fact/}}
+	{\popQED\end{fact/}}
 
 \newenvironment{lema}
 {\renewcommand{\qedsymbol}{$\square$}%

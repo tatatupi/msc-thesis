@@ -1,5 +1,6 @@
 
 %-------------------------------------------------------------------------------
+\hypertarget{lcap4}{}
 \chapter{State Estimation for Sampled-Data Systems}
 \vspace{-1cm} \label{cap4}
 %
@@ -19,14 +20,14 @@
 %
 %
 
-In this chapter, the field of sensor fusion under irregular sampling is reduced to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin by describing the discrete-time representation for sampled-data systems. Then we review the adopted state estimation algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
-In Section~\ref{sec:estimation_aperiodic} we describe the particularities of the filtering algorithms for when the correct timestamp is available to the estimator and when it is not. We end with a description of the performance criteria used for assessment of the results, designed to quantify estimation accuracy and consistency.
+In this chapter, the investigation in the field of sensor fusion under irregular sampling is narrowed down to the problem of estimating the states of a system with a known process model, that is observed by aperiodically sampled measurements. We begin by describing the discrete-time representation for sampled-data systems. Then we review the adopted state estimation algorithm, that is the Kalman Filter, which is the most common approach to probabilistic data fusion. The nonlinear extension based on the unscented transform is also explored.
+In Section~\ref{sec:estimation_aperiodic} we describe the peculiarities of the filtering algorithms for when the correct timestamp is available to the estimator and when it is not. We end with a description of the performance criteria used for assessment of the results, designed to quantify estimation accuracy and consistency.
 
-\section{Discrete-Time Representation of Sampled-Data Systems}\label{sec:discretization}
+\section{Discrete-Time Model of Sampled-Data Systems}\label{sec:discretization}
 
 State estimation for nonlinear sampled-data systems can be performed using the continuous-time process model and the discrete-time observation model. The state-estimate propagation is performed using numerical integration over the time interval defined by the arrivals of two consecutive measurements. The work of \citep{Teixeira20082} compares two of those methods, the sampled-data extended Kalman Filter (SDEKF) and the sampled-data unscented Kalman Filter (SDUKF) to estimate the trajectory of a satellite.
 
-To avoid computational complexity of the numerical integrations, discretization of the process model is widely used in state estimation applications \citep{Aguirre2005}, which motivates the use of discrete-time methods in this study. Thus the system described in Section \ref{sec:problem_form} is formulated as a discrete-time model. First, we reproduce the stochastic nonlinear sampled system models as follows
+To reduce computational cost in the numerical integrations, discretization of the process model is widely used in state estimation applications \citep{Aguirre2005}, which motivates the use of discrete-time methods in this study. Thus the system described in Section \ref{sec:problem_form} is formulated as a discrete-time model. First, we reproduce the stochastic nonlinear sampled system models as follows
 
 
 \begin{align}
@@ -55,7 +56,7 @@ k_4 &= h_k f(t_k + h_k, \ x({t_k}) + k_3), \label{eq:runge_kutta2}
 \end{align}
 
 \noindent
-where $f(x(t), u(t), w(t), t)$ was reduce to $f(x(t), t)$ for simplicity, since the numerical approximation depends only on the vector state itself and the time intervals. Input $u(t)$ is considered to be constant during the time step and $w(t)$ represents unknown noise. Therefore, the discrete-time representation for the nonlinear sampled system becomes
+where $f(x(t), u(t), w(t), t)$ was represented as $f(t, x(t))$ for simplicity, since the numerical approximation depends only on the vector state itself and the time intervals. Input $u(t)$ is considered to be constant during the time step and $w(t)$ represents unknown zero mean additive noise. Therefore, the discrete-time representation for the nonlinear sampled system becomes
 
 \begin{align}
 x(t_{k+1}) &= f_\textrm{d}(x(t_k), u(t_k), w(t_k), t_k),   \label{eq:prob_process3} \\ 
@@ -63,9 +64,9 @@ y(t_k) &= g(x(t_k) ,v(t_k), t_k), \label{eq:prob_obs3}
 \end{align}
 
 \noindent
-where $f_\textrm{d}(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics given by (\ref{eq:prob_process2}) is time-invariant, that is if $f(\cdot)$ does not depend directly on $t$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor $h_k$ outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$, in (\ref{eq:runge_kutta22})-(\ref{eq:runge_kutta2}). Discrete time instants $t_k$ are determined by random time intervals $h_k$, that is $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
+where $f_\textrm{d}(\cdot)$ is given by (\ref{eq:runge_kutta})-(\ref{eq:runge_kutta2}). Note that even if the nonlinear dynamics given by (\ref{eq:prob_process2}) is time-invariant, that is if $f(\cdot)$ does not depend directly on $t$, its discrete counterpart will be time-varying if the system is irregularly sampled, since there is a time-step dependent factor $h_k$ outside $f(\cdot)$ for each $k_n$, $n=[1,2,3,4]$, in (\ref{eq:runge_kutta22})-(\ref{eq:runge_kutta2}). Discrete time instants $t_k$ are determined by random time intervals $h_k$, that is $t_{k+1} = t_k + h_k$ $\in \mathbb{R}$ as in (\ref{eq:time_interval}) and $k \in \mathbb{N}$ is the discrete-time index.
 
-For the linear time-invariant case (LTI), dynamic model of the sampled system is given by
+For the linear time-invariant case (LTI), the sampled system is given by
 
 \begin{align}
 \dot{x}(t) &= Ax(t) + Bu(t) + Gw(t),   \label{eq:prob_LTI} \\ 
@@ -76,66 +77,68 @@ y(t_k) &= Cx(t_k) + v(t_k), \label{eq:prob_LTIobs}
 where matrices $A \in \mathbb{R}^{n\times n}$, $B \in \mathbb{R}^{n\times p}$,  $G \in \mathbb{R}^{n\times q}$ and $C \in \mathbb{R}^{m\times n}$ are known matrices, $\rho(w(t)) = \mathcal{N}(0,Q)$ and $\rho(v(t_k)) = \mathcal{N}(0,R)$ are process and measurement noises, respectively, with covariance matrices $Q \in \mathbb{R}^{q\times q}$ and $R \in \mathbb{R}^{r \times r}$. If input $u(t)$ is digitally generated at the same rate as observations are taken, and followed by a digital-to-analog converter, then it is piecewise constant. In other words $u(t)=u(t_k)$, for $t_k \leq t < t_{k+1}$. In such cases, there is an exact solution to the discretization problem of (\ref{eq:prob_LTI}), given by \citep{Chen1999}
 
 \begin{equation}
-x(t_{k+1}) = A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + w_\textrm{d}(t_k), \label{eq:prob_process_d}\\
+x(t_{k+1}) = A_\textrm{d}(t_k,t_{k+1}) x(t_k) + B_\textrm{d}(t_k,t_{k+1}) u(t_k) + w_\textrm{d}(t_k,t_{k+1}), \label{eq:prob_process_d}\\
 \end{equation}
 
 \noindent	
-where $t_{k+1} = t_k + h_k$, $\in \mathbb{R}$ are discrete time instants as in (\ref{eq:time_interval}), separated by random time intervals $h_k \in \mathbb{R}$ and $k \in \mathbb{N}$ is the discrete-time index. The matrices from the discrete-time representation and the input noise $w_d(t_k)$ are given by
+where $t_{k+1} = t_k + h_k$ $\in \mathbb{R}$ are discrete time instants as in (\ref{eq:time_interval}), separated by random time intervals $h_k \in \mathbb{R}$ and $k \in \mathbb{N}$ is the discrete-time index. The matrices from the discrete-time representation and the input noise $w_d(t_k)$ are given by
 
 \begin{align}
-A_\textrm{d} &= e^{A h_k}, \label{eq:Ad}\\
-B_\textrm{d} &= \left( \int_{\tau=0}^{h_k}e^{A \tau}\delta \tau \right)B, \label{eq:Bd} \\	
-w_\textrm{d}(t_k) &= \int_{\tau=0}^{h_k} e^{A(t_{k+1}-\tau)}Gdw(\tau) d\tau, \label{eq:wd}.
+A_\textrm{d}(t_k,t_{k+1}) &= e^{A (t_{k+1}-t_k)}, \label{eq:Ad}\\
+B_\textrm{d}(t_k,t_{k+1}) &= \left( \int_{\tau=0}^{t_{k+1}-t_k}e^{A \tau}\delta \tau \right)B, \label{eq:Bd} \\	
+w_\textrm{d}(t_k,t_{k+1}) &= \int_{\tau=0}^{t_{k+1}-t_k} e^{A(t_{k+1}-\tau)}Gdw(\tau) d\tau, \label{eq:wd}.
 \end{align}
-
-\noindent
-Computation of $A_d$, given by the matrix exponential (\ref{eq:Ad}), can be solved by expansion in Taylor series
-
-\begin{equation}
-e^{A h_k} = I + h_kA+\frac{h_k^2A^2}{2!} + \ ... \ + \frac{h_k^nA^n}{n!} + \ ... \ = \sum_{i=0}^{\infty}\frac{h_k^iA^i}{i!}. \label{eq:disc_taylor}
-\end{equation}
-
-\noindent
-By truncating (\ref{eq:disc_taylor}) at some point, $A_d$ can be approximated by matrix multiplications and additions. Taylor series can also be used to compute $B_d$. The integral factor of (\ref{eq:Bd}) can be expanded as
-
-\begin{align}
-\int_{\tau=0}^{h_k}e^{A \tau}\delta \tau &= \int_{\tau=0}^{h_k} \left( I + \tau A+\frac{\tau^2A^2}{2!} + \ ... \right) d\tau, \notag \\
-&= h_kI + \frac{h_k^2A}{2!}+\frac{h_k^3A^2}{3!}+ \ ..., \label{eq:Bd_1}
-\end{align}
-
-\noindent
-If $A$ is nonsingular, the series can be written as
-
-\begin{align}
-\int_{\tau=0}^{h_k}e^{A \tau}\delta \tau &= A^{-1} \left(Ah_kI + \frac{h_k^2A^2}{2!}+\frac{h_k^3A^3}{3!}+ \ ... \ + I - I \right), \notag \\
-&=	A^{-1}\left( e^{A_k} - I\right). \label{eq:Bd_2}
-\end{align}
-
-\noindent Thus uniting (\ref{eq:Bd}) and (\ref{eq:Bd_2}), $B_d$ becomes
-
-\begin{equation}
-B_d = A^{-1} \left(A_d - I)B\right).
-\end{equation}
-
+%
+%\noindent
+%Computation of $A_d$, given by the matrix exponential (\ref{eq:Ad}), can be solved by expansion in Taylor series
+%
+%\begin{equation}
+%e^{A h_k} = I + h_kA+\frac{h_k^2A^2}{2!} + \ ... \ + \frac{h_k^nA^n}{n!} + \ ... \ = \sum_{i=0}^{\infty}\frac{h_k^iA^i}{i!}. \label{eq:disc_taylor}
+%\end{equation}
+%
+%\noindent
+%By truncating (\ref{eq:disc_taylor}) at some point, $A_d$ can be approximated by matrix multiplications and additions. Taylor series can also be used to compute $B_d$. The integral factor of (\ref{eq:Bd}) can be expanded as
+%
+%\begin{align}
+%\int_{\tau=0}^{h_k}e^{A \tau}\delta \tau &= \int_{\tau=0}^{h_k} \left( I + \tau A+\frac{\tau^2A^2}{2!} + \ ... \right) d\tau, \notag \\
+%&= h_kI + \frac{h_k^2A}{2!}+\frac{h_k^3A^2}{3!}+ \ ..., \label{eq:Bd_1}
+%\end{align}
+%
+%\noindent
+%If $A$ is nonsingular, the series can be written as
+%
+%\begin{align}
+%\int_{\tau=0}^{h_k}e^{A \tau}\delta \tau &= A^{-1} \left(Ah_kI + \frac{h_k^2A^2}{2!}+\frac{h_k^3A^3}{3!}+ \ ... \ + I - I \right), \notag \\
+%&=	A^{-1}\left( e^{A_k} - I\right). \label{eq:Bd_2}
+%\end{align}
+%
+%\noindent Thus uniting (\ref{eq:Bd}) and (\ref{eq:Bd_2}), $B_d$ becomes
+%
+%\begin{equation}
+%B_d = A^{-1} \left(A_d - I)B\right).
+%\end{equation}
+%
 If input noise $w(t)$ from (\ref{eq:prob_LTI}) is zero-mean white Gaussian, then $w_d(t_k)$ given by (\ref{eq:wd}) will also be zero-mean white Gaussian \citep{Jazwinski1970}, with covariance $Q_{k}$ given by 
 
 \begin{equation}
-Q_{k} = \int_{\tau=0}^{h_k} e^{A\tau}GQG^Te^{A^T\tau}d\tau, \label{eq:q_k-exact}
+Q_\textrm{d}(t_k,t_{k+1}) = \int_{\tau=0}^{t_{k+1}-t_k} e^{A\tau}GQG^Te^{A^T\tau}d\tau, \label{eq:q_k-exact}
 \end{equation}
 
 \noindent
-For state estimation purpose, we are interested in the calculation of (\ref{eq:q_k-exact}) at every time instant $t_k$, $k\in \mathbb{N}$, given that exact information about timestamp is available. Usually, for regularly sampled systems, discrete noise covariance is either modeled or tuned directly \citep{Wahlstrom2014}. However, if the system is sampled aperiodically, the dependency between covariance $Q_{k}$ and time interval $h_k$ must be taken into account. The calculation of (\ref{eq:q_k-exact}) is nontrivial and there are numerical methods available for computing the matrix exponential integral, at the expense of high computational costs \citep{Micheli2002}. In this study we simplify the problem, adopting a common practice in state estimation applications, that employs approximate discretization \citep{Axelsson2015}. Continuous-time noise is assumed to be piecewise constant in the interval $h_k$, that is $w(t)\approx w(t_k)$, for $t_k \leq t < t_{k+1}$. Then, (\ref{eq:prob_LTI}) is discretized by
+For state estimation purpose, we are interested in the calculation of (\ref{eq:q_k-exact}) at every time instant $t_k$, $k\in \mathbb{N}$, given that exact information about timestamp is available. Usually, for regularly sampled systems, discrete noise covariance is either modeled or tuned directly \citep{Wahlstrom2014}. However, if the system is sampled aperiodically, the dependency between covariance $Q_{k}$ and time interval $h_k$ must be taken into account. 
+
+The calculation of (\ref{eq:q_k-exact}) is nontrivial and there are numerical methods available for computing the matrix exponential integral, at the expense of high computational costs \citep{Micheli2002}. In this study we simplify the problem, adopting a common practice in state estimation applications, that employs approximate discretization \citep{Axelsson2015}. Continuous-time noise is assumed to be piecewise constant in the interval $h_k$, that is $w(t)\approx w(t_k)$, for $t_k \leq t < t_{k+1}$. Then, (\ref{eq:prob_LTI}) is discretized by
 
 \begin{equation}
-x(t_{k+1}) = A_\textrm{d} x(t_k) + B_\textrm{d} u(t_k) + G_\textrm{d}w_\textrm{d}(t_k), \label{eq:prob_process_d2}\\
+x(t_{k+1}) = A_\textrm{d}(t_k,t_{k+1}) x(t_k) + B_\textrm{d}(t_k,t_{k+1}) u(t_k) + G_\textrm{d}(t_k,t_{k+1}) w(t_k), \label{eq:prob_process_d2}\\
 \end{equation}
 
 \noindent
-where $A_\textrm{d}$ and $B_\textrm{d}$ are given by (\ref{eq:Ad}) and (\ref{eq:Bd}) respectively, $G_\textrm{d}$ is calculated the same way as $B_\textrm{d}$, that is $G_\textrm{d} = \left( \int_{\tau=0}^{h_k}e^{A \tau}\delta \tau \right)G$ and $Q_{k}=h_kQ$.
+where $A_\textrm{d}$ and $B_\textrm{d}$ are given by (\ref{eq:Ad}) and (\ref{eq:Bd}) respectively, $G_\textrm{d}$ is calculated the same way as $B_\textrm{d}$, that is $G_\textrm{d}(t_k,t_{k+1}) = \left( \int_{\tau=0}^{t_{k+1}-t_k}e^{A \tau}\delta \tau \right)G$ and $Q_\textrm{d}(t_k,t_{k+1}) = (t_{k+1}-t_k)Q$.
 
 Note that, once again, even for the time-invariant case, the matrices from the discrete-time system depend on time intervals, thus will be time-variant if sampling is aperiodic.
 
-Usually, the covariance matrices $Q$ and $R$ of the noise vectors, that represent the noise level, are better expressed  by a signal-to-noise ratio (SNR) quantity, which relates more directly to how contaminated is a signal. It is basically a relation between the power level of the signal and of the noise, that is
+Usually, the covariance matrices $Q$ and $R$, that represent the noise level, are better expressed  by a signal-to-noise ratio (SNR) quantity, which relates more directly to how contaminated is a signal. It is basically a relation between the power level of the signal and of the noise, that is
 
 \begin{equation}
 SNR = \frac{P_{\textrm{signal}}}{P_{\textrm{noise}}},
@@ -151,14 +154,14 @@ SNR = \frac{\sigma^2_{\textrm{signal}}}{\sigma^2_{\textrm{noise}}}.
 In Chapter~\ref{cap5} we use SNR definition to express the noise level present in signals, using the logarithmic decibel (dB) scale, given by
 
 \begin{equation}
-SNR_{\textrm{dB}} = 10 \log_{10}\frac{P_{\textrm{signal}}}{P_{\textrm{noise}}}, \label{eq:snr_db}
+SNR_{\textrm{dB}} = 10 \log_{10}\frac{P_{\textrm{signal}}}{P_{\textrm{noise}}}. \label{eq:snr_db}
 \end{equation}
 
 In the next section we introduce the estimation problem and the Bayesian solution, considering the discrete-time models of state space representations. For simplicity, we replace $(t_k)$ argument for a subscript $k$, to represent discrete instants of time. 
 
 \section{Bayesian Estimation}\label{sec:bayes_estimation}
 
-The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated as new information arrives, using not just the new data, but also the prior information. For that, both the states and the arrived information are modeled as random variables (RV), hence its classification falls under the probabilistic fusion framework.
+The Bayesian approach to state estimation can be interpreted as a data fusion algorithm in which the inferred knowledge about the system's states is updated as new information arrives, using not just the new data, but also prior information. For that, both the states and the arrived information are modeled as stochastic processes (RV), hence its classification falls under the probabilistic fusion framework.
 
 The goal of the estimator is to statistically and recursively infer the values of the system's states, that is the random vector $x_k \in \mathbb{R}^n$, from noisy data, that is the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ and input vector sequence $u_1,...,u_k \in \mathbb{R}^p$. The corresponding conditional PDF, $\rho(x_k|(y_1,...,y_k))$, is called the \textit{posterior} PDF, describing the statistics of the random vector $x_k \in \mathbb{R}^n$, after the present and past experimental observations  $\rho(x_k|(y_1,...,y_k))$ have been assimilated and the process model has been taken into account. Thus we can find the estimation of $x_k$ using methods such as the \textit{maximum a posteriori} (MAP) or \textit{minimum mean square error} (MMSE), given by \citep{Bar-Shalom2001}
 
@@ -168,33 +171,33 @@ The goal of the estimator is to statistically and recursively infer the values o
 \end{align}
 
 \noindent
-where $\hat{x_k}$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior PDF of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
+where ${\hat{x}}_k$ is the estimated value of $x_k \in \mathbb{R}^n$, $\hat{\rho}(x_k|(y_1,...,y_k))$ is the estimated posterior PDF of $x_k$ given the observation sequence, and $E[(\hat{x}_k-x_k)^T(\hat{x}_k-x_k)|(y_1,...,y_k)]$ is the variance of the random vector $x_k$, given the observation sequence. MAP can be interpreted as the bayesian approach to \textit{maximum likelihood} (ML) estimation, whereas MMSE is the counterpart of the \textit{least squares} (LS) estimator \citep{Bar-Shalom2001}. 
 
-Finding the \textit{posterior} $\rho(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimates $\hat{x_k}^{MAP} \in \mathbb{R}^n$ and $\hat{x_k}^{MMSE} \in \mathbb{R}^n$ are the optimal state estimates, under their optimality criteria. A recursive Bayesian solution to the state estimation problem, that is finding the \textit{posterior} PDF, considering that the system evolves according a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we need to define two lemmas.
+Finding the \textit{posterior} $\hat{\rho}(x_k|(y_1,...,y_k))$ defines the complete state estimation problem, whereas the estimates $\hat{x_k}^{MAP} \in \mathbb{R}^n$ and $\hat{x_k}^{MMSE} \in \mathbb{R}^n$ are the optimal state estimates, under their optimality criteria. A recursive Bayesian solution to the state estimation problem, that is finding the \textit{posterior} PDF, considering that the system evolves according to a Markov process is presented in Proposition~\ref{prop:bayes_solution}. But first, we present two facts related to Markov processes	.
 
-\begin{lema}\label{lemma:markov} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition PDF of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
+\begin{fact}\label{fact:markov} \citep{Papoulis1984} For a Markov system with initial state $x_0 \sim \rho(x_0)$, the transition PDF of the future state $x_{k+1}$ given the present state $x_k$ is independent of past states, that is
 
-\begin{equation}\label{eq:lemma_transition}
+\begin{equation}\label{eq:fact_transition}
 \rho(x_{k+1} | (x_0,...,x_k)) = \rho(x_{k+1}|x_k),
 \end{equation}
 
 \noindent
 and observation vector $y_k$ is independent of past observations and past states, given the present state $x_k$, that is
 
-\begin{equation}\label{eq:lemma_likelihood}
+\begin{equation}\label{eq:fact_likelihood}
 \rho(y_k|(x_0,...,x_k,y_0,...,y_{k-1}) = \rho(y_k|x_k).
 \end{equation}
-\end{lema}
+\end{fact}
 
-\begin{lema} \label{lemma:chapman}For a Markov system, we can find the transition PDF from step $n$ to step $s$ as a function of the transition densities between them and an intermediate step $r$, as long as $n>r>s$, by the Chapman-Kolmogorov equation~\citep{Papoulis1984}
+\begin{fact} \label{fact:chapman} \citep{Papoulis1984} For a Markov system, we can find the transition PDF from step $n$ to step $s$ as a function of the transition densities between them and an intermediate step $r$, as long as $n>r>s$, by the Chapman-Kolmogorov equation
 
 \begin{equation}
 \rho(x_n|x_s) = \int_{-\infty}^{\infty}\rho(x_n|x_r)\rho(x_r|x_s)dx_r.
 \end{equation}
-\end{lema}
+\end{fact}
 \vspace{0.2cm}
 
-Note that the systems described in Section~\ref{sec:discretization} are Markovian, since the transition or process models given by (\ref{eq:prob_process3}) and (\ref{eq:prob_LTIobs}) and the observation models given by (\ref{eq:prob_obs3}) and (\ref{eq:prob_LTIobs}) follow the conditions (\ref{eq:lemma_transition}) and (\ref{eq:lemma_likelihood}), respectively.
+Note that we assume that the systems described in Section~\ref{sec:discretization} are Markovian, since the transition or process models given by (\ref{eq:prob_process3}) and (\ref{eq:prob_LTIobs}) and the observation models given by (\ref{eq:prob_obs3}) and (\ref{eq:prob_LTIobs}) follow the conditions (\ref{eq:fact_transition}) and (\ref{eq:fact_likelihood}), respectively.
 
 \begin{propo}\label{prop:bayes_solution} The posterior PDF of system states $x_k \in \mathbb{R}^n$ conditioned on the observation vector sequence $y_1,...,y_k \in \mathbb{R}^m$ is recursively given by
 
@@ -237,7 +240,7 @@ it is possible to rewrite (\ref{eq:post_pdf}) as
 \rho(x_k|(y_1,...,y_k)) = \frac{\rho(y_k|(y_1,...,y_{k-1},x_k))\rho(y_1,...,y_{k-1}|x_k)\rho(x_k)}{\rho(y_k|(y_1,...,y_{k-1}))  \rho(y_1,...,y_{k-1})}. \\
 \end{equation}
 
-From Lemma~\ref{lemma:markov}, given the current state $x_k$, the present $y_k$ is independent of past observations, thus the first term of the dividend becomes $\rho(y_k|x_k)$. Additionally, Bayes' rule in the second term yields
+From Fact~\ref{fact:markov}, given the current state $x_k$, the present $y_k$ is independent of past observations, thus the first term of the dividend becomes $\rho(y_k|x_k)$. Additionally, Bayes' rule in the second term yields
 
 \begin{equation}\label{eq:post_pdf3}
 \rho((y_1,...,y_{k-1})|x_k)) = \frac{\rho(x_k|(y_1,...,y_{k-1})) \rho((y_1,...,y_{k-1}))}{\rho(x_k)}.\\
@@ -252,18 +255,18 @@ Finally, by combining all together, we have
 \noindent
 which, after canceling the equal terms (in gray), proves (\ref{eq:prop_xk}).
 
-To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the posterior PDF, that is $\rho(x_{k+1},x_k|(y_1,...,y_k))$ ~\citep{Bergman1999}. Rewriting the new conditional PDF with the aid of (\ref{eq:cond_prob}), (\ref{eq:chain_rule}) and Lemma~\ref{lemma:markov}, we have
+To prove (\ref{eq:prop_xk1}), we introduce a predicted state $x_{k+1}$ in the posterior PDF, that is $\rho(x_{k+1},x_k|(y_1,...,y_k))$ ~\citep{Bergman1999}. Rewriting the new conditional PDF with the aid of (\ref{eq:cond_prob}), (\ref{eq:chain_rule}) and Fact~\ref{fact:markov}, we have
 
 \begin{align}
 \rho(x_{k+1}, x_k | (y_1,...,y_k)) &= \rho(x_{k+1}|(x_k,y_1,...,y_k))\rho(x_k|(y_1,...,y_k)) \notag \\
 &=\rho(x_{k+1}|(x_k)\rho(x_k|(y_1,...,y_k)) \label{eq:forecast_condPDF}.
 \end{align}
 
-The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_k$ yelds (\ref{eq:prop_xk1}), which is also a Chapman-Kolmogorov equation. This last piece of proof is also an application of Lemma~\ref{lemma:chapman}.
+The integration of both sides of (\ref{eq:forecast_condPDF}) with respect to $x_k$ yelds (\ref{eq:prop_xk1}), which is also a Chapman-Kolmogorov equation. This last piece of proof is also an application of Fact~\ref{fact:chapman}.
 
 \end{proof}
 
-The evidence term in the denominator of (\ref{eq:prop_xk}) is commonly presented as a constant~\citep{Sarkka2013}, since it does not depend on the state vector $x_k$, and it can be computed by the Chapman-Kolmogorov equation from Lemma~\ref{lemma:chapman}
+The evidence term in the denominator of (\ref{eq:prop_xk}) is commonly presented as a constant~\citep{Sarkka2013}, since it does not depend on the state vector $x_k$, and it can be computed by the Chapman-Kolmogorov equation from Fact~\ref{fact:chapman}
 
 \begin{align}
 \rho(y_k|(y_1,...,y_{k-1}) 	&= \int_{\mathbb{R}^n} \rho(y_k|x_k)\rho(x_k|(y_1,...,y_{k-1})) dx_k, \\
@@ -353,7 +356,7 @@ y_k &= C_kx_k+ v_k, \label{eq:gm_obs}
 \end{align}
 
 \noindent
-where, $\forall k \geq1$, time varying matrices $A_{k-1} \in \mathbb{R}^{n\times n}$,  $B_{k-1} \in \mathbb{R}^{n\times p}$,  $G_{k-1} \in \mathbb{R}^{n\times q}$ and  $C_{k-1} \in \mathbb{R}^{m\times n}$ are known, as well as the input $u_{k-1} \in \mathbb{R}^P$ and output $y_k \in \mathbb{R}^m$ vectors. Process and observation noise vectors, $w_{k-1} \in \mathbb{R}^q$ and $v_{k-1} \in \mathbb{R}^m$ are white, zero-mean and mutually independent, apart from being Gaussian, with known covariance matrices $Q_{k-1}$ and $R_k$, respectively.
+where, $\forall k \geq1$, time varying matrices $A_{k-1} \in \mathbb{R}^{n\times n}$,  $B_{k-1} \in \mathbb{R}^{n\times p}$,  $G_{k-1} \in \mathbb{R}^{n\times q}$ and  $C_{k-1} \in \mathbb{R}^{m\times n}$ are known, as well as the input $u_{k-1} \in \mathbb{R}^P$ and output $y_k \in \mathbb{R}^m$ vectors. Process and observation noise vectors, $w_{k-1} \in \mathbb{R}^q$ and $v_{k-1} \in \mathbb{R}^m$ are white, zero-mean and mutually independent, apart from being Gaussian, with known covariance matrices $Q_{k-1}$ and $R_{k-1}$, respectively.
 
 Define $\mathcal{N}(x;\bar{x},P^{xx})$ as a multivariate Gaussian PDF on $x$, with mean $\bar{x}$ and covariance $P^{xx}$, given by
 
@@ -519,7 +522,7 @@ The linear KF is the optimal estimator under both MAP and MMSE criteria, it is u
 
 For nonlinear systems, the Gaussianity requirement does not hold, even if the uncertainty and initial conditions are Gaussian. Therefore, we can not characterize the posterior PDF only by its first two moments, mean and covariance, and the solution given by proposition~\ref{prop:bayes_solution} are not suited for the estimation problem. In fact, optimal solutions are generally not possible to be obtained by a recursive algorithm.
 
-Adaptations to the Kalman filter have been proposed in the literature. The extended Kalman filter (EKF), for example, linearizes the system around the current state estimates, to achieve approximations using Algorithm~\ref{alg:KF}. A different approach is to approximate the statistics of the posterior PDF, instead of the model. The unscented Kalman filter (UKF) \citep{Julier2004} performs statistical approximations via the unscented transform (UT), based on the Monte Carlo approach.
+Adaptations to the Kalman filter have been proposed in the literature. The extended Kalman filter (EKF), for example, linearizes the system around the current state estimates, to achieve approximations using Algorithm~\ref{alg:KF}. A different approach is to approximate the statistics of the posterior PDF, instead of the model. The unscented Kalman filter (UKF) \citep{Julier2004} performs statistical approximations via the unscented transform (UT), based on a Monte Carlo approach.
 
 First, we define a set of samples $\chi \triangleq [\chi_1,...,\chi_{2n}] \in \mathbb{R}^{n\times 2n}$, also referred to as sigma points, to estimate the mean $\bar{x}$ and covariance $\bar{P}^{xx}$ of the random variable being approximated, such that
 
@@ -530,7 +533,7 @@ First, we define a set of samples $\chi \triangleq [\chi_1,...,\chi_{2n}] \in \m
 \end{align}
 
 \noindent
-where $\gamma_{i}$, $\forall i > 1$ are called weights. There are various ways of determining the sigma points, but we choose a simplified version of the original UT proposed by \citep{Julier1997}, which each $\chi_i$ is given by a column of the matrix $\chi = \left[ \chi_1 \ \chi_2 \ \textrm{...} \ \chi_{2n} \right]$ given by
+where $\gamma_{i}$, $\forall i > 1$ are called weights. There are various ways of determining the sigma points \citep{Menegaz2015}, but we choose a simplified version of the original UT proposed by \citep{Julier1997}, which each $\chi_i$ is given by a column of the matrix $\chi = \left[ \chi_1 \ \chi_2 \ \textrm{...} \ \chi_{2n} \right]$ given by
 
 
 \begin{align}
@@ -549,7 +552,7 @@ Such simplification has one less tunning degree of freedom to approximate higher
 \begin{algo} \label{alg:UT} Unscented Transform (UT) algorithm
 	
 \noindent
-Consider a nonlinear transformation of two random variables $y$ and $x$
+Consider a nonlinear transformation relating two random variables $y$ and $x$
 
 \begin{equation} \label{eq:ut_nonlinear}
 	y = f(x,d),
@@ -608,7 +611,7 @@ P^{xx}_{k|k}		&= P^{xx}_{k|k-1} - P^{yy}_{k|k-1} K_k^{-1} (P^{yy}_{k|k-1})^T.
 \end{algo}
 
 
-UKF algorithm addresses many of the drawbacks that appear in the EKF implementation, such as the necessity of differentiability, the performance loss due to systems that are poorly approximated by linearization and computational efficiency. Therefore the UKF is the chosen method for the nonlinear system simulated in Chapter~\ref{cap5} and will be further discussed in this section.
+UKF algorithm addresses many of the drawbacks that appear in the EKF implementation, such as the necessity of differentiability and the performance loss due to systems that are poorly approximated by linearization. Therefore the UKF is the chosen method for the nonlinear system simulated in Chapter~\ref{cap5} and will be further discussed in this section.
 
 
 
@@ -616,9 +619,9 @@ UKF algorithm addresses many of the drawbacks that appear in the EKF implementat
 \section{State Estimation with Aperiodic Sampling} \label{sec:estimation_aperiodic}
 
 
-The exact solution to the linear discretization problem, defined by (\ref{eq:prob_LTI})-(\ref{eq:wd}) considered digital inputs sampled at the same rate as the observations are taken, producing a sequence of data at time instants $t_k$, $\forall k \in \mathbb{N}$. The nonlinear solution is agnostic to this assumption, since it relies on numerical approximations. Nevertheless, the representation given by (\ref{eq:prob_process3}) and (\ref{eq:prob_obs3}) is constructed using a common time sequence $t_k$, $\forall k \in \mathbb{N}$ for both process and observation models.
+The exact solution to the linear discretization problem, defined by (\ref{eq:prob_LTI})-(\ref{eq:wd}) considered digital inputs sampled at the same rate as the observations are taken, producing a sequence of data at time instants $t_k$, $\forall k \in \mathbb{N}$. The nonlinear solution does not depend on to this assumption, since it relies on numerical approximations. Nevertheless, the representation given by (\ref{eq:prob_process3}) and (\ref{eq:prob_obs3}) is constructed using a common time sequence $t_k$, $\forall k \in \mathbb{N}$ for both process and observation models.
 
-However, we are interested in the effects of aperiodic sampling of the observations with data assimilation executed at incorrect time instants, as formulated in Section~\ref{sec:problem_form}. For that, we consider that input signal $u(t)$ is generated by a digital device using an \textit{ideal sampler}, with a regular time interval $T$, that is $u(t)=u(iT)$, for $iT\leq t < (i+1)T$, $\forall i \in \mathbb{N}$. Estimation time instants need to coincide with the regularly spaced time intervals $T$. Measurement instants $t_k$, $\forall k \in \mathbb{N}$ do not match the estimation instants $iT$, $\forall i \in \mathbb{N}$. Additionally, input data $u(iT)$ is available a rate $1/T$ that is $\alpha > 1$ times faster than the expected sampling rate $\lambda$ of the observations. An illustrative example is presented in Figure~\ref{fig:cap4-sampling_example}, where $\alpha=5$, that is the expected time interval for observations $1/\lambda$ is five times higher than regular sampling time interval $T$.
+However, we are interested in the effects of aperiodic sampling of the observations with data assimilation executed at incorrect time instants, as formulated in Section~\ref{sec:problem_form}. For that, we consider that input signal $u(t)$ is updated	 with a regular time interval $T$, that is $u(t)=u(iT)$, for $iT\leq t < (i+1)T$, $\forall i \in \mathbb{N}$. Estimation time instants need to coincide with the regularly spaced time intervals $T$. Measurement instants $t_k$, $\forall k \in \mathbb{N}$ do not match the estimation instants $iT$, $\forall i \in \mathbb{N}$. Additionally, input data $u(iT)$ is available at a rate $1/T$ that is $\alpha > 1$ times faster than the expected sampling rate $\lambda$ of the observations. An illustrative example is presented in Figure~\ref{fig:cap4-sampling_example}, where $\alpha=5$, that is the expected time interval for observations $1/\lambda$ is five times higher than regular sampling time interval $T$.
 
 \begin{figure}[!htb]
 	\centering
@@ -640,7 +643,7 @@ P\left(N(t)=n\right) = e^{-\lambda t}\frac{(\lambda t)^n}{n!}, \label{eq:poisson
 \end{equation}
 
 \noindent
-where $\lambda$ is called rate or intensity parameter, $t = t_1-t_0$ is the time difference between two points and $N(t)$ is a RV representing the amount of measurements that arrived in the interval given by $t$, as shown in Figure~\ref{fig:poissonproc}. The interarrival time $h_k$, given by the distance between two consecutive arrivals, for the Poisson process has an exponential distribution, with a PDF given by
+where $\lambda$ is called rate or intensity parameter, $t = t_1-t_0$ is the time difference between two time instants and $N(t)$ is a RV representing the amount of measurements that arrived in the interval given by $t$, as shown in Figure~\ref{fig:poissonproc}. The inter-arrival time $h_k$, given by the distance between two consecutive arrivals, for the Poisson process has an exponential distribution, with a PDF given by
 
 \begin{equation}
 \rho_{h_k}(t) = \lambda e^{-\lambda t}
@@ -704,11 +707,11 @@ h_N \xrightarrow[]{D} \mathcal{E}(\lambda),
 \end{equation}
 	
 \noindent
-where $\xrightarrow[]{D}$ means \textit{converges in distribution}, as $N\rightarrow \infty$.
+where $\xrightarrow[]{D}$ means \textit{converges in distribution} \citep{Papoulis1984}, as $N\rightarrow \infty$.
 	
 \end{propo}
 
-\begin{proof} The distribution of $h_N$ is studied by the so called extreme value theory \citep{Leadbetter1983}. To compute it, we consider its cumulative distribution function (CDF), the independence condition and Property \ref{prop:CDF}, yielding	
+\begin{proof} \citep{Micheli2002} The distribution of $h_N$ is studied by the so called extreme value theory \citep{Leadbetter1983}. To compute it, we consider its cumulative distribution function (CDF), the independence condition and Property \ref{prop:CDF}, yielding	
 	
 \begin{align}
 \rho_{h_N} \left( \textrm{min}_i(\xi_i) \leq t \right) &= 1 - \rho\left( \textrm{min}_i(\xi_i) > t \right), \notag \\
@@ -767,7 +770,7 @@ x(t^*_j)=f_\textrm{d}(x(t^*_{j-1}),u(t^*_{j-1}),w(t^*_{j-1}),t^*_{j-1}),
 \end{equation}
 
 \noindent
-where $t^*_j$, $\forall j \in \mathbb{N}$ represents the estimation time sequence and is given by $t^*_j= t^*_{j-1} + \delta t^*_j$, with $t^*_0=0$. In other words, each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. A zero order holder (ZOH) is used for input signals, considering the last available information. The variable time interval $\delta t^*_j$ is calculated according to the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
+where $t^*_j$, $\forall j \in \mathbb{N}$ represents the estimation time sequence and is given by $t^*_j= t^*_{j-1} + \delta t^*_j$, with $t^*_0=0$. In other words, each value $\delta t^*_j$ corresponds to the time interval between the last instant $t^*_{j-1}$ in which a signal was received, whether it transmitted input or observation data, and the next time interval $t^*_{j}$ in which a new signal arrives. The input signals are considered to be held constant during each time interval, considering the last available information. The variable time interval $\delta t^*_j$ is calculated according to the schematic presented by Figure~\ref{fig:cap4-online_estimator}.
 
 \begin{figure}[!htb]
 	\centering
@@ -792,7 +795,7 @@ where $t^*_j$, $\forall j \in \mathbb{N}$ represents the estimation time sequenc
 		\node (pro3) [startstop, below of = pro23][text width=2.8cm,align=center, xshift=1.8cm]{Estimate at $t^*_{j}$};
 		
 		\draw [arrow] (start) -- node[pos=0.5](h){} (dec1);
-		\draw [arrow] (dec1) -| node[text width=2.8cm,align=center,anchor=west,xshift=-1cm] {Iput \\ Signal} (pro1);
+		\draw [arrow] (dec1) -| node[text width=2.8cm,align=center,anchor=west,xshift=-1cm] {Input \\ Signal} (pro1);
 		\draw [arrow] (dec1) -| node[text width=2.8cm,align=center,anchor=east,xshift=0.8cm] {Observation\\ Signal} (pro2);
 		\draw [arrow] (pro1) -- (pro12);
 		\draw [arrow] (pro2) -- (pro22);
@@ -815,8 +818,7 @@ For the \textit{online} estimator, the differential equations are numerically in
 
 \subsection{State Estimation Without Timestamp}\label{sec:without_timestamp}
 
-For some applications, discretization at variable time intervals may be difficult to accomplish. In other situations measurements may be transmitted in a centralized manner at regular time intervals, even though they were taken aperiodically.
-In such cases it is impossible to consider the time-stamp information in the estimation process. Thus process model (\ref{eq:prob_process}) is discretized at a constant time interval, according to
+For some applications, discretization at variable time intervals, as presented in Secton~\ref{sec:discretization}, may be difficult to accomplish. In other situations measurements may be transmitted in a centralized manner, as discussed in Section~\ref{sec:classification}, at regular time intervals, even though they were taken aperiodically like the models from Section~\ref{sec:aperiodic}. In such cases it is impossible to consider the time-stamp information in the estimation process. Thus process model (\ref{eq:prob_process}) is discretized at a constant time interval, according to
 
 
 \begin{equation}\label{eq:disc_semcarimbo}
@@ -899,12 +901,12 @@ E\left[(x_k - \hat{x}_{k|k})(x_k - \hat{x}_{k|k})^T\right] &\triangleq E[\tilde{
 \noindent
 where $\tilde{x}_{k|k}$ is the estimation error at time instant $k$. Condition (\ref{eq:consistency1}) is called \textit{unbiasedness} requirement, whereas (\ref{eq:consistency1}) refers to \textit{covariance matching}. For the nonlinear case, these conditions cannot be fully met, since the \textit{posterior} PDF is an approximation of a Gaussian density. Thus, the closer they are met, the more consistent are the filter estimates.
 %
-In this study we will use metrics that measure both consistency conditions. According to Bar-Shalom, in order to test them, the consistency criteria metrics for state estimation must certify: that state estimate errors are zero mean and compatible with the estimated state covariance; that innovations are also zero mean and compatible with their respective covariances; and that innovations are white. We will adopt two tests proposed by him that attests all conditions simultaneously, that is the normalized (state) estimation error squared (NEES) and normalized innovation squared (NIS) tests. We first defined NEES and NIS as
+In this study we will use metrics that measure both consistency conditions. According to Bar-Shalom, in order to test them, the consistency criteria metrics for state estimation must certify: (i) that state estimate errors are zero mean and compatible with the estimated state covariance; (ii) that innovations are also zero mean and compatible with their respective covariances; and (iii) that innovations are white. We adopt two tests proposed by \citep{Bar-Shalom2001} that attests all conditions simultaneously, that is the normalized (state) estimation error squared (NEES) and normalized innovation squared (NIS) tests. We first defined NEES and NIS as
 
 
 \begin{align}
 NEES_k &\triangleq  \tilde{x}_{k|k}^T(P^{xx}_{k|k})^{-1}\tilde{x}_{k|k}, \label{eq:nees} \\
-NIS_k &\triangleq  \eta_{k|k-1}^T(P^{yy}_{k|k-1})^{-1}\eta_{k|k-1}, \label{eq:nis}.
+NIS_k &\triangleq  \eta_{k|k-1}^T(P^{yy}_{k|k-1})^{-1}\eta_{k|k-1}, \label{eq:nis}
 \end{align}
 \noindent where $\eta_{k|k-1}$ is the innovation vector at time instant $k$ and $P^{yy}_{k|k-1}$ its covariance matrix. Under the linear and Gaussian assumption, we formulate a hypothesis test, under which the null hypothesis $H_0$, that the filter is consistent, requires that both NEES and NIS follow chi-squared distributions, with $n_x$ and $n_y$ degrees of freedom, respectively, and $n_x$ is the dimension of the state vector, whereas $n_y$ is the dimension of the observation vector. The expected value of a RV that is chi-squared distributed is equal to its degrees of freedom quantity, that is $E[NEES_k] = n_x, \ \forall k > 1$ and  $E[NIS_k] = n_y, \ \forall k > 1$. 
 
@@ -944,7 +946,7 @@ RMSE = \frac{ \sum_{i=1}^N \sqrt{(\hat{x}_{k|k}-x_{k})^2}}{N}
 \noindent
 where $x_k$ is the true state vector and $N$ is the amount of estimates. 
 
-Multiple runs will be carried out and all accuracy and consistency data of all scenarios for both algorithms will be used in box and whisker plots, so we can compare the results distributions. In order to assess performance degradation, we also conduct paired-samples $t$-tests to compare accuracy metrics of both algorithms. For that, we maintain the same conditions for both cases. The null hypothesis $H_0$ assumes that the true mean differences between metrics is zero, whereas the alternative hypothesis $H_0$ assumes it is not zero, that is
+Multiple runs are carried out and all accuracy and consistency data of all scenarios for both algorithms are stored. Then we construct box and whisker plots, so we can compare the results distributions. In order to assess performance degradation, we also conduct paired-samples $t$-tests to compare accuracy metrics of both algorithms. For that, each run considers the same conditions and the same random variables realizations for them both. The null hypothesis $H_0$ assumes that the true mean differences between metrics is zero, whereas the alternative hypothesis $H_0$ assumes it is not zero, that is
 
 \begin{equation}\label{eq:ttest}
 \begin{cases}
@@ -953,7 +955,7 @@ H_1: \mu_{\textrm{D}} &\neq 0,
 \end{cases}
 \end{equation}
 
-\noindent where $\mu_{\textrm{D}} = RMSE_\textrm{w/o} - RMSE_\textrm{w}$ and suffixes \textit{w/o} and \textit{w} mean without and with timestamp, respectively. Since we use relatively high sample sizes, we expect differences with statistical significance for most of the results, considering a confidence level of $95\%$. However, in some some scenarios results might not be practically significant, which has more meaning in the real world. Thus, we also calculate effect sizes to assess the difference between both algorithms, referred to as the \textit{d} family of effect sizes. For that we use Cohen's \textit{d} method for effect size estimation, given by
+\noindent where $\mu_{\textrm{D}} = RMSE_\textrm{w/o} - RMSE_\textrm{w}$ and suffixes \textit{w/o} and \textit{w} mean without and with timestamp, respectively. Since we use relatively high sample sizes, we expect differences with statistical significance for most of the results, considering a confidence level of $95\%$. However, for some scenarios, mean differences might not be practically significant, which has more meaning in the real world. Thus, we also calculate effect sizes to assess the difference between both algorithms, referred to as the \textit{d} family of effect sizes. For that we use Cohen's \textit{d} method for effect size estimation, given by
 
 \begin{equation}\label{eq:cohen}
 d = \frac{\overline{RMSE}_\textrm{w/o} - \overline{RMSE}_\textrm{w}}{s_\textrm{D}},
@@ -964,4 +966,4 @@ where $\overline{RMSE}_\textrm{w/o}$ and $\overline{RMSE}_\textrm{w}$ are the RM
 
 
 \clearpage
-\afterpage{\blankpage}
+%\afterpage{\blankpage}
