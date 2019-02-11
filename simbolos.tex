@@ -116,14 +116,8 @@
 	$t_i$, $t_k$			& continuous-time sampled index; \\
 	$k$						& discrete-time index of measurements;  \\
 	$T$						& expected sampling time interval; \\
-	$d(k)$					& observation sampling time delays; \\
 	$l$						& amount of different known delays; \\
 	$\xi(t)$				& Bernoulli random variable \\
-	$C_i(t)$				& real time approximation from the $i^{th}$ computer clock; \\
-	$a_i$					& $i^{th}$ clock drift; \\
-	$b_i$					& $i^{th}$ clock offset; \\
-	$a_{ij}$				& relative drift between $i^{th}$ and $j^{th}$ node; \\
-	$b_{ij}$				& relative offset between $i^{th}$ and $j^{th}$ node; \\
 
 	$\Delta$				& measured value interval between observations; \\
 	$\delta_k$				& random time interval; \\
@@ -273,12 +267,13 @@
 	$\sim$					& is distributed as; \\
 	$\triangleq$			& equals by definition; \\	
 	$\approx$				& approximately equal to; \\
-	
+	$I_{m\times n}$			& $m$ by $n$ identity matrix; \\
 	$t$						& continuous-time index; \\
 	$k, i$					& discrete-time index;  \\
 	$n$						& discrete-time index of time-shifted measurements;  \\
 	$T$						& input sampling interval; \\
 	$t_k, t_i$				& continuous-time sampled instants; \\
+	$\delta_k$				& shifted time interval; \\
 	$\delta t_{sim}$		& nominal system simulation time step; \\
 	$h_k$					& time intervals between two continuous-time sampled instants; \\
 	$A$, $B$, $C$, $D$,		& matrices of continuous-time linear model in state-space;  \\
@@ -306,7 +301,7 @@
 	$\tilde{u}$				& measured input vector; \\
 	$y(t)$					& output vector; \\
 	$y(t_k)$				& output vector at continuous-time sampled instants;\\
-	$\tilde{y}$				& measured value of $y$ \\
+
 	$w(t_k)$				& process noise vector at continuous-time sampled instants; \\
 	$v(t_k)$				& measurement noise vector at continuous-time sampled instants; \\
 	$Q$						& process noise covariance matrix; \\

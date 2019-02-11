@@ -32,7 +32,7 @@ In general the proposed methods and their performance will depend on the charact
 
 To the best of the author's knowledge, no method was proposed so far, for cases in which the random time instants or their statistics are not known or not reliable. If the sampling irregularity is caused due to the lack of sensor synchronization in the network, several algorithms can ensure a common timescale \citep{Sivrikaya2004}, at the expense of additional investments or energy use. Another approach, believed to be largely used in practice, is to simply disregard the irregularities, assimilating the measurements as soon as possible \citep{Kwok2004, Huck2011}. In this case, additional noise will appear in the measurement model as an outcome of not considering the correct time instants. In many cases the statistics of this additional noise is unknown and cannot be accounted for in the estimation process. However, depending on system dynamics and parameters, it might be irrelevant to the overall performance.
 
-Knowing to what extent the estimation accuracy is deteriorated by ignoring the additional uncertainty caused by the sampling irregularity is important to decide whether or not to invest in synchronization. In addition, the investment in more sensors sharing the same network in order to improve accuracy might not pay off, if it increases the occurrence of irregularities. However there are no detailed studies on the behavior of the degradation in accuracy due to neglecting irregularities in the sampling process. Therefore, this work assesses the differences in state estimation performance for systems sampled at random time intervals with and without time-stamp for different scenarios. The purpose is to shed some light on the trade-off for investments in sensor networks and synchronization.
+Knowing to what extent the estimation accuracy is deteriorated by ignoring the additional uncertainty caused by the sampling irregularity is important to decide whether or not to invest in synchronization. In addition, the investment in more sensors sharing the same network in order to improve accuracy might not pay off, if it increases the occurrence of irregularities. However there are no detailed studies on the behavior of the degradation in accuracy due to neglecting irregularities in the sampling process. Therefore, this work assesses the differences in state estimation performance for systems sampled at random time intervals with and without timestamp for different scenarios. The purpose is to shed some light on the trade-off for investments in sensor networks and synchronization.
 
 \section{Problem Formulation}\label{sec:problem_form} 
 
@@ -75,11 +75,11 @@ We wish to estimate the state vector $x(t)$ and its covariance recursively, at r
 
 \section{Objectives}\label{objectives}
 
-In this study we are interested in the importance of the timestamp in sensor fusion applications under irregular sampling. More specifically, we define the following research objectives:
+In this study our main goal is to assess the importance of the timestamp in sensor fusion for the problem of irregular sampling. More specifically, we define the following research objectives:
 
 \begin{enumerate}
 	\item Review sensor fusion methods and the irregular sampling problem;
-	\item Present state estimation algorithms that fuse data from multiple sources, subject to irregularly sampled measurements with no information about timestamp;
+	\item Discuss state estimation algorithms that fuse data from multiple sources, subject to irregularly sampled measurements with no information about timestamp;
 	\item Develop a simulation setup where the effect of neglecting timestamps in state estimation can be assessed;
 	\item Apply the proposed setup to linear and nonlinear systems, considering performance metrics that assess accuracy, which is related to estimation quality; and consistency, which quantifies conformity of the estimation error and the covariance matrix provided by the filter.
 \end{enumerate}
