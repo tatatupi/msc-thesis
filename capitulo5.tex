@@ -42,12 +42,12 @@ e_k & \approx -\frac{dy}{dt}\delta_k.
 \end{align}
 
 
-Using the system from Example~\ref{ex:samp_error}, we can observe some interesting aspects of the error $e$ that is introduced by shifting the time instants of the measurements. In Figure~\ref{fig:Gs_sampling} from Section~\ref{sec:without_timestamp} we observe that the error will always have negative values when the signal is increasing, and vice-versa, as expected. In Figure~\ref{fig:Gs_error} we present the time series of such error overlapping the measurement. 
+Using the system from Example~\ref{ex:samp_error}, we can observe some interesting aspects of the error $e$ that is introduced by shifting the time instants of the measurements. In Figure~\ref{fig:Gs_sampling} from Section~\ref{sec:without_timestamp} we observe that the error will always have negative values when the signal is increasing, and vice-versa, as expected. In Figure~\ref{fig:Gs_error} we present the time series of such error overlapping the measurement, in different scales.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.75\textwidth]{Imagens/Gs_error.eps}
-	\caption[Added error of shifting measurements time instants]{Added error time series (orange) as an effect of shifting time instants of the measurements (red) and output (blue). A gray dotted horizontal line is placed at the origin, for reference.}
+	\caption[Added error of shifting measurements time instants]{Added error time series (orange) as an effect of shifting time instants of the measurements (red) and output (blue). A gray dotted horizontal line is placed at the origin, for reference. Right scale (in orange) refers to the error data, whereas left scale (in black) refers to the output signal amplitude.}
 	\label{fig:Gs_error}
 \end{figure}
 
@@ -244,7 +244,7 @@ where $t_{k+1} = t_k + h_k \in \mathbb{R}$ and $k \in \mathbb{N}$. $\rho(v(t_k))
 
 \subsection{Single Realization Analysis}
 
-In this section we present one realization of the state estimation simulation for the system defined by (\ref{eq:sys_beg})-(\ref{eq:sys_end}), using the Kalman Filter described in Section~\ref{sec:kalman-filter} and the algorithms modifications explained in Section~\ref{sec:estimation_aperiodic}.  
+In this section we present one realization of the state estimation simulation for the system defined by (\ref{eq:sys_beg})-(\ref{eq:sys_end}), using the Kalman Filter described in Section~\ref{sec:kalman-filter} and the algorithm modifications explained in Section~\ref{sec:estimation_aperiodic}.  
 
 Simulation parameters are set according to $\lambda = 500 \textrm{ Hz}$, $SNR_{\textrm{obs}} = 30 \textrm{ dB}$, and $SNR_{\textrm{pro}} = 30 \textrm{ dB}$, where subscript $\textrm{obs}$ and $\textrm{pro}$ refer to observation and process, respectively. Time step to simulate nominal system model is set as $\delta t_{\textrm{sim}} = 10^{-6} \textrm{ s}$ and the regular estimation time interval is given by $T = 2\times 10^{-3} \textrm{ s}$. Noise is generated as a zero mean, white, Gaussian signal with $R=9.596\times 10^{-4}$ and process noise variance of $Q=9.986\times 10^{-4}I_{4\times 4}$. These exact values are used in the Kalman filter implementation and the estimation results for states $x_1$ and $x_4$ of the algorithms with and without timestamp, in comparison to the true state values are shown in Figures~\ref{fig:StatesWithAndWithoutTimeStamp}.
 
@@ -375,7 +375,7 @@ Finally, the shapes of the box and whiskers plots suggest a sample distribution 
 
 Variation of performance indices for different $\lambda$ values are shown in the second column of Figure~\ref{fig:linear_sim} and the second row of Table~\ref{tab:results_linear}. We observe the smaller differences of the means for higher $\lambda$ values, suggesting that the accuracy degradation levels caused by neglecting timestamps are higher for smaller average frequencies of the aperiodic sampled observations. That is expected, since the approximation errors of $\tilde{y}_i \approx y(t_k)$ are higher for more sparse average time intervals $1/\lambda$ and so is the additional measurement error introduced by data assimilation performed at incorrect time instants. The only exception is for state $x_1$ RMSE results for $lambda=100$ Hz. However, the sample distribution shown in Figure~\ref{fig:linear_sim} (b) has such a high variability with distant outliers, that it would be hard to draw any conclusion from this scenario. The trend shown in (e), on the other hand, is very clear. However, when it comes to effect size, we do not observe a clear trend in degradation increase. Cohen's \textit{d} values for state $x_4$ shows little difference in effect size, which is due to the variation of the standard deviations in the data from the algorithm without timestamp.
 
-Consistency performance results in graphs (h) and (k) show that, for the parameter combinations simulated, not considering timestamp produce inconsistent estimates in all cases, while the algorithm with timestamp achieves rejection rates on NEES and NIS tests consistently closer to $5\%$. However, we observe an increase in the rejection rates for higher frequencies in the algorithm considering timestamp. It can be due to numerical errors in discretization steps performed with very small time intervals. But it would require further investigation, though.
+Consistency performance results in graphs (h) and (k) show that, for the simulated parameter combinations, not considering timestamp produces inconsistent estimates in all cases, while the algorithm with timestamp achieves rejection rates on NEES and NIS tests consistently closer to $5\%$. However, we observe an increase in the rejection rates for higher frequencies in the algorithm considering timestamp. It can be due to numerical errors in discretization steps performed with very small time intervals. But it would require further investigation, though.
 
 Once again, accuracy data distributions for the algorithm not considering suggest a much higher variability, impacting negatively in estimation reliability.
 
