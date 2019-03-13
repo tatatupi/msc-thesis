@@ -663,7 +663,14 @@ y_i(nT + \xi_i) = Cx(nT + \xi_i) + v(nT + \xi_i), \quad n \in \mathbb{N}, \ i \i
 \end{equation}
 
 \noindent
-where matrix $C$ and measurement noise are already defined in (\ref{eq:prob_LTIobs}) and $\xi_i \in [0,T)$ is referred to as the phase of each sensor, that is the waiting time for the $i$-th sensor to yield a noisy measurement, after time $t=0$. If all phases are different, that is the sensors are not synchronized, and the number of sensors $N$ is high enough, then the amount of measurements arriving in a given interval can be approximated by a Poisson process with rate parameter $\lambda = N/T$. Thus, the random interarrival times or the waiting times between two consecutive measurements can be approximated by an exponential random variable  $h_k \sim \mathcal{E} (\lambda)$, according to Proposition~\ref{prop:poissonproc}. 
+where matrix $C$ and measurement noise are already defined in (\ref{eq:prob_LTIobs}) and $\xi_i \in [0,T)$ is referred to as the phase of each sensor, that is the waiting time for the $i$-th sensor to yield a noisy measurement, after time $t=0$. An illustrative example of four sensors and the phases between them is shown in Figure~\ref{fig:sensor_phase}. If all phases are different, that is the sensors are not synchronized, and the number of sensors $N$ is high enough, then the amount of measurements arriving in a given interval can be approximated by a Poisson process with rate parameter $\lambda = N/T$. Thus, the random interarrival times or the waiting times between two consecutive measurements can be approximated by an exponential random variable  $h_k \sim \mathcal{E} (\lambda)$, according to Proposition~\ref{prop:poissonproc}. 
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{Imagens/sensor_phase.pdf}
+	\caption[Sampling instants and phases of multiple sensors]{Sampling instants of four sensors ($S_i$) and their phases. The phase $\xi_0$ is considered to be zero. The time interval for all of them is constant and equal to $T$.}
+	\label{fig:sensor_phase}
+\end{figure} 
 
 %\begin{prop} \label{prop:CDF} The cumulative distribution function (CDF) of a random variable X is given by \citep{Papoulis1984}
 %

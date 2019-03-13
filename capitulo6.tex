@@ -30,9 +30,26 @@ We consider the research objectives introduced in the beginning of this work to 
 
 We then choose Kalman filter and the unscented Kalman filter as state estimation methods, presenting their implementation details. By modeling the measurements random time instants as a Poisson process, we cover a very generic irregular sampling problem. The motivations behind it lie on large sensor networks applications, where data is transmitted periodically but unsynchronized. Resulting arrival times can be approximated by an exponential random variable. We go through the adaptations to the state estimation algorithms to the situations when timestamp is part of the data packet, and when they are not available. Therefore, second objective is also covered.
 
-The analysis on the error that is added to the measurement data, by shifting the irregular time instants, substantiated the design of the simulation setup, which is the third objective of this study. We end up with a framework that suggests that the degradation in state estimation performance by neglecting timestamp depends on SNR levels, on the average sampling rate of measurements $\lambda$, and the relation between the average sampling rate of measurements with the regular sampling rate of estimation $\alpha$. 
+The analysis on the error that is added to the measurement data, by shifting the irregular time instants, substantiated the design of the simulation setup, which is the third objective of this study. We end up with a framework that suggests that the degradation in state estimation performance by neglecting timestamp depends on SNR levels, on the average sampling rate of measurements $\lambda$, and the relation between the average sampling rate of measurements with the regular sampling rate of estimation $\alpha$. In order to apply our approach in decision making processes regarding sensor networks investments and synchronization, the step-by-step framework is shown in Figure~\ref{fig:framework}.
 
-By applying the proposed framework to two different systems, one being linear and the other nonlinear, we test if the effects can indeed be assessed, fulfilling the last objective. For the case studies considered we observe some significant performance variation for some parameter sets, whereas for other combination of system parameters, neglecting timestamp did not play an important role. When system SNRs increase to a certain level, considering timestamp or not becomes irrelevant. Results suggest that timestamp information might algo be neglected for high sampling rates. However, what is considered to be high will depend on the system dynamics. Another conclusion we draw from results is that performance degradation for the variation of the relation between measurement and input sampling rates $\alpha$ might depend on the relation between their SNR levels. As a final note, we also observe a higher variability in performance metrics mean values for the algorithm that does not consider timestamp, which can be a problem if consistency is needed.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{Imagens/framework.pdf}
+	%\setlength{\belowcaptionskip}{-12pt}
+	\caption[Proposed framework]{Proposed framework steps to assist decision making process for investments in sensor networks and synchronization.}
+	\label{fig:framework}
+\end{figure} 
+
+By applying the proposed framework to two different systems, one being linear and the other nonlinear, we test if the effects can indeed be assessed, fulfilling the last objective. For the case studies considered we observe some significant performance variation for some parameter sets, whereas for other combination of system parameters, neglecting timestamp did not play an important role. When system SNRs increase to a certain level, considering timestamp or not becomes irrelevant. Results suggest that timestamp information might algo be neglected for high sampling rates. However, what is considered to be high will depend on the system dynamics. Another conclusion we draw from results is that performance degradation for the variation of the relation between measurement and input sampling rates $\alpha$ might depend on the relation between their SNR levels. As a final note, we also observe a higher variability in performance metrics mean values for the algorithm that does not consider timestamp, which can be a problem if consistency is needed. Figure~\ref{fig:decision_flux} shows a suggestion of decision fluxogram, based on the proposed framework.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{Imagens/decision_flux.pdf}
+	%\setlength{\belowcaptionskip}{-12pt}
+	\caption[Proposed framework]{Proposed framework steps to assist decision making process for investments in sensor networks and synchronization.}
+	\label{fig:decision_flux}
+\end{figure} 
 
 We must also be self-critical and question what could have been more consistent or realistic in our study. First, the irregular sampling model, although generic, could have been closer to reality by including time delay on data transmission. Such configuration would better justify the lack of timestamp in the data packet. However, time delay in state estimation without timestamps seems to have a similar effect to the problem we formulated, which is a time shift in measurement time instants. Adaptations to the algorithms, on the other hand, are much more complex. Additionally, as we observe in the results for $\alpha$ variation, different combination of SNR in process and observation models could have been carried out to evaluate a joint contribution. And finally, since we argue that neglecting timestamp will introduce an error to the measurements, then we could have tested state estimation algorithms with an artificially higher covariance of the observation model. We could also have tried some error compensation method that is related to an estimate of the output derivative, since they are related.
 
@@ -50,4 +67,4 @@ From the improvement points discussed on the last section and some insights prov
 
 
 \clearpage
-\afterpage{\blankpage}
+%\afterpage{\blankpage}/
